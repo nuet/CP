@@ -1,0 +1,5 @@
+D:\MichauxPro\ZPY\ProTools\bin\Release\ProTools.dll
+D:\MichauxPro\ZPY\ProTools\bin\Release\ProTools.pdb
+D:\MichauxPro\ZPY\ProTools\obj\Release\ProTools.dll
+D:\MichauxPro\ZPY\ProTools\obj\Release\ProTools.pdb
+D:\MichauxPro\ZPY\ProTools\obj\Release\ProTools.csprojResolveAssemblyReference.cache

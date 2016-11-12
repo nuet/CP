@@ -1,0 +1,107 @@
+﻿  @{
+      ViewBag.Title = "登录";
+  }
+<link rel="stylesheet" type="text/css" href="/modules/css/login.css">
+ 
+<!--主体 开始 -->
+<div class="main">
+    <!-- 图片-->
+    <div class="advertisement"></div>
+    <!--登录 开始-->
+    <div class="login">
+        <div class="login1">
+                <h3>用户登录</h3>
+                <li>
+                    <span>账 &nbsp;&nbsp;号：</span>
+                    <span><input class="phone1" type="text" name="username" placeholder="用户名/邮箱" style="height: 25px;width: 184px;"/></span>
+                    <p class="phone" style="font-size:12px;color:red;"></p>
+                </li>
+                <li class="line">
+                    <span> 密 &nbsp;&nbsp;码：</span>
+                    <span><input class="q1" type="password" name="password" width="200" height="40" placeholder="至少六位"style="height: 25px;width: 184px;"/></span>
+                    <p class="password" style="font-size:12px;color:red;"></p>
+                </li>
+                <li class="line">
+                    <span> 验证码：</span>
+                    <span style="width: 50px;"><input type="text" id="codetext" style="width: 50px;height: 25px;"/></span>
+                    <span><input type="text" readonly="readonly" id="txt1" size="6" style="cursor: pointer;" class="button2" onclick="show()" /></span>
+                    <span class="red codetips" style="margin-left: 10px;font-size:12px;"></span> 
+                </li>
+                <li class="line">
+                    <span> <input value="登录" class="getcodes button1"/></span>
+                    <span class=" line1"><a href="/Help/Forget">忘记密码</a></span>
+                </li>
+                <li class="line">
+                    <span>没有账号？</span>&nbsp;
+                    <span><a href="/Home/Register">立即注册</a></span>
+                </li>
+            
+        </div>
+    </div>
+    <!--登录 结束-->
+</div>
+<!--主体 结束 -->
+<script type="text/javascript" src="/Scripts/yzm.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        GetAddvert();
+        $('.button1').bind('click', function () {
+            if ($('.phone1').val() == "") {
+                $('.phone').html('登陆账号不能为空');
+                return false;
+            } else { $('.phone').html(''); }
+            if ($('.q1').val() == "") {
+                $('.password').html('密码不能为空');
+                return false;
+            } else { $('.password').html(''); }
+            if ($('#codetext').val().toLowerCase() != $('#txt1').val().toLowerCase()) {
+                $('.codetips').html('验证码错误');
+                show();
+                return false;
+            } else { $('.codetips').html(''); }
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/UserLogin",
+                data: "userName=" + $('.phone1').val() + "&pwd=" + $('.q1').val(),
+                success: function (data) {
+                    if (data.result==1) {
+                        $('.nologo').addClass('hide');
+                        $('.logoed').removeClass('hide');
+                        location.href = '/User/UserInfo';
+                    } else { 
+                        alert(data.errorMsg);
+                        if (data.result==0){
+                            location.href = '/Home/Register2';
+                        } 
+                    }
+                }
+            });
+        });
+        $(document).on("keypress", function (e) {
+            if (e.keyCode == 13) {
+                $(".button1").click();
+            }
+        });
+    });
+    function GetAddvert() {
+        $.post('/Home/GetAdvertList',
+            {
+                imgtype: "",
+                view: $('#pagecontroller').val() + '/' + $('#pageaction').val()
+            }, function (data) {
+                var header = "";
+                for (var i = 0; i < data.items.length; i++) {
+                    var item = data.items[i];
+                    if (item.ImgType == "Header") {
+                        header = '<a href="' + (item.LinkUrl != "" ? item.LinkUrl : 'javascript:void(0);') + '" title="' + item.Content + '">' +
+                            '<img style="width:960px;height:80px;" src="' + data.BaseUrl + item.ImgUrl + '" alt="' + item.Content + '" >' +
+                            '</a>';
+                    }
+                }
+                $('.advertisement').html(header);
+            });
+    }
+  
+</script>

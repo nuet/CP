@@ -1,0 +1,533 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BB3C794B-5A6A-494B-8E2B-A0662ACC3084}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CPiao</RootNamespace>
+    <AssemblyName>CPiao</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=2.6.8.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\net40\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime, Version=2.6.8.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\net40\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks, Version=2.6.8.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\net40\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.3.0.20105.1\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.1\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.1.0.20105.408\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\ExpandClass.cs" />
+    <Compile Include="Common\UserAuthorize.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RFriendController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DLL\Newtonsoft.Json.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="modules\assets\jquery.pwstabs-1.1.3.js" />
+    <Content Include="modules\assets\jquery.pwstabs-1.1.3.min.js" />
+    <Content Include="modules\assets\jquery.pwstabs.css" />
+    <Content Include="modules\assets\jquery.pwstabs.min.css" />
+    <Content Include="modules\assets\styles.css" />
+    <Content Include="modules\css\active.css" />
+    <Content Include="modules\css\base.css" />
+    <Content Include="modules\css\diyUpload.css" />
+    <Content Include="modules\css\head.css" />
+    <Content Include="modules\css\help.css" />
+    <Content Include="modules\css\iconfont\demo.css" />
+    <Content Include="modules\css\iconfont\demo.html" />
+    <Content Include="modules\css\iconfont\iconfont.css" />
+    <Content Include="modules\css\iconfont\iconfont.svg" />
+    <Content Include="modules\css\message.css" />
+    <Content Include="modules\css\shiyiyun.css" />
+    <Content Include="modules\css\slide.css" />
+    <Content Include="modules\css\webuploader.css" />
+    <Content Include="modules\images\03-weixin.png" />
+    <Content Include="modules\images\1.png" />
+    <Content Include="modules\images\2.png" />
+    <Content Include="modules\images\3.png" />
+    <Content Include="modules\images\4.png" />
+    <Content Include="modules\images\ad.jpg" />
+    <Content Include="modules\images\ad2.jpg" />
+    <Content Include="modules\images\banner.jpg" />
+    <Content Include="modules\images\bg.png" />
+    <Content Include="modules\images\bl.png" />
+    <Content Include="modules\images\cai.png" />
+    <Content Include="modules\images\cha.png" />
+    <Content Include="modules\images\cp_img_sc.png" />
+    <Content Include="modules\images\cp_img_tj.png" />
+    <Content Include="modules\images\cp_img_tj_a.png" />
+    <Content Include="modules\images\credit.png" />
+    <Content Include="modules\images\da.png" />
+    <Content Include="modules\images\dianhua.png" />
+    <Content Include="modules\images\gua.png" />
+    <Content Include="modules\images\head.png" />
+    <Content Include="modules\images\jj.png" />
+    <Content Include="modules\images\logo.ico" />
+    <Content Include="modules\images\logo.jpg" />
+    <Content Include="modules\images\photo.jpg" />
+    <Content Include="modules\images\photo1.jpg" />
+    <Content Include="modules\images\photo2.jpg" />
+    <Content Include="modules\images\photo3.jpg" />
+    <Content Include="modules\images\photo4.jpg" />
+    <Content Include="modules\images\pingjia.png" />
+    <Content Include="modules\images\progress.png" />
+    <Content Include="modules\images\qq%282%29.png" />
+    <Content Include="modules\images\qq.png" />
+    <Content Include="modules\images\slide\ban_next.png" />
+    <Content Include="modules\images\slide\ban_pre.png" />
+    <Content Include="modules\images\slide\slide1.jpg" />
+    <Content Include="modules\images\slide\slide1p1.png" />
+    <Content Include="modules\images\slide\slide1p2.png" />
+    <Content Include="modules\images\slide\slide2.jpg" />
+    <Content Include="modules\images\slide\slide2p1.png" />
+    <Content Include="modules\images\slide\slide3.jpg" />
+    <Content Include="modules\images\slide\slide3p1.png" />
+    <Content Include="modules\images\slide\slide3p2.png" />
+    <Content Include="modules\images\slide\slide3p3.png" />
+    <Content Include="modules\images\sousuo.png" />
+    <Content Include="modules\images\success.png" />
+    <Content Include="modules\images\tupian.png" />
+    <Content Include="modules\images\uploader\banner.jpg" />
+    <Content Include="modules\images\uploader\bg.png" />
+    <Content Include="modules\images\uploader\cp_img_sc.png" />
+    <Content Include="modules\images\uploader\cp_img_tj.png" />
+    <Content Include="modules\images\uploader\cp_img_tj_a.png" />
+    <Content Include="modules\images\uploader\favicon.ico" />
+    <Content Include="modules\images\uploader\favicon.png" />
+    <Content Include="modules\images\uploader\icons.png" />
+    <Content Include="modules\images\uploader\image.png" />
+    <Content Include="modules\images\uploader\progress.png" />
+    <Content Include="modules\images\uploader\success.png" />
+    <Content Include="modules\images\vip.gif" />
+    <Content Include="modules\images\web.png" />
+    <Content Include="modules\images\weixin.png" />
+    <Content Include="modules\images\xie.png" />
+    <Content Include="modules\images\zh\cp_img_sc.png" />
+    <Content Include="modules\images\email.png" />
+    <Content Include="modules\images\zh\zh0.gif" />
+    <Content Include="modules\images\zh\zh1.gif" />
+    <Content Include="modules\images\zh\zh10.gif" />
+    <Content Include="modules\images\zh\zh11.gif" />
+    <Content Include="modules\images\zh\zh12.gif" />
+    <Content Include="modules\images\zh\zh13.gif" />
+    <Content Include="modules\images\zh\zh2.gif" />
+    <Content Include="modules\images\zh\zh3.gif" />
+    <Content Include="modules\images\zh\zh4.gif" />
+    <Content Include="modules\images\zh\zh5.gif" />
+    <Content Include="modules\images\zh\zh6.gif" />
+    <Content Include="modules\images\zh\zh7.gif" />
+    <Content Include="modules\images\zh\zh8.gif" />
+    <Content Include="modules\images\zh\zh9.gif" />
+    <Content Include="modules\img\bg.jpg" />
+    <Content Include="modules\img\browser.png" />
+    <Content Include="modules\img\head.jpg" />
+    <Content Include="modules\img\header-bg.png" />
+    <Content Include="modules\img\litte-icon\1.png" />
+    <Content Include="modules\img\litte-icon\11.png" />
+    <Content Include="modules\img\litte-icon\account-safe.png" />
+    <Content Include="modules\img\litte-icon\coupon.png" />
+    <Content Include="modules\img\litte-icon\getjf01.jpg" />
+    <Content Include="modules\img\litte-icon\getjf02.jpg" />
+    <Content Include="modules\img\litte-icon\jfen.png" />
+    <Content Include="modules\img\litte-icon\logo.png" />
+    <Content Include="modules\img\litte-icon\record.png" />
+    <Content Include="modules\img\litte-icon\三角 %282%29.png" />
+    <Content Include="modules\img\litte-icon\三角.png" />
+    <Content Include="modules\img\litte-icon\优惠券.png" />
+    <Content Include="modules\img\litte-icon\关闭差.png" />
+    <Content Include="modules\img\litte-icon\对号.png" />
+    <Content Include="modules\img\litte-icon\尖括号-粗大-右.png" />
+    <Content Include="modules\img\litte-icon\手机.png" />
+    <Content Include="modules\img\litte-icon\时钟.png" />
+    <Content Include="modules\img\litte-icon\游戏.png" />
+    <Content Include="modules\img\litte-icon\游戏1.png" />
+    <Content Include="modules\img\litte-icon\积分.png" />
+    <Content Include="modules\img\litte-icon\记录.png" />
+    <Content Include="modules\img\litte-icon\账户安全a.png" />
+    <Content Include="modules\img\litte-icon\资金安全a.png" />
+    <Content Include="modules\img\litte-icon\邮箱.png" />
+    <Content Include="modules\img\litte-icon\锁.png" />
+    <Content Include="modules\img\yinhang\gh.jpg" />
+    <Content Include="modules\img\yinhang\gongh.jpg" />
+    <Content Include="modules\img\yinhang\img.png" />
+    <Content Include="modules\img\yinhang\jianh.jpg" />
+    <Content Include="modules\img\yinhang\nongh.jpg" />
+    <Content Include="modules\img\yinhang\wangyin.jpg" />
+    <Content Include="modules\jedate\jedate.js" />
+    <Content Include="modules\jedate\jedate.min.js" />
+    <Content Include="modules\jedate\skin\jedate.css" />
+    <Content Include="modules\jpaginate\about.png" />
+    <Content Include="modules\jpaginate\bg.png" />
+    <Content Include="modules\jpaginate\codrops_back.png" />
+    <Content Include="modules\jpaginate\css\style.css" />
+    <Content Include="modules\jpaginate\images\next.png" />
+    <Content Include="modules\jpaginate\images\previous.png" />
+    <Content Include="modules\jpaginate\images\snext.png" />
+    <Content Include="modules\jpaginate\images\sprevious.png" />
+    <Content Include="modules\jpaginate\jPaginate.html" />
+    <Content Include="modules\jpaginate\jquery-1.3.2.js" />
+    <Content Include="modules\jpaginate\jquery.paginate.js" />
+    <Content Include="modules\scripts\home.js" />
+    <Content Include="modules\scripts\imgbox.js" />
+    <Content Include="modules\scripts\layout.js" />
+    <Content Include="modules\scripts\register\forget.js" />
+    <Content Include="modules\scripts\register\register.js" />
+    <Content Include="modules\scripts\register\partregister.js" />
+    <Content Include="modules\scripts\rfriend\recommend.js" />
+    <Content Include="modules\scripts\rfriend\rfriend.js" />
+    <Content Include="modules\scripts\uploadcreate.js" />
+    <Content Include="modules\scripts\userinfo\userinfo.js" />
+    <Content Include="modules\scripts\userinfo\usermsg.js" />
+    <Content Include="modules\ueedit\index.html" />
+    <Content Include="modules\ueedit\lang\en\en.js" />
+    <Content Include="modules\ueedit\lang\en\images\addimage.png" />
+    <Content Include="modules\ueedit\lang\en\images\alldeletebtnhoverskin.png" />
+    <Content Include="modules\ueedit\lang\en\images\alldeletebtnupskin.png" />
+    <Content Include="modules\ueedit\lang\en\images\background.png" />
+    <Content Include="modules\ueedit\lang\en\images\button.png" />
+    <Content Include="modules\ueedit\lang\en\images\copy.png" />
+    <Content Include="modules\ueedit\lang\en\images\deletedisable.png" />
+    <Content Include="modules\ueedit\lang\en\images\deleteenable.png" />
+    <Content Include="modules\ueedit\lang\en\images\listbackground.png" />
+    <Content Include="modules\ueedit\lang\en\images\localimage.png" />
+    <Content Include="modules\ueedit\lang\en\images\music.png" />
+    <Content Include="modules\ueedit\lang\en\images\rotateleftdisable.png" />
+    <Content Include="modules\ueedit\lang\en\images\rotateleftenable.png" />
+    <Content Include="modules\ueedit\lang\en\images\rotaterightdisable.png" />
+    <Content Include="modules\ueedit\lang\en\images\rotaterightenable.png" />
+    <Content Include="modules\ueedit\lang\en\images\upload.png" />
+    <Content Include="modules\ueedit\lang\zh-cn\images\copy.png" />
+    <Content Include="modules\ueedit\lang\zh-cn\images\localimage.png" />
+    <Content Include="modules\ueedit\lang\zh-cn\images\music.png" />
+    <Content Include="modules\ueedit\lang\zh-cn\images\upload.png" />
+    <Content Include="modules\ueedit\lang\zh-cn\zh-cn.js" />
+    <Content Include="modules\ueedit\themes\default\css\ueditor.css" />
+    <Content Include="modules\ueedit\themes\default\css\ueditor.min.css" />
+    <Content Include="modules\ueedit\themes\default\dialogbase.css" />
+    <Content Include="modules\ueedit\themes\default\images\anchor.gif" />
+    <Content Include="modules\ueedit\themes\default\images\arrow.png" />
+    <Content Include="modules\ueedit\themes\default\images\arrow_down.png" />
+    <Content Include="modules\ueedit\themes\default\images\arrow_up.png" />
+    <Content Include="modules\ueedit\themes\default\images\button-bg.gif" />
+    <Content Include="modules\ueedit\themes\default\images\cancelbutton.gif" />
+    <Content Include="modules\ueedit\themes\default\images\charts.png" />
+    <Content Include="modules\ueedit\themes\default\images\cursor_h.gif" />
+    <Content Include="modules\ueedit\themes\default\images\cursor_h.png" />
+    <Content Include="modules\ueedit\themes\default\images\cursor_v.gif" />
+    <Content Include="modules\ueedit\themes\default\images\cursor_v.png" />
+    <Content Include="modules\ueedit\themes\default\images\dialog-title-bg.png" />
+    <Content Include="modules\ueedit\themes\default\images\filescan.png" />
+    <Content Include="modules\ueedit\themes\default\images\highlighted.gif" />
+    <Content Include="modules\ueedit\themes\default\images\icons-all.gif" />
+    <Content Include="modules\ueedit\themes\default\images\icons.gif" />
+    <Content Include="modules\ueedit\themes\default\images\icons.png" />
+    <Content Include="modules\ueedit\themes\default\images\loaderror.png" />
+    <Content Include="modules\ueedit\themes\default\images\loading.gif" />
+    <Content Include="modules\ueedit\themes\default\images\lock.gif" />
+    <Content Include="modules\ueedit\themes\default\images\neweditor-tab-bg.png" />
+    <Content Include="modules\ueedit\themes\default\images\pagebreak.gif" />
+    <Content Include="modules\ueedit\themes\default\images\scale.png" />
+    <Content Include="modules\ueedit\themes\default\images\sortable.png" />
+    <Content Include="modules\ueedit\themes\default\images\spacer.gif" />
+    <Content Include="modules\ueedit\themes\default\images\sparator_v.png" />
+    <Content Include="modules\ueedit\themes\default\images\table-cell-align.png" />
+    <Content Include="modules\ueedit\themes\default\images\tangram-colorpicker.png" />
+    <Content Include="modules\ueedit\themes\default\images\toolbar_bg.png" />
+    <Content Include="modules\ueedit\themes\default\images\unhighlighted.gif" />
+    <Content Include="modules\ueedit\themes\default\images\upload.png" />
+    <Content Include="modules\ueedit\themes\default\images\videologo.gif" />
+    <Content Include="modules\ueedit\themes\default\images\word.gif" />
+    <Content Include="modules\ueedit\themes\default\images\wordpaste.png" />
+    <Content Include="modules\ueedit\themes\iframe.css" />
+    <Content Include="modules\ueedit\ueditor.all.js" />
+    <Content Include="modules\ueedit\ueditor.all.min.js" />
+    <Content Include="modules\ueedit\ueditor.config.js" />
+    <Content Include="modules\ueedit\ueditor.parse.js" />
+    <Content Include="modules\ueedit\ueditor.parse.min.js" />
+    <Content Include="modules\webuploader\bootstrap.min.css" />
+    <Content Include="modules\webuploader\uploader.css" />
+    <Content Include="modules\webuploader\Uploader.swf" />
+    <Content Include="modules\webuploader\webuploader.css" />
+    <Content Include="modules\webuploader\webuploader.js" />
+    <Content Include="Scripts\date.js" />
+    <Content Include="Scripts\DateForm.js" />
+    <Content Include="Scripts\diyUpload.js" />
+    <Content Include="modules\scripts\index-script.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\jquery.metadata.js" />
+    <Content Include="Scripts\jquery.simplemodal.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\laydate.js" />
+    <Content Include="modules\scripts\message.js" />
+    <Content Include="Scripts\PCASClass.js" />
+    <Content Include="Scripts\scroll.js" />
+    <Content Include="modules\scripts\shiyiyun.js" />
+    <Content Include="Scripts\slide.js" />
+    <Content Include="Scripts\webuploader.html5only.min.js" />
+    <Content Include="modules\scripts\withdraw.js" />
+    <Content Include="Scripts\yzm.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Upload\UserAvatar\" />
+    <Folder Include="Upload\UserImg\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="modules\css\iconfont\iconfont.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="modules\css\iconfont\iconfont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="modules\css\iconfont\iconfont.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Register.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\UserInfo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\UserMsg.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RFriend\RentFriend.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="modules\images\uploader\logo.psd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RFriend\UserPic.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RFriend\HireDetail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RFriend\HireMsg.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Help\Helps.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RFriend\ReCommend.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Register2.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Help\Forget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="modules\img\litte-icon\img.sprite" />
+    <Content Include="modules\img\proxy.properties" />
+    <None Include="Properties\PublishProfiles\发布.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProBusiness\ProBusiness.csproj">
+      <Project>{4ba7be5b-94b2-4f79-b333-c5fe5429424a}</Project>
+      <Name>ProBusiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProDAL\ProDAL.csproj">
+      <Project>{6559e42c-832c-4ab3-8e7d-52d03af86b5b}</Project>
+      <Name>ProDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProEntity\ProEntity.csproj">
+      <Project>{4c47b989-57a6-4602-b33b-0957c32a0930}</Project>
+      <Name>ProEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProEnum\ProEnum.csproj">
+      <Project>{b2f2671d-7f9b-4e3e-b5e1-fe8acbf1976f}</Project>
+      <Name>ProEnum</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProTools\ProTools.csproj">
+      <Project>{898a9502-a35e-4032-a90c-42708b2b9c82}</Project>
+      <Name>ProTools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>19626</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:6323/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

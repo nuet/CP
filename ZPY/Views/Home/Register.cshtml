@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "用户注册";
+}
+<link rel="stylesheet" type="text/css" href="/modules/css/register.css">
+<script type="text/javascript" src="/Scripts/jquery.validate.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.metadata.js"></script>
+<div class="advertisement"></div>
+<div class="contentf">
+    <p>登录帐号：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="username"/><span>由字符数字或下划线组成</span></p>
+    <p>登录密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="password"  id="password" /><span>长度为6-16个字符</span></p>
+    <p>确认密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="confirm_password" id="confirm_password" /><span>再次输入密码</span></p>   
+    <p class="code">验&nbsp;&nbsp;证&nbsp;&nbsp;码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="confirm" size="6" id="inputRandom" maxlength="4">
+        <input type="text" id="txt1" onclick="show()" style="cursor: pointer;" size="3" maxlength="4" readonly="readonly"><span></span></p>
+    <p class="agree"><label><input type="checkbox" id="agree" value="true">已阅读并同意注册协议和隐私</input></label>
+    </p>
+    <p><input class="btnregister" type="button" style="font-size: 12px;" value="同意注册协议,继续"/>
+    </p>
+</div>
+<script type="text/javascript" src="/Scripts/yzm.js"></script>
+
+
+<script type="text/javascript" src="/modules/scripts/register/register.js"> 
+
+</script>

@@ -1,0 +1,6 @@
+D:\MichauxPro\ZPY\ProEnum\bin\Release\ProEnum.dll
+D:\MichauxPro\ZPY\ProEnum\bin\Release\ProEnum.pdb
+D:\MichauxPro\ZPY\ProEnum\obj\Release\ProEnum.dll
+D:\MichauxPro\ZPY\ProEnum\obj\Release\ProEnum.pdb
+D:\MichauxPro\ZPY\ProEnum\bin\Release\System.Runtime.dll
+D:\MichauxPro\ZPY\ProEnum\bin\Release\System.Runtime.xml
