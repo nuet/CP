@@ -372,7 +372,6 @@
     <Content Include="Scripts\date.js" />
     <Content Include="Scripts\DateForm.js" />
     <Content Include="Scripts\diyUpload.js" />
-    <Content Include="modules\scripts\index-script.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery.metadata.js" />
     <Content Include="Scripts\jquery.simplemodal.js" />
@@ -447,6 +446,7 @@
     <Content Include="modules\img\litte-icon\img.sprite" />
     <Content Include="modules\img\proxy.properties" />
     <None Include="Properties\PublishProfiles\发布.pubxml" />
+    <Content Include="Views\Help\Security.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

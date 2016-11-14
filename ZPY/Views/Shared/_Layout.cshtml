@@ -7,12 +7,9 @@
         Menu controllerMenu = ExpandClass.GetController(HttpContext.Current, controller);
     }
 <html>
-<head>
-    <title>@ViewBag.Title</title>
-@*     <link rel="stylesheet" type="text/css" href="/modules/css/base.css"> *@
-    <link rel="stylesheet" type="text/css" href="/modules/css/head.css"> 
-    <link rel="stylesheet" type="text/css" href="/modules/jpaginate/css/style.css" media="screen"/>
-    <link href="/modules/css/iconfont/iconfont.css" rel="stylesheet" /> 
+<head> 
+    <title>@ViewBag.Title</title> 
+    <link rel="stylesheet" type="text/css" href="/modules/css/head.css">  
     @RenderSection("css", false)
 </head>
 
@@ -30,71 +27,24 @@
                 <img src="/modules/img/litte-icon/logo.png" alt="logo" title="logo" width="153" height="36"/></a>
         </div>
         <div class="nav-box">
-            <ul id="sddm">
-                @* <li  class="@(controller == "home" ? "select left" : "left")">
-                <a href="/home/index" >
-                    首页
-                </a> 
-             </li>  *@
-                <li class="@(controller == "home" ? "button2 on2" : "lebutton2ft")"><a href="/Home/Index">首页</a></li>
-            <li class="@(controller == "active" ? "button2 on2" : "lebutton2ft")"><a  href="active_center.html">活动</a></li>
+            <ul id="sddm"> 
+            <li class="@(controller == "home" ? "button2 on2" : "lebutton2ft")"><a href="javascript:void(0);"  data-href="/Help/Security">首页</a></li>
+            <li class="@(controller == "active" ? "button2 on2" : "lebutton2ft")"><a href="javascript:void(0);" data-href="active_center.html">活动</a></li>
             @foreach (Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, ExpandClass.CLIENT_TOP_CODE))
             {                   
                 <li class="@(model.MenuCode.ToUpper() == (controllerMenu != null ? controllerMenu.PCode.ToUpper() : "101000000") ? "button2 on2" : "button2")"  data-code="@(model.MenuCode)">            
-                    <a  href="/@(model.Controller)/@(model.View)">
+                    <a  href="javascript:void(0);"  data-href="/@(model.Controller)/@(model.View)">
                         @(model.Name)
                     </a>
-                    <div id="m1" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                    <div class="navdiv"> @* id="m1"onmouseover="mcancelclosetime()" onmouseout="mclosetime()"*@
                        @foreach (Menu items in ExpandClass.GetChildMenuByCode(HttpContext.Current, model.MenuCode))
                        {
-                           <a href="/@(items.Controller)/@(items.View)">@(items.Name)</a>
+                           <a data-href="/@(items.Controller)/@(items.View)" href="javascript:void(0);">@(items.Name)</a>
                        }
-                        
                     </div>
                 </li> 
-            }
-
-             @*   <li class="button2 on2"><a href="/Home/Index">首页</a></li>
-                <li class="button2"><a target="mainframe" href="active_center.html">活动</a></li>
-                <li style="width: 100px;" class="button2 ">
-                    <a href="/User/UserList" onmouseover="mopen('m1')" onmouseout="mclosetime()">用户管理</a>
-                    <div id="m1" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-                        <a href="/User/UserList">用户列表</a>
-                        <a target="mainframe" href="user_add.html">增加用户</a>
-                        <a target="mainframe" href="user_edit.html">修改昵称</a>
-                        <a target="mainframe" href="message_privatelist.html">消息中心</a>
-                        <a target="mainframe" href="user_reward-info.html">奖金详情</a>
-                        <a target="mainframe" href="">推广链接</a>
-                    </div>
-                </li>
-                <li style="width: 100px;" class="button2">
-                    <a href="javascript:void(0)" onmouseover="mopen('m2')" onmouseout="mclosetime()">报表管理</a>
-                    <div id="m2" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-                        <a target="mainframe" href="report_list.html">账变列表</a>
-                        <a target="mainframe" href="report_see.html">报表查询</a>
-                        <a target="mainframe" href="report_tody.html">今日报表</a>
-                        <a target="mainframe" href="report_profit.html">盈亏报表</a>
-                    </div>
-                </li>
-                <li style="width: 100px;" class="button2">
-                    <a href="javascript:void(0)" onmouseover="mopen('m3')" onmouseout="mclosetime()">账户管理</a>
-                    <div id="m3" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-                        <a target="mainframe" href="account_safe.html">账户安全</a>
-                        <a target="mainframe" href="">我的银行卡</a>
-                    </div>
-                </li>
-                <li style="width: 100px;" class="button2">
-                    <a href="javascript:void(0)" onmouseover="mopen('m4')" onmouseout="mclosetime()">帮助中心</a>
-                    <div id="m4" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-                        <a target="mainframe" href="help_ security.html">信息中心</a>
-                        <a target="mainframe" href="help_function.html">功能介绍</a>
-                        <a target="mainframe" href="help_game.html">玩法介绍</a>
-                        <a target="mainframe" href="help_general.html">常见问题</a>
-                    </div>
-                </li>*@
-
+            } 
             </ul>
-
         </div>
     </div>
 </header>
@@ -208,14 +158,16 @@
                 </div>
             </div>
             <div class="right-main">
-                @* <iframe src="help_ security.html" frameborder="0" class="frame" name="mainframe" width="100%" height="100%" scrolling="auto">#document
-                </iframe>*@
-
+              
                 <div class="main-body">
-                    <div class="main-content">
+                    @*<div class="main-content">*@
                         @RenderBody()
-                    </div>
-                </div> 
+                    @*</div>*@
+                </div>
+                  <iframe src="/Help/Security" frameborder="0" class="frame" name="mainframe" id="mainframe" width="100%" height="100%" scrolling="auto">#document
+                     
+                </iframe>
+
             </div>
         </div>
     </div>
@@ -248,11 +200,32 @@
     <!-- 普通弹出层 ]] -->
 </div>
 <input type="hidden" value="@controller" id="pagecontroller"/>
-<input type="hidden" value="@action" id="pageaction"/> 
-<script type="text/javascript" src="/modules/scripts/index-script.js"></script>
+<input type="hidden" value="@action" id="pageaction"/>  
 <script type="text/javascript">
-     
-    $(document).ready(function () {
+    $(function() {
+        $('#sddm a').each(function(i, v) {
+            $(v).click(function() {
+                $('#mainframe').attr("src", $(v).data("href"));
+            });
+        });
+        $('#sddm li a:first-child').each(function (i, v) {
+            $(v).mouseover(function() {
+                $(v).next().show();
+                
+            }).mouseout(function () {
+                $(v).next().hide(); 
+            });
+        });
+        $('.navdiv').each(function (i, v) {
+            $(v).mouseover(function () { 
+                $('.navdiv').hide();
+                $(v).show();
+            }).mouseout(function () {
+                $(v).hide(); 
+            });
+        });
+    });
+    $(document).ready(function () {   
         $("#sItem li:not(:first)").css("display", "none");
         var B = $("#sItem li:last");
         var C = $("#sItem li:first");
@@ -263,14 +236,9 @@
             } else {
                 $("#sItem li:visible").addClass("in");
                 $("#sItem li.in").next().fadeIn(500);
-                $("li.in").hide().removeClass("in")
+                $("li.in").hide().removeClass("in");
             }
-        }, 4000);  //每3秒钟切换一条，你可以根据需要更改  
-        // 菜单点击事件
-        //$(".header .button2").on("click", function (evt) {
-        //    $(".header .on2").removeClass("on2");
-        //    $(this).addClass("on2");
-        //});
+        }, 4000);   
         $(".left-header .left-href a").on("click", function (evt) {
             $(".left-header .left-href .up").removeClass("up");
             $(this).addClass("up");

@@ -21,7 +21,7 @@ namespace CPiao.Controllers
         //
         // GET: /Help/
 
-        public ActionResult Helps()
+        public ActionResult Security()
         {
             return View();
         }

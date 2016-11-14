@@ -1,0 +1,223 @@
+﻿@{
+    ViewBag.Title = "信息中心";
+    Layout = null;
+}
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="utf-8" />
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/modules/css/help.css" />
+    <style>
+        body{margin: 10px 0 0 25px;padding-left: 30px;}
+         .black_overlay {
+             position: fixed;
+             top: 0%;
+             left: 0%;
+             bottom: 0%;
+             width: 100%;
+             height: 100%;
+             z-index: 60000;
+             opacity: .20;
+             filter: alpha(opacity=20);
+             BACKGROUND-COLOR: #000;
+         }
+
+        .layer {
+            position: absolute;
+            width: 400px;
+            height: 200px;
+            margin: 0 auto;
+            top: 100px;
+            left: 300px;
+            z-index: 60001;
+            BACKGROUND-COLOR: #f7f7f7;
+        }
+
+        .layer1 {
+            position: relative;
+            width: 100%;
+            height: 40px;
+            margin: 0 auto;
+            top: 0px;
+            z-index: 60002;
+            line-height: 40px;
+        }
+
+        .layer2 {
+            position: relative;
+            width: 100%;
+            height: 100px;
+            margin: 0 auto;
+            z-index: 60002;
+        }
+
+        .layer3 {
+            position: relative;
+            width: 100px;
+            height: 30px;
+            margin: 0 auto;
+            z-index: 60002;
+            line-height: 30px;
+            border-radius: 2px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .layer1, .layer3 {
+            color: #fff;
+            background-color: #CE1E1E;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .closea {
+            height: 40px;
+            width: 80px;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 20px;
+        }
+
+        .al {
+            margin-left: 50px;
+        }
+    </style>
+    <script type="text/javascript" src="/Scripts/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+    <div class="grade">
+        <p class="graded">
+            账户安全等级评分 ：<span class="grade-mark">55</span> 分（满分100分）&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>本次登录地址：</span><span class="c-ef3552">河南省 郑州市 移动网络</span>
+        </p>
+        <div class="safe">
+            <div class="item">
+                <p>
+                    <img src="/modules/img/litte-icon/账户安全a.png" alt="账户安全" class="account-safe" width="85" height="85" />
+                </li>
+					   <p class="big-title">账户安全</p>
+                <div class="set1"><a href="#" target="mainframe">立即设置</a></div>
+            </div>
+            <div class="item">
+                <p>
+                    <img src="/modules/img/litte-icon/资金安全a.png" alt="资金安全" class="account-safe" width="85" height="85" />
+                </li>
+					   <p class="big-title">资金安全</p>
+                <div class="set1"><a href="#" target="mainframe">立即设置</a></div>
+            </div>
+        </div>
+    </div>
+    <dl class="list">
+        <dt>最新公告</dt>
+        <dd>
+            <div class="dd">
+                <span>
+                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
+                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
+                <span class="date">2016-12-12</span>
+            </div>
+        </dd>
+        <dd>
+            <div class="dd">
+                <span>
+                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
+                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
+                <span class="date">2016-12-12</span>
+            </div>
+        </dd>
+        <dd>
+            <div class="dd">
+                <span>
+                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
+                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
+                <span class="date">2016-12-12</span>
+            </div>
+        </dd>
+        <dd>
+            <div class="dd">
+                <span>
+                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
+                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
+                <span class="date">2016-12-12</span>
+            </div>
+        </dd>
+        <dd>
+            <div class="dd">
+                <span>
+                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
+                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
+                <span class="date">2016-12-12</span>
+            </div>
+        </dd>
+        <dd>
+            <div class="dd">
+                <span>
+                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
+                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
+                <span class="date">2016-12-12</span>
+            </div>
+        </dd>
+        <dd>
+            <div class="dd">
+                <span>
+                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
+                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
+                <span class="date">2016-12-12</span>
+            </div>
+        </dd>
+        <dd>
+            <div class="dd">
+                <span>
+                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
+                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
+                <span class="date">2016-12-12</span>
+            </div>
+        </dd>
+    </dl>
+    <!--   弹出层-->
+    <div class="layer">
+        <div class="layer1">
+            特别提醒
+        </div>
+        <div class="layer2">
+            <div style="width: 340px; margin: 0 auto;">
+                <span>
+                    <h4 style="top: 30px; color: red; font-size: 14px;">
+                        <br />
+                        本娱乐平台充值卡号会频繁更换！请务必要复制最新收款卡信息！如果汇款到非最新收款卡二导致的损失，本平台一律不负责任！</h4>
+                </span>
+            </div>
+
+        </div>
+        <div class="layer3" onclick="closeLogin()">知道了</div>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+
+    <!--   弹出层-->
+    <script type="text/javascript">
+        function login() {
+            document.getElementsByClassName('black_overlay')[0].style.display = "block";
+            document.getElementsByClassName('layer')[0].style.display = "block";
+        }
+
+        function closeLogin() {
+            document.getElementsByClassName('black_overlay')[0].style.display = "none";
+            document.getElementsByClassName('layer')[0].style.display = "none";
+        }
+
+        $(function () {
+            //http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=42.227.165.239 
+            $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=42.227.165.239', function (_result) {
+                var ipinfo = remote_ip_info;
+                if (ipinfo.ret == '1') {
+                    console.log('IP 详细信息：' + ipinfo.country + ' ' + ipinfo.province + ' ' + ipinfo.city + ' ' + ipinfo.district); //+ remote_ip_info.isp + '<BR>类型：' + remote_ip_info.type + '<BR>其他：' + remote_ip_info.desc
+                } else {
+                    console.log('错误', '没有找到匹配的 IP 地址信息！');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

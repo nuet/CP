@@ -19,8 +19,8 @@ body>.header .nav-box {height: 50px;position: absolute;top: 0px;}
 .nav-box ul li a {color: #fff;display: block}
 .nav-box ul li:hover {background-color: rgb(175, 23, 22);}
 
-#sddm div {position: absolute;visibility: hidden;display: block;width: 100px;min-height: 30px;margin-top: 2px;padding: 5px 0;background: rgb(241, 48, 49);z-index: 1000;border-radius: 4px;}
-#sddm div a {position: relative;display: block;height: 30px;line-height: 30px;border-radius: 2px;text-decoration: none;background: rgb(241, 48, 49);}
+#sddm div {position: absolute;display: none;width: 100px;min-height: 30px;padding: 5px 0;background: rgb(241, 48, 49);z-index: 1000;border-radius: 4px;}
+#sddm div a {position: relative;display: block !important;height: 30px;line-height: 30px;border-radius: 2px;text-decoration: none;background: rgb(241, 48, 49);}
 #sddm div a:hover {background: rgb(175, 23, 22);color: #FFF}
 /*content*/
 

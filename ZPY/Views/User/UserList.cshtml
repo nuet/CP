@@ -1,97 +1,113 @@
 ﻿@using ProEntity.Manage
 @{ 
-    ViewBag.Title = "会员中心"; 
+    ViewBag.Title = "会员中心";
+    Layout = null;
 }
-<link rel="stylesheet" type="text/css" href="/modules/css/help.css" />
-<div class="p-header">
-    <p class="current-location">
-        <span>当前位置：</span><span> &gt; 用户列表</span>
-    </p>
-</div>
-<div class="chooseRecords">
-    <div class="filter">
-        <input type="hidden" name="isgetdate" value="1" />
-        <label for="username">
-            <span class="text-middle-input">用户名：</span>
-            <input type="text" class="start-time input" name="username" value="" />
-        </label>
-        <label for="bank_min">
-            <span class="text-middle-input">账户余额：</span>
-            <input type="text" class="start-time input" name="bank_min" value="" />
-            <span class="text-middle-input">&nbsp;至&nbsp;</span>
-            <input type="text" class="endtime input" name="bank_max" value="" />
-        </label>
-        <label>
-            <span class="text-middle-input">排序：</span>
-            <select class="input state" name="sortby" style="width: 100px;">
-                <option value="default" selected="selected">默认排序</option>
-                <option value="username">用户名</option>
-                <option value="bank">账户余额</option>
-                <option value="point">返点级别</option>
-            </select>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="utf-8" />
+    <meta charset="UTF-8">
+    <title>游戏平台 - 用户列表</title>
+    <link rel="stylesheet" type="text/css" href="/modules/css/help.css"/>
+    <script type="text/javascript" src="/Scripts/jquery-1.11.3.min.js"></script>
+    <style>
+        body {
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="p-header">
+        <p class="current-location">
+            <span>当前位置：</span><span> &gt; 用户列表</span>
+        </p>
+    </div>
+    <div class="chooseRecords">
+        <div class="filter">
+            <input type="hidden" name="isgetdate" value="1" />
+            <label for="username">
+                <span class="text-middle-input">用户名：</span>
+                <input type="text" class="start-time input" name="username" value="" />
+            </label>
+            <label for="bank_min">
+                <span class="text-middle-input">账户余额：</span>
+                <input type="text" class="start-time input" name="bank_min" value="" />
+                <span class="text-middle-input">&nbsp;至&nbsp;</span>
+                <input type="text" class="endtime input" name="bank_max" value="" />
+            </label>
             <label>
-                <input type="checkbox" class="checkbox" name="sortbymax" value="1" />从大到小</label>
-        </label>
-        <label>
-            <span class="text-middle-input">用户级别：</span>
-            <select class="input" name="usergroup" style="width: 100px;">
-                <option value="0" selected="selected">请选择...</option>
-                <option value="1">代理用户</option>
-                <option value="2">会员用户</option>
-            </select>
-        </label>
-        <label>
-            <span class="text-middle-input">返点级别：</span>
-            <input type="text" class="start-time input" name="bank_min" value="" />
-            <span class="text-middle-input">&nbsp;至&nbsp;</span>
-            <input type="text" class="endtime input" name="bank_max" value="" />
-        </label>
-        <div class="filter-button-box">
-            <div class="search">搜索</div>
-            <a href="user_add.html" target="_self" style="color: white;">
-                <div class="clear" style="background: #D64242;">增加用户</div>
-            </a>
+                <span class="text-middle-input">排序：</span>
+                <select class="input state" name="sortby" style="width: 100px;">
+                    <option value="default" selected="selected">默认排序</option>
+                    <option value="username">用户名</option>
+                    <option value="bank">账户余额</option>
+                    <option value="point">返点级别</option>
+                </select>
+                <label>
+                    <input type="checkbox" class="checkbox" name="sortbymax" value="1" />从大到小</label>
+            </label>
+            <label>
+                <span class="text-middle-input">用户级别：</span>
+                <select class="input" name="usergroup" style="width: 100px;">
+                    <option value="0" selected="selected">请选择...</option>
+                    <option value="1">代理用户</option>
+                    <option value="2">会员用户</option>
+                </select>
+            </label>
+            <label>
+                <span class="text-middle-input">返点级别：</span>
+                <input type="text" class="start-time input" name="bank_min" value="" />
+                <span class="text-middle-input">&nbsp;至&nbsp;</span>
+                <input type="text" class="endtime input" name="bank_max" value="" />
+            </label>
+            <div class="filter-button-box">
+                <div class="search">搜索</div>
+                <a href="javascript:void(0);" id="addUser"  style="color: white;">
+                    <div class="clear" style="background: #D64242;">增加用户</div>
+                </a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="data">
+                <table class="data-table" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="th-1" style="width: 12%;">用户名</th>
+                            <th class="th-2" style="width: 14%;">用户级别</th>
+                            <th class="th-3" style="width: 10%;">余额</th>
+                            <th class="th-4" style="width: 14%;">返点级别</th>
+                            <th class="th-5" style="width: 14%;">注册时间</th>
+                            <th class="th-6" style="width: 11%;">代充</th>
+                            <th class="th-7" style="width: 14%;">注册方式</th>
+                            <th class="th-8" style="width: 11%;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>用户名</td>
+                            <td>用户级别</td>
+                            <td>余额</td>
+                            <td>返点级别</td>
+                            <td>注册时间</td>
+                            <td>代充</td>
+                            <td>注册方式</td>
+                            <td>删除</td>
+                        </tr>
+                        <tr>
+                            <td height="37" colspan="13" style="text-align: center;" class="needq">
+                                <span>请选择查询条件之后进行查询</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="13" style="text-align: center;"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
-    <div class="content">
-        <div class="data">
-            <table class="data-table" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th class="th-1" style="width: 12%;">用户名</th>
-                        <th class="th-2" style="width: 14%;">用户级别</th>
-                        <th class="th-3" style="width: 10%;">余额</th>
-                        <th class="th-4" style="width: 14%;">返点级别</th>
-                        <th class="th-5" style="width: 14%;">注册时间</th>
-                        <th class="th-6" style="width: 11%;">代充</th>
-                        <th class="th-7" style="width: 14%;">注册方式</th>
-                        <th class="th-8" style="width: 11%;">操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>用户名</td>
-                        <td>用户级别</td>
-                        <td>余额</td>
-                        <td>返点级别</td>
-                        <td>注册时间</td>
-                        <td>代充</td>
-                        <td>注册方式</td>
-                        <td>删除</td>
-                    </tr>
-                    <tr>
-                        <td height="37" colspan="13" style="text-align: center;" class="needq">
-                            <span>请选择查询条件之后进行查询</span>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="13" style="text-align: center;"></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-</div>
-<script type="text/javascript" src="/modules/scripts/userinfo/userinfo.js"></script>
+    <script type="text/javascript" src="/modules/scripts/userinfo/userinfo.js"></script>
+</body>
+</html>
