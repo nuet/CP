@@ -82,11 +82,7 @@ namespace CPiao.Controllers
         }
 
         public bool checkGolds(string route)
-        {
-            if (CurrentUser.AuthorType == 1)
-            {
-                return true;
-            }
+        { 
             var model=WebSetBusiness.GetChargeSetDetail(route.ToLower());
             if (model == null)
             {

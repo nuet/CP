@@ -22,16 +22,21 @@ namespace ProEntity.Manage
 	/// M_Users:实体类(属性说明自动提取数据库字段的描述信息)
 	/// </summary>
 	[Serializable]
-	public partial class M_Users:UserReport
+	public partial class M_Users 
 	{
 		public M_Users()
 		{}
 
 
         public List<Menu> Menus { get; set; }
-		/// <summary>
-		/// 
-		/// </summary>
+	    public decimal Rebate { get; set; }
+        public decimal UsableRebate { get; set; }
+	    /// <summary>
+	    /// 
+	    /// </summary>
+	    public string UserID { get; set; }
+
+	    /// 
 		public int AutoID{ get; set; } 
 		/// <summary>
 		/// 
@@ -40,16 +45,15 @@ namespace ProEntity.Manage
 		/// <summary>
 		/// 
 		/// </summary>
-		public string LoginPWD{ get; set; }
+		public string LoginPwd{get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
-		public string Name{ get; set; }
+		public string UserName{ get; set; }
 
         public string RoleID{ get; set; }
 	    public int SourceType { get; set; }
-	    public M_Role Role{ get; set; }
-        public int? Age { get; set; }
+	    public M_Role Role{ get; set; } 
 		/// <summary>
 		/// 
 		/// </summary>
@@ -65,7 +69,7 @@ namespace ProEntity.Manage
 		/// <summary>
 		/// 
 		/// </summary>
-		public string Jobs{ get; set; }
+		public int Type{ get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -81,7 +85,7 @@ namespace ProEntity.Manage
 		/// <summary>
 		/// 
 		/// </summary>
-		public string Description{ get; set; }
+		public string AccountPwd{ get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -92,55 +96,16 @@ namespace ProEntity.Manage
         [Property("Lower")] 
         public string CreateUserID{ get; set; }
 
-        public M_Users CreateUser{ get; set; }
+        public M_Users CreateUser{ get; set; } 
 
-        public int? Sex { get; set; }
+        public string LastLoginIP { get; set; } 
 
-        public int? IsMarry { get; set; }
-
-        public string Province { get; set; }
-
-        public string City { get; set; }
-
-        public string District { get; set; }
-
-        public string Education { get; set; }
-
-        public string BHeight { get; set; }
-
-        public string QQ { get; set; }
+        public string PrevLoginIP { get; set; } 
         /// <summary>
         /// 等级
         /// </summary>
-	    public string Levelid { get; set; }
-        /// <summary>
-        /// 体重
-        /// </summary>
-        public string BWeight { get; set; }
-        /// <summary>
-        /// 自评
-        /// </summary>
-        public string MyContent { get; set; }
-        /// <summary>
-        /// 宣言
-        /// </summary>
-        public string TalkTo { get; set; }
-        public DateTime BirthDay { get; set; }
-        /// <summary>
-        /// 个性
-        /// </summary>
-        public string MyCharacter { get; set; }
-        /// <summary>
-        /// 工资
-        /// </summary>
-        public string BPay { get; set; }
-        public decimal Account { get; set; }
-        public decimal InAccount { get; set; }
-        public decimal OutAccount { get; set; }
-	    public string MyService { get; set; }
-        public DateTime AuthorBTime { get; set; }
-        public DateTime AuthorETime { get; set; }
-        public int AuthorType { get; set; } 
+	    public int SafeLevel { get; set; }   
+        public DateTime? UpdateTime { get; set; }  
 	    /// <summary>
         /// 填充数据
         /// </summary>

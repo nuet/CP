@@ -19,10 +19,10 @@ namespace CPiao.Controllers
 
         public ActionResult Index()
         {
-            //if (Session["Manager"] == null)
-            //{
-            //    return Redirect("/Home/Login");
-            //}
+            if (Session["Manager"] == null)
+            {
+                return Redirect("/Home/Login");
+            }
             return View();
         }
         public ActionResult Register()
@@ -37,9 +37,9 @@ namespace CPiao.Controllers
         {
             if (CurrentUser != null)
             {
-                return Redirect("/User/UserInfo");
+                return Redirect("/Home/Index");
             }
-            HttpCookie cook = Request.Cookies["zpy"];
+            HttpCookie cook = Request.Cookies["cp"];
             if (cook != null)
             {
                 if (cook["status"] == "1")
@@ -48,13 +48,9 @@ namespace CPiao.Controllers
                     int result;
                     M_Users model = ProBusiness.M_UsersBusiness.GetM_UserByProUserName(cook["username"], cook["pwd"], operateip, out result);
                     if (model != null)
-                    {
-                        if (DateTime.Now.CompareTo(model.AuthorETime)<1)
-                        {
-                            model.AuthorType = 0;
-                        }
+                    { 
                         Session["Manager"] = model;
-                        return Redirect("/User/UserInfo");
+                        return Redirect("/Home/Index");
                     }
                 }
             }
@@ -62,16 +58,12 @@ namespace CPiao.Controllers
         }
         public ActionResult Logout()
         { 
-            HttpCookie cook = Request.Cookies["zpy"];
+            HttpCookie cook = Request.Cookies["cp"];
             if (cook != null)
             {
                 cook["status"] = "0";
                 Response.Cookies.Add(cook);
-            }
-            if (CurrentUser!=null)
-            {
-                M_UsersBusiness.CreateUserReport(CurrentUser.UserID, CurrentUser.LoginName, " IsLogin=0 ", OperateIP);
-            }
+            } 
             Session["Manager"] = null;
             Session["PartManage"] = null;
             return Redirect("/Home/Index");
@@ -90,16 +82,10 @@ namespace CPiao.Controllers
             string msg = "";
             ProEntity.Manage.M_Users model = ProBusiness.M_UsersBusiness.GetM_UserByProUserName(userName, pwd, operateip, out result);
             if (model != null)
-            {
-                if (model.Status == 0)
+            { 
+                if (model.Status == 1)
                 {
-                    result = 0;
-                    Session["PartManage"] = model;
-                    msg = "还没有注册完成,请继续注册";
-                }
-                else if (model.Status == 1)
-                {
-                    HttpCookie cook = new HttpCookie("zpy");
+                    HttpCookie cook = new HttpCookie("cp");
                     cook["username"] = userName;
                     cook["pwd"] = pwd;
                     if (remember == "1")
@@ -169,8 +155,7 @@ namespace CPiao.Controllers
             users.Avatar = "";
             users.CreateUserID = "";
             users.IsAdmin = 0;
-            users.RoleID = "";
-            users.Description = "";
+            users.RoleID = ""; 
             users.UserID = ((M_Users) Session["PartManage"]).UserID;
             var result = ProBusiness.M_UsersBusiness.UpdateM_UserBase(users);
             if (result)

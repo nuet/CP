@@ -148,7 +148,7 @@ namespace Proc.Controllers
         public JsonResult GetUsers(string keyWords, int pageIndex,int status=-1,int sourcetype=1)
         {
             int totalCount = 0, pageCount = 0;
-            var list = M_UsersBusiness.GetUsers(-1, PageSize, pageIndex, ref totalCount, ref pageCount, "", "", sourcetype, status, keyWords);
+            var list = M_UsersBusiness.GetUsers( PageSize, pageIndex, ref totalCount, ref pageCount, sourcetype, status, keyWords);
 
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("totalCount", totalCount);
@@ -203,7 +203,7 @@ namespace Proc.Controllers
             }
             else
             {
-                bool bl = M_UsersBusiness.UpdateM_User(model.UserID, model.Name, model.RoleID, model.Email, model.MobilePhone, model.OfficePhone, model.Jobs,model.Description);
+                bool bl = M_UsersBusiness.UpdateM_User(model.UserID, model.UserName, model.RoleID, model.Email, model.MobilePhone, model.OfficePhone, "","");
                 if (!bl)
                 {
                     model.UserID = "";

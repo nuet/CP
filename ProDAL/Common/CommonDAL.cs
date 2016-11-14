@@ -27,17 +27,7 @@ namespace ProDAL
         {
             DataTable dt = GetDataTable("select * from Menu where Type=2 and IsHide=0 order by Sort ");
             return dt;
-        }
-
-        /// <summary>
-        /// 获取城市列表
-        /// </summary>
-        /// <returns></returns>
-        public DataTable GetCitys()
-        {
-            DataTable dt = GetDataTable("select * from City");
-            return dt;
-        }
+        } 
 
         /// <summary>
         /// 查询

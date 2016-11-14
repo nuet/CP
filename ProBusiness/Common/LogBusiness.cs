@@ -21,7 +21,7 @@ namespace ProBusiness.Common
         /// <returns></returns>
         public static List<LogEntity> GetLogs( string type, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string btime="",string etime="")
         {
-            string tablename = "UsersLog  a left join M_Users b  on a.SeeID =b.UserID ";
+            string tablename = "UsersLog  a left join M_Users b  on a.UserID =b.UserID ";
 
             string sqlwhere = " 1=1 ";
             if (!string.IsNullOrEmpty(btime))
@@ -38,7 +38,7 @@ namespace ProBusiness.Common
             {
                 sqlwhere += " and a.CreateTime<'" + etime + "'";
             }
-            DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.Avatar as SeeAvatar ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
+            DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.Avatar as Avatar ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
             List<LogEntity> list = new List<LogEntity>();
             foreach (DataRow dr in dt.Rows)
             {
@@ -70,9 +70,9 @@ namespace ProBusiness.Common
         /// <param name="status">登录结果</param>
         /// <param name="systemtype">系统类型</param>
         /// <param name="operateip">登录IP</param>
-        public static async void AddLoginLog(string loginname, string operateip, string userid, EnumUserOperateType systemtype = EnumUserOperateType.Login, string leveid="")
+        public static async void AddLoginLog(string loginname, string operateip, string userid, EnumUserOperateType systemtype = EnumUserOperateType.Login)
         {
-            await LogDAL.AddLoginLog(loginname, (int)systemtype, operateip, userid, leveid);
+            await LogDAL.AddLoginLog(loginname, (int)systemtype, operateip, userid);
         }
 
         /// <summary>

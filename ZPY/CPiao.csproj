@@ -132,8 +132,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RFriendController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -394,6 +393,7 @@
     <Folder Include="Models\" />
     <Folder Include="Upload\UserAvatar\" />
     <Folder Include="Upload\UserImg\" />
+    <Folder Include="Views\RFriend\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -429,31 +429,13 @@
     <Content Include="Views\Home\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\UserInfo.cshtml" />
+    <Content Include="Views\User\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\UserMsg.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\RFriend\RentFriend.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="modules\images\uploader\logo.psd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\RFriend\UserPic.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\RFriend\HireDetail.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\RFriend\HireMsg.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Help\Helps.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\RFriend\ReCommend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Register2.cshtml" />

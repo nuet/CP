@@ -20,17 +20,18 @@ namespace ProEntity
 
         public string UserName { get; set; }
 
-        public string LeveID { get; set; }
+        public string IP { get; set; }
 
-        public string SeeID { get; set; }
+        public string Sheng { get; set; }
 
-        public string SeeAvatar { get; set; }
+        public string Shi { get; set; }
 
-        public string SeeName { get; set; }
+        public string Qu { get; set; }
 
         public int Type { get; set; }
+        public string Avatar { get; set; }
 
-        public string OpearteID { get; set; }
+        public string IpName { get; set; }
 
         public void FillData(System.Data.DataRow dr)
         {

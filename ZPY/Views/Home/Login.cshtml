@@ -80,19 +80,32 @@
 				</div>
 			</footer>
 		</div>
-		<script src="/Scripts/jquery-1.12.1.js"></script>
-		<script type="text/javascript">
-		    $(".next1").click(function () {
-		        var reg1 = /^[a-zA-Z 0-9]+$/;
-		        var reg = /[\da-zA-Z]*\d+[a-zA-Z]+[\da-zA-Z]*/;
-		        if ($(".name-input").val() == "" || $(".name-input1").val() == "") {
-		            alert('您好！\n*用户名不能为空！或*密码不能为空！');
-		            return false;
-		        } else if (!reg.test($(".name-input1").val()) && $(".name-input1").val() !== "") {
-		            alert("*密码不正确！");
-		            return false;
-		        }
-		    });
-		</script>
+		<script src="/Scripts/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    $(document).on("keypress", function (e) {
+        if (e.keyCode == 13) {
+            $("#next1").click();
+        }
+    });
+    $(".next1").click(function () {
+        var reg1 = /^[a-zA-Z 0-9]+$/;
+        var reg = /[\da-zA-Z]*\d+[a-zA-Z]+[\da-zA-Z]*/;
+        if ($(".name-input").val() == "" || $(".name-input1").val() == "") {
+            alert('您好！\n*用户名不能为空！或*密码不能为空！');
+            return false;
+        }
+        //else if (!reg.test($(".name-input1").val()) && $(".name-input1").val() !== "") {
+        //    alert("*密码不正确！");
+        //    return false;
+        //}
+        $.post('/Home/UserLogin', { userName: $(".name-input").val(), pwd: $(".name-input1").val() }, function (data) {
+            if (data.result==1) {
+                location.href = "/Home/Index";
+            } else {
+                alert("账户或密码不正确！");
+            }
+        });
+    });
+</script>
 </body>
 </html>

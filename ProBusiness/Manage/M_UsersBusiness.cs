@@ -39,11 +39,11 @@ namespace ProBusiness
                 //权限
                 if (model.Role != null && model.Role.IsDefault == 1)
                 {
-                    model.Menus = CommonBusiness.ManageMenus;
+                    model.Menus = CommonBusiness.ClientMenus;
                 }
                 else if (model.IsAdmin == 1)
                 {
-                    model.Menus = CommonBusiness.ManageMenus;
+                    model.Menus = CommonBusiness.ClientMenus;
                 }
                 else
                 {
@@ -74,11 +74,11 @@ namespace ProBusiness
                 //权限
                 if (model.Role != null && model.Role.IsDefault == 1)
                 {
-                    model.Menus = CommonBusiness.ManageMenus;
+                    model.Menus = CommonBusiness.ClientMenus;
                 }
                 else if (model.IsAdmin == 1)
                 {
-                    model.Menus = CommonBusiness.ManageMenus;
+                    model.Menus = CommonBusiness.ClientMenus;
                 }
                 else
                 {
@@ -93,8 +93,7 @@ namespace ProBusiness
             }
             if (model != null && model.Status==1)
             {
-                LogBusiness.AddLoginLog(loginname, operateip, model != null ? model.UserID : "",type, model != null ? model.Levelid : "");
-                M_UsersDAL.BaseProvider.CreateUserReport(model.UserID, " IsLogin=1 ");
+                LogBusiness.AddLoginLog(loginname, operateip, model != null ? model.UserID : "",type);
             }
             return model;
         }
@@ -103,48 +102,21 @@ namespace ProBusiness
             DataTable dt = new M_UsersDAL().GetM_UserByLoginName(loginname);
             return dt.Rows.Count;
         }
-        public static List<M_Users> GetUsers(int sex, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string address = "", string age = "", int sourcetype = 0, int status = -1, string keyWords="")
+        public static List<M_Users> GetUsers(int pageSize, int pageIndex, ref int totalCount, ref int pageCount, int type = 0, int status = -1, string keyWords = "", string colmonasc = "a.AutoID", bool isasc = false)
         {
             string whereSql = " a.Status<>9";
 
-            if (sex > -1)
-            {
-                whereSql += " and a.Sex=" + sex;
-            }
+           
             if (status > -1)
             {
                 whereSql += " and a.Status=" + status;
             }
             if (!string.IsNullOrEmpty(keyWords))
             {
-                whereSql += " and (a.Name like '%" + keyWords + "%' or a.LoginName like'%" + keyWords + "%') ";
-            }
-            if (sourcetype > -1)
-            {
-                whereSql += " and a.sourcetype=" + sourcetype;
-            }
-            if (!string.IsNullOrEmpty(address))
-            {
-                string[] strArr = address.Split(',');
-                for (int i = 0; i < strArr.Length; i++)
-                {
-                    whereSql += (i == 0
-                        ? " and a. province='"
-                        : i == 1 ? " and a.City='" : i == 2 ? " and a.District='" : "") + strArr[i] + "'";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(age))
-            {
-                string[] strArr = age.Split('~');
-                for (int i = 0; i < strArr.Length; i++)
-                {
-                    whereSql += (i == 0? " and a.Age>=": " and a.Age<=") + strArr[i];
-                } 
-            }
-            string cstr = @"a.AuthorBTime,a.AuthorETime,a.AuthorType,a.userID,a.Avatar,a.Name,a.LoginName,a.Age,a.MyService,a.Province,a.City,a.District,a.CreateTime,a.Status,a.Sex,a.IsMarry,a.Education,a.ROleID,
-a.BHeight,a.Levelid,a.BWeight,a.MyContent,a.MyCharacter,a.BPay,a.Account,a.TalkTo,a.Description";
-            DataTable dt = CommonBusiness.GetPagerData("M_Users a", cstr, whereSql, "a.AutoID", pageSize, pageIndex, out totalCount, out pageCount);
+                whereSql += " and (a.UserName like '%" + keyWords + "%' or a.LoginName like'%" + keyWords + "%') ";
+            } 
+            string cstr = @" a.* ";
+            DataTable dt = CommonBusiness.GetPagerData("M_Users a", cstr, whereSql, "a.AutoID", colmonasc, pageSize, pageIndex, out totalCount, out pageCount, isasc);
             List<M_Users> list = new List<M_Users>();
             M_Users model;
             foreach (DataRow item in dt.Rows)
@@ -186,34 +158,9 @@ a.BHeight,a.Levelid,a.BWeight,a.MyContent,a.MyCharacter,a.BPay,a.Account,a.TalkT
         }
 
 
-        public static List<M_Users> GetUsersReCommen(int sex, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string address = "", string age = "",string cdesc="")
+        public static List<M_Users> GetUsersReCommen( int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string cdesc="")
         {
-            string whereSql = " a.Status<>9";
-
-            if (sex > -1)
-            {
-                whereSql += " and a.Sex=" + sex;
-            }
-
-            if (!string.IsNullOrEmpty(address))
-            {
-                string[] strArr = address.Split(',');
-                for (int i = 0; i < strArr.Length; i++)
-                {
-                    whereSql += (i == 0
-                        ? " and a.province='"
-                        : i == 1 ? " and a.City='" : i == 2 ? " and a.District='" : "") + strArr[i] + "'";
-                }
-            }
-
-            if (!string.IsNullOrEmpty(age))
-            {
-                string[] strArr = age.Split('~');
-                for (int i = 0; i < strArr.Length; i++)
-                {
-                    whereSql += (i == 0 ? " and a.Age>=" : " and a.Age<=") + strArr[i];
-                }
-            }
+            string whereSql = " a.Status<>9";   
             string clumstr = "a.AuthorBTime,a.AuthorETime,a.AuthorType,a.userID,a.Avatar,a.Name,a.Age,a.LoginName,a.MyService,a.Province,a.City,a.District,a.CreateTime,a.Status,a.Sex,a.IsMarry,a.Education," +
                 "a.BHeight,a.Levelid,a.BWeight,a.MyContent,a.MyCharacter,a.TalkTo,a.BPay,a.Account,b.ImgCount,b.IsLogin,b.RecommendCount,b.SeeCount";
             DataTable dt = CommonBusiness.GetPagerData("M_Users a left join userReport b on a.Userid=b.Userid ", clumstr, whereSql, "a.AutoID" + (string.IsNullOrEmpty(cdesc) ? "" : "," + cdesc), pageSize, pageIndex, out totalCount, out pageCount);
@@ -253,12 +200,13 @@ a.BHeight,a.Levelid,a.BWeight,a.MyContent,a.MyCharacter,a.BPay,a.Account,a.TalkT
         public static string CreateM_User(M_Users musers)
         {
             string userid = Guid.NewGuid().ToString();
-            musers.LoginPWD = ProBusiness.Encrypt.GetEncryptPwd(musers.LoginPWD, musers.LoginName);
-            bool bl = M_UsersDAL.BaseProvider.CreateM_User(userid, musers.LoginName, musers.LoginPWD, 
-                string.IsNullOrEmpty(musers.Name) ? "" : musers.Name, musers.IsAdmin, musers.RoleID, musers.Email, musers.MobilePhone,
-                musers.OfficePhone, musers.Jobs, musers.Avatar, musers.Description, musers.CreateUserID,
-                musers.Sex.Value,musers.BHeight,musers.Education,musers.IsMarry.Value,musers.Province,musers.City,
-                musers.District,musers.QQ,musers.SourceType);
+            musers.LoginPwd = ProBusiness.Encrypt.GetEncryptPwd(musers.LoginPwd, musers.LoginName);
+            bool bl = false;
+                //M_UsersDAL.BaseProvider.CreateM_User(userid, musers.LoginName, musers.LoginPWD, 
+                //string.IsNullOrEmpty(musers.Name) ? "" : musers.Name, musers.IsAdmin, musers.RoleID, musers.Email, musers.MobilePhone,
+                //musers.OfficePhone, musers.Jobs, musers.Avatar, musers.Description, musers.CreateUserID,
+                //musers.Sex.Value,musers.BHeight,musers.Education,musers.IsMarry.Value,musers.Province,musers.City,
+                //musers.District,musers.QQ,musers.SourceType);
             return bl ? userid : "";
         }
 
@@ -314,8 +262,9 @@ a.BHeight,a.Levelid,a.BWeight,a.MyContent,a.MyCharacter,a.BPay,a.Account,a.TalkT
         }
         public static bool UpdateM_UserBase(M_Users user)
         {
-            return M_UsersDAL.BaseProvider.UpdateM_UserInfo(user.UserID, user.BHeight, user.BWeight, user.Jobs, user.BPay, user.IsMarry.Value,
-                user.MyContent, user.Name, user.TalkTo, user.Age.Value, user.MyService,user.BirthDay,user.Sex.Value,user.Education,user.QQ,user.MobilePhone,user.Email,user.Province,user.City,user.District);
+            return false;
+            //M_UsersDAL.BaseProvider.UpdateM_UserInfo(user.UserID, user.BHeight, user.BWeight, user.Jobs, user.BPay, user.IsMarry.Value,
+            //user.MyContent, user.Name, user.TalkTo, user.Age.Value, user.MyService,user.BirthDay,user.Sex.Value,user.Education,user.QQ,user.MobilePhone,user.Email,user.Province,user.City,user.District);
         }
 
         public static bool CheckEmail(string loginname, string email)

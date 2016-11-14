@@ -116,6 +116,18 @@
         function closeLogin() {
             document.getElementsByClassName('black_overlay')[0].style.display = "none";
             document.getElementsByClassName('layer')[0].style.display = "none";
-        }
-    </script></div>
+        }  
+        $(function () { 
+            //http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=42.227.165.239 
+            $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=42.227.165.239', function (_result) { 
+                var ipinfo = remote_ip_info;
+                if (ipinfo.ret == '1') {
+                    alert('IP 详细信息：' + ipinfo.country + ' ' + ipinfo.province + ' ' + ipinfo.city + ' ' + ipinfo.district);//+ remote_ip_info.isp + '<BR>类型：' + remote_ip_info.type + '<BR>其他：' + remote_ip_info.desc
+                } else {
+                    alert('错误', '没有找到匹配的 IP 地址信息！');
+                }
+            });
+        });
+    </script>
+</div>
 @*<script type="text/javascript" src="/modules/scripts/index.js"></script>*@

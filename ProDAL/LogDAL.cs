@@ -22,8 +22,8 @@ namespace ProDAL
 
         public static Task<bool> AddLoginLog(string loginname, int type, string operateip, string userid, string leveid="")
         {
-            string sqlText = "insert into UsersLog(UserName,Type,CreateTime,UserID,OperateIP) " +
-                            " values(@UserName,@Type,GETDATE(),@OperateIP,@UserID)";
+            string sqlText = "insert into UsersLog(Type,CreateTime,UserID,IP) " +
+                            " values(@Type,GETDATE(),@OperateIP,@UserID)";
             SqlParameter[] paras = { 
                                      new SqlParameter("@UserName" , loginname),
                                      new SqlParameter("@Type" , type),   

@@ -18,31 +18,7 @@ namespace ProBusiness
 
     public class CommonBusiness
     {
-        #region Cache
-
-        private static List<CityEntity> _citys;
-        /// <summary>
-        /// 城市
-        /// </summary>
-        public static List<CityEntity> Citys
-        {
-            get
-            {
-                if (_citys == null)
-                {
-                    DataTable dt = new CommonDAL().GetCitys();
-                    _citys = new List<CityEntity>();
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        CityEntity model = new CityEntity();
-                        model.FillData(dr);
-                        _citys.Add(model);
-                    }
-                }
-                return _citys;
-            }
-        }
-
+        #region Cache 
         private static List<Menu> _clientMenus;
         /// <summary>
         /// 客户端菜单
@@ -108,16 +84,7 @@ namespace ProBusiness
             }
         }
         #endregion
-
-
-        public static CityEntity GetCityByCode(string citycode)
-        {
-            if (string.IsNullOrEmpty(citycode))
-            {
-                return null;
-            }
-            return Citys.Where(m => m.CityCode == citycode).FirstOrDefault();
-        }
+         
 
         /// <summary>
         /// 修改表中某字段值

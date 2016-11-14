@@ -99,7 +99,7 @@ public static class ExpandClass
     {
         if (httpContext.Session["Manager"] != null)
         {
-            return ProBusiness.CommonBusiness.ManageMenus.Where(m => m.Controller.ToUpper() == controller.ToUpper() && m.Layer == 2 && m.IsMenu == 1).FirstOrDefault();
+            return ProBusiness.CommonBusiness.ClientMenus.Where(m => m.Controller.ToUpper() == controller.ToUpper() && m.IsMenu == 1).FirstOrDefault();
         }
         return new Menu();
     }

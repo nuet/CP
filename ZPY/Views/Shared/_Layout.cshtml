@@ -8,34 +8,58 @@
     }
 <html>
 <head>
-    <title>@ViewBag.Title</title>  
+    <title>@ViewBag.Title</title>
+@*     <link rel="stylesheet" type="text/css" href="/modules/css/base.css"> *@
     <link rel="stylesheet" type="text/css" href="/modules/css/head.css"> 
     <link rel="stylesheet" type="text/css" href="/modules/jpaginate/css/style.css" media="screen"/>
-    <link href="/modules/css/iconfont/iconfont.css" rel="stylesheet" />
-@*    <link rel="shortcut icon" href="/modules/images/logo.ico"> *@
+    <link href="/modules/css/iconfont/iconfont.css" rel="stylesheet" /> 
     @RenderSection("css", false)
 </head>
 
-<body>
+<body id="mainbody">
    
     <script type="text/javascript" src="/Scripts/jquery-1.11.3.min.js"></script>
     <script type="text/javascript"src="/Scripts/DateForm.js"></script>
     <script src="/modules/jpaginate/jquery.paginate.js" type="text/javascript"></script> 
-
- <!-- 头部导航栏 -->
+    <script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+<!-- 头部导航栏 -->
+<header>
     <div class="header">
         <div class="logo" style="cursor: pointer;">
             <a href="">
-                <img src="/modules/img/litte-icon/logo.png" alt="logo" title="logo" width="153" height="36" /></a>
+                <img src="/modules/img/litte-icon/logo.png" alt="logo" title="logo" width="153" height="36"/></a>
         </div>
         <div class="nav-box">
             <ul id="sddm">
-                <li class="button2 on2"><a target="mainframe" href="help_ security.html">首页</a></li>
+                @* <li  class="@(controller == "home" ? "select left" : "left")">
+                <a href="/home/index" >
+                    首页
+                </a> 
+             </li>  *@
+                <li class="@(controller == "home" ? "button2 on2" : "lebutton2ft")"><a href="/Home/Index">首页</a></li>
+            <li class="@(controller == "active" ? "button2 on2" : "lebutton2ft")"><a  href="active_center.html">活动</a></li>
+            @foreach (Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, ExpandClass.CLIENT_TOP_CODE))
+            {                   
+                <li class="@(model.MenuCode.ToUpper() == (controllerMenu != null ? controllerMenu.PCode.ToUpper() : "101000000") ? "button2 on2" : "button2")"  data-code="@(model.MenuCode)">            
+                    <a  href="/@(model.Controller)/@(model.View)">
+                        @(model.Name)
+                    </a>
+                    <div id="m1" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                       @foreach (Menu items in ExpandClass.GetChildMenuByCode(HttpContext.Current, model.MenuCode))
+                       {
+                           <a href="/@(items.Controller)/@(items.View)">@(items.Name)</a>
+                       }
+                        
+                    </div>
+                </li> 
+            }
+
+             @*   <li class="button2 on2"><a href="/Home/Index">首页</a></li>
                 <li class="button2"><a target="mainframe" href="active_center.html">活动</a></li>
                 <li style="width: 100px;" class="button2 ">
-                    <a href="javascript:void(0)" onmouseover="mopen('m1')" onmouseout="mclosetime()">用户管理</a>
+                    <a href="/User/UserList" onmouseover="mopen('m1')" onmouseout="mclosetime()">用户管理</a>
                     <div id="m1" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-                        <a target="mainframe" href="user_list.html">用户列表</a>
+                        <a href="/User/UserList">用户列表</a>
                         <a target="mainframe" href="user_add.html">增加用户</a>
                         <a target="mainframe" href="user_edit.html">修改昵称</a>
                         <a target="mainframe" href="message_privatelist.html">消息中心</a>
@@ -67,12 +91,13 @@
                         <a target="mainframe" href="help_game.html">玩法介绍</a>
                         <a target="mainframe" href="help_general.html">常见问题</a>
                     </div>
-                </li>
+                </li>*@
 
             </ul>
 
         </div>
     </div>
+</header>
   <div class="main-content">
         <!-- 左边导航栏 -->
         <div class="left-header">
@@ -226,6 +251,7 @@
 <input type="hidden" value="@action" id="pageaction"/> 
 <script type="text/javascript" src="/modules/scripts/index-script.js"></script>
 <script type="text/javascript">
+     
     $(document).ready(function () {
         $("#sItem li:not(:first)").css("display", "none");
         var B = $("#sItem li:last");
@@ -241,10 +267,10 @@
             }
         }, 4000);  //每3秒钟切换一条，你可以根据需要更改  
         // 菜单点击事件
-        $(".header .button2").on("click", function (evt) {
-            $(".header .on2").removeClass("on2");
-            $(this).addClass("on2");
-        });
+        //$(".header .button2").on("click", function (evt) {
+        //    $(".header .on2").removeClass("on2");
+        //    $(this).addClass("on2");
+        //});
         $(".left-header .left-href a").on("click", function (evt) {
             $(".left-header .left-href .up").removeClass("up");
             $(this).addClass("up");
