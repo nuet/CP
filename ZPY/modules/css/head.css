@@ -36,7 +36,7 @@ body>.header .nav-box {height: 50px;position: absolute;top: 0px;}
 .left-info ul li span:nth-child(3){position: absolute;left: 66px;text-overflow: ellipsis;overflow:hidden;}
 .left-info ul div .picture {border-radius: 50%;width: 60px;text-align: center;height: 60px;padding: 5px 0;}
 .left-info-with {margin-left: 15px;float: left;margin-top: 20px;}
-.left-info ul div .recharge,.left-info ul div .withdraw {display: block;width: 60px;height: 26px;text-align: center;line-height: 26px;border-radius: 8px;margin: 0 auto;}
+.left-info ul div .recharge,.left-info ul div .withdraw {display: block;width: 60px;height: 26px;text-align: center;line-height: 26px;border-radius: 4px;margin: 0 auto;}
 .left-info ul div .recharge {background-color: rgb(30, 143, 206);}
 .left-info ul div .withdraw {background-color: rgb(206, 97, 32);}
 .left-info ul div .recharge a,.left-info ul div .withdraw a {color: white;display: block;}

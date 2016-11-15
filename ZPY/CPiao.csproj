@@ -446,6 +446,7 @@
     <None Include="Properties\PublishProfiles\发布.pubxml" />
     <Content Include="Views\Help\Security.cshtml" />
     <Content Include="Views\User\UserAdd.cshtml" />
+    <Content Include="Views\User\UserEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

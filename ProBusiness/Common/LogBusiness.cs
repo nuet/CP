@@ -48,16 +48,22 @@ namespace ProBusiness.Common
             }
             return list;
         }
-
-        public static UserReport GetUserCount(string userid)
+        public static LogEntity GetLogsByUserID(string userID,int tops=1)
         {
-            UserReport userrpt=new UserReport();
-            DataTable dt = LogDAL.GetUserReport(userid);
+            string tablename = "select top "+tops+" a.*  from UsersLog  a left join M_Users b  on a.UserID =b.UserID ";
+
+            string sqlwhere = " where 1=1 "; 
+            if (!string.IsNullOrEmpty(userID))
+            {
+                sqlwhere += " and a.userID='" + userID + "'";
+            }
+            DataTable dt = LogDAL.GetDataTable(tablename + sqlwhere + " order by  a.AutoID  desc ");
+            LogEntity model = new LogEntity();
             foreach (DataRow dr in dt.Rows)
             {
-                userrpt.FillData(dr); 
+                model.FillData(dr); 
             }
-            return userrpt;
+            return model;
         }
         #endregion
 
@@ -82,7 +88,13 @@ namespace ProBusiness.Common
         {
             await LogDAL.AddOperateLog(userid, username,leveid,seeid,seename, (int)type, message, operateip);
         }
-        
+        /// <summary>
+        /// UpdateLastIP
+        /// </summary>
+        public static async void UpdateLastIP(string userid, string operateip)
+        {
+            await LogDAL.UpdateLastIP(userid, operateip);
+        }
         #endregion
     }
 }

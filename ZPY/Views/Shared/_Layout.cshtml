@@ -16,9 +16,8 @@
 <body id="mainbody">
    
     <script type="text/javascript" src="/Scripts/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript"src="/Scripts/DateForm.js"></script>
-    <script src="/modules/jpaginate/jquery.paginate.js" type="text/javascript"></script> 
-    <script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+    <script type="text/javascript"src="/Scripts/DateForm.js"></script> 
+
 <!-- 头部导航栏 -->
 <header>
     <div class="header">
@@ -71,6 +70,11 @@
                     <div class="left-info-with">
                         <div class="withdraw">
                             <a target="mainframe" href="withdraw_cash.html">提现</a>
+                        </div>
+                    </div>
+                    <div class="left-info-with">
+                        <div class="withdraw">
+                            <a id="loginout" href="javascript:void(0)">退出</a>
                         </div>
                     </div>
                 </ul>
@@ -232,6 +236,7 @@
                 $(v).hide(); 
             });
         });
+        $('#loginout').click(function() {$.post('/Home/Logout',null,null)});
     });
     $(document).ready(function () {   
         $("#sItem li:not(:first)").css("display", "none");

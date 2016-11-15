@@ -94,6 +94,7 @@ namespace ProBusiness
             if (model != null && model.Status==1)
             {
                 LogBusiness.AddLoginLog(loginname, operateip, model != null ? model.UserID : "",type);
+                LogBusiness.UpdateLastIP(model != null ? model.UserID : "", operateip);
             }
             return model;
         }
@@ -220,7 +221,7 @@ namespace ProBusiness
         {
             string userid = Guid.NewGuid().ToString();
             musers.LoginPwd = ProBusiness.Encrypt.GetEncryptPwd(musers.LoginPwd, musers.LoginName);
-            bool bl = M_UsersDAL.BaseProvider.CreateM_User(userid, musers.LoginName, musers.LoginPwd, musers.UserName, musers.Rebate, musers.SourceType, parentid, out errormsg); 
+            bool bl = M_UsersDAL.BaseProvider.CreateM_User(userid, musers.LoginName, musers.LoginPwd, musers.UserName, musers.Rebate, musers.SourceType,musers.Type,parentid, out errormsg); 
             return bl ? userid : "";
         }
 
@@ -256,6 +257,11 @@ namespace ProBusiness
             bool bl = M_UsersDAL.BaseProvider.UpdateM_User(userid, avatar); 
             return bl;
         }
+        public static bool UpdateM_UserName(string userid, string username)
+        {
+            bool bl = M_UsersDAL.BaseProvider.UpdateM_User(userid, username);
+            return bl;
+        }
         public static bool UpdatePwd(string loginname, string pwd)
         {
             pwd = ProBusiness.Encrypt.GetEncryptPwd(pwd, loginname);
@@ -286,7 +292,11 @@ namespace ProBusiness
            var result= CommonBusiness.Select("M_Users", "count(1)", " LoginName='" + loginname + "' and email='" + email + "' ");
             return Convert.ToInt32(result) > 0;
         }
-
+        public static bool CheckEmail(string email)
+        {
+            var result = CommonBusiness.Select("M_Users", "count(1)", " email='" + email + "' ");
+            return Convert.ToInt32(result) > 0;
+        }
         #endregion
 
     }

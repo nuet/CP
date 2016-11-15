@@ -188,6 +188,7 @@ namespace Proc.Controllers
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             M_Users model = serializer.Deserialize<M_Users>(entity);
+            string mes = "";
             JsonDictionary.Add("errmeg", "执行成功");
             if (string.IsNullOrEmpty(model.UserID))
             {
@@ -197,7 +198,7 @@ namespace Proc.Controllers
                     model.Avatar = "";
                     model.IsAdmin = 0;
                     model.SourceType = 1;
-                    model.UserID =  M_UsersBusiness.CreateM_User(model);
+                    model.UserID = M_UsersBusiness.CreateM_User(model, ref mes);
                 }
                 else { JsonDictionary["errmeg"] = "登录名已存在,操作失败"; }
             }

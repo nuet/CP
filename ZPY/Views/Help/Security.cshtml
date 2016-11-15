@@ -6,7 +6,8 @@
 <head>
     <meta http-equiv="content-type" content="text/html" charset="utf-8" />
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/modules/css/help.css" />
+    <link rel="stylesheet" type="text/css" href="/modules/css/help.css"/>
+    <script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
     <style>
         body{margin: 10px 0 0 25px;padding-left: 30px;}
          .black_overlay {
@@ -89,8 +90,8 @@
 <body>
     <div class="grade">
         <p class="graded">
-            账户安全等级评分 ：<span class="grade-mark">55</span> 分（满分100分）&nbsp;&nbsp;&nbsp;&nbsp;
-				<span>本次登录地址：</span><span class="c-ef3552">河南省 郑州市 移动网络</span>
+            账户安全等级评分 ：<span class="grade-mark">@ViewBag.SafeLevel</span> 分（满分100分）&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>本次登录地址：</span><span class="c-ef3552" id="ipaddress"></span>
         </p>
         <div class="safe">
             <div class="item">
@@ -208,13 +209,15 @@
         }
 
         $(function () {
-            //http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=42.227.165.239 
-            $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=42.227.165.239', function (_result) {
+            var url = 'http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=@ViewBag.LastIP';
+            $.getScript(url, function (_result) {
                 var ipinfo = remote_ip_info;
                 if (ipinfo.ret == '1') {
-                    console.log('IP 详细信息：' + ipinfo.country + ' ' + ipinfo.province + ' ' + ipinfo.city + ' ' + ipinfo.district); //+ remote_ip_info.isp + '<BR>类型：' + remote_ip_info.type + '<BR>其他：' + remote_ip_info.desc
+                    console.log('IP 详细信息：' + ipinfo.country + ' ' + ipinfo.province + ' ' + ipinfo.city + ' ' + ipinfo.district + ' ' + ipinfo.isp);/*+ '<BR>类型：' + ipinfo.type + '<BR>其他：' + ipinfo.desc);*/
+                    $('#ipaddress').html(ipinfo.country + ' ' + ipinfo.province + ' ' + ipinfo.city);
                 } else {
                     console.log('错误', '没有找到匹配的 IP 地址信息！');
+                    $('#ipaddress').html('没有找到匹配的 IP 地址信息');
                 }
             });
         });

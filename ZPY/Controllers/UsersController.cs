@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ProBusiness;
+using ProBusiness.Common;
 using ProEntity.Manage;
 
 namespace CPiao.Controllers
@@ -26,7 +27,16 @@ namespace CPiao.Controllers
             ViewBag.UsableRebate = model.UsableRebate;
             return View();
         }
-
+        public ActionResult UserEdit()
+        {
+            var model = M_UsersBusiness.GetUserDetail(CurrentUser.UserID);
+            var  logmd=LogBusiness.GetLogsByUserID(CurrentUser.UserID,2);
+            ViewBag.UserName = model.UserName;
+            ViewBag.LastIP = model.LastLoginIP == "::1"?"127.0.0.1":model.LastLoginIP ; 
+            ViewBag.LastTime = logmd.CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
+            ViewBag.SafeLevel = model.SafeLevel;
+            return View();
+        }
 
 
 
@@ -47,7 +57,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
+        [HttpPost]
         public JsonResult UserAdd(int type, string username, string loginpwd, string loginname, decimal rebate)
         {
             string Errmsg = "";
@@ -56,6 +66,7 @@ namespace CPiao.Controllers
                 Type = type,
                 SourceType = 0, 
                 UserName = username,
+                LoginName = loginname,
                 LoginPwd = loginpwd,
                 Rebate = rebate
             };
@@ -68,7 +79,24 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
+        [HttpPost]
+        public JsonResult UserEdit(string username)
+        {
+            string Errmsg = ""; 
+            var result = M_UsersBusiness.UpdateM_UserName(CurrentUser.UserID, username);
+            if (result)
+            {
+                var model = CurrentUser;
+                model.UserName = username;
+                Session["Manage"] = model;
+            }
+            JsonDictionary.Add("result", result); 
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         #endregion
 
     }

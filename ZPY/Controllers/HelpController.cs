@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 using ProBusiness;
+using ProBusiness.Common;
 using ProBusiness.Manage;
 using ProBusiness.UserAttrs;
 using ProEntity;
@@ -22,8 +23,12 @@ namespace CPiao.Controllers
         // GET: /Help/
 
         public ActionResult Security()
-        {
-            return View();
+        { 
+            var logmd = LogBusiness.GetLogsByUserID(CurrentUser.UserID, 1);
+            ViewBag.LastIP = logmd.IP == "::1" ? "127.0.0.1" : logmd.IP; 
+            ViewBag.LastTime = logmd.CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
+            ViewBag.SafeLevel = CurrentUser.SafeLevel;
+            return View(); 
         }
         public ActionResult Forget()
         {

@@ -48,7 +48,8 @@ namespace CPiao.Controllers
                     int result;
                     M_Users model = ProBusiness.M_UsersBusiness.GetM_UserByProUserName(cook["username"], cook["pwd"], operateip, out result);
                     if (model != null)
-                    { 
+                    {
+                        model.LastLoginIP = OperateIP;
                         Session["Manager"] = model;
                         return Redirect("/Home/Index");
                     }
@@ -64,8 +65,7 @@ namespace CPiao.Controllers
                 cook["status"] = "0";
                 Response.Cookies.Add(cook);
             } 
-            Session["Manager"] = null;
-            Session["PartManage"] = null;
+            Session["Manager"] = null; 
             return Redirect("/Home/Index");
         }
         /// <summary>
@@ -84,7 +84,8 @@ namespace CPiao.Controllers
             if (model != null)
             { 
                 if (model.Status == 1)
-                {
+                { 
+                    model.LastLoginIP = OperateIP;
                     HttpCookie cook = new HttpCookie("cp");
                     cook["username"] = userName;
                     cook["pwd"] = pwd;
