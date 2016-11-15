@@ -36,7 +36,7 @@
                     <a  href="javascript:void(0);"  data-href="/@(model.Controller)/@(model.View)">
                         @(model.Name)
                     </a>
-                    <div class="navdiv"> @* id="m1"onmouseover="mcancelclosetime()" onmouseout="mclosetime()"*@
+                    <div class="navdiv"> 
                        @foreach (Menu items in ExpandClass.GetChildMenuByCode(HttpContext.Current, model.MenuCode))
                        {
                            <a data-href="/@(items.Controller)/@(items.View)" href="javascript:void(0);">@(items.Name)</a>
@@ -206,6 +206,14 @@
         $('#sddm a').each(function(i, v) {
             $(v).click(function() {
                 $('#mainframe').attr("src", $(v).data("href"));
+            });
+        });
+        $('#sddm li').each(function (i, v) {
+            $(v).click(function () {
+                if (!$(v).hasClass('on2')) {
+                    $(v).siblings().removeClass('on2');
+                    $(v).addClass('on2');
+                }
             });
         });
         $('#sddm li a:first-child').each(function (i, v) {

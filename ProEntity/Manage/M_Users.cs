@@ -31,6 +31,8 @@ namespace ProEntity.Manage
         public List<Menu> Menus { get; set; }
 	    public decimal Rebate { get; set; }
         public decimal UsableRebate { get; set; }
+	    public decimal AccountFee { get; set; }
+
 	    /// <summary>
 	    /// 
 	    /// </summary>
@@ -78,6 +80,8 @@ namespace ProEntity.Manage
 		/// 
 		/// </summary>
 		public int? IsAdmin{ get; set; }
+
+        public int? ChildCount { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>

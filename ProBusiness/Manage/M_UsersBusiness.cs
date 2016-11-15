@@ -102,11 +102,30 @@ namespace ProBusiness
             DataTable dt = new M_UsersDAL().GetM_UserByLoginName(loginname);
             return dt.Rows.Count;
         }
-        public static List<M_Users> GetUsers(int pageSize, int pageIndex, ref int totalCount, ref int pageCount, int type = 0, int status = -1, string keyWords = "", string colmonasc = "a.AutoID", bool isasc = false)
+        public static List<M_Users> GetUsers(int pageSize, int pageIndex, ref int totalCount, ref int pageCount, int type = -1, int status = -1, string keyWords = "", string colmonasc = "a.AutoID", bool isasc = false,
+            string rebatemin="",string rebatemax="",string accountmin="",string accountmax="")
         {
             string whereSql = " a.Status<>9";
-
-           
+            if (!string.IsNullOrEmpty(rebatemax))
+            {
+                whereSql += " and a.Rebate<='" + rebatemax + "' ";
+            }
+            if (!string.IsNullOrEmpty(rebatemin))
+            {
+                whereSql += " and a.Rebate>'" + rebatemin + "' ";
+            }
+            if (type > -1)
+            {
+                whereSql += " and a.type=" + type +" ";
+            }
+            if (!string.IsNullOrEmpty(accountmax))
+            {
+                whereSql += " and b.AccountFee<='" + accountmax + "' ";
+            }
+            if (!string.IsNullOrEmpty(accountmin))
+            {
+                whereSql += " and b.AccountFee>'" + accountmin + "' ";
+            }
             if (status > -1)
             {
                 whereSql += " and a.Status=" + status;
@@ -115,8 +134,8 @@ namespace ProBusiness
             {
                 whereSql += " and (a.UserName like '%" + keyWords + "%' or a.LoginName like'%" + keyWords + "%') ";
             } 
-            string cstr = @" a.* ";
-            DataTable dt = CommonBusiness.GetPagerData("M_Users a", cstr, whereSql, "a.AutoID", colmonasc, pageSize, pageIndex, out totalCount, out pageCount, isasc);
+            string cstr = @" a.*,b.AccountFee ";
+            DataTable dt = CommonBusiness.GetPagerData("M_Users a join UserAccount b on a.UserID=b.UserID ", cstr, whereSql, "a.AutoID", colmonasc, pageSize, pageIndex, out totalCount, out pageCount, isasc);
             List<M_Users> list = new List<M_Users>();
             M_Users model;
             foreach (DataRow item in dt.Rows)
@@ -197,16 +216,11 @@ namespace ProBusiness
         /// <summary>
         /// 新增或修改用户信息
         /// </summary>
-        public static string CreateM_User(M_Users musers)
+        public static string CreateM_User(M_Users musers,ref string errormsg,string parentid="")
         {
             string userid = Guid.NewGuid().ToString();
             musers.LoginPwd = ProBusiness.Encrypt.GetEncryptPwd(musers.LoginPwd, musers.LoginName);
-            bool bl = false;
-                //M_UsersDAL.BaseProvider.CreateM_User(userid, musers.LoginName, musers.LoginPWD, 
-                //string.IsNullOrEmpty(musers.Name) ? "" : musers.Name, musers.IsAdmin, musers.RoleID, musers.Email, musers.MobilePhone,
-                //musers.OfficePhone, musers.Jobs, musers.Avatar, musers.Description, musers.CreateUserID,
-                //musers.Sex.Value,musers.BHeight,musers.Education,musers.IsMarry.Value,musers.Province,musers.City,
-                //musers.District,musers.QQ,musers.SourceType);
+            bool bl = M_UsersDAL.BaseProvider.CreateM_User(userid, musers.LoginName, musers.LoginPwd, musers.UserName, musers.Rebate, musers.SourceType, parentid, out errormsg); 
             return bl ? userid : "";
         }
 

@@ -15,7 +15,7 @@ body>.header .nav-box {height: 50px;position: absolute;top: 0px;}
 .logo {width: 25%;height: 34px;margin: 7px 15px;}
 .nav-box {width: 70%;float: right !important;height: 50px;left: 30%;}
 .nav-box ul {display: block;width: 800px;height: 50px;position: absolute;}
-.nav-box ul li {display: block;float: left;line-height: 50px;width: 80px;height: 50px;color: white;text-align: center;}
+.nav-box ul li {display: block;float: left;line-height: 50px;width: 100px;height: 50px;color: white;text-align: center;}
 .nav-box ul li a {color: #fff;display: block}
 .nav-box ul li:hover {background-color: rgb(175, 23, 22);}
 

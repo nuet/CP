@@ -103,38 +103,25 @@ namespace ProDAL.Manage
             return result;
         }
 
-        public bool CreateM_User(string userid, string loginname, string loginpwd,string name,int? isadmin,string roleid,string email,string mobilephone,string officephone,string jobs,string avatar, string description, string operateid
-            ,int Sex,string BHeight,string Education,int IsMarry,string Province,string City,string District,string QQ,int SourceType)
+        public bool CreateM_User(string userid, string loginname, string loginpwd,string username ,decimal rebate,int sourceType,string parentid,out string errormsg)
         {
-            string sql = "INSERT INTO M_Users(UserID,LoginName ,LoginPWD,Name,Email,MobilePhone,OfficePhone,Jobs ,Avatar ,IsAdmin ,Status  ,Description ,CreateUserID ,RoleID,Sex,BHeight,Education,IsMarry,Province,City,District,QQ,SourceType) " +
-                        " values(@UserID,@LoginName,@LoginPWD,@Name,@Email,@MobilePhone,@OfficePhone,@Jobs,@Avatar,@IsAdmin,1,@Description,@CreateUserID,@RoleID,@Sex,@BHeight,@Education,@IsMarry,@Province,@City,@District,@QQ,@SourceType)";
-
             SqlParameter[] paras = { 
-                                       new SqlParameter("@UserID",userid),
-                                       new SqlParameter("@LoginName",loginname),
-                                       new SqlParameter("@LoginPWD",loginpwd),
-                                       new SqlParameter("@Name",name),
-                                       new SqlParameter("@Email",email),
-                                       new SqlParameter("@MobilePhone",mobilephone),
-                                       new SqlParameter("@OfficePhone",officephone),
-                                       new SqlParameter("@Jobs",jobs),
-                                       new SqlParameter("@Avatar",avatar),
-                                       new SqlParameter("@IsAdmin",isadmin),
-                                       new SqlParameter("@Description",description),
-                                       new SqlParameter("@CreateUserID",operateid),
-                                       new SqlParameter("@Sex",Sex),
-                                       new SqlParameter("@BHeight",BHeight),
-                                       new SqlParameter("@Education",Education),
-                                       new SqlParameter("@IsMarry",IsMarry),
-                                       new SqlParameter("@Province",Province),
-                                       new SqlParameter("@City",City),
-                                       new SqlParameter("@District",District),
-                                       new SqlParameter("@QQ",QQ),
-                                       new SqlParameter("@SourceType",SourceType), 
-                                       new SqlParameter("@RoleID",roleid)
+                                    new SqlParameter("@ErrorMsg" , SqlDbType.VarChar,300),
+                                    new SqlParameter("@Result",SqlDbType.Int),
+                                    new SqlParameter("@UserID",userid),
+                                    new SqlParameter("@LoginName",loginname),
+                                    new SqlParameter("@LoginPwd",loginpwd),
+                                    new SqlParameter("@SourceType",sourceType), 
+                                    new SqlParameter("@Rebate",rebate), 
+                                    new SqlParameter("@UserName",username),
+                                    new SqlParameter("@ParentID",parentid)
                                    };
-
-            return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
+            paras[0].Direction = ParameterDirection.Output;
+            paras[1].Direction = ParameterDirection.Output;
+            ExecuteNonQuery("M_InsertUser", paras, CommandType.StoredProcedure);
+            var result = Convert.ToInt32(paras[0].Value);
+            errormsg = paras[1].Value.ToString();
+            return result>0;
         }
 
         public bool CreateM_UserBase(string userid, string loginname, string loginpwd)

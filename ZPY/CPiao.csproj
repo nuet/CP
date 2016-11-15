@@ -161,6 +161,13 @@
     <Content Include="modules\css\shiyiyun.css" />
     <Content Include="modules\css\slide.css" />
     <Content Include="modules\css\webuploader.css" />
+    <Content Include="modules\datapager\images\next.png" />
+    <Content Include="modules\datapager\images\previous.png" />
+    <Content Include="modules\datapager\images\snext.png" />
+    <Content Include="modules\datapager\images\sprevious.png" />
+    <Content Include="modules\datapager\style.css" />
+    <Content Include="modules\dropdown\dropdown.js" />
+    <Content Include="modules\dropdown\style.css" />
     <Content Include="modules\images\03-weixin.png" />
     <Content Include="modules\images\1.png" />
     <Content Include="modules\images\2.png" />
@@ -276,17 +283,7 @@
     <Content Include="modules\jedate\jedate.js" />
     <Content Include="modules\jedate\jedate.min.js" />
     <Content Include="modules\jedate\skin\jedate.css" />
-    <Content Include="modules\jpaginate\about.png" />
-    <Content Include="modules\jpaginate\bg.png" />
-    <Content Include="modules\jpaginate\codrops_back.png" />
-    <Content Include="modules\jpaginate\css\style.css" />
-    <Content Include="modules\jpaginate\images\next.png" />
-    <Content Include="modules\jpaginate\images\previous.png" />
-    <Content Include="modules\jpaginate\images\snext.png" />
-    <Content Include="modules\jpaginate\images\sprevious.png" />
-    <Content Include="modules\jpaginate\jPaginate.html" />
-    <Content Include="modules\jpaginate\jquery-1.3.2.js" />
-    <Content Include="modules\jpaginate\jquery.paginate.js" />
+    <Content Include="modules\datapager\paginate.js" />
     <Content Include="modules\scripts\home.js" />
     <Content Include="modules\scripts\imgbox.js" />
     <Content Include="modules\scripts\layout.js" />
@@ -369,6 +366,7 @@
     <Content Include="modules\webuploader\Uploader.swf" />
     <Content Include="modules\webuploader\webuploader.css" />
     <Content Include="modules\webuploader\webuploader.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\date.js" />
     <Content Include="Scripts\DateForm.js" />
     <Content Include="Scripts\diyUpload.js" />
@@ -447,6 +445,7 @@
     <Content Include="modules\img\proxy.properties" />
     <None Include="Properties\PublishProfiles\发布.pubxml" />
     <Content Include="Views\Help\Security.cshtml" />
+    <Content Include="Views\User\UserAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

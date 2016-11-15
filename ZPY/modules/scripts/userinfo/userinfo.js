@@ -1,25 +1,42 @@
 ﻿ 
 var regprice = /(^[1-9]*[1-9][0-9]*$)|(^1?\d\.\d$)|(^2[0-3]\.\d$)/;
 var regday = /^[1-9]*[1-9][0-9]*$/;
+
+
+var userList = {}
+userList.Params = {
+    orderby: false,
+    username: '',
+    userid:'',
+    accountmin: '',
+    accountmax: '',
+    clumon: '',
+    type: -1,
+    rebatemin: '',
+    rebatemax: '',
+    pageIndex: 1,
+    pageSize:15
+}
 $(function() {     
     /*绑定事件 begin*/
     $('#addUser').click(function () { 
         $(window.parent.document).find("#mainframe").attr('src', '/User/UserAdd');
-    }); 
-    $('.saleservice').click(function() {
+    });
+    $('.search').click(function () {
+        userList.UserInfoList();
+    });
+    $('#sortbymax').click(function () {
         if (typeof ($(this).attr('checked')) != 'undefined') {
             $(this).removeAttr('checked');
+            userList.Params.orderby = false;
         } else {
             $(this).attr('checked', 'checked');
+            userList.Params.orderby = true;
         }
     });
-    $('.myservice').click(function () {
-        if (typeof ($(this).attr('checked')) != 'undefined') {
-            $(this).removeAttr('checked');
-        } else {
-            $(this).attr('checked', 'checked');
-        }
-    });
+
+   
+
     $(document).click(function(e) {
         if (!$(e.target).parents().hasClass("tips-content") && !$(e.target).hasClass("replycz")
             && !$(e.target).hasClass("box-main") && !$(e.target).parents().hasClass("box-main")) {
@@ -39,7 +56,7 @@ $(function() {
     //getUserMyInfo(); 
 }); 
 /*获取用户动态*/
-function getUserActions(type,pageindex,pagesize) {
+userList.getUserActions= function(type,pageindex,pagesize) {
     $.post('/User/UserActions', { type: type, pageIndex: pageindex, pageSize: pagesize }, function (data) {
         if (data.items.length > 0) {
             var html = '';
@@ -56,11 +73,11 @@ function getUserActions(type,pageindex,pagesize) {
                         count: data.pageCount,
                         start: 1,
                         display: pagesize,
-                        border: false,
-                        text_color: '#79B5E3',
-                        background_color: 'none',
-                        text_hover_color: '#2573AF',
-                        background_hover_color: 'none',
+                        //border: false,
+                        //text_color: '#79B5E3',
+                        //background_color: 'none',
+                        //text_hover_color: '#2573AF',
+                        //background_hover_color: 'none',
                         images: false,
                         mouse: 'press',
                         onChange: function(page) {
@@ -86,103 +103,46 @@ function getUserActions(type,pageindex,pagesize) {
 } 
  
 /*获取用户信息*/
-function getUserMyInfo() {
-    $.post('UserMyInfo', null, function (data) {
-        if (data.item != null) { 
-            $('.useravator').attr("src", (data.item.Avatar != null && data.item.Avatar != "") ? data.item.Avatar : '/modules/images/head.png');
-            $('#BHeight').val(data.item.BHeight);
-            $('#BWeight').val(data.item.BWeight); 
-            $('#Jobs').val(data.item.Jobs);
-            $('#BPay').val(data.item.BPay);
-            $('#userAge').val(data.item.Age);
-            $('#userTalkTo').val(data.item.TalkTo);
-            $('#IsMarry').val(data.item.IsMarry);
-            $('#MyContent').val(data.item.MyContent);
-            if (data.item.MyService != "" && data.item.MyService != null) {
-                $('.myservice').each(function(i, v) {
-                    if (data.item.MyService.indexOf($(v).val()) > -1) {
-                        $(v).attr('checked', 'checked');
-                    }
-                });
-            }
+userList.UserInfoList = function () {
+    userList.Params.username = $('#username').val();
+    userList.Params.accountmin = $('#accountmin').val();
+    userList.Params.accountmax = $('#accountmax').val();
+    userList.Params.clumon = $('#sortby').val();
+    userList.Params.type = $('#type').val();
+    userList.Params.rebatemin = $('#ratemin').val();
+    userList.Params.userid = $('#UserID').val();
+    userList.Params.rebatemax = $('#ratemax').val();
+    $.post('UserInfoList', userList.Params, function (data) {
+        var html = '';
+        if (data.items.length > 0) {
+            for (var i = 0; i < data.items.length; i++) {
+                var item = data.items[i];
+                html += '<tr><td class="' + (item.ChildCount > 0 ? "colorblue" : "") + '" data-id="'+item.UserID+'">' + item.UserName + '</td><td>' + (item.Type == 1 ? "代理用户" : "会员用户") + '</td><td>' + item.AccountFee + '</td><td>' + item.Rebate + '</td><td>' + convertdate(item.CreateTime, true) + '</td><td>关闭</td><td>' + (item.SourceType == 0 ? "手动" : "自动") + '</td><td>删除</td></tr>';
+            } 
+        } else {
+            html = '<tr><td height="37" colspan="13" style="text-align: center;" class="needq"><span>暂无数据</span></td></tr>';
         }
+        $('#usertbody').html(html);
+        $('#usertbody .colorblue').click(function() {
+            $('#UserID').val($(this).data('id'));
+            userList.UserInfoList();
+        });
+        $("#pager").paginate({
+            total_count: data.TotalCount,
+            count: data.pageCount,
+            start: userList.Params.pageIndex,
+            display: 5,
+            border: true,
+            rotate: true,
+            images: false,
+            mouse: 'slide',
+            onChange: function (page) {
+                userList.Params.pageIndex= page;
+                userList.UserInfoList();
+            }
+        });
     });
 } 
+   
  
-function savaUserNeeds(entity) {
-    $.post('/User/SaveNeeds', { entity: JSON.stringify(entity) }, function (data) { 
-        if (data.result) {
-            alert('发布成功');
-            if (entity.type == 0) { 
-                $('.adddiary').addClass('hide');
-                udedit.setContent('', false);
-                getUserDiary(1);
-                $('.listdiary').show();
-
-            } else if (entity.type == 2) { 
-                $('.saleservice').each(function (i, v) {
-                    if ($(v).attr('checked') == 'checked') {
-                        $(v).removeAttr('checked');
-                    }
-                });
-                $('#saleprice').val('');
-                $('#saletitle').val('');
-                $('#salecontent').val('');
-                $('.saleprovice').val('');
-                $('.salecity').val('');
-            } else {
-                $('#needtitle').val('');
-                $('#needsdays').val('');
-                $('#needsprice').val('');
-                $('.needsprovice').val('');
-                $('.needscity').val('');
-                $('#needscontent').val(''); 
-            }
-        }
-    }, "json");
-} 
-
-function getconteinfo(replyid,_this) {
-    $.post('/Help/GetReplyInfo', { replyid: replyid }, function (data) {
-        if (data.result) {
-            _this.parent().html(data.errorMsg);
-        } else {
-            alert(data.errorMsg);
-        }
-    });
-}
-
-function deleteReply(replyid,type) {
-    $.post('/Help/DeleteReply', { replyid: replyid }, function (data) {
-        if (data.result) {
-            alert('删除成功');
-            getReplyList(1, type);
-        } else {
-            alert('操作失败，请稍后再试');
-        }
-    });
-}
-
-function SavaReply(userid, fromuid,replyid) {
-    if ($('#replycontent').val() == '') {
-        return false;
-    }
-    var item = {
-        GUID: userid,
-        Content: $('#replycontent').val(),
-        Type: 1,
-        FromReplyID: replyid,
-        FromReplyUserID: fromuid
-    }
-    $.post('/Help/SaveReply', { entity: JSON.stringify(item) },
-    function (data) {
-        if (data.result) {
-            $('#replycontent').val('');
-            $('#replydialog').hide();
-            alert('提交成功');
-        } else {
-            alert(data.errorMsg);
-            location.href = '/Home/Login';
-        }
-    });
-}; 
+ 
