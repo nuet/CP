@@ -125,58 +125,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-        public JsonResult UserRegister(string loginname,string pwd)
-        { 
-            var result = !string.IsNullOrEmpty(ProBusiness.M_UsersBusiness.CreateM_UserBase(loginname, pwd));
-            if (result)
-            {
-                var outresult = 0;
-                ProEntity.Manage.M_Users model = ProBusiness.M_UsersBusiness.GetM_UserByProUserName(loginname, pwd,
-                    OperateIP, out outresult);
-                if (model != null)
-                {
-                    Session["PartManage"] = model; 
-                }
-                else
-                {
-                    result = false; 
-                }
-            } 
-            JsonDictionary.Add("result", result);
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            }; 
-        }
-        public JsonResult UserRegister2(string entity)
-        {
-            M_Users users = JsonConvert.DeserializeObject<M_Users>(entity); 
-            users.OfficePhone = "";
-            users.Avatar = "";
-            users.CreateUserID = "";
-            users.IsAdmin = 0;
-            users.RoleID = ""; 
-            users.UserID = ((M_Users) Session["PartManage"]).UserID;
-            var result = ProBusiness.M_UsersBusiness.UpdateM_UserBase(users);
-            if (result)
-            {
-                var outresult = 0;
-                ProEntity.Manage.M_Users model = ProBusiness.M_UsersBusiness.GetUserDetail(((M_Users)Session["PartManage"]).UserID);
-                if (model != null)
-                {  
-                    CurrentUser = model;
-                    Session["Manager"] = model; 
-                }
-            }
-            JsonDictionary.Add("result", result);
-
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
+        
 
         public JsonResult GetAdvertList(string view, string imgtype)
         {

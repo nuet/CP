@@ -54,6 +54,7 @@
     <Compile Include="Manage\MemberLevel.cs" />
     <Compile Include="Manage\M_Role.cs" />
     <Compile Include="Manage\M_RolePermission.cs" />
+    <Compile Include="Manage\M_UserRelation.cs" />
     <Compile Include="Manage\M_Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserAttr\UserImgs.cs" />

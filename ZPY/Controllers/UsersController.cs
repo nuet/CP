@@ -17,6 +17,7 @@ namespace CPiao.Controllers
         public ActionResult UserList(string id="")
         {
             ViewBag.UserID = id;
+            ViewBag.Layers = CurrentUser.Layers;
             return View();
         }
 
@@ -42,11 +43,11 @@ namespace CPiao.Controllers
 
         #region Ajax
 
-        public JsonResult UserInfoList(int type, bool orderby, string username, string accountmin, string accountmax, string clumon, string rebatemin, string rebatemax, int pageIndex, int pageSize)
+        public JsonResult UserInfoList(int type, bool orderby, string username, string userid, string accountmin, string accountmax, string clumon, string rebatemin, string rebatemax, int pageIndex, int pageSize, bool mytype=false)
         {
             int total = 0;
             int pageCount = 0;
-            var list = M_UsersBusiness.GetUsers(pageSize, pageIndex, ref total, ref pageCount, type, -1, username, clumon, orderby, rebatemin, rebatemax,accountmin,accountmax);
+            var list = M_UsersBusiness.GetUsersRelationList(pageSize, pageIndex, ref total, ref pageCount, string.IsNullOrEmpty(userid)?CurrentUser.UserID:userid, type, -1, username, clumon, orderby, rebatemin, rebatemax, accountmin, accountmax, mytype);
             
             JsonDictionary.Add("items", list);
             JsonDictionary.Add("totalCount", total);
@@ -68,7 +69,9 @@ namespace CPiao.Controllers
                 UserName = username,
                 LoginName = loginname,
                 LoginPwd = loginpwd,
-                Rebate = rebate
+                Description="用户新增",
+                Rebate = rebate,
+                RoleID=(type==1?"dd87ca0a-b425-4e1e-b7ec-7a1e02dad0f8":"48eb0491-d92c-4664-ab27-37320ac7de38")
             };
             var result = M_UsersBusiness.CreateM_User(user, ref Errmsg,CurrentUser.UserID);
             JsonDictionary.Add("result", result);
@@ -97,6 +100,19 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        [HttpPost]
+        public JsonResult GetChildList(string userid="",bool type=false)
+        {
+            var list=M_UsersBusiness.GetUsersRelationList(userid==""?CurrentUser.UserID:userid, type);
+            JsonDictionary.Add("items", list);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #endregion
 
     }

@@ -14,10 +14,26 @@
     <script type="text/javascript" src="/Scripts/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="/Scripts/DateForm.js"></script>
     <script type="text/javascript" src="/modules/datapager/paginate.js"></script> 
-    <style>
-        body {
-            padding-top: 10px;
-        }
+    <style> 
+        .b_header{color: #fff;background-color: rgb(207, 27, 28);height: 30px;line-height: 30px; margin:0 auto;text-align: center;}
+        .b_header ul{    display: block;list-style-type: disc;-webkit-margin-before: 1em;-webkit-margin-after: 1em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;-webkit-padding-start: 40px;}
+        .b_box ,.b_box ul{ list-style: none;margin: 0;padding: 0;float: left;background-color: #e3f5ff;width: 100%;}
+        .b_box li {line-height: 22px;width: 100%;text-align: left;float: left;border-top: 1px solid #f5fcff;border-bottom: 1px solid #c6e2f2;color: #666;font: 9px "宋体","sans-serif", "Arial", "Verdana";}
+        .b_box li>a {color: #666;}
+        .b_box li.on, li.on>a {border: none;color:rgb(207, 27, 28);font-weight: bold;}
+        .n {background-color: #797979 !important;}
+        .n, .n_links {margin: 4px 3px 1px 0px;float: right;background-color: #ff7e00;color: #FFF;border-radius: 2px;min-width: 12px;text-align: center;line-height: 14px;height: 12px;padding: 0px 3px 2px 3px;}
+        .b_box li.on>a::before {top: -3px;margin: 0 6px;transform: rotateZ(0deg);}
+        .b_box li a::before {content: '';display: inline-block;width: 5px;height: 3px;margin: 0 5px;position: relative;top: -3px;background: url(/modules/img/down-arrow.png);transform: rotateZ(-90deg);}
+        .b_box li a.no-icon::before {background: url();}
+        .b_box li.on>.n_links { background-color: #ff7e00;}
+        .b_box.n_links {cursor: pointer;}
+        .b_box li:last-child {border-bottom: none;}
+        .b_box li:hover{background-color: #fff;}
+        .b_box .n,.b_box .n_links {margin: 4px 3px 1px 0px;float: right;background-color: #ff7e00;color: #FFF;border-radius: 2px;min-width: 12px;text-align: center;line-height: 14px;height: 12px;padding: 0px 3px 2px 3px;}
+        #ext {background-color: #f1faff;border-top: 1px solid #7eadcb;border-bottom: 1px solid #7eadcb;}
+        #ext>li:first-child {}
+        #ext li {}
     </style>
 </head>
 <body>
@@ -26,79 +42,89 @@
             <span>当前位置：</span><span> &gt; 用户列表</span>
         </p>
     </div>
-    <div class="chooseRecords">
-        <div class="filter">
-            <input type="hidden" name="isgetdate" value="1" />
-            <label for="username">
-                <span class="text-middle-input">用户名：</span>
-                <input type="text" class="start-time input" id="username" value="" />
-            </label>
-            <label for="bank_min">
-                <span class="text-middle-input">账户余额：</span>
-                <input type="text" class="start-time input" id="accountmin" value="" />
-                <span class="text-middle-input">&nbsp;至&nbsp;</span>
-                <input type="text" class="endtime input" id="accountmax" value="" />
-            </label>
-            <label>
-                <span class="text-middle-input">排序：</span>
-                <select class="input state" id="sortby" style="width: 100px;">
-                    <option value="" selected="selected">默认排序</option>
-                    <option value="a.username">用户名</option>
-                    <option value="b.accountfee">账户余额</option>
-                    <option value="a.rebate">返点级别</option>
-                </select>
-                <label>
-                    <input type="checkbox" class="checkbox" id="sortbymax" value="1" />从大到小</label>
-            </label>
-            <label>
-                <span class="text-middle-input">用户级别：</span>
-                <select class="input" id="type" style="width: 100px;">
-                    <option value="-1" selected="selected">请选择...</option>
-                    <option value="1">代理用户</option>
-                    <option value="0">会员用户</option>
-                </select>
-            </label>
-            <label>
-                <span class="text-middle-input">返点级别：</span>
-                <input type="text" class="start-time input" id="ratemin" value="" />
-                <span class="text-middle-input">&nbsp;至&nbsp;</span>
-                <input type="text" class="endtime input" id="ratemax" value="" />
-            </label>
-            <div class="filter-button-box">
-                <div class="search">搜索</div>
-                <a href="javascript:void(0);" id="addUser"  style="color: white;">
-                    <div class="clear btn" style="background: #D64242;">增加用户</div>
-                </a>
-            </div>
+<div class="chooseRecords">
+    <div style="float: left; width: 162px; padding-left:20px;" id="leftcontent">
+        <div class="b_header">&nbsp;全部下级</div>
+        <div>
+	        <ul class="b_box" data-id=""> 
+	    	</ul>
         </div>
-        <div class="content">
-            <div class="data">
-                <table class="data-table" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th class="th-1" style="width: 12%;">用户名</th>
-                        <th class="th-2" style="width: 14%;">用户级别</th>
-                        <th class="th-3" style="width: 10%;">余额</th>
-                        <th class="th-4" style="width: 14%;">返点级别</th>
-                        <th class="th-5" style="width: 14%;">注册时间</th>
-                        <th class="th-6" style="width: 11%;">代充</th>
-                        <th class="th-7" style="width: 14%;">注册方式</th>
-                        <th class="th-8" style="width: 11%;">操作</th>
-                    </tr>
-                    </thead>
-                    <tbody id="usertbody">
-                        <tr>
-			    			<td height="37" colspan="13" style="text-align: center;" class="needq">
-			    				<span>请选择查询条件之后进行查询</span>
-			    			</td>
-			    		</tr>
-                    </tbody> 
-                </table>
-            </div>
-            <div id="pager" style="margin-top: 20px; margin-right: 80px;"></div>
-        </div>
-       <input id="UserID" hidden="hidden" style="display: none;" type="text" value="@ViewBag.UserID"/>
     </div>
+    <div  style="float: left;width: 85%;" id="rightcontent">
+    <div class="filter">
+        <input type="hidden" name="isgetdate" value="1"/>
+        <label for="username">
+            <span class="text-middle-input">用户名：</span>
+            <input type="text" class="start-time input" id="username" value=""/>
+        </label>
+        <label for="bank_min">
+            <span class="text-middle-input">账户余额：</span>
+            <input type="text" class="start-time input" id="accountmin" value=""/>
+            <span class="text-middle-input">&nbsp;至&nbsp;</span>
+            <input type="text" class="endtime input" id="accountmax" value=""/>
+        </label>
+        <label>
+            <span class="text-middle-input">排序：</span>
+            <select class="input state" id="sortby" style="width: 100px;">
+                <option value="" selected="selected">默认排序</option>
+                <option value="a.username">用户名</option>
+                <option value="b.accountfee">账户余额</option>
+                <option value="a.rebate">返点级别</option>
+            </select>
+            <label>
+                <input type="checkbox" class="checkbox" id="sortbymax" value="1"/>从大到小</label>
+        </label>
+        <label>
+            <span class="text-middle-input">用户级别：</span>
+            <select class="input" id="type" style="width: 100px;">
+                <option value="-1" selected="selected">请选择...</option>
+                <option value="1">代理用户</option>
+                <option value="0">会员用户</option>
+            </select>
+        </label>
+        <label>
+            <span class="text-middle-input">返点级别：</span>
+            <input type="text" class="start-time input" id="ratemin" value=""/>
+            <span class="text-middle-input">&nbsp;至&nbsp;</span>
+            <input type="text" class="endtime input" id="ratemax" value=""/>
+        </label>
+        <div class="filter-button-box">
+            <div class="search">搜索</div>
+            <a href="javascript:void(0);" id="addUser" style="color: white;">
+                <div class="clear btn" style="background: #D64242;">增加用户</div>
+            </a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="data">
+            <table class="data-table" cellspacing="0">
+                <thead>
+                <tr>
+                    <th class="th-1" style="width: 12%;">用户名</th>
+                    <th class="th-2" style="width: 14%;">用户级别</th>
+                    <th class="th-3" style="width: 10%;">余额</th>
+                    <th class="th-4" style="width: 14%;">返点级别</th>
+                    <th class="th-5" style="width: 14%;">注册时间</th>
+                    <th class="th-6" style="width: 11%;">代充</th>
+                    <th class="th-7" style="width: 14%;">注册方式</th>
+                    <th class="th-8" style="width: 11%;">操作</th>
+                </tr>
+                </thead>
+                <tbody id="usertbody">
+                <tr>
+                    <td height="37" colspan="13" style="text-align: center;" class="needq">
+                        <span>请选择查询条件之后进行查询</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="pager" style="margin-top: 20px; margin-right: 80px;"></div>
+    </div>
+        <input id="UserID" hidden="hidden" style="display: none;" type="text" value="@ViewBag.UserID"/>
+        <input id="Layers" hidden="hidden" style="display: none;" type="text" value="@ViewBag.Layers"/>
+        </div>
+</div>
     <script type="text/javascript" src="/modules/scripts/userinfo/userinfo.js"></script>
 </body>
 </html>

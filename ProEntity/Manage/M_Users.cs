@@ -86,14 +86,21 @@ namespace ProEntity.Manage
 		/// 
 		/// </summary>
 		public int? Status{ get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? Layers { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
 		public string AccountPwd{ get; set; }
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTime? CreateTime{ get; set; }
+
+	    /// <summary>
+	    /// 
+	    /// </summary>
+	    public string Description { get; set; }
+
+	    public DateTime? CreateTime{ get; set; }
         /// <summary>
         /// 
         /// </summary>

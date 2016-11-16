@@ -28,7 +28,7 @@
         <div class="nav-box">
             <ul id="sddm"> 
             <li class="@(controller == "home" ? "button2 on2" : "lebutton2ft")"><a href="javascript:void(0);"  data-href="/Help/Security">首页</a></li>
-            <li class="@(controller == "active" ? "button2 on2" : "lebutton2ft")"><a href="javascript:void(0);" data-href="active_center.html">活动</a></li>
+            <li class="@(controller == "active" ? "button2 on2" : "lebutton2ft")"><a href="javascript:void(0);" data-href="/Help/Active">活动</a></li>
             @foreach (Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, ExpandClass.CLIENT_TOP_CODE))
             {                   
                 <li class="@(model.MenuCode.ToUpper() == (controllerMenu != null ? controllerMenu.PCode.ToUpper() : "101000000") ? "button2 on2" : "button2")"  data-code="@(model.MenuCode)">            

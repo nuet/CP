@@ -63,19 +63,7 @@ namespace ProDAL.Manage
 
             return ExecuteNonQuery("update M_Users set LoginName=@UserName , LoginPwd=@LoginPwd where userID=@userID", paras, CommandType.Text) > 0;
         }
-
-        public bool CreateUserReport(string userid, string keyName)
-        { 
-            SqlParameter[] paras = { 
-                                    new SqlParameter("@Result",SqlDbType.Int),
-                                    new SqlParameter("@UserID",userid),
-                                    new SqlParameter("@KeyName",keyName)
-                                   };
-            paras[0].Direction = ParameterDirection.Output;
-            ExecuteNonQuery("M_InsertUserReport", paras, CommandType.StoredProcedure);
-            var result = Convert.ToInt32(paras[0].Value);
-            return result > 0;
-        }
+         
         public bool UpdateUserAccount(string userid, decimal golds,int  type,string remark)
         {
             SqlParameter[] paras = { 
@@ -90,20 +78,8 @@ namespace ProDAL.Manage
             var result = Convert.ToInt32(paras[0].Value);
             return result > 0;
         }
-        public int CreateUserFocus(string userid, string seeid)
-        {
-            SqlParameter[] paras = { 
-                                    new SqlParameter("@Result",SqlDbType.Int),
-                                    new SqlParameter("@UserID",userid),
-                                    new SqlParameter("@SeeID",seeid)
-                                   };
-            paras[0].Direction = ParameterDirection.Output;
-            ExecuteNonQuery("M_InsertUserFocus", paras, CommandType.StoredProcedure);
-            var result = Convert.ToInt32(paras[0].Value);
-            return result;
-        }
 
-        public bool CreateM_User(string userid, string loginname, string loginpwd,string username ,decimal rebate,int sourceType,int  type,string parentid,out string errormsg)
+        public bool CreateM_User(string userid, string loginname, string loginpwd, string username, decimal rebate, int sourceType, int type, string parentid, string roleid, out string errormsg, string Description)
         {
             SqlParameter[] paras = { 
                                     new SqlParameter("@ErrorMsg" , SqlDbType.VarChar,300),
@@ -112,6 +88,8 @@ namespace ProDAL.Manage
                                     new SqlParameter("@LoginName",loginname),
                                     new SqlParameter("@LoginPwd",loginpwd),
                                     new SqlParameter("@SourceType",sourceType),
+                                    new SqlParameter("@RoleID",roleid),
+                                    new SqlParameter("@Description",Description), 
                                     new SqlParameter("@Type",type), 
                                     new SqlParameter("@Rebate",rebate), 
                                     new SqlParameter("@UserName",username),
@@ -137,24 +115,7 @@ namespace ProDAL.Manage
                                    };
 
             return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
-        }
-        public bool UpdateManage_User(string userid, string name, string roleid, string email, string mobilephone, string officephone, string jobs,  string description)
-        {
-            string sql = "update M_Users set Name=@Name,Email=@Email,MobilePhone=@MobilePhone,OfficePhone=@OfficePhone,Jobs=@Jobs  ,Description=@Description ,RoleID=@RoleID where UserID=@UserID ";
-
-            SqlParameter[] paras = {  
-                                       new SqlParameter("@UserID",userid),
-                                       new SqlParameter("@Name",name),
-                                       new SqlParameter("@Email",email),
-                                       new SqlParameter("@MobilePhone",mobilephone),
-                                       new SqlParameter("@OfficePhone",officephone),
-                                       new SqlParameter("@Jobs",jobs),  
-                                       new SqlParameter("@Description",description), 
-                                       new SqlParameter("@RoleID",roleid)
-                                   };
-
-            return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
-        }
+        } 
         public bool UpdateM_User(string userid, string avatar)
         {
             string sql = "update M_Users set Avatar=@Avatar where UserID=@UserID ";
@@ -162,6 +123,18 @@ namespace ProDAL.Manage
             SqlParameter[] paras = {  
                                        new SqlParameter("@UserID",userid),
                                        new SqlParameter("@Avatar",avatar)
+                                   };
+
+            return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
+        }
+        public bool UpdateM_UserRole(string userid, string roleid,string Description)
+        {
+            string sql = "update M_Users set RoleID=@RoleID,Description=isnull(Description,'')+@Description where UserID=@UserID ";
+
+            SqlParameter[] paras = {  
+                                       new SqlParameter("@UserID",userid),
+                                        new SqlParameter("@RoleID",roleid),
+                                       new SqlParameter("@Description",Description)
                                    };
 
             return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
@@ -175,59 +148,7 @@ namespace ProDAL.Manage
                                        new SqlParameter("@UserName",username)
                                    };
             return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
-        }
-        public bool UpdateM_UserBase(string userid, string bHeight, string bWeight, string jobs, string bPay, int isMarry,
-            string myContent, string name, string talkTo, int age, string myservice)
-        {
-            string sql = "update M_Users set bHeight=@bHeight,bWeight=@bWeight,Name=@Name,TalkTo=@TalkTo,MyService=@MyService," +
-                         "bPay=@bPay,Jobs=@Jobs ,IsMarry=@isMarry,myContent=@myContent,Age=@Age  " +
-                         "where UserID=@UserID ";
-
-            SqlParameter[] paras = {  
-                                       new SqlParameter("@MyService",myservice), 
-                                       new SqlParameter("@Name",name), 
-                                       new SqlParameter("@Age",age), 
-                                       new SqlParameter("@TalkTo",talkTo), 
-                                       new SqlParameter("@UserID",userid),
-                                       new SqlParameter("@bHeight",bHeight),
-                                       new SqlParameter("@bWeight",bWeight),
-                                       new SqlParameter("@isMarry",isMarry),
-                                       new SqlParameter("@bPay",bPay),
-                                       new SqlParameter("@Jobs",jobs),
-                                       new SqlParameter("@myContent",myContent) 
-                                   };
-            return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
-        }
-        public bool UpdateM_UserInfo(string userid, string bHeight, string bWeight, string jobs, string bPay, int isMarry,string myContent, string name, string talkTo,
-            int age, string myservice,DateTime birthday,int sex,string education,string qq,string mobile,string email,string province,string city ,string district)
-        {
-            string sql = "update M_Users set Status=1,bHeight=@bHeight,bWeight=@bWeight,Name=@Name,TalkTo=@TalkTo,MyService=@MyService,Sex=@Sex,Education=@Education,Province=@Province," +
-                         "bPay=@bPay,Jobs=@Jobs ,IsMarry=@isMarry,myContent=@myContent,Age=@Age,BirthDay=@BirthDay,Email=@Email,QQ=@QQ,MobilePhone=@Mobile,City=@City,District=@District " +
-                         "where UserID=@UserID ";
-            SqlParameter[] paras = {  
-                                       new SqlParameter("@MyService",myservice), 
-                                       new SqlParameter("@Name",name), 
-                                       new SqlParameter("@BirthDay",birthday), 
-                                       new SqlParameter("@Sex",sex), 
-                                       new SqlParameter("@Education",education), 
-                                       new SqlParameter("@QQ",qq), 
-                                       new SqlParameter("@Mobile",mobile), 
-                                       new SqlParameter("@Email",email), 
-                                       new SqlParameter("@Province",province), 
-                                       new SqlParameter("@City",city), 
-                                       new SqlParameter("@District",district), 
-                                       new SqlParameter("@Age",age), 
-                                       new SqlParameter("@TalkTo",talkTo), 
-                                       new SqlParameter("@UserID",userid),
-                                       new SqlParameter("@bHeight",bHeight),
-                                       new SqlParameter("@bWeight",bWeight),
-                                       new SqlParameter("@isMarry",isMarry),
-                                       new SqlParameter("@bPay",bPay),
-                                       new SqlParameter("@Jobs",jobs),
-                                       new SqlParameter("@myContent",myContent) 
-                                   };
-            return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
-        }
+        }  
         public bool DeleteM_User(string userid, int status)
         {
             SqlParameter[] paras = { 

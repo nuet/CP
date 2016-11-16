@@ -184,27 +184,29 @@ namespace Proc.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         public JsonResult SaveUser(string entity)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             M_Users model = serializer.Deserialize<M_Users>(entity);
-            string mes = "";
+            string mes = "执行成功";
             JsonDictionary.Add("errmeg", "执行成功");
             if (string.IsNullOrEmpty(model.UserID))
             {
                 if (M_UsersBusiness.GetM_UserCountByLoginName(model.LoginName) == 0)
                 {
-                    model.CreateUserID = CurrentUser.UserID;
-                    model.Avatar = "";
+                    model.CreateUserID = CurrentUser.UserID; 
                     model.IsAdmin = 0;
                     model.SourceType = 1;
-                    model.UserID = M_UsersBusiness.CreateM_User(model, ref mes);
+                    model.Type = 1;
+                    model.Rebate = 100;
+                    model.UserID = M_UsersBusiness.CreateM_User(model, ref mes,"");
                 }
                 else { JsonDictionary["errmeg"] = "登录名已存在,操作失败"; }
             }
             else
             {
-                bool bl = M_UsersBusiness.UpdateM_User(model.UserID, model.UserName, model.RoleID, model.Email, model.MobilePhone, model.OfficePhone, "","");
+                bool bl = M_UsersBusiness.UpdateM_UserRole(model.UserID, model.RoleID, model.Description);
                 if (!bl)
                 {
                     model.UserID = "";
@@ -218,6 +220,7 @@ namespace Proc.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         public JsonResult DeleteMUser(string id)
         {
 
