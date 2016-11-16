@@ -39,7 +39,7 @@ namespace CPiao.Controllers
         {
             return View();
         }
-
+      
         public JsonResult RestPwd(string loginname,string useremail)
         {
             string newpwd = CreateRandomCode(6);

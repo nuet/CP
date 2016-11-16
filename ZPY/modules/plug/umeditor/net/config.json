@@ -7,9 +7,8 @@
     "imageCompressEnable": true, 
     "imageCompressBorder": 1600,
     "imageInsertAlign": "none", 
-    "imageUrlPrefix":"",
-	"tempimageUrlPrefix":http://admin.intfactory.cn/modules/plug/umeditor/net/",
-    
+    "imageUrlPrefix": "http://localhost:6323/modules/plug/umeditor/net/",
+    /*"tempimageUrlPrefix": "http://admin.intfactory.cn/modules/plug/umeditor/net/",*/
     "imagePathFormat": "upload/image/{yyyy}{mm}{dd}/{time}{rand:6}",
 
     "scrawlActionName": "uploadscrawl",

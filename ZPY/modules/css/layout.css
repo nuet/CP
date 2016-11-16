@@ -1,10 +1,10 @@
 ﻿
 /*全局样式*/
-body { background-color:#fff; }
+body { background-color: #e1eaf0;}
 iframe{vertical-align:top;}
 embed{display:none;}
 /*header样式*/ 
-header { height:50px; width:100%; background-color:#2A8CEF; position:fixed; top:0; z-index:1999; opacity:0.9;}
+header { height:50px; width:100%; background-color:#D64242; position:fixed; top:0; z-index:1999; opacity:0.9;}
 
 header .logo { margin-top:13px; margin-left:10px; }
 header .logo img{ height:26px;width:20px; }
@@ -15,19 +15,19 @@ header .companyname:hover { color: #fff; }
 /*一级菜单*/
 header .menu { height:50px; margin-left:0px;  }
 header .menu a{  height:50px; line-height:50px;text-align:center; width:100px; display:inline-block; font-size:14px; color:#fff; }
-header .menu .select {background-color:#307FDC;}
-header .menu li:hover {background-color:#87ADDA;}
+/*header .menu .select {background-color:#D64242;}
+header .menu li:hover {background-color:#87ADDA;}*/
 
 
 /*登录信息*/
 header .currentuser { margin-right:30px; cursor:pointer;}
 header .currentuser span{ display:inline-block; float:left;}
-header .currentuser .avatar { height:35px; width:35px; border:solid 1px #2F74B9; border-radius:18px; margin-top:7px;}
+header .currentuser .avatar { height:35px; width:35px; border:solid 1px #D64242; border-radius:18px; margin-top:7px;}
 header .currentuser .username { margin-left:10px; color:#eee; line-height:50px; font-size:14px; }
 
 header .currentuser .dropdown { width:16px; height:16px; position:relative; overflow:hidden; margin-left:5px; margin-top:24px; }
 header .dropdown .dropdown-top { border-top:solid 6px #eee; border-left:solid 6px transparent ;border-right:solid 6px transparent ; }
-header .dropdown .dropdown-bottom { border-top:solid 6px #2F74B9; border-left:solid 6px transparent ;
+header .dropdown .dropdown-bottom { border-top:solid 6px #D64242; border-left:solid 6px transparent ;
                                     border-right:solid 6px transparent; position:absolute; top:-3px; left:0; }
 
 header .currentuser:hover .username{ color:#fff;}
@@ -49,10 +49,10 @@ nav { width:200px; position:fixed; left:0; top:50px; height:100%; background-col
 
 nav .controller { border-top:solid 1px #eee; padding:5px 0;}
 nav .controller-box {  height:40px; cursor:pointer; }
-nav .controller-name { height:40px; cursor:pointer; text-align:center; line-height:40px; font-size:16px; color:#2C76EA; }
+nav .controller-name { height:40px; cursor:pointer; text-align:center; line-height:40px; font-size:16px; color:#D64242; }
 nav .controller-box :hover{ background-color: #ddd; }
 nav .controller-box.select{background-color: #ddd;}
-nav .controller-name a{ height:40px; cursor:pointer; text-align:center; line-height:40px; font-size:16px; color:#318ae4; }
+nav .controller-name a{ height:40px; cursor:pointer; text-align:center; line-height:40px; font-size:16px; color:#D64242; }
  
 
 nav .action-box {}
@@ -66,12 +66,12 @@ nav .action-box .select { width:201px; background-color:#fff;}
 .main-content {margin: 0 20px 0 20px;padding-top: 10px;}
 
 /*Title样式*/
-.header-box {border-bottom:solid 1px #e6e6e6;/* margin-top:15px; */height:35px;}
-.header-box .header-title { height:35px; line-height:35px; color:#666; font-size:11px;}
+.header-box {border-bottom:solid 1px #fff;  height:35px; }
+.header-box .header-title { height:35px; line-height:35px; color:#666;  font-size:11px;}
 .header-box .ico-back { margin:6px 0 0 20px; }
 
 /*内容页样式*/
-.content-body{ padding:15px 0 80px; overflow:auto; background-color:#fff; border-radius:2px; min-height:130px; }
+.content-body{padding: 15px 20px 80px; overflow:auto; background-color:#fff; border-radius:2px; min-height:130px; }
 .search-body { height:35px; }
 
 /*数据验证错误*/
@@ -166,8 +166,8 @@ nav .action-box .select { width:201px; background-color:#fff;}
 .tab-nav { margin:10px 0; height:33px; line-height:33px; border-bottom: solid 1px #ccc; }
 .tab-nav ul { height: 32px; }
 .tab-nav ul li { height:32px; float:left; padding:0 20px; cursor:pointer; }
-.tab-nav ul li:hover { color:#318ae4; }
-.tab-nav ul li.hover { position: relative; height: 32px; line-height: 32px; border-bottom: 2px solid #D64242; color:#318ae4;}
+.tab-nav ul li:hover { color:#D64242; }
+.tab-nav ul li.hover { position: relative; height: 32px; line-height: 32px; border-bottom: 2px solid #D64242; color:#D64242;}
 
 /*日志样式*/
 .log-body { width:99%; }

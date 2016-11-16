@@ -24,7 +24,11 @@ namespace CPiao.Controllers
         {
             return View();
         }
-
+        public ActionResult ActiveAdd(string id = "")
+        {
+            ViewBag.ActiveID = id;
+            return View();
+        }
         public ActionResult Active()
         {
             return View();

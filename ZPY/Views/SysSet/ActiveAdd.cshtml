@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "ActiveAdd";
+    Layout = null;
+}
+<html>
+<head>
+    <link href="/modules/css/base.css" rel="stylesheet" />
+    <link href="/modules/css/layout.css" rel="stylesheet" />
+    <link href="/modules/css/iconfont/iconfont.css" rel="stylesheet"/>
+    <link href="/modules/plug/umeditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="/Scripts/sea.js"></script>
+    <script type="text/javascript" src="/Scripts/sea-config.js"></script>
+    <script src="/modules/plug/umeditor/ueditor.config.js"></script>
+    <script src="/modules/plug/umeditor/umeditor.min.js"></script>
+    <script type="text/javascript">
+        seajs.use(["scripts/sysset/active"], function (obj) {
+            var um = UE.getEditor('actcontent');
+            obj.init(um);
+        });
+    </script>
+</head>
+<body>
+    <div class="main-body">
+        <div class="main-content">
+<div class="content-body mTop20">
+    <ul class="table-add product-add">
+        <li>
+            <span class="column-name">活动名称：</span><input type="text" style="width:300px;" maxlength="50" id="acttitle" data-empty="必填" class="input verify" />
+        </li> 
+        <li>
+            <span class="column-name">活动概要：</span><input type="text" maxlength="200" id="acttips" class="input" />
+        </li>
+        <li>
+            <span class="column-name">活动海报：</span><span id="actimg" class="btn">选择产品图片</span>
+        </li>
+        <li>
+            <span class="column-name">有效时间：</span><input type="text" id="iptCreateTime" placeholder="创建时间" class="ipt-date"  /> 
+        </li>  
+        <li>
+            <span class="column-name">活动详情：</span><div id="actcontent" class="left"></div>
+        </li>
+
+    </ul>
+    <img class="product-img" id="productImg" alt="" src="/modules/images/default.png" />
+    <div class="mTop20">
+        <div  class="btn" id="btnSaveActive">保存</div>
+    </div>
+</div>
+        </div>
+    </div>
+</body>
+</html>
