@@ -86,6 +86,7 @@
         }
     </style>
     <script type="text/javascript" src="/Scripts/jquery-1.11.3.min.js"></script>
+    <script  type="text/javascript"  src="/Scripts/DateForm.js"></script>
 </head>
 <body>
     <div class="grade">
@@ -97,14 +98,14 @@
             <div class="item">
                 <p>
                     <img src="/modules/img/litte-icon/账户安全a.png" alt="账户安全" class="account-safe" width="85" height="85" />
-                </li>
+                </p>
 					   <p class="big-title">账户安全</p>
                 <div class="set1"><a href="#" target="mainframe">立即设置</a></div>
             </div>
             <div class="item">
                 <p>
                     <img src="/modules/img/litte-icon/资金安全a.png" alt="资金安全" class="account-safe" width="85" height="85" />
-                </li>
+                </p>
 					   <p class="big-title">资金安全</p>
                 <div class="set1"><a href="#" target="mainframe">立即设置</a></div>
             </div>
@@ -112,70 +113,14 @@
     </div>
     <dl class="list">
         <dt>最新公告</dt>
-        <dd>
+        <dd id="infodiv">
             <div class="dd">
                 <span>
                     <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
                 <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
                 <span class="date">2016-12-12</span>
-            </div>
-        </dd>
-        <dd>
-            <div class="dd">
-                <span>
-                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
-                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
-                <span class="date">2016-12-12</span>
-            </div>
-        </dd>
-        <dd>
-            <div class="dd">
-                <span>
-                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
-                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
-                <span class="date">2016-12-12</span>
-            </div>
-        </dd>
-        <dd>
-            <div class="dd">
-                <span>
-                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
-                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
-                <span class="date">2016-12-12</span>
-            </div>
-        </dd>
-        <dd>
-            <div class="dd">
-                <span>
-                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
-                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
-                <span class="date">2016-12-12</span>
-            </div>
-        </dd>
-        <dd>
-            <div class="dd">
-                <span>
-                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
-                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
-                <span class="date">2016-12-12</span>
-            </div>
-        </dd>
-        <dd>
-            <div class="dd">
-                <span>
-                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
-                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
-                <span class="date">2016-12-12</span>
-            </div>
-        </dd>
-        <dd>
-            <div class="dd">
-                <span>
-                    <img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>
-                <span class="pub-title">系统最新公布消息你说的那个人中奖了</span>
-                <span class="date">2016-12-12</span>
-            </div>
-        </dd>
+            </div> 
+        </dd> 
     </dl>
     <!--   弹出层-->
     <div class="layer">
@@ -219,6 +164,15 @@
                     console.log('错误', '没有找到匹配的 IP 地址信息！');
                     $('#ipaddress').html('没有找到匹配的 IP 地址信息');
                 }
+            });
+            $.post('/Help/GetActive', { type: 1, tops: 10 }, function(data) {
+                var html = "";
+                for (var i = 0; i < data.Items.length; i++) {
+                    html += '<div class="dd"><span><img src="/modules/img/litte-icon/尖括号-粗大-右.png" width="14" height="14" style="vertical-align: middle;" /></span>' +
+                        '<span class="pub-title">' + data.Items[i].Title + '</span>' +
+                        '<span class="date">' + convertdate(data.Items[i].CreateTime, true) + '</span></div> ';
+                }
+                $('#infodiv').html(html);
             });
         });
     </script>

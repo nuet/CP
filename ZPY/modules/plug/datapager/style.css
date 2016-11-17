@@ -77,22 +77,22 @@ span.jPag-sprevious,
 span.jPag-sprevious-img{
     margin:2px 0px 2px 2px;
     padding:4px 8px;
-    color: rgb(51, 51, 51); 
-    border: 1px solid rgb(74, 158, 238); 
-    background-color: rgb(255, 255, 255);
+    color: rgb(51, 51, 51);
+    border: 1px solid rgb(238, 74, 74);/*rgb(74, 158, 238);*/
+    background-color: rgb(231, 74, 74);/*rgb(255, 255, 255);*/
 }
 span.jPag-snext,
 span.jPag-snext-img{
     margin:2px 0px 2px 2px;
     padding:4px 8px;
     color: rgb(51, 51, 51); 
-    border: 1px solid rgb(74, 158, 238); 
-    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(238, 74, 74);/*rgb(74, 158, 238);*/
+    background-color: rgb(231, 74, 74);/*rgb(255, 255, 255);*/
 }
-ul.jPag-pages li span.jPag-previous-img { background: transparent url(../images/previous.png) no-repeat center right; }
-ul.jPag-pages li span.jPag-next-img { background: transparent url(../images/next.png) no-repeat center left; }
-span.jPag-sprevious-img { background: transparent url(../images/sprevious.png) no-repeat center right; }
-span.jPag-snext-img { background: transparent url(../images/snext.png) no-repeat center left; }
+ul.jPag-pages li span.jPag-previous-img { background: transparent url(/modules/datapager/images/previous.png) no-repeat center right; }
+ul.jPag-pages li span.jPag-next-img { background: transparent url(/modules/datapager/images/next.png) no-repeat center left; }
+span.jPag-sprevious-img { background: transparent url(/modules/datapager/images/sprevious.png) no-repeat center right; }
+span.jPag-snext-img { background: transparent url(/modules/datapager/images/snext.png) no-repeat center left; }
 
 .jPag-count {color:#333; height:33px; line-height:33px; display:inline-block; position:absolute; top:0; right:0; text-align:right; font-size:13px;}
 .jPag-count input{width:20px; border:solid 1px #ccc; text-align:center;}

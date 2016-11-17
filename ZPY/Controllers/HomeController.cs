@@ -127,16 +127,6 @@ namespace CPiao.Controllers
         }
         
 
-        public JsonResult GetAdvertList(string view, string imgtype)
-        {
-            var list = WebSetBusiness.GetAdvertSetList(imgtype, view.ToLower());
-            JsonDictionary.Add("BaseUrl",ProTools.Common.GetKeyValue("Url"));
-            JsonDictionary.Add("items", list);
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
+        
     }
 }

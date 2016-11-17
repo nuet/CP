@@ -223,7 +223,7 @@
         Global.post("/SysSet/SaveUser", { entity: JSON.stringify(model) }, function (data) {
             if (data.errmeg == "执行成功") {
                 _self.getList();
-            } else { alert(data.errmeg); }
+            } else { alert(data.ErrMsg); }
         })
     }
 

@@ -11,46 +11,7 @@ namespace ProDAL
     public class WebSetDAL : BaseDAL
     {
         public static WebSetDAL BaseProvider = new WebSetDAL();
-        public DataTable GetMemberLevel()
-        { 
-
-            DataTable dt = GetDataTable("select * from MemberLevel where  Status=1 order by Origin");
-
-            return dt;
-        }
-        public DataTable GetAdvertSetList(string imgType ,string view)
-        {
-            string sqlwhere = "";
-            if (!string.IsNullOrEmpty(imgType))
-            {
-                sqlwhere += " and imgType='" + imgType + "' ";
-            }
-            if (!string.IsNullOrEmpty(view))
-            {
-                sqlwhere += " and [view]='" + view + "' ";
-            }
-            DataTable dt = GetDataTable("select * from AdvertSet where 1=1 "+sqlwhere);
-
-            return dt;
-        }
-        public DataTable GetMemberLevelByLevelID(string levelID)
-        {
-            string sqlText = "select * from MemberLevel where LevelID=@LevelID and Status=1";
-            SqlParameter[] paras = { 
-                                     new SqlParameter("@LevelID",levelID)
-                                   };
-
-            return GetDataTable(sqlText, paras, CommandType.Text);
-        }
-        public DataTable GetMemberLevelByOrigin(string origin)
-        {
-            string sqlText = "select * from MemberLevel where origin=@Origin  and Status=1 ";
-            SqlParameter[] paras = { 
-                                     new SqlParameter("@Origin",origin)
-                                   };
-
-            return GetDataTable(sqlText, paras, CommandType.Text);
-        }
+       
         public DataTable GetChargeSetDetail(string view)
         {
             SqlParameter[] paras = { 
@@ -59,39 +20,30 @@ namespace ProDAL
 
             return GetDataTable("select * from ChargeSet where [View]=@View and Status=1", paras, CommandType.Text);
         }
-        #region 新增
-        public string InsertMemberLevel(string levelid, string name, decimal golds,  string userid, decimal discountfee, decimal integfeemore, int origin, int status = 1, string imgurl = "",int type=0)
+        public DataTable GetActiveByID(string id)
         {
             SqlParameter[] paras = { 
-                                     new SqlParameter("@result" , SqlDbType.VarChar,300),
-                                     new SqlParameter("@LevelID" , levelid),
-                                     new SqlParameter("@Name" , name), 
-                                     new SqlParameter("@Golds" , golds),
-                                     new SqlParameter("@DiscountFee" , discountfee),
-                                     new SqlParameter("@IntegFeeMore" , integfeemore),
-                                     new SqlParameter("@Status" , status),
-                                      new SqlParameter("@Type" , type),
-                                     new SqlParameter("@CreateUserID" , userid),
-                                      new SqlParameter("@ImgUrl",imgurl), 
-                                    
+                                    new SqlParameter("@AutoID",id)
                                    };
-            paras[0].Direction = ParameterDirection.Output;
-            origin = ExecuteNonQuery("P_InsertMemberLevel", paras, CommandType.StoredProcedure);
-            return Convert.ToString(paras[0].Value);
-        }
 
-        public bool InsertAdvert(string userid, string view, string content, string imgtype, string imgurl, string linkurl)
+            return GetDataTable("select * from Active where AutoID=@AutoID and Status<>9", paras, CommandType.Text);
+        }
+        #region 新增 
+
+        public bool InsertActive(string userid, string Title, string content, string Tips, string img, DateTime btime, DateTime etime,int type)
         {
             SqlParameter[] paras =
             { 
-                new SqlParameter("@View", view),
+                new SqlParameter("@Title", Title),
                 new SqlParameter("@Content", content),
-                new SqlParameter("@ImgType", imgtype),
-                new SqlParameter("@ImgUrl", imgurl),
-                new SqlParameter("@UserID", userid),
-                new SqlParameter("@LinkUrl", linkurl)
+                new SqlParameter("@Tips", Tips),
+                new SqlParameter("@Img", img),
+                new SqlParameter("@Type", type),
+                new SqlParameter("@UserID", userid), 
+                new SqlParameter("@ETime", etime),
+                new SqlParameter("@BTime", btime)
             };
-            return ExecuteNonQuery("Insert into  AdvertSet([View],[Content],ImgType,ImgUrl,CreateTime,CreateUserID,LinkUrl) values (@View,@Content,@ImgType,@ImgUrl,getDate(),@UserID,@LinkUrl)", paras, CommandType.Text) > 0;
+            return ExecuteNonQuery("Insert into  Active([Title],[Content],Tips,Img,CreateTime,CreateUserID,BTime,ETime,Type) values (@Title,@Content,@Tips,@Img,getDate(),@UserID,@BTime,@ETime,@Type)", paras, CommandType.Text) > 0;
         }
         public bool InsertChargeSet(string userid, string view, string remark, decimal golds)
         {
@@ -106,45 +58,22 @@ namespace ProDAL
         }
         #endregion
 
-        #region 修改
-         public string UpdateMemberLevel(decimal golds, string levelid, string name, decimal discountfee, decimal integfeemore, string imgurl="")
-        {  
-            SqlParameter[] paras = { 
-                                     new SqlParameter("@result" , SqlDbType.VarChar,300),
-                                     new SqlParameter("@LevelID",levelid),
-                                     new SqlParameter("@Name",name), 
-                                     new SqlParameter("@DiscountFee" , discountfee),
-                                     new SqlParameter("@IntegFeeMore" , integfeemore),
-                                     new SqlParameter("@Golds" , golds),
-                                     new SqlParameter("@ImgUrl",imgurl), 
-                                   };
-            paras[0].Direction = ParameterDirection.Output;
-            ExecuteNonQuery("P_UpdateMemberLevel", paras, CommandType.StoredProcedure);
-            return paras[0].Value.ToString(); ;
-        }
-        public string DeleteMemberLevel(string levelid)
-        {
-            SqlParameter[] paras = { 
-                                     new SqlParameter("@result" , SqlDbType.VarChar,300),
-                                     new SqlParameter("@LevelID",levelid) 
-                                   };
-            paras[0].Direction = ParameterDirection.Output;
-            ExecuteNonQuery("P_DeleteMemberLevel", paras, CommandType.StoredProcedure);
-            return paras[0].Value.ToString();
-        }
+        #region 修改  
 
-        public bool UpdateAdvert(int autoid, string view, string content, string imgtype, string imgurl, string linkurl)
+        public bool UpdateActive(int autoid, string Title, string content, string Tips, string img, DateTime btime, DateTime etime, string upduserid)
         {
             SqlParameter[] paras =
             {
                 new SqlParameter("@AutoID", autoid),
-                new SqlParameter("@View", view),
+                new SqlParameter("@Title", Title),
                 new SqlParameter("@Content", content),
-                new SqlParameter("@ImgType", imgtype),
-                new SqlParameter("@LinkUrl", linkurl),
-                new SqlParameter("@ImgUrl", imgurl)
+                new SqlParameter("@Img", img),
+                new SqlParameter("@Tips", Tips),
+                new SqlParameter("@ETime", etime),
+                new SqlParameter("@UpdUserID", upduserid),
+                new SqlParameter("@BTime", btime)
             };
-            return ExecuteNonQuery("Update AdvertSet set [View]=@View,[Content]=@Content,ImgType=@ImgType,ImgUrl=@ImgUrl,LinkUrl=@LinkUrl  where AutoID=@AutoID ", paras, CommandType.Text) > 0;
+            return ExecuteNonQuery("Update Active set UpdUserID=@UpdUserID,[Content]=@Content,Img=@Img,Tips=@Tips,Title=@Title,UpdTime=getdate(),BTime=@BTime,ETime=@ETime   where AutoID=@AutoID ", paras, CommandType.Text) > 0;
         }
         public bool UpdateChargeSet(int autoid, string view, string remark, decimal golds)
         {
@@ -157,14 +86,14 @@ namespace ProDAL
             };
             return ExecuteNonQuery("Update ChargeSet set [View]=@View,[Remark]=@Remark,Golds=@Golds  where AutoID=@AutoID ", paras, CommandType.Text) > 0;
         }
-        
-        public bool DeleteAdvertSet(int autoid)
+
+        public bool DeleteActive(int autoid)
         {
             SqlParameter[] paras =
             {
                 new SqlParameter("@AutoID", autoid)
             };
-            return ExecuteNonQuery("Delete from AdvertSet where AutoID=@AutoID ", paras,CommandType.Text) > 0;
+            return ExecuteNonQuery("update Active set Status=9 where AutoID=@AutoID ", paras, CommandType.Text) > 0;
         } 
         #endregion
     }

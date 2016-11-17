@@ -132,6 +132,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlugController.cs" />
     <Compile Include="Controllers\SysSetController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -179,6 +180,7 @@
     <Content Include="modules\datapager\images\snext.png" />
     <Content Include="modules\datapager\images\sprevious.png" />
     <Content Include="modules\datapager\style.css" />
+    <Content Include="modules\images\default.png" />
     <Content Include="modules\images\ico-btnadd.png" />
     <Content Include="modules\images\ico-check.png" />
     <Content Include="modules\images\ico-checked.png" />
@@ -191,6 +193,9 @@
     <Content Include="modules\images\ico-tree-line.png" />
     <Content Include="modules\images\ico-tree-open.png" />
     <Content Include="modules\images\ico-tree-pull.png" />
+    <Content Include="modules\images\icondate.png" />
+    <Content Include="modules\images\ico_search.png" />
+    <Content Include="modules\images\ico_searchhover.png" />
     <Content Include="modules\img\bg.jpg" />
     <Content Include="modules\img\browser.png" />
     <Content Include="modules\img\down-arrow.png" />
@@ -766,6 +771,7 @@
     <Content Include="modules\template\sysset\user-detail.html" />
     <Content Include="modules\template\sysset\users.html" />
     <Content Include="modules\template\sysset\webusers.html" />
+    <Content Include="modules\template\sysset\active.html" />
     <Content Include="modules\webuploader\bootstrap.min.css" />
     <Content Include="modules\webuploader\uploader.css" />
     <Content Include="modules\webuploader\Uploader.swf" />
@@ -791,8 +797,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\tempfile\" />
+    <Folder Include="Content\UploadFiles\" />
     <Folder Include="Models\" />
     <Folder Include="modules\plug\umeditor\net\upload\images\" />
+    <Folder Include="Upload\Active\" />
     <Folder Include="Upload\image\" />
     <Folder Include="Upload\UserAvatar\" />
     <Folder Include="Views\RFriend\" />
@@ -919,6 +928,7 @@
     <Content Include="Views\SysSet\RolePermission.cshtml" />
     <Content Include="Views\Help\Active.cshtml" />
     <Content Include="Views\SysSet\ActiveAdd.cshtml" />
+    <Content Include="Views\SysSet\ActiveDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

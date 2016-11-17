@@ -106,6 +106,19 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+
+        public JsonResult GetActive(int type=0,int tops=9)
+        {
+            var list = WebSetBusiness.GetActiveList(type ,tops);
+            JsonDictionary.Add("Items", list);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         public JsonResult SaveReply(string entity)
         {
             var result = false;
@@ -189,47 +202,7 @@ namespace CPiao.Controllers
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
-        }
-        public JsonResult GetActivity(int type=1)
-        {
-            JsonDictionary.Add("items", WebSetBusiness.GetMemberLevel(type));
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
-        public JsonResult PayMoney(int type,string levelid,string payway)
-        {
-            var model=WebSetBusiness.GetMemberLevelByID(levelid);
-            string msg = "";
-            string ordercode = CurrentUser.AutoID + DateTime.Now.ToString("yyyMMddHHmmssfff");
-            JsonDictionary.Add("result", UserOrdersBusiness.CreateUserOrder(levelid, payway == "zfbpay" ? 0 : 1, ordercode, CurrentUser.UserID, ref msg));
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-        public JsonResult PayOtherMoney(decimal gold, string payway)
-        {
-            var grule = Convert.ToDecimal(CommonBusiness.getSysSetting(EnumSettingKey.GoldScale, "DValue"));
-            var totalFee = grule*gold;
-            string ordercode = CurrentUser.AutoID + DateTime.Now.ToString("yyyMMddHHmmssfff");
-            var model = WebSetBusiness.GetMemberLevel(1).Where(x => x.IntegFeeMore <= totalFee).OrderByDescending(x=>x.Origin).FirstOrDefault();
-            string content = "购买金币";
-            if (model != null)
-            {
-                content = model.Golds > 0 ? ("满足优惠活动，赠送金币：" + model.Golds) : "";
-                gold += model.Golds;
-            }
-            JsonDictionary.Add("result", UserOrdersBusiness.CreateUserOrder(ordercode, payway == "zfbpay" ? 0 : 1, "金币", "", content, totalFee, "", 1, gold, CurrentUser.UserID));
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
+        } 
+         
     }
 }

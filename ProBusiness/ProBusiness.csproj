@@ -94,6 +94,10 @@
       <Project>{b2f2671d-7f9b-4e3e-b5e1-fe8acbf1976f}</Project>
       <Name>ProEnum</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ProTools\ProTools.csproj">
+      <Project>{898a9502-a35e-4032-a90c-42708b2b9c82}</Project>
+      <Name>ProTools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

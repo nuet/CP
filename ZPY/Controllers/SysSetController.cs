@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ProBusiness;
 using ProBusiness.Manage;
+using ProEntity;
 using ProEntity.Manage;
 
 namespace CPiao.Controllers
@@ -24,13 +25,18 @@ namespace CPiao.Controllers
         {
             return View();
         }
-        public ActionResult ActiveAdd(string id = "")
-        {
-            ViewBag.ActiveID = id;
-            return View();
-        }
+       
         public ActionResult Active()
         {
+            return View();
+        }
+        public ActionResult ActiveAdd()
+        {
+            return View();
+        }
+        public ActionResult ActiveDetail(string id = "")
+        {
+            ViewBag.Model = WebSetBusiness.GetActiveByID(id);
             return View();
         }
         public ActionResult Inform()
@@ -189,7 +195,7 @@ namespace CPiao.Controllers
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             M_Users model = serializer.Deserialize<M_Users>(entity);
             string mes = "执行成功";
-            JsonDictionary.Add("errmeg", "执行成功");
+            JsonDictionary.Add("ErrMsg", "执行成功");
             if (string.IsNullOrEmpty(model.UserID))
             {
                 if (M_UsersBusiness.GetM_UserCountByLoginName(model.LoginName) == 0)
@@ -201,7 +207,7 @@ namespace CPiao.Controllers
                     model.Rebate = 100; 
                     model.UserID = M_UsersBusiness.CreateM_User(model, ref mes, "");
                 }
-                else { JsonDictionary["errmeg"] = "登录名已存在,操作失败"; }
+                else { JsonDictionary["ErrMsg"] = "登录名已存在,操作失败"; }
             }
             else
             {
@@ -211,7 +217,7 @@ namespace CPiao.Controllers
                     model.UserID = "";
                 }
             }
-            if (string.IsNullOrEmpty(model.UserID)) { JsonDictionary["errmeg"] = "操作失败"; }
+            if (string.IsNullOrEmpty(model.UserID)) { JsonDictionary["ErrMsg"] = "操作失败"; }
             JsonDictionary.Add("model", model);
             return new JsonResult
             {
@@ -287,6 +293,62 @@ namespace CPiao.Controllers
             JsonDictionary.Add("Result", flag ? 1 : 0);
 
             return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+
+        public JsonResult GetActiveList(string keywords, int pageIndex, int pageSize, string btime = "", string etime = "",int type=-1)
+        {
+            int totalCount = 0, pageCount = 0;
+            JsonDictionary.Add("items", WebSetBusiness.GetActiveList(keywords, pageIndex, pageSize, ref totalCount, ref pageCount, btime, etime, type));
+            JsonDictionary.Add("TotalCount", totalCount);
+            JsonDictionary.Add("PageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public JsonResult GetActiveByID(string id)
+        {
+            var item = WebSetBusiness.GetActiveByID(id);
+            JsonDictionary.Add("Item", item);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public JsonResult DeleteActive(int autoid)
+        {
+            JsonDictionary.Add("result", WebSetBusiness.DeleteActive(autoid));
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+         [ValidateInput(false)]
+        public JsonResult SaveActive(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            Active model = serializer.Deserialize<Active>(entity);
+            var result = false;
+            if (model.AutoID == -1)
+            {
+                model.CreateUserID = CurrentUser.UserID;
+                result = WebSetBusiness.InsertActive(model);
+            }
+            else
+            {
+                model.UpdUserID = CurrentUser.UserID;
+                result = WebSetBusiness.UpdateActive(model);
+            }
+            JsonDictionary.Add("result", result);
+            return new JsonResult
             {
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet

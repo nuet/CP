@@ -20,7 +20,8 @@ body{background-color: #e1eaf0;margin-left: 0px;margin-top: 10px;padding: 0;over
 .list dt{font-size: 14px;line-height: 34px;font-weight: 700;}
 .list dd{padding-bottom: 0px;position: relative;}
 .list dd,.list dt{border-bottom: 1px solid #efefef;}
-.list .dd {height: 22px;line-height: 22px;}
+.list .dd {height: 22px;line-height: 22px;cursor: pointer;font-weight: bold;}
+.list .dd:hover {color: #AC1716 !important;}
 .pub-title{padding-left: 5px;}
 .date{float: right;}
 

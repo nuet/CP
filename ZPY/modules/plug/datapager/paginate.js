@@ -23,12 +23,12 @@ define(function (require, exports, module) {
             start: 12,
             display: 5,
             border: true,
-            border_color: '#4a9eee',
+            border_color: 'rgb(238, 74, 74)',/*'#4a9eee',*/
             text_color: '#333',
             background_color: '#fff',
-            border_hover_color: '#4a9eee',
+            border_hover_color: 'rgb(238, 74, 74)',/*'#4a9eee',*/
             text_hover_color: '#fff',
-            background_hover_color: '#4a98e7',
+            background_hover_color: 'rgb(231, 74, 74)',/*'#4a98e7',*/
             rotate: false,
             images: true,
             mouse: 'slide',
@@ -39,9 +39,9 @@ define(function (require, exports, module) {
             o.border_color = "#ccc";
             o.text_color = "#333";
             o.background_color = "#fff";
-            o.border_hover_color = "#4a9eee";
+            o.border_hover_color = 'rgb(238, 74, 74)';/*'#4a9eee';*/
             o.text_hover_color = "#fff";
-            o.background_hover_color = "#4a98e7";
+            o.background_hover_color = 'rgb(231, 74, 74)';/*'#4a98e7';*/
 
             if (o.display > o.count)
                 o.display = o.count;
