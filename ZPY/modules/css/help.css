@@ -5,7 +5,7 @@ div,p,span,dl,dt,dd,a,table,tr,td,thead,th,tbody{margin: 0;padding: 0;list-style
 
 body, html {background-color: #e1eaf0;font-size: 12px;color: rgb(51, 51, 51);overflow-x: auto;overflow-y: hidden;}
 body{background-color: #e1eaf0;margin-left: 0px;margin-top: 10px;padding: 0;overflow-x: hidden;}
-* input[type="text"]:focus { border:solid 1px rgb(207, 27, 28) !important; }
+* input[type="text"]:focus { border:solid 1px rgb(207, 27, 28) !important; box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;}
 /*首页内容*/
 .graded,dl{display: block;-webkit-margin-before: 1em;-webkit-margin-after: 1em;-webkit-margin-start: 0px;-webkit-margin-end: 0px;}
 .grade-mark{font-size: 30px;color: #ff7e00;}

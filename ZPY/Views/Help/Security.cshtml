@@ -158,7 +158,6 @@
             $.getScript(url, function (_result) {
                 var ipinfo = remote_ip_info;
                 if (ipinfo.ret == '1') {
-                    console.log('IP 详细信息：' + ipinfo.country + ' ' + ipinfo.province + ' ' + ipinfo.city + ' ' + ipinfo.district + ' ' + ipinfo.isp);/*+ '<BR>类型：' + ipinfo.type + '<BR>其他：' + ipinfo.desc);*/
                     $('#ipaddress').html(ipinfo.country + ' ' + ipinfo.province + ' ' + ipinfo.city);
                 } else {
                     console.log('错误', '没有找到匹配的 IP 地址信息！');

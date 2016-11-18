@@ -246,6 +246,7 @@ namespace ProBusiness
 
             return M_UsersDAL.BaseProvider.SetAdminAccount(userid, loginname, pwd);
         } 
+
         /// <summary>
         /// 新增或修改用户信息
         /// </summary>
@@ -286,6 +287,17 @@ namespace ProBusiness
         {
             pwd = ProBusiness.Encrypt.GetEncryptPwd(pwd, loginname);
             bool bl = M_UsersDAL.BaseProvider.UpdatePwd(loginname, pwd);
+            return bl;
+        }
+        public static bool UpdateAccountPwd(string userid,string loginname, string pwd)
+        {
+            pwd = ProBusiness.Encrypt.GetEncryptPwd(pwd, loginname);
+            bool bl = M_UsersDAL.BaseProvider.UpdateAccountPwd(userid, pwd);
+            return bl;
+        }
+        public static bool BindOtherAccount(int  type,string userid, string accountcode,ref string errmsg)
+        {
+            bool bl = M_UsersDAL.BaseProvider.BindOtherAccount(userid, type, accountcode, ref errmsg);
             return bl;
         }
         public static  bool DeleteM_User(string userid, int status) {

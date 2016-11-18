@@ -129,6 +129,7 @@
   <ItemGroup>
     <Compile Include="Common\ExpandClass.cs" />
     <Compile Include="Common\UserAuthorize.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -929,6 +930,7 @@
     <Content Include="Views\Help\Active.cshtml" />
     <Content Include="Views\SysSet\ActiveAdd.cshtml" />
     <Content Include="Views\SysSet\ActiveDetail.cshtml" />
+    <Content Include="Views\Account\AccountSafe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

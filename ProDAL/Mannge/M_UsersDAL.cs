@@ -102,7 +102,22 @@ namespace ProDAL.Manage
             errormsg = paras[0].Value.ToString();
             return result>0;
         }
-
+        public bool BindOtherAccount(string userid,int  type,string accountcode,ref string errormsg)
+         {
+            SqlParameter[] paras = { 
+                                    new SqlParameter("@ErrorMsg" , SqlDbType.VarChar,300),
+                                    new SqlParameter("@Result",SqlDbType.Int),
+                                    new SqlParameter("@UserID",userid),
+                                    new SqlParameter("@Type",type),
+                                    new SqlParameter("@AccountCode",accountcode) 
+                                   };
+            paras[0].Direction = ParameterDirection.Output;
+            paras[1].Direction = ParameterDirection.Output;
+            ExecuteNonQuery("M_BindOtherAccount", paras, CommandType.StoredProcedure);
+            var result = Convert.ToInt32(paras[1].Value);
+            errormsg = paras[0].Value.ToString();
+            return result>0;
+        }
         public bool CreateM_UserBase(string userid, string loginname, string loginpwd)
         {
             string sql = "INSERT INTO M_Users(UserID,LoginName ,LoginPWD,Status) " +
@@ -176,7 +191,15 @@ namespace ProDAL.Manage
 
             return ExecuteNonQuery("update M_Users set LevelID=@LevelID where userID=@userID", paras, CommandType.Text) > 0;
         }
+        public bool UpdateAccountPwd(string userid, string pwd)
+        {
+            SqlParameter[] paras = { 
+                                    new SqlParameter("@UserID",userid),
+                                    new SqlParameter("@AccountPwd",pwd),
+                                   };
 
+            return ExecuteNonQuery("update M_Users set AccountPwd=@AccountPwd where UserID=@UserID", paras, CommandType.Text) > 0;
+        }
         public bool UpdatePwd(string loginname, string pwd)
         {
             SqlParameter[] paras = { 
