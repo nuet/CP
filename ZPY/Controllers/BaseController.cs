@@ -95,5 +95,25 @@ namespace CPiao.Controllers
             return  CommonBusiness.UpdateUserAccount(model.Golds, CurrentUser.UserID, 1,
                 string.IsNullOrEmpty(model.Remark) ? "查看信息扣除" : model.Remark); ;
         }
+        [Serializable]  
+        public class SessionAccount
+        {
+            public bool Status { get; set; }
+            public DateTime ExpTime{get;set;}
+        }
+
+        public bool getAccountSession(string keyname)
+        {
+            bool result = false;
+            if (Session[keyname] != null)
+            {
+                var model =(SessionAccount) Session[keyname];
+                if (DateTime.Now.CompareTo(model.ExpTime) > -1)
+                {
+                    result = model.Status;
+                } 
+            }
+            return result;
+        }
     }
 }

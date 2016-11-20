@@ -198,7 +198,7 @@ namespace ProDAL.Manage
                                     new SqlParameter("@AccountPwd",pwd),
                                    };
 
-            return ExecuteNonQuery("update M_Users set AccountPwd=@AccountPwd where UserID=@UserID", paras, CommandType.Text) > 0;
+            return ExecuteNonQuery(" declare @acct int select  @acct= case isnull(AccountPwd,'') when '' then SafeLevel+15 else SafeLevel end from M_Users where  UserID=@UserID update M_Users set AccountPwd=@AccountPwd,SafeLevel=@acct where UserID=@UserID", paras, CommandType.Text) > 0;
         }
         public bool UpdatePwd(string loginname, string pwd)
         {

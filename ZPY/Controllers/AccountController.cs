@@ -22,12 +22,22 @@ namespace CPiao.Controllers
             ViewBag.LastTime = logmd.CreateTime.ToString("yyyy-MM-dd HH:mm:ss");
             ViewBag.SafeLevel = model.SafeLevel;
             ViewBag.HasEmail = !string.IsNullOrEmpty(model.Email);
-            ViewBag.HasMobile = !string.IsNullOrEmpty(model.Email);
+            ViewBag.HasMobile = !string.IsNullOrEmpty(model.MobilePhone);
             ViewBag.HasAccount = !string.IsNullOrEmpty(model.AccountPwd);
+            var temp = CurrentUser;
+            temp.SafeLevel = model.SafeLevel;
+            Session["Manage"] = model;
             return View();
         }
 
-
+        public ActionResult MyCard()
+        {
+            return View();
+        }
+        public ActionResult Banks()
+        {
+            return View();
+        }
 
         #region Ajax
 
@@ -119,6 +129,27 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        public JsonResult BankCards(string accountpwd, string type = "MyCard")
+        {
+            type = string.IsNullOrEmpty(type) ? "MyCard" : type;
+            var result
+            =Encrypt.GetEncryptPwd(accountpwd, CurrentUser.LoginName).ToLower() ==
+                CurrentUser.AccountPwd.ToLower() ;
+            if (result)
+            {
+                var model = new SessionAccount() {Status = true, ExpTime = DateTime.Now.AddMinutes(10)};
+                Session[type] = model;
+            }
+            JsonDictionary.Add("result", result);
+            JsonDictionary.Add("ErrMsg", result?"":"资金密码错误!");
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #endregion
 
 

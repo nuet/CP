@@ -139,6 +139,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Content Include="modules\css\account.css" />
     <Compile Include="modules\plug\umeditor\net\App_Code\Config.cs" />
     <Compile Include="modules\plug\umeditor\net\App_Code\ConfigHandler.cs" />
     <Compile Include="modules\plug\umeditor\net\App_Code\CrawlerHandler.cs" />
@@ -169,6 +170,9 @@
     <Content Include="modules\css\iconfont\demo.html" />
     <Content Include="modules\css\iconfont\iconfont.css" />
     <Content Include="modules\css\iconfont\iconfont.svg" />
+    <Content Include="modules\css\keyboard-dark.min.css" />
+    <Content Include="modules\css\keyboard.min.css" />
+    <Content Include="modules\css\keycommon.css" />
     <Content Include="modules\css\layout.css" />
     <Content Include="modules\css\message.css" />
     <Content Include="modules\css\shiyiyun.css" />
@@ -752,6 +756,7 @@
     <Content Include="modules\scripts\register\partregister.js" />
     <Content Include="modules\scripts\rfriend\recommend.js" />
     <Content Include="modules\scripts\rfriend\rfriend.js" />
+    <Content Include="modules\scripts\sysset\banks.js" />
     <Content Include="modules\scripts\sysset\feedback.js" />
     <Content Include="modules\scripts\sysset\roles.js" />
     <Content Include="modules\scripts\sysset\users.js" />
@@ -773,6 +778,8 @@
     <Content Include="modules\template\sysset\users.html" />
     <Content Include="modules\template\sysset\webusers.html" />
     <Content Include="modules\template\sysset\active.html" />
+    <Content Include="modules\template\sysset\banks.html" />
+    <Content Include="modules\template\sysset\bank-detail.html" />
     <Content Include="modules\webuploader\bootstrap.min.css" />
     <Content Include="modules\webuploader\uploader.css" />
     <Content Include="modules\webuploader\Uploader.swf" />
@@ -784,9 +791,12 @@
     <Content Include="Scripts\diyUpload.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-scramble.min.js" />
     <Content Include="Scripts\jquery.metadata.js" />
+    <Content Include="Scripts\jquery.mousewheel.min.js" />
     <Content Include="Scripts\jquery.simplemodal.js" />
     <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.keyboard.min.js" />
     <Content Include="Scripts\laydate.js" />
     <Content Include="modules\scripts\message.js" />
     <Content Include="modules\scripts\shiyiyun.js" />
@@ -931,6 +941,8 @@
     <Content Include="Views\SysSet\ActiveAdd.cshtml" />
     <Content Include="Views\SysSet\ActiveDetail.cshtml" />
     <Content Include="Views\Account\AccountSafe.cshtml" />
+    <Content Include="Views\Account\MyCard.cshtml" />
+    <Content Include="Views\Account\Banks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
