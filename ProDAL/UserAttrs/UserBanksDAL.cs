@@ -10,23 +10,36 @@ namespace ProDAL.UserAttrs
     public class UserBanksDAL : BaseDAL
     {
         public static UserBanksDAL BaseProvider = new UserBanksDAL();
-        public bool Create(string userID, string cardcode, string bankname,string bankchild,string truename,string bankpre,string bankcity)
-        {
-            string sql = @"declare @rerrormsg nvarchar(50) if(exists( select cardcode from userBanks where  Cardcode=@Cardcode ) ) begin  insert into UserImgs(UserID,Cardcode,BankName,Status,CreateTime,TrueName,BankChild,BankPre,BankCity)" +
-                         "values(@UserID,@Cardcode,@BankName,0,getdate(),@TrueName,@BankChild,@BankPre,@BankCity)  ";
+        public bool Create(string userID, string cardcode, string bankname, string bankchild, string truename, string bankpre, string bankcity,int type, ref string errormsg)
+        { 
             SqlParameter[] paras = { 
-                                    new SqlParameter("@ErrorMsg",userID),
+                                    new SqlParameter("@ErrorMsg" , SqlDbType.VarChar,300),
+                                    new SqlParameter("@Result",SqlDbType.Int),
                                     new SqlParameter("@UserID",userID), 
                                     new SqlParameter("@Cardcode",cardcode),
                                     new SqlParameter("@TrueName",truename),
                                     new SqlParameter("@BankChild",bankchild),
                                     new SqlParameter("@BankPre",bankpre),
                                     new SqlParameter("@BankCity",bankcity),
-                                    new SqlParameter("@BankName",bankname) 
+                                    new SqlParameter("@BankName",bankname),
+                                    new SqlParameter("@Type",type)
                                    };
-            return ExecuteNonQuery(sql, paras, CommandType.Text) > 0;
+            paras[0].Direction = ParameterDirection.Output;
+            paras[1].Direction = ParameterDirection.Output;
+            ExecuteNonQuery("P_InsertUserBanks", paras, CommandType.StoredProcedure);
+            var result = Convert.ToInt32(paras[1].Value);
+            errormsg = paras[0].Value.ToString();
+            return result > 0;
         }
+        public bool UpdateStatus(string userid)
+        {
+            SqlParameter[] paras =
+           {
+               new SqlParameter("@UserID", userid) 
+           };
+            return ExecuteNonQuery("update UserBanks set Status=9 where UserID =@UserID", paras, CommandType.Text) > 0;
 
+        }
         public bool UpdateStatus(string autoids, int status)
         {
             SqlParameter[] paras =
@@ -34,7 +47,7 @@ namespace ProDAL.UserAttrs
                new SqlParameter("@AutoID", autoids),
                new SqlParameter("@Status", status)
            };
-            return ExecuteNonQuery("update UserBanks set Status=@Status where AutoID=@AutoID", paras, CommandType.StoredProcedure) > 0;
+            return ExecuteNonQuery("update UserBanks set Status=@Status where AutoID =@AutoID", paras, CommandType.Text) > 0;
 
         }
     }

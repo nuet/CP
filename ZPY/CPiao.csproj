@@ -800,6 +800,7 @@
     <Content Include="Scripts\laydate.js" />
     <Content Include="modules\scripts\message.js" />
     <Content Include="modules\scripts\shiyiyun.js" />
+    <Content Include="Scripts\PCASClass.js" />
     <Content Include="Scripts\sea-config.js" />
     <Content Include="Scripts\sea.js" />
     <Content Include="Scripts\webuploader.html5only.min.js" />

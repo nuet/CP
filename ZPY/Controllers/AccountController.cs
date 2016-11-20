@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using ProBusiness;
 using ProBusiness.Common;
+using ProBusiness.UserAttrs;
+using ProEntity;
+using ProEntity.Manage;
 
 namespace CPiao.Controllers
 {
@@ -35,9 +39,18 @@ namespace CPiao.Controllers
             return View();
         }
         public ActionResult Banks()
-        {
-            return View();
+        { 
+            if (getAccountSession("MyCard")){
+                ViewBag.Max = 5;
+                ViewBag.Hour = 6;
+                ViewBag.HasCount = UserBanksBusiness.GetCount(CurrentUser.UserID);
+                return View();
+            }else
+            {
+                return Redirect("MyCard");
+            }
         }
+            
 
         #region Ajax
 
@@ -129,7 +142,27 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
+        public JsonResult BankList(   int pageIndex)
+        {
+            int total = 0;
+            int pageCount = 0;
+            var list = UserBanksBusiness.GetBanks("",CurrentUser.UserID, PageSize, pageIndex, ref total, ref pageCount);
+            list.ForEach(x =>
+            {
+                if (!string.IsNullOrEmpty( x.CardCode) && x.CardCode.Length > 4)
+                {
+                    x.CardCode = x.CardCode.Replace(x.CardCode.Substring(0, x.CardCode.Length - 4), "*");
+                }
+            });
+            JsonDictionary.Add("Items", list.Where(x=>x.Status!=9).ToList());
+            JsonDictionary.Add("totalCount", total);
+            JsonDictionary.Add("pageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         public JsonResult BankCards(string accountpwd, string type = "MyCard")
         {
             type = string.IsNullOrEmpty(type) ? "MyCard" : type;
@@ -150,6 +183,54 @@ namespace CPiao.Controllers
             };
         }
 
+        public JsonResult SaveBanks(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            UserBanks model = serializer.Deserialize<UserBanks>(entity);
+            model.UserID = CurrentUser.UserID;
+            string errmsg = "";
+            var result =UserBanksBusiness.InsertBanks(model, ref errmsg);
+            JsonDictionary.Add("result", result);
+            if (!result)
+            {
+                JsonDictionary.Add("ErrMsg", errmsg);
+            }
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public JsonResult DeleteBanks(string id)
+        {  
+            string errmsg = "";
+            var result = UserBanksBusiness.UpdateStatus(id, 9);
+            JsonDictionary.Add("result", result);
+            if (!result)
+            {
+                JsonDictionary.Add("ErrMsg", "操作失败！");
+            }
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public JsonResult LockBanks()
+        {
+            string errmsg = "";
+            var result = UserBanksBusiness.UpdateStatus(CurrentUser.UserID);
+            JsonDictionary.Add("result", result);
+            if (!result)
+            {
+                JsonDictionary.Add("ErrMsg", "操作失败！");
+            }
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         #endregion
 
 

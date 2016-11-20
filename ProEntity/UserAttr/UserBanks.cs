@@ -13,9 +13,10 @@ namespace ProEntity
         public string BankName { get; set; }
         public string BankPre { get; set; }
         public string BankCity { get; set; }
-        public int BankChild { get; set; }
-        public int CardCode { get; set; }
+        public string BankChild { get; set; }
+        public string CardCode { get; set; }
         public int Status { get; set; }
+        public int Type { get; set; }
         public DateTime CreateTime { get; set; }
         public void FillData(System.Data.DataRow dr)
         {

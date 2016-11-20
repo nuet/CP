@@ -108,7 +108,7 @@ namespace CPiao.Controllers
             if (Session[keyname] != null)
             {
                 var model =(SessionAccount) Session[keyname];
-                if (DateTime.Now.CompareTo(model.ExpTime) > -1)
+                if (DateTime.Now.CompareTo(model.ExpTime) == -1)
                 {
                     result = model.Status;
                 } 
