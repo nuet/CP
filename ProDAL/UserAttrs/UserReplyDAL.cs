@@ -12,13 +12,14 @@ namespace ProDAL.UserAttrs
     {
         public static UserReplyDAL BaseProvider = new UserReplyDAL();
 
-        public bool CreateUserReply(string guid, string content, string userID, string fromReplyID, string fromReplyUserID, int type, int haschilds, ref string errormsg)
+        public bool CreateUserReply(string guid, string content,string title, string userID, string fromReplyID, string fromReplyUserID, int type, int haschilds, ref string errormsg)
         {
             string replyID = Guid.NewGuid().ToString(); 
             SqlParameter[] paras = { 
                                     new SqlParameter("@ErrorMsg" , SqlDbType.VarChar,300),
                                     new SqlParameter("@Result",SqlDbType.Int),
                                      new SqlParameter("@ReplyID",replyID),
+                                     new SqlParameter("@Title",title), 
                                      new SqlParameter("@GUID",guid),
                                      new SqlParameter("@Content",content),
                                      new SqlParameter("@FromReplyID",fromReplyID),

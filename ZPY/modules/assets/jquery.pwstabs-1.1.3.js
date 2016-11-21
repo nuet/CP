@@ -136,7 +136,7 @@
             var verticalTabsWidth = parseInt(this.$elem.parent().find('ul.pws_tabs_controll li a').outerWidth()) + 1;
             this.$elem.parent().find('ul.pws_tabs_controll').width(verticalTabsWidth);
 
-            // Set content width
+             // Set content width 
             var verticalContentWidth = parseInt(this.$elem.parent().outerWidth()) - verticalTabsWidth;
             this.$elem.outerWidth(verticalContentWidth);
 

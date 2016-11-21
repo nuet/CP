@@ -12,6 +12,7 @@ namespace ProEntity
         public string ReplyID {get;set;}
         public string GUID {get;set;}
         public string UserName { get; set; }
+        public string Title { get; set; }
         public string UserAvatar { get; set; }
         public string Content {get;set;}
         //0 正常 1 已读  9 删除

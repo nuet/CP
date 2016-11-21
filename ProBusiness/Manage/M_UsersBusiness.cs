@@ -251,11 +251,10 @@ namespace ProBusiness
         {
             string clumstr = " select  c.*,a.UserName  from M_Users a join UserRelation c on a.UserID=c.UserID and  c.UserID='" + childID + "' where a.Status<>9";
             DataTable dt = M_UsersDAL.GetDataTable(clumstr);
-          
-            M_UserRelation model;
+
+            M_UserRelation model = new M_UserRelation();
             foreach (DataRow item in dt.Rows)
-            {
-                model = new M_UserRelation();
+            { 
                 model.FillData(item); 
             }
 

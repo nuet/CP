@@ -45,8 +45,8 @@ namespace CPiao.Controllers
         {
             var list = M_UsersBusiness.GetUsersListByParent(CurrentUser.UserID);
             ViewBag.Childs = list;
-            var model=M_UsersBusiness.GetParentByChildID(CurrentUser.UserID)
-            ViewBag.ParentID = model != null ? model.UserID : "";
+            var model = M_UsersBusiness.GetParentByChildID(CurrentUser.UserID);
+            ViewBag.ParentID = model != null ? model.ParentID : "";
             return View();
         }
 
@@ -148,7 +148,7 @@ namespace CPiao.Controllers
             UserReply model = JsonConvert.DeserializeObject<UserReply>(entity); 
             model.FromReplyID = string.IsNullOrEmpty(model.FromReplyID) ? "" : model.FromReplyID;
             model.FromReplyUserID = string.IsNullOrEmpty(model.FromReplyUserID) ? "" : model.FromReplyUserID;
-            result = UserReplyBusiness.CreateUserReply(model.GUID.Replace("ZSXJ,",""), model.Content, CurrentUser.UserID, model.FromReplyID, model.FromReplyUserID, model.Type, model.GUID.IndexOf("ZSXJ,"), ref msg); 
+            result = UserReplyBusiness.CreateUserReply(model.GUID.Replace("ZSXJ,",""), model.Content,model.Title, CurrentUser.UserID, model.FromReplyID, model.FromReplyUserID, model.Type, model.GUID.IndexOf("ZSXJ,"), ref msg); 
             JsonDictionary.Add("result", result);
             JsonDictionary.Add("ErrMsg", msg);
             return new JsonResult
@@ -157,6 +157,32 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        public JsonResult UpdStatus(string ids,int status)
+        {
+            var result = false;
+            string msg = "提交失败，请稍后再试！";
+            result=UserReplyBusiness.UpdateReplyStatus(ids.TrimEnd(',').Replace(",","','"), status);
+            JsonDictionary.Add("result", result);
+            JsonDictionary.Add("ErrMsg", msg);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult ReplyDetail(string id)
+        {
+            var model = UserReplyBusiness.GetReplyDetail(id);
+            JsonDictionary.Add("Item", model); 
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #endregion
 
     }

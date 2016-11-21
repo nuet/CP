@@ -70,9 +70,9 @@ namespace ProBusiness.UserAttrs
 
         #region 添加.删除
 
-        public static bool CreateUserReply(string guid, string content, string userID, string fromReplyID, string fromReplyUserID, int type, int haschilds, ref string errormsg)
+        public static bool CreateUserReply(string guid, string content,string title, string userID, string fromReplyID, string fromReplyUserID, int type, int haschilds, ref string errormsg)
         {
-            return UserReplyDAL.BaseProvider.CreateUserReply(guid.Trim(','), content, userID, fromReplyID, fromReplyUserID, type, haschilds, ref errormsg);
+            return UserReplyDAL.BaseProvider.CreateUserReply(guid.Trim(','), content,title, userID, fromReplyID, fromReplyUserID, type, haschilds, ref errormsg);
         }  
         public static bool DeleteReply(string replyid)
         {
@@ -81,7 +81,7 @@ namespace ProBusiness.UserAttrs
         }
         public static bool UpdateReplyStatus(string replyid,int status)
         {
-            bool bl = CommonBusiness.Update("UserReply", "Status", status, "ReplyID='" + replyid + "' and Status<>9");
+            bool bl = CommonBusiness.Update("UserReply", "Status", status, "ReplyID in('" + replyid + "') and Status<>9");
             return bl;
         }
         #endregion 

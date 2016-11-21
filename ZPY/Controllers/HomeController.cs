@@ -83,7 +83,7 @@ namespace CPiao.Controllers
             ProEntity.Manage.M_Users model = ProBusiness.M_UsersBusiness.GetM_UserByProUserName(userName, pwd, operateip, out result);
             if (model != null)
             { 
-                if (model.Status == 1)
+                if (model.Status <2 )
                 { 
                     model.LastLoginIP = OperateIP;
                     HttpCookie cook = new HttpCookie("cp");

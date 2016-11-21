@@ -4,7 +4,7 @@
 body, html {font-family: 微软雅黑;padding: 0;margin: 0;font-size: 13px;color: #e1eaf0;}
 body{background-color: #e1eaf0;padding: 0;overflow-x: hidden;}
 html{min-width: 1000px;overflow-x: auto;}
-* input:focus{ border:solid 1px rgb(207, 27, 28) !important;box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;}
+* input:focus,textarea:focus{ border:solid 1px rgb(207, 27, 28) !important;box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;}
 /*消息中心*/
 .p-header{padding: 0;margin: 0;}
 .p-header .current-location{font-family: "微软雅黑",arial;font-size: 12px;background: #eee;color: #666;padding:  0 30px;height: 32px;line-height: 32px;border-bottom: 1px solid #fff;}
@@ -44,7 +44,7 @@ table {display: table;border-collapse: separate;border-spacing: 2px;border-color
 .stable img{display: inline-block;}
 .stable label{font-style: initial;color: #333;font-weight: 500;}
 .head .size{line-height: 80px;}
-.mid{width:120px;position: absolute;font-size: 14px;}
+.mid{position: absolute;font-size: 14px;}
 .mid .ifseted{line-height: 20px;vertical-align: middle;}
 .action{cursor: pointer;margin-right: 0;padding: 0;float: right;font-size: 18px;}
 .mid,.action{margin-top:40px;}
