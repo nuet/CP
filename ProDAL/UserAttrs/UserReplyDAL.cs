@@ -12,22 +12,27 @@ namespace ProDAL.UserAttrs
     {
         public static UserReplyDAL BaseProvider = new UserReplyDAL();
 
-        public bool CreateUserReply(string guid, string content, string userID, string fromReplyID, string fromReplyUserID,int type)
+        public bool CreateUserReply(string guid, string content, string userID, string fromReplyID, string fromReplyUserID, int type, int haschilds, ref string errormsg)
         {
-            string replyID = Guid.NewGuid().ToString();
-            string @sql = "insert into UserReply (ReplyID,GUID,[Content],FromReplyID,FromReplyUserID,CreateUserID,Type) " +
-                          "values(@ReplyID,@GUID,@Content,@FromReplyID,@FromReplyUserID,@CreateUserID,@Type)";
+            string replyID = Guid.NewGuid().ToString(); 
             SqlParameter[] paras = { 
+                                    new SqlParameter("@ErrorMsg" , SqlDbType.VarChar,300),
+                                    new SqlParameter("@Result",SqlDbType.Int),
                                      new SqlParameter("@ReplyID",replyID),
                                      new SqlParameter("@GUID",guid),
                                      new SqlParameter("@Content",content),
                                      new SqlParameter("@FromReplyID",fromReplyID),
                                      new SqlParameter("@CreateUserID" , userID), 
-                                      new SqlParameter("@Type" , type), 
+                                     new SqlParameter("@Type" , type), 
+                                     new SqlParameter("@HasChilds",haschilds), 
                                      new SqlParameter("@FromReplyUserID" , fromReplyUserID),
                                    };
-
-            return ExecuteNonQuery(@sql, paras, CommandType.Text) > 0;
+            paras[0].Direction = ParameterDirection.Output;
+            paras[1].Direction = ParameterDirection.Output;
+            ExecuteNonQuery("P_InsertUserReplay", paras, CommandType.StoredProcedure);
+            var result = Convert.ToInt32(paras[1].Value);
+            errormsg = paras[0].Value.ToString();
+            return result > 0;
         }
         public DataTable GetReplyDetail(string replyid)
         {

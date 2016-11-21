@@ -39,7 +39,16 @@ namespace CPiao.Controllers
         {
             return View();
         }
-      
+
+        public ActionResult FuncInfo()
+        {
+            return View();
+        }
+
+        public ActionResult PlayInfo()
+        {
+            return View();
+        }
         public JsonResult RestPwd(string loginname,string useremail)
         {
             string newpwd = CreateRandomCode(6);
@@ -118,30 +127,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
-        public JsonResult SaveReply(string entity)
-        {
-            var result = false;
-            string msg = "提交失败，请稍后再试！";
-            if (CurrentUser == null)
-            {
-                msg = "您尚未登录，请登录后在操作！";
-            }
-            else
-            {
-                UserReply model = JsonConvert.DeserializeObject<UserReply>(entity);
-                model.FromReplyID = string.IsNullOrEmpty(model.FromReplyID) ? "" : model.FromReplyID;
-                model.FromReplyUserID = string.IsNullOrEmpty(model.FromReplyUserID) ? "" : model.FromReplyUserID; 
-                result = UserReplyBusiness.CreateUserReply(model.GUID,model.Content,CurrentUser.UserID,model.FromReplyID,model.FromReplyUserID,model.Type);
-            }
-            JsonDictionary.Add("result", result);
-            JsonDictionary.Add("errorMsg", msg);
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
+         
         public JsonResult ReplyList(int type,int pageIndex,int pageSize)
         {
             
@@ -179,30 +165,6 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
-        public JsonResult GetReplyInfo(string replyid)
-        {
-            string errMsg = "";
-            var result = false;
-            string url = RouteData.Values["controller"] + "/" + RouteData.Values["action"];
-            if (!checkGolds(url))
-            {
-                errMsg = "账户金币不足，不能查看";
-            }
-            
-            if (string.IsNullOrEmpty(errMsg))
-            {
-                errMsg = UserReplyBusiness.GetReplyDetail(replyid).Content;
-                result = UserReplyBusiness.UpdateReplyStatus(replyid, 1);
-            }
-            JsonDictionary.Add("errorMsg", errMsg);
-            JsonDictionary.Add("result", result);
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        } 
          
     }
 }

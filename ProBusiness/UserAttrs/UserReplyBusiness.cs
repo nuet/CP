@@ -34,7 +34,7 @@ namespace ProBusiness.UserAttrs
             {
                 sqlwhere += " and a.CreateUserID='" + userid + "' ";
             }
-            DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.Name as UserName,b.Avatar as UserAvatar,c.Name as FromName,c.Avatar as FromAvatar ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
+            DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.UserName as UserName,b.Avatar as UserAvatar,c.UserName as FromName,c.Avatar as FromAvatar ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
             List<UserReply> list = new List<UserReply>();
             foreach (DataRow dr in dt.Rows)
             {
@@ -44,6 +44,17 @@ namespace ProBusiness.UserAttrs
             }
             return list; 
         }
+
+        public static int GetNotReadReplay(int type, string userid)
+        {
+            string sqlwhere = " Status<>9 and Type=" + type;
+            if (!string.IsNullOrEmpty(userid))
+            {
+                sqlwhere += " and Guid='" + userid + "'";
+            }
+            return Convert.ToInt32(CommonBusiness.Select("UserReply", "count(1)", sqlwhere));
+        }
+
         public static UserReply GetReplyDetail(string replyid)
         {
             DataTable dt = UserReplyDAL.BaseProvider.GetReplyDetail(replyid);
@@ -59,9 +70,9 @@ namespace ProBusiness.UserAttrs
 
         #region 添加.删除
 
-        public static bool CreateUserReply(string guid, string content, string userID, string fromReplyID, string fromReplyUserID,int type)
+        public static bool CreateUserReply(string guid, string content, string userID, string fromReplyID, string fromReplyUserID, int type, int haschilds, ref string errormsg)
         {
-            return UserReplyDAL.BaseProvider.CreateUserReply(guid, content, userID, fromReplyID, fromReplyUserID, type);
+            return UserReplyDAL.BaseProvider.CreateUserReply(guid.Trim(','), content, userID, fromReplyID, fromReplyUserID, type, haschilds, ref errormsg);
         }  
         public static bool DeleteReply(string replyid)
         {

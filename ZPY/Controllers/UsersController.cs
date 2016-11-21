@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using ProBusiness;
 using ProBusiness.Common;
+using ProBusiness.UserAttrs;
+using ProEntity;
 using ProEntity.Manage;
 
 namespace CPiao.Controllers
@@ -38,7 +41,14 @@ namespace CPiao.Controllers
             ViewBag.SafeLevel = model.SafeLevel;
             return View();
         }
-
+        public ActionResult UserMsg()
+        {
+            var list = M_UsersBusiness.GetUsersListByParent(CurrentUser.UserID);
+            ViewBag.Childs = list;
+            var model=M_UsersBusiness.GetParentByChildID(CurrentUser.UserID)
+            ViewBag.ParentID = model != null ? model.UserID : "";
+            return View();
+        }
 
 
         #region Ajax
@@ -113,6 +123,40 @@ namespace CPiao.Controllers
             };
         }
 
+
+        public JsonResult GetMsgList(int type,int pageIndex)
+        {
+            int total = 0;
+            int pageCount = 0;
+            var list = UserReplyBusiness.GetUserReplys(CurrentUser.UserID, "", type, PageSize, pageIndex, ref total,
+                ref pageCount);
+            JsonDictionary.Add("items", list);
+            JsonDictionary.Add("totalCount", total);
+            JsonDictionary.Add("pageCount", pageCount);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+
+        }
+
+        public JsonResult SaveReply(string entity)
+        {
+            var result = false;
+            string msg = "提交失败，请稍后再试！"; 
+            UserReply model = JsonConvert.DeserializeObject<UserReply>(entity); 
+            model.FromReplyID = string.IsNullOrEmpty(model.FromReplyID) ? "" : model.FromReplyID;
+            model.FromReplyUserID = string.IsNullOrEmpty(model.FromReplyUserID) ? "" : model.FromReplyUserID;
+            result = UserReplyBusiness.CreateUserReply(model.GUID.Replace("ZSXJ,",""), model.Content, CurrentUser.UserID, model.FromReplyID, model.FromReplyUserID, model.Type, model.GUID.IndexOf("ZSXJ,"), ref msg); 
+            JsonDictionary.Add("result", result);
+            JsonDictionary.Add("ErrMsg", msg);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         #endregion
 
     }

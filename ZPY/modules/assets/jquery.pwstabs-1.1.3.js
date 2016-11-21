@@ -18,7 +18,8 @@
       tabsPosition: 'horizontal',   // Tabs position: horizontal / vertical
       horizontalPosition: 'top',    // Tabs horizontal position: top / bottom
       verticalPosition: 'left',     // Tabs vertical position: left / right
-      rtl: false                    // Right to left support: true/ false
+      rtl: false,                   // Right to left support: true/ false
+      lifunction: function () { }
     };
 
 
@@ -230,7 +231,12 @@
             // Set main container height to the height of current tab
             currentTab.parent().height(parseInt(currentTab.height()));
 
-         });
+         }); 
+        this.$elem.parent().find('ul li').on('click', { pwsOptions: this.settings }, function(e) {
+            e.preventDefault(); // Prevent use of href attribute
+            var $settings = e.data.pwsOptions; 
+            $settings.lifunction();
+        }); 
 
       } // Init function END
 

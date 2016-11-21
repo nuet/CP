@@ -231,6 +231,7 @@
     <Content Include="modules\img\litte-icon\资金安全a.png" />
     <Content Include="modules\img\litte-icon\邮箱.png" />
     <Content Include="modules\img\litte-icon\锁.png" />
+    <Content Include="modules\img\messagecenter.png" />
     <Content Include="modules\img\yinhang\gh.jpg" />
     <Content Include="modules\img\yinhang\gongh.jpg" />
     <Content Include="modules\img\yinhang\img.png" />
@@ -944,6 +945,8 @@
     <Content Include="Views\Account\AccountSafe.cshtml" />
     <Content Include="Views\Account\MyCard.cshtml" />
     <Content Include="Views\Account\Banks.cshtml" />
+    <Content Include="Views\Help\FuncInfo.cshtml" />
+    <Content Include="Views\Help\PlayInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

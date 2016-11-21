@@ -27,7 +27,7 @@
 }
 .pws_tabs_container.pws_tabs_rtl ul.pws_tabs_controll li a{
    margin-right: 0;
-   margin-left: 3px;
+   margin-left: 3px; 
 }
 .pws_tabs_container ul.pws_tabs_controll li a.pws_tab_active{
    background-color: #fff;

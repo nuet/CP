@@ -15,9 +15,14 @@ namespace ProEntity.Manage
        public int AutoID{ get; set; } 
 
        public string UserID { get; set; }
+       public string UserName { get; set; }
        public string ParentID { get; set; }
        public string Parents { get; set; }
        public DateTime CreateTime { get; set; }
        public int Layers { get; set; }
+       public void FillData(System.Data.DataRow dr)
+       {
+           dr.FillData(this);
+       }
     }
 }

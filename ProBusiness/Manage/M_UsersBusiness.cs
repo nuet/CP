@@ -232,8 +232,35 @@ namespace ProBusiness
 
             return list;
         }
+        public static List<M_UserRelation> GetUsersListByParent(string parentid)
+        {
+            string clumstr = " select  c.*,a.UserName  from M_Users a join UserRelation c on a.UserID=c.UserID and  c.ParentID='" + parentid + "' where a.layers>0 and a.Status<>9";
+            DataTable dt = M_UsersDAL.GetDataTable(clumstr);
+            List<M_UserRelation> list = new List<M_UserRelation>();
+            M_UserRelation model;
+            foreach (DataRow item in dt.Rows)
+            {
+                model = new M_UserRelation();
+                model.FillData(item);
+                list.Add(model);
+            }
 
+            return list;
+        }
+        public static M_UserRelation GetParentByChildID(string childID)
+        {
+            string clumstr = " select  c.*,a.UserName  from M_Users a join UserRelation c on a.UserID=c.UserID and  c.UserID='" + childID + "' where a.Status<>9";
+            DataTable dt = M_UsersDAL.GetDataTable(clumstr);
+          
+            M_UserRelation model;
+            foreach (DataRow item in dt.Rows)
+            {
+                model = new M_UserRelation();
+                model.FillData(item); 
+            }
 
+            return model;
+        }
         #endregion
 
         #region 改
