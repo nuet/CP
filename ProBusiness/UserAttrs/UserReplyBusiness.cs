@@ -45,13 +45,18 @@ namespace ProBusiness.UserAttrs
             return list; 
         }
 
-        public static int GetNotReadReplay(int type, string userid)
+        public static int GetNotReadReplay(int type, string userid, int status)
         {
             string sqlwhere = " Status<>9 and Type=" + type;
             if (!string.IsNullOrEmpty(userid))
             {
                 sqlwhere += " and Guid='" + userid + "'";
             }
+            if (status > -1)
+            {
+                sqlwhere += " and Status=" + status;
+            }
+
             return Convert.ToInt32(CommonBusiness.Select("UserReply", "count(1)", sqlwhere));
         }
 

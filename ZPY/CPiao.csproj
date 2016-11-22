@@ -759,6 +759,7 @@
     <Content Include="modules\scripts\rfriend\rfriend.js" />
     <Content Include="modules\scripts\sysset\banks.js" />
     <Content Include="modules\scripts\sysset\feedback.js" />
+    <Content Include="modules\scripts\sysset\ordersaudit.js" />
     <Content Include="modules\scripts\sysset\roles.js" />
     <Content Include="modules\scripts\sysset\users.js" />
     <Content Include="modules\scripts\sysset\webusers.js" />
@@ -767,10 +768,9 @@
     <Content Include="modules\scripts\userinfo\userinfo.js" />
     <Content Include="modules\scripts\userinfo\usermsg.js" />
     <Content Include="modules\template\faudit\imglist.html" />
-    <Content Include="modules\template\faudit\needslist.html" />
-    <Content Include="modules\template\faudit\orderlist.html" />
     <Content Include="modules\template\report\agentactionreport-list.html" />
     <Content Include="modules\template\sysset\feedback-list.html" />
+    <Content Include="modules\template\sysset\orderlist.html" />
     <Content Include="modules\template\sysset\permissions.html" />
     <Content Include="modules\template\sysset\role-detail.html" />
     <Content Include="modules\template\sysset\roles.html" />
@@ -781,6 +781,7 @@
     <Content Include="modules\template\sysset\active.html" />
     <Content Include="modules\template\sysset\banks.html" />
     <Content Include="modules\template\sysset\bank-detail.html" />
+    <Content Include="modules\template\sysset\order-detail.html" />
     <Content Include="modules\webuploader\bootstrap.min.css" />
     <Content Include="modules\webuploader\uploader.css" />
     <Content Include="modules\webuploader\Uploader.swf" />
@@ -936,7 +937,7 @@
     <Content Include="Views\SysSet\Users.cshtml" />
     <Content Include="Views\SysSet\Role.cshtml" />
     <Content Include="Views\SysSet\Active.cshtml" />
-    <Content Include="Views\SysSet\Inform.cshtml" />
+    <Content Include="Views\SysSet\Orders.cshtml" />
     <Content Include="Views\SysSet\FeedBack.cshtml" />
     <Content Include="Views\SysSet\RolePermission.cshtml" />
     <Content Include="Views\Help\Active.cshtml" />
@@ -947,6 +948,9 @@
     <Content Include="Views\Account\Banks.cshtml" />
     <Content Include="Views\Help\FuncInfo.cshtml" />
     <Content Include="Views\Help\PlayInfo.cshtml" />
+    <Content Include="Views\Help\General.cshtml" />
+    <Content Include="Views\User\UserReward.cshtml" />
+    <Content Include="Views\SysSet\FeedDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

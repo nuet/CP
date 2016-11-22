@@ -81,4 +81,15 @@ namespace ProEnum
         GoldScale = 2
 
     }
+    public enum EnumPayType
+    {
+        [DescriptionAttribute("支付宝")]
+        Alipy = 0,
+        [DescriptionAttribute("线下汇款")]
+        OffLine = 1,
+        [DescriptionAttribute("银行卡")]
+        BankCard = 2,
+        [DescriptionAttribute("微信")]
+        WXPay = 3
+    }
 }

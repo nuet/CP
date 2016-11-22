@@ -5,10 +5,10 @@
 <tr class="list-item">
     <td class="width30"><span data-id="{%=item.AutoID%}" data-userid="{%=item.UserID%}"  data-ordercode="{%=item.OrderCode%}" class="ico-check check"></span></td>
   <td class='tLeft width150'>{%= item.OrderCode %}</td>
-    <td class='tLeft minwidth70'>{%= item.SPName %}</td>
-    <td class="tLeft minwidth70">{%=item.Content%}</td> 
+    <td class='tLeft minwidth70'>{%= item.BankName %}</td>
+    <td class="tLeft minwidth70">{%=item.Sku%}</td> 
     <td class="width80 ">{%=item.TotalFee.toFixed(2)%}</td>
-    <td class='center'>{%=item.PayType==0?'支付宝':'其他'%}</td>
+    <td class='center'>{%=item.PayType==0?'支付宝':(item.PayType==1?'线下汇款':(item.PayType==2?'银行卡':(item.PayType==3?'微信':'其他')))%}</td>
     <td class='center'>{%=item.Status==0?'待审核':item.Status==1?'支付成功':item.Status==2?'支付失败':'作废'%}</td>
     <td class='center'>{%=item.CreateTime.toDate("yyyy-MM-dd hh:mm:ss")%}</td>
     <td class='center'>{%=item.UserName%}</td> 

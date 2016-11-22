@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace CPiao.Controllers
 {
+    [CPiao.Common.UserAuthorize]
     public class PlugController : BaseController
     {
         //
@@ -16,6 +17,7 @@ namespace CPiao.Controllers
         /// 上传图片
         /// </summary>
         /// <returns></returns>
+        /// 
         public JsonResult UploadFile()
         {
             string oldPath = "",

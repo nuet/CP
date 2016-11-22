@@ -17,6 +17,7 @@ using ProEnum;
 using ProTools;
 namespace CPiao.Controllers
 {
+    [CPiao.Common.UserAuthorize]
     public class HelpController : BaseController
     {
         //
@@ -49,6 +50,12 @@ namespace CPiao.Controllers
         {
             return View();
         }
+
+        public ActionResult General()
+        {
+            return View();
+        }
+
         public JsonResult RestPwd(string loginname,string useremail)
         {
             string newpwd = CreateRandomCode(6);

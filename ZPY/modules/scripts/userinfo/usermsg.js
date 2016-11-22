@@ -31,7 +31,7 @@ $(function() {
                 alert('标题为空,发送失败');
             }
         } else {
-            alert('收件人为选择,发送失败');
+            alert('收件人未选择,发送失败');
             return false;
         }
     });
@@ -46,7 +46,7 @@ $(function() {
             repModel.Title = 'Re:' + tempModel.Title;
             SavaReply(); 
         } else {
-            alert('收件人为选择,发送失败');
+            alert('收件人未选择,发送失败');
             return false;
         }
     });
@@ -88,7 +88,7 @@ function GetReplay() {
         if (data.items!=null && data.items.length > 0) {
             for (var i = 0; i < data.items.length; i++) {
                 html += '<tr><td style="width: 40px; text-align: left;"><input type="checkbox" class="check" style="margin-left: 12px;" data-id="' + data.items[i].ReplyID + '" name="check"/> </td>' +
-                    '<td  data-id="' + data.items[i].ReplyID + '" class="adetail">' + data.items[i].Title + '</td><td>' + data.items[i].UserName + '</td><td>' + convertdate(data.items[i].CreateTime, true) + '</td></tr>';
+                    '<td  data-id="' + data.items[i].ReplyID + '" class="adetail">' + data.items[i].Title + '</td><td>' + data.items[i].FromName + '</td><td>' + convertdate(data.items[i].CreateTime, true) + '</td></tr>';
             }
         } else {
             html += '<tr><td colspan="4" style="text-align: center;">暂无数据</td></tr> ';
@@ -122,7 +122,7 @@ function GetReplay() {
                         var html1 = '';
                         for (var j = 0; j < content.length; j++) {
                             if (content[j] != '') {
-                                html1 += '<div style="margin-top: 10px; color: #666666; width: 80%; border-top: 1px #666666 dotted;">' + content[j] + '</div>'
+                                html1 += '<div style="margin-top: 10px; color: #666666; width: 80%; border-top: 1px #666666 dotted;">' + content[j] + '</div>';
                             }
                         }
                         if (html1 == "") {
@@ -154,7 +154,7 @@ function GetReplay() {
 }
 
 var repModel = { 
-    GuiD: '',
+    GuID: '',
     Content: '',
     Title: '',
     FromReplyID: '',
@@ -171,8 +171,9 @@ function SavaReply() {
         if (data.result) {
             $('.receive_content').val('');
             $('#receive_name').val('');
-            $('.receivediv').html('');
+            $('#receivediv').html('');
             alert('提交成功');
+            receivers = '';
             if ($('#replaydetail').css('display') == 'block') {
                 $('#back').click();
             }

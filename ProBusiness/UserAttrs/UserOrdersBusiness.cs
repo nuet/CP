@@ -22,7 +22,7 @@ namespace ProBusiness
             string sqlwhere = " a.status<>9 ";
             if (!string.IsNullOrEmpty(keyWords))
             {
-                sqlwhere += " and (b.Name like '%" + keyWords + "%' or a.Content like '%" + keyWords + "%')";
+                sqlwhere += " and (b.UserName like '%" + keyWords + "%' or a.BankName like '%" + keyWords + "%' or a.OrderCode like '%" + keyWords + "%'  or a.Sku like '%" + keyWords + "%' or a.OtherCode like '%" + keyWords + "%')";
             }
             if (type > -1)
             {
@@ -48,7 +48,7 @@ namespace ProBusiness
             {
                 sqlwhere += " and a.CreateTime<'" + endtime + " 23:59:59:999'";
             }
-            DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.Name as UserName ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
+            DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.UserName ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
             List<UserOrders> list = new List<UserOrders>();
             foreach (DataRow dr in dt.Rows)
             {

@@ -62,7 +62,7 @@ define(function (require, exports, module) {
             var Types = [
                 {
                     ID: "1",
-                    Name: "举报"
+                    Name: "问题l"
                 },
                 {
                     ID: "2",

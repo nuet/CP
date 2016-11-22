@@ -53,35 +53,7 @@ namespace Proc.Controllers
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             }; 
-        }
-
-        public JsonResult NeedsList(string keywords, string type, string status, string beginTime, string endTime, int pageIndex, int pageSize)
-        {
-            int totalCount = 0;
-            int pageCount = 0;
-            var result = UserNeedsBusiness.FindNeedsList(keywords,type, "", status, pageSize, pageIndex, ref totalCount, ref pageCount, beginTime, endTime);
-            JsonDictionary.Add("totalCount", totalCount);
-            JsonDictionary.Add("pageCount", pageCount);
-            JsonDictionary.Add("items", result);
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
-        public JsonResult UpdateNeedStatus(string ids, int status)
-        {
-            ids=ids.Trim(',');
-            var result = UserNeedsBusiness.UpdateStatus(ids, status,CurrentUser.UserID);
-            JsonDictionary.Add("result", result);
-            return new JsonResult
-            {
-                Data = JsonDictionary,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            }; 
-        }
-
+        } 
         public JsonResult OrdersList(int paytype, int status, string keywords, string userID, string beginTime,
             string endTime, int pageIndex, int pageSize)
         {

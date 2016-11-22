@@ -2,7 +2,7 @@
 .pws_tabs_container.pws_tabs_rtl{text-align:right;direction:rtl;margin: 0 auto;}
 .pws_tabs_container ul.pws_tabs_controll{list-style:none}
 .pws_tabs_container ul.pws_tabs_controll li{display:inline-block}
-.pws_tabs_container ul.pws_tabs_controll li a{display:block;background-color:#EEEEEE;padding:15px 30px;text-decoration:none;color:black;margin-right:3px;}
+.pws_tabs_container ul.pws_tabs_controll li a{display:block;background-color:#EEEEEE;padding:15px 18px;text-decoration:none;color:black;margin-right:3px;}
 .pws_tabs_container ul.pws_tabs_controll li a:hover{background-color: #E1EAF0;}
 .pws_tabs_container.pws_tabs_rtl ul.pws_tabs_controll li a{margin-right:0;margin-left: 3px;}
 .pws_tabs_container ul.pws_tabs_controll li a.pws_tab_active{background-color:#fff;color: #F50000;font-weight:700;border-top: 4px solid #D13636;}

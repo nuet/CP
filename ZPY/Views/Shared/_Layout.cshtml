@@ -236,7 +236,7 @@
                 $(v).hide(); 
             });
         });
-        $('#loginout').click(function() {$.post('/Home/Logout',null,null)});
+        $('#loginout').click(function() {$.post('/Home/Logout',null,function (){window.location.href='/Home/Login';});});
     });
     $(document).ready(function () {   
         $("#sItem li:not(:first)").css("display", "none");

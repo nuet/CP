@@ -1,0 +1,29 @@
+﻿
+<ul class="easydialog-create">
+    <li><span class="left width120">开户银行：</span>
+        <select name="modelBankName" id="modelBankName">
+            <option value="1">中国工商银行</option>
+            <option value="2">中国农业银行</option>
+            <option value="3">中国建设银行</option>
+            <option value="4">招商银行</option>
+            <option value="5">中国民生银行</option>
+            <option value="6">交通银行</option>
+            <option value="7">中信银行</option>
+            <option value="8">兴业银行</option>
+            <option value="9">中国光大银行</option>
+            <option value="10">上海浦东发展银行</option>
+        </select></li>
+    <li ><span class="left width120">支行名称：</span><input type="text" id="modelBankChild" maxlength="20" class="input verify " data-empty="必填"/>
+        <input type="text" id="modelAutoID" maxlength="20" class="input verify " hidden="hidden" style="display: none !important;" data-empty="必填" value="-1"/>
+    </li>
+    <li ><span class="left width120">登陆账号：</span><input type="text" id="modelLoginName" maxlength="20" class="input verify " data-empty="必填"/> </li>
+    <li><span class="left width120">付款方式：</span><select name="modelPayType" id="modelPayType">
+        <option value="0">支付宝</option>
+        <option value="1">线下汇款</option>
+        <option value="2">银行卡</option>
+        <option value="3">微信</option>
+    </select></li>
+     <li title="银行卡号,支付宝账号或微信账号" ><span class="left width120">支付账号：</span><input type="text" id="modelSku" maxlength="20" class="input verify " data-empty="必填"/> </li>
+    <li><span class="left width120">充值金额：</span><input type="text" id="modelTotalFee" maxlength="20" class="input verify " data-empty="必填"/></li>
+    <li><span class="left width120">收款金额：</span><input type="text" id="modelPayFee" maxlength="20" class="input verify " data-empty="必填"/></li>
+</ul>

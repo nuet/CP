@@ -48,12 +48,10 @@
                     id: "show-model-detail",
                     header: !Model.AutoID ? "添加银行卡" : "编辑银行卡",
                     content: html,
-                    yesFn: function () {
-                        console.log(!_self.checkform());
+                    yesFn: function () { 
                         if (!VerifyObject.isPass() || !_self.checkform()) {
                             return false;
-                        }
-                        console.log(1);
+                        } 
                         Model.TrueName = $("#modelTrueName").val();
                         Model.CardCode = $('#modelCardCode').val();
                         Model.BankName = $("#modelBankName").find("option:selected").text();;

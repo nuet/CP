@@ -41,7 +41,7 @@ namespace ProDAL.UserAttrs
                                     new SqlParameter("@ReplyID",replyid)
                                    };
 
-            return GetDataTable("select * from UserReply where ReplyID=@ReplyID ", paras, CommandType.Text);
+            return GetDataTable("select a.*,b.UserName from UserReply a join M_Users b on a.CreateUserID=b.UserID where ReplyID=@ReplyID ", paras, CommandType.Text);
         }
     }
 }

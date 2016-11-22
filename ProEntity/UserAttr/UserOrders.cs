@@ -22,6 +22,9 @@ namespace ProEntity
         public string OtherCode { get; set; }
         public int Type { get; set; }
         public decimal Num { get; set; }
+        public DateTime UpdTime { get; set; }
+        public string UpdUserID { get; set; } 
+        public string CreateUserID { get; set; }
         public void FillData(System.Data.DataRow dr)
         {
             dr.FillData(this);

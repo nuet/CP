@@ -23,7 +23,9 @@ namespace CPiao.Common
             base.OnAuthorization(filterContext);
             if (filterContext.HttpContext.Response.StatusCode == 401)
             {
-                filterContext.Result = new RedirectResult("/Home/Login");
+               // filterContext.Result = new RedirectResult("/Home/Login");
+                filterContext.RequestContext.HttpContext.Response.Write("<script>parent.location.reload(); window.location.href='/Home/Login';</script>");
+                filterContext.RequestContext.HttpContext.Response.End();
                 return;
             }
             else

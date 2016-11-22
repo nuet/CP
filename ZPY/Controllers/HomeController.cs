@@ -65,8 +65,9 @@ namespace CPiao.Controllers
                 cook["status"] = "0";
                 Response.Cookies.Add(cook);
             } 
-            Session["Manager"] = null; 
-            return Redirect("/Home/Index");
+            //Session["Manager"] = null;
+            Session.RemoveAll();
+            return Redirect("/Home/Login");
         }
         /// <summary>
         /// 用户登录

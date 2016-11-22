@@ -12,6 +12,7 @@ using ProEntity.Manage;
 
 namespace CPiao.Controllers
 {
+    [CPiao.Common.UserAuthorize]
     public class UserController : BaseController
     {
         //
@@ -50,6 +51,15 @@ namespace CPiao.Controllers
             return View();
         }
 
+        public ActionResult UserReward()
+        {
+            ViewBag.Rabate = CurrentUser.Rebate;
+            ViewBag.LoginName = CurrentUser.LoginName;
+            ViewBag.UserName = CurrentUser.UserName;
+            ViewBag.OtherRebate = ((CurrentUser.Rebate - (decimal)1.5) > 0 ? (CurrentUser.Rebate - (decimal)1.5) : 0);
+            ViewBag.SscRebate = ((CurrentUser.Rebate - (decimal)3) > 0 ? (CurrentUser.Rebate - 3) : 0);
+            return View();
+        }
 
         #region Ajax
 

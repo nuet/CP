@@ -12,6 +12,7 @@ using ProEntity.Manage;
 
 namespace CPiao.Controllers
 {
+    [CPiao.Common.UserAuthorize]
     public class AccountController : BaseController
     {
         //

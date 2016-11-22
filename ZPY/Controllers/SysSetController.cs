@@ -11,6 +11,7 @@ using ProEntity.Manage;
 
 namespace CPiao.Controllers
 {
+    [CPiao.Common.UserAuthorize]
     public class SysSetController : BaseController
     {
         //
@@ -39,7 +40,7 @@ namespace CPiao.Controllers
             ViewBag.Model = WebSetBusiness.GetActiveByID(id);
             return View();
         }
-        public ActionResult Inform()
+        public ActionResult Orders()
         {
             return View();
         }
@@ -354,6 +355,56 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        #region Ordes
+         public JsonResult OrdersList(int paytype, int status, string keywords, string userID, string beginTime,
+            string endTime, int pageIndex, int pageSize)
+        {
+            int totalCount = 0;
+            int pageCount = 0;
+            var result = UserOrdersBusiness.GetUserOrders(keywords, userID, -1, status, paytype,pageSize,pageIndex,ref totalCount, ref pageCount, beginTime, endTime);
+            JsonDictionary.Add("totalCount", totalCount);
+            JsonDictionary.Add("pageCount", pageCount);
+            JsonDictionary.Add("items", result);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            }; 
+        }
+        public JsonResult BoutOrder(string ordercode)
+        {
+            var result = UserOrdersBusiness.BoutOrder(ordercode);
+            JsonDictionary.Add("result", result);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public JsonResult OrderAuditing(string ordercode)
+        {
+            string msg = "";
+            var result = false;
+            var model = UserOrdersBusiness.GetUserOrderDetail(ordercode);
+            if (model != null && model.Status ==0)
+            {
+                result = UserOrdersBusiness.OrderAuditting(ordercode, "", model.TotalFee);
+            }
+            else
+            {
+                msg = "订单状态不正确";
+            }
+            JsonDictionary.Add("errorMsg", msg);
+            JsonDictionary.Add("result", result);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        #endregion
+
         #endregion
     }
 }
