@@ -118,8 +118,7 @@
     } 
     //保存实体
     ObjectJS.saveModel = function (model) {
-        var _self = this;
-        console.log(JSON.stringify(model));
+        var _self = this; 
         Global.post("/Account/SaveBanks", { entity: JSON.stringify(model) }, function(data) {
             if (data.result) {
                 _self.getList();

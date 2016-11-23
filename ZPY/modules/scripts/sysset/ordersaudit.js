@@ -1,6 +1,7 @@
 ﻿define(function (require, exports, module) {
     var Global = require("global"),
         doT = require("dot"),
+        Verify = require("verify"), VerifyObject,
         Easydialog = require("easydialog"), 
         moment = require("moment");
     require("daterangepicker");
@@ -99,7 +100,7 @@
             });
         }); 
         //全部选中
-        $("#checkAll").click(function () {
+        $(".checkAll").click(function () {
             var _this = $(this);
             if (!_this.hasClass("ico-checked")) {
                 _this.addClass("ico-checked").removeClass("ico-check");
@@ -135,13 +136,16 @@
             _self.updateStatus(3, code);
         });
         $("#createModel").click(function () { 
-            Model.CardCode = "";
-            Model.BankName = "";
-            Model.TrueName = "";
-            Model.Type = 0;
-            Model.BankChild = "";
-            Model.BankPre = "";
-            Model.BankCity = "";
+            Model.BankName = '';
+            Model.UserName = '';
+            Model.Sku ='';
+            Model.Type = 1;
+            Model.PayType ='';
+            Model.TotalFee ='';
+            Model.PayFee = 0.00;
+            Model.AutoID = -1;
+            Model.OtherCode = "";
+            Model.Content= '';
             _self.createModel();
         });
 
@@ -242,19 +246,28 @@
             Easydialog.open({
                 container: {
                     id: "show-model-detail",
-                    header: !Model.AutoID ? "订单登记" : "编辑订单",
+                    header: (!Model.AutoID && Model.AutoID != -1) ? "订单登记" : "编辑订单",
                     content: html,
                     yesFn: function () { 
-                        if (!VerifyObject.isPass() || !_self.checkform()) {
+                        if (!VerifyObject.isPass() || !_self.checkForm()) {
                             return false;
-                        } 
-                        Model.modelBankName = $("#modelLoginName").val() + ' ' + $("#modelBankName").find("option:selected").text() + ' [' + $("#modelBankChild").val() + ']';
+                        }
+                        var banksinfo = '';
+                        if ($('#modelPayType').val() == '0' || $('#modelPayType').val() == '3') {
+                            banksinfo = $("#modelPayType").find("option:selected").data('name');
+                        } else {
+                            banksinfo = $("#modelBankName").find("option:selected").text();
+                        }
+                        Model.BankName = $("#modelLoginName").val() + ' ' +banksinfo + ' [' + $("#modelBankChild").val() + ']';
                         Model.Sku = $('#modelSku').val();
+                        Model.UserName = $("#modelLoginName").val();
                         Model.Type = 1;
                         Model.PayType = $("#modelPayType").val();
                         Model.TotalFee = $("#modelTotalFee").val();
                         Model.PayFee = $("#modelPayFee").val(); 
                         Model.AutoID = $("#modelAutoID").val();
+                        Model.Content = $("#modelContent").val();
+                        Model.OtherCode = $('#modelOtherCode').val();
                         _self.saveModel(Model);
                     },
                     callback: function () {
@@ -267,7 +280,45 @@
                 emptyAttr: "data-empty",
                 verifyType: "data-type",
                 regText: "data-text"
+            });
+            $('#modelPayType').change(function() {
+                if ($('#modelPayType').val() == '0' || $('#modelPayType').val() == '3') { 
+                    $('.bankinfo').hide();
+                    $("#modelBankChild").val($("#modelPayType").find("option:selected").text());
+                } else {
+                    $(".bankinfo").show();
+                    $("#modelBankChild").val(''); 
+                }
+            });
+            $('#modelTotalFee').keyup(function () {
+                var ve = $(this);
+                ve.val(ve.val().replace(/\D+/g, '')); 
             }); 
+        });
+    }
+    ObjectJS.checkForm= function() {
+        var money = /^[0-9]*(\.[0-9]{0,2})?$/;
+        if (!money.test($('#modelPayFee').val())) {
+            alert('收款金额输入有误.');
+            return false;
+        }
+        if ($('#modelTotalFee').val() < 1) {
+            alert('充值金额不能为小于1');
+            return false;
+        }
+        return true;
+    }
+
+    //保存实体
+    ObjectJS.saveModel = function (model) {
+        var _self = this;
+        console.log(JSON.stringify(model));
+        Global.post("/SysSet/SaveOrders", { entity: JSON.stringify(model) }, function (data) {
+            if (data.result) {
+                _self.getList();
+            } else {
+                alert(data.ErrMsg);
+            }
         });
     }
     module.exports = ObjectJS;

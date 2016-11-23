@@ -77,9 +77,9 @@ namespace ProBusiness
         {
             return UserOrdersDAL.BaseProvider.CreateUserOrder(levelid, paytype, orderCode, UserID,out msg);
         }
-       public static bool CreateUserOrder(string ordercode, int paytype, string spname, string sku, string content, decimal totalfee, string othercode, int type, decimal num, string userID)
+       public static bool CreateUserOrder(string ordercode, int paytype, string spname, string bankinfo,string sku, string content, decimal totalfee, string othercode, int type, decimal num, decimal payfee,string userID,string createuserid,string operatip)
        {
-           return UserOrdersDAL.BaseProvider.CreateUserOrder(ordercode, paytype, spname, sku, content, totalfee, othercode, type, num, userID);
+           return UserOrdersDAL.BaseProvider.CreateUserOrder(ordercode, paytype, spname, bankinfo, sku, content, totalfee, othercode, type, num, payfee, userID, createuserid, operatip);
        }
         public static bool DeleteOrder(string ordercode)
         {

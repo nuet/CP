@@ -26,15 +26,19 @@ namespace ProDAL
             msg = paras[0].Value.ToString();
             return string.IsNullOrEmpty(result);
         }
-        public bool CreateUserOrder(string ordercode, int paytype, string spname, string sku, string content, decimal totalfee, string othercode, int type, decimal num, string userID)
+        public bool CreateUserOrder(string ordercode, int paytype, string spname, string bankinfo, string sku, string content, decimal totalfee, string othercode, int type, decimal num, decimal paytfee, string userID, string createid, string operatip)
         {
-            string sql = @"INSERT INTO [UserOrders]([OrderCode],[SPName],[Sku],[Content],[CreateTime],[Status],[UserID],[PayType],[TotalFee],[OtherCode],[Type],[Num],[PayFee])
-                    VALUES (@OrderCode,@SPName,@Sku,@Content,getdate(), 0,@UserID, @PayType, @TotalFee, @OtherCode, @Type, @Num，0.00)";
+            string sql = @"INSERT INTO [UserOrders]([OrderCode],[BankName],[SPName],[Sku],[Content],[CreateTime],[Status],[UserID],[PayType],[TotalFee],[OtherCode],[Type],[Num],[PayFee],CreateUserID,IP)
+                    VALUES (@OrderCode,@BankName,@SPName,@Sku,@Content,getdate(), 0,@UserID, @PayType, @TotalFee, @OtherCode, @Type, @Num,@PayFee,@CreateUserID,@IP)";
             SqlParameter[] paras = { 
                                     new SqlParameter("@SPName",spname),
+                                    new SqlParameter("@BankName",bankinfo),
                                     new SqlParameter("@UserID",userID),
+                                    new SqlParameter("@CreateUserID",createid),
+                                    new SqlParameter("@IP",operatip), 
                                     new SqlParameter("@Sku",sku),
                                     new SqlParameter("@PayType",paytype),
+                                    new SqlParameter("@PayFee",paytfee),
                                     new SqlParameter("@Content",content),
                                     new SqlParameter("@TotalFee",totalfee),
                                     new SqlParameter("@OtherCode",othercode),

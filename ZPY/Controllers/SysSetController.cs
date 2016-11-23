@@ -22,38 +22,45 @@ namespace CPiao.Controllers
             ViewBag.Roles = ManageSystemBusiness.GetRoles();
             return View();
         }
+
         public ActionResult Role()
         {
             return View();
         }
-       
+
         public ActionResult Active()
         {
             return View();
         }
+
         public ActionResult ActiveAdd()
         {
             return View();
         }
+
         public ActionResult ActiveDetail(string id = "")
         {
             ViewBag.Model = WebSetBusiness.GetActiveByID(id);
             return View();
         }
+
         public ActionResult Orders()
         {
             return View();
         }
+
         public ActionResult FeedBack()
         {
             return View();
         }
+
         public ActionResult RolePermission(string id)
         {
             ViewBag.Model = ManageSystemBusiness.GetRoleByID(id);
             ViewBag.Menus = CommonBusiness.ClientMenus.Where(m => m.PCode == ExpandClass.CLIENT_TOP_CODE).ToList();
             return View();
         }
+
         #region Ajax
 
         /// <summary>
@@ -99,7 +106,8 @@ namespace CPiao.Controllers
             }
             else
             {
-                bool bl = new ManageSystemBusiness().UpdateRole(model.RoleID, model.Name, model.Description, string.Empty);
+                bool bl = new ManageSystemBusiness().UpdateRole(model.RoleID, model.Name, model.Description,
+                    string.Empty);
                 if (!bl)
                 {
                     model.RoleID = "";
@@ -155,7 +163,8 @@ namespace CPiao.Controllers
         public JsonResult GetUsers(string keyWords, int pageIndex, int status = -1, int sourcetype = 1)
         {
             int totalCount = 0, pageCount = 0;
-            var list = M_UsersBusiness.GetUsers(PageSize, pageIndex, ref totalCount, ref pageCount, sourcetype, status, keyWords);
+            var list = M_UsersBusiness.GetUsers(PageSize, pageIndex, ref totalCount, ref pageCount, sourcetype, status,
+                keyWords);
 
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("totalCount", totalCount);
@@ -178,6 +187,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         /// <summary>
         /// 新增或修改用户
         /// </summary>
@@ -191,6 +201,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         public JsonResult SaveUser(string entity)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -205,10 +216,13 @@ namespace CPiao.Controllers
                     model.IsAdmin = 0;
                     model.SourceType = 1;
                     model.Type = 1;
-                    model.Rebate = 100; 
+                    model.Rebate = 100;
                     model.UserID = M_UsersBusiness.CreateM_User(model, ref mes, "");
                 }
-                else { JsonDictionary["ErrMsg"] = "登录名已存在,操作失败"; }
+                else
+                {
+                    JsonDictionary["ErrMsg"] = "登录名已存在,操作失败";
+                }
             }
             else
             {
@@ -218,7 +232,10 @@ namespace CPiao.Controllers
                     model.UserID = "";
                 }
             }
-            if (string.IsNullOrEmpty(model.UserID)) { JsonDictionary["ErrMsg"] = "操作失败"; }
+            if (string.IsNullOrEmpty(model.UserID))
+            {
+                JsonDictionary["ErrMsg"] = "操作失败";
+            }
             JsonDictionary.Add("model", model);
             return new JsonResult
             {
@@ -226,6 +243,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         public JsonResult DeleteMUser(string id)
         {
 
@@ -237,6 +255,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         public JsonResult UpdateUserStatus(string id, int status)
         {
 
@@ -260,11 +279,13 @@ namespace CPiao.Controllers
         /// <param name="beginDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public JsonResult GetFeedBacks(int pageIndex, int type, int status, string keyWords, string beginDate, string endDate)
+        public JsonResult GetFeedBacks(int pageIndex, int type, int status, string keyWords, string beginDate,
+            string endDate)
         {
 
             int totalCount = 0, pageCount = 0;
-            var list = FeedBackBusiness.GetFeedBacks(keyWords, beginDate, endDate, type, status, "", PageSize, pageIndex, out totalCount, out pageCount);
+            var list = FeedBackBusiness.GetFeedBacks(keyWords, beginDate, endDate, type, status, "", PageSize, pageIndex,
+                out totalCount, out pageCount);
             JsonDictionary.Add("Items", list);
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);
@@ -301,10 +322,13 @@ namespace CPiao.Controllers
         }
 
 
-        public JsonResult GetActiveList(string keywords, int pageIndex, int pageSize, string btime = "", string etime = "",int type=-1)
+        public JsonResult GetActiveList(string keywords, int pageIndex, int pageSize, string btime = "",
+            string etime = "", int type = -1)
         {
             int totalCount = 0, pageCount = 0;
-            JsonDictionary.Add("items", WebSetBusiness.GetActiveList(keywords, pageIndex, pageSize, ref totalCount, ref pageCount, btime, etime, type));
+            JsonDictionary.Add("items",
+                WebSetBusiness.GetActiveList(keywords, pageIndex, pageSize, ref totalCount, ref pageCount, btime, etime,
+                    type));
             JsonDictionary.Add("TotalCount", totalCount);
             JsonDictionary.Add("PageCount", pageCount);
             return new JsonResult
@@ -313,6 +337,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         public JsonResult GetActiveByID(string id)
         {
             var item = WebSetBusiness.GetActiveByID(id);
@@ -323,6 +348,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         public JsonResult DeleteActive(int autoid)
         {
             JsonDictionary.Add("result", WebSetBusiness.DeleteActive(autoid));
@@ -332,7 +358,8 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-         [ValidateInput(false)]
+
+        [ValidateInput(false)]
         public JsonResult SaveActive(string entity)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -357,12 +384,14 @@ namespace CPiao.Controllers
         }
 
         #region Ordes
-         public JsonResult OrdersList(int paytype, int status, string keywords, string userID, string beginTime,
+
+        public JsonResult OrdersList(int paytype, int status, string keywords, string userID, string beginTime,
             string endTime, int pageIndex, int pageSize)
         {
             int totalCount = 0;
             int pageCount = 0;
-            var result = UserOrdersBusiness.GetUserOrders(keywords, userID, -1, status, paytype,pageSize,pageIndex,ref totalCount, ref pageCount, beginTime, endTime);
+            var result = UserOrdersBusiness.GetUserOrders(keywords, userID, -1, status, paytype, pageSize, pageIndex,
+                ref totalCount, ref pageCount, beginTime, endTime);
             JsonDictionary.Add("totalCount", totalCount);
             JsonDictionary.Add("pageCount", pageCount);
             JsonDictionary.Add("items", result);
@@ -370,8 +399,9 @@ namespace CPiao.Controllers
             {
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            }; 
+            };
         }
+
         public JsonResult BoutOrder(string ordercode)
         {
             var result = UserOrdersBusiness.BoutOrder(ordercode);
@@ -382,12 +412,13 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
         public JsonResult OrderAuditing(string ordercode)
         {
             string msg = "";
             var result = false;
             var model = UserOrdersBusiness.GetUserOrderDetail(ordercode);
-            if (model != null && model.Status ==0)
+            if (model != null && model.Status == 0)
             {
                 result = UserOrdersBusiness.OrderAuditting(ordercode, "", model.TotalFee);
             }
@@ -403,6 +434,38 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        public JsonResult SaveOrders(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            UserOrders model = serializer.Deserialize<UserOrders>(entity);
+            model.SPName = "";
+            string error = "";
+            var result =false;
+            if (model.AutoID==-1)
+            {
+                var tempu=M_UsersBusiness.GetUserDetailByLoginName(model.UserName);
+                if (tempu != null && !string.IsNullOrEmpty(tempu.UserID))
+                {
+                    result = UserOrdersBusiness.CreateUserOrder(
+                        DateTime.Now.ToString("yyyyMMddhhmmss") + CurrentUser.AutoID, model.PayType, model.SPName,
+                        model.BankName, model.Sku, model.Content, model.TotalFee, model.OtherCode,
+                        Convert.ToInt32(model.TotalFee), model.Type, model.PayFee, tempu.UserID, CurrentUser.UserID,OperateIP);
+                }
+                else
+                {
+                    error = "登陆账号不存在,订单登记失败";
+                }
+            }
+            JsonDictionary.Add("result", result);
+            JsonDictionary.Add("ErrMsg", error);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #endregion
 
         #endregion

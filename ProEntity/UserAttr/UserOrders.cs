@@ -11,6 +11,7 @@ namespace ProEntity
         public int AutoID { get; set; }
         public string OrderCode { get; set; }
         public string SPName { get; set; }
+        public string BankName { get; set; }
         public string Sku { get; set; }
         public string Content { get; set; }
         public DateTime CreateTime { get; set; }
@@ -19,6 +20,7 @@ namespace ProEntity
         public string UserName { get; set; }
         public int PayType { get; set; }
         public decimal TotalFee { get; set; }
+        public decimal PayFee { get; set; }
         public string OtherCode { get; set; }
         public int Type { get; set; }
         public decimal Num { get; set; }

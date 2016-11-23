@@ -47,16 +47,16 @@ function JsRound(e, t, r) {
     return e 
 } 
 function checkMoney(e) {
-    e.value = formatFloat(e.value) 
+    e.val() = formatFloat(e.val())
 } 
 function checkWithdraw(e, t, r) {
-    e.value = formatFloat(e.value), parseFloat(e.value) > parseFloat(r) && (alert("输入金额超出了可用余额"), e.value = r), jQuery("#" + t).html(changeMoneyToChinese(e.value)) 
+    e.val() = formatFloat(e.val()), parseFloat(e.val()) > parseFloat(r) && (alert("输入金额超出了可用余额"), e.val() = r), jQuery("#" + t).html(changeMoneyToChinese(e.val()))
 } 
 function checkOnlineWithdraw(e, t) {
-    e.value = formatFloat(e.value), parseFloat(e.value) > parseFloat(t) && (alert("提现金额超出了可提现限额"), e.value = t, e.focus()) 
+    e.val() = formatFloat(e.val()), parseFloat(e.val()) > parseFloat(t) && (alert("提现金额超出了可提现限额"), e.val() = t, e.focus());
 } 
 function checkIntWithdraw(e, t, r) {
-    e.value = parseInt(e.value, 10), e.value = isNaN(e.value) ? 0 : e.value, parseFloat(e.value) > parseFloat(r) && (alert("输入金额超出了可用余额"), e.value = parseInt(r, 10)), jQuery("#" + t).html(changeMoneyToChinese(e.value)) 
+    e.val() = parseInt(e.val(), 10), e.val() = isNaN(e.val()) ? 0 : e.val(), parseFloat(e.val()) > parseFloat(r) && (alert("输入金额超出了可用余额"), e.val() = parseInt(r, 10)), jQuery("#" + t).html(changeMoneyToChinese(e.val())) 
 } 
 function moneyFormat(e) {
     if (sign = Number(e) < 0 ? "-" : "", e = e.toString().replace(/[^\d.]/g, ""), e = e.replace(/\.{2,}/g, "."), e = e.replace(".", "$#$").replace(/\./g, "").replace("$#$", "."), -1 != e.indexOf(".")) {
@@ -142,7 +142,7 @@ function addItem(e, t, r) {
     e.options.add(n) 
 } 
 function SelectItem(e, t) {
-    for (var r = e.options.length, n = 0;r > n;n++) if (e.options[n].value == t) return e.options[n].selected = !0, !0 
+    for (var r = e.options.length, n = 0;r > n;n++) if (e.options[n].val() == t) return e.options[n].selected = !0, !0 
 } 
 function Combination(e, t) {
     if (t = parseInt(t), e = parseInt(e), 0 > t || 0 > e) return !1;

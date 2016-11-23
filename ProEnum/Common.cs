@@ -92,4 +92,41 @@ namespace ProEnum
         [DescriptionAttribute("微信")]
         WXPay = 3
     }
+    public enum EnumPalyType
+    {   
+        [DescriptionAttribute("推广注册")]
+        WelcomeIn = 0,
+        [DescriptionAttribute("账户充值")]
+        InAccount = 1,
+        [DescriptionAttribute("账户提现")]
+        OutAccount= 2,
+        [DescriptionAttribute("提现失败")]
+        OutAccountFault= 3,
+        [DescriptionAttribute("投注扣款")]
+        PlayNum = 4,
+        [DescriptionAttribute("追号扣款")]
+        ChaseNum=5,
+        [DescriptionAttribute("追号返款")]
+        ChaseNumBack=6,
+        [DescriptionAttribute("游戏返点")]
+        PlayNumBackPointe=7,
+        [DescriptionAttribute("奖金派送")]
+        RewardSend=8,
+        [DescriptionAttribute("撤单返款")]
+        ReturnPayNum=9,
+        [DescriptionAttribute("撤单手续费")]
+        ReturnBrokerage=10,
+        [DescriptionAttribute("撤消返点")]
+        ReturnBackPointe=11,
+        [DescriptionAttribute("撤消派奖")]
+        ReturnRewardSend=12,
+        [DescriptionAttribute("充值扣费")]
+        InAccountDeduction=13,
+        [DescriptionAttribute("上级充值")]
+        ParentPay=14,
+        [DescriptionAttribute("活动礼金")]
+        ActiveMoney=15,
+        [DescriptionAttribute("其他")]
+        Other=16,
+    }
 }

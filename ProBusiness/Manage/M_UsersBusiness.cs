@@ -165,6 +165,21 @@ namespace ProBusiness
             
             return model;
         }
+        public static M_Users GetUserDetailByLoginName(string loginName)
+        {
+
+            DataTable dt = M_UsersDAL.GetDataTable("select *  from M_Users where Status<>9 and LoginName='" + loginName + "'");
+
+            M_Users model = null;
+            if (dt.Rows.Count == 1)
+            {
+                model = new M_Users();
+                model.FillData(dt.Rows[0]);
+            }
+
+            return model;
+        }
+
         public static List<M_Users> GetUsersRelationList(int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string userid,int type = -1, int status = -1, string keyWords = "", string colmonasc = "a.AutoID", bool isasc = false,
             string rebatemin="",string rebatemax="",string accountmin="",string accountmax="",bool myselft = false)
         {
