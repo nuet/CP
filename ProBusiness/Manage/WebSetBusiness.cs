@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
+using System.Web; 
 
 namespace ProBusiness.Manage
 {
@@ -116,6 +117,50 @@ namespace ProBusiness.Manage
             return model;
         }
 
+
+        public static Lottery GetLotteryDetail(string cpCode)
+        {
+            var model=CommonBusiness.LottertList.Where(x => x.CPCode == cpCode).FirstOrDefault();
+            if (model != null && !string.IsNullOrEmpty(model.CPName))
+            {
+                return model;
+            }
+            else
+            {
+                DataTable dt = new CommonDAL().GetLotteryList();
+                List<Lottery> lottertList=new List<Lottery>();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Lottery mod = new Lottery();
+                    mod.FillData(dr);
+                    lottertList.Add(mod);
+                }
+                CommonBusiness.LottertList = lottertList;
+                return CommonBusiness.LottertList.Where(x => x.CPCode == cpCode).FirstOrDefault(); 
+            }
+        }
+        public static Lottery GetLotteryDetailByID(int autoid)
+        {
+            var model = CommonBusiness.LottertList.Where(x => x.AutoID == autoid).FirstOrDefault();
+            if (model != null && !string.IsNullOrEmpty(model.CPName))
+            {
+                return model;
+            }
+            else
+            {
+                DataTable dt = new CommonDAL().GetLotteryList();
+                List<Lottery> lottertList = new List<Lottery>();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Lottery mod = new Lottery();
+                    mod.FillData(dr);
+                    lottertList.Add(mod);
+                }
+                CommonBusiness.LottertList = lottertList;
+                return CommonBusiness.LottertList.Where(x => x.AutoID == autoid).FirstOrDefault();
+            }
+        }
+
         #endregion
         #region 新增 
         public static bool InsertActive(Active model)
@@ -127,6 +172,17 @@ namespace ProBusiness.Manage
         public static bool InsertChargeSet(ChargeSet model)
         {
             return WebSetDAL.BaseProvider.InsertChargeSet(model.UserID, model.View.ToLower(), model.Remark, model.Golds);
+        }
+
+        public static int CreateLottery(string cpname, string cpcode, int icontype, string resulturl, string userid,ref string  errmsg)
+        {
+            var result= WebSetDAL.BaseProvider.InsertLottery(cpname, cpcode, icontype, resulturl, userid, ref errmsg);
+            if (result > 0)
+            {
+                GetLotteryDetailByID(result);
+            }
+            return result;
+
         }
 
         #endregion
@@ -148,7 +204,41 @@ namespace ProBusiness.Manage
         public static bool DeleteActive(int autoid)
         {
             return WebSetDAL.BaseProvider.DeleteActive(autoid);  
+        } 
+        public static bool UpdateUserLottery(int status, int autoid){
+            bool bl = CommonBusiness.Update("Lottery","Status",status," AutoID="+autoid);
+            if (bl)
+            {
+                var model = CommonBusiness.LottertList.Where(x => x.AutoID == autoid).FirstOrDefault();
+                if (model != null && model.AutoID > 0)
+                {
+                    CommonBusiness.LottertList.Remove(model);
+                    model.Status = status;
+                    CommonBusiness.LottertList.Add(model);
+                }
+            }
+            return bl;
         }
+
+        public static bool UpdateLottery(string cpname, string cpcode, int icontype, string resulturl,int autoid)
+        {
+            bool bl = WebSetDAL.BaseProvider.UpdateLottery(cpname, cpcode, icontype, resulturl, autoid);
+            if (bl)
+            {
+                var model = CommonBusiness.LottertList.Where(x => x.AutoID == autoid).FirstOrDefault();
+                if (model != null && model.AutoID>0)
+                {
+                    CommonBusiness.LottertList.Remove(model);
+                    model.CPName = cpname;
+                    model.CPCode = cpcode;
+                    model.IconType = icontype;
+                    model.ResultUrl = resulturl;
+                    CommonBusiness.LottertList.Add(model);
+                }
+            }
+            return bl;
+        }
+
         #endregion
         public static string GetUploadImgurl(string imgurl)
         {

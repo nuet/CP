@@ -450,6 +450,8 @@
     <Content Include="modules\plug\laydate\skins\molv\laydate.css" />
     <Content Include="modules\plug\seach_keys\seach_keys.js" />
     <Content Include="modules\plug\seach_keys\style.css" />
+    <Content Include="modules\plug\switch\style.css" />
+    <Content Include="modules\plug\switch\switch.js" />
     <Content Include="modules\plug\umeditor\dialogs\anchor\anchor.html" />
     <Content Include="modules\plug\umeditor\dialogs\attachment\attachment.css" />
     <Content Include="modules\plug\umeditor\dialogs\attachment\attachment.html" />
@@ -764,6 +766,7 @@
     <Content Include="modules\scripts\sysset\users.js" />
     <Content Include="modules\scripts\sysset\webusers.js" />
     <Content Include="modules\scripts\sysset\active.js" />
+    <Content Include="modules\scripts\sysset\lottery.js" />
     <Content Include="modules\scripts\uploadcreate.js" />
     <Content Include="modules\scripts\userinfo\userinfo.js" />
     <Content Include="modules\scripts\userinfo\usermsg.js" />
@@ -782,6 +785,8 @@
     <Content Include="modules\template\sysset\banks.html" />
     <Content Include="modules\template\sysset\bank-detail.html" />
     <Content Include="modules\template\sysset\order-detail.html" />
+    <Content Include="modules\template\sysset\lottery-detail.html" />
+    <Content Include="modules\template\sysset\lottery.html" />
     <Content Include="modules\webuploader\bootstrap.min.css" />
     <Content Include="modules\webuploader\uploader.css" />
     <Content Include="modules\webuploader\Uploader.swf" />
@@ -951,6 +956,7 @@
     <Content Include="Views\Help\General.cshtml" />
     <Content Include="Views\User\UserReward.cshtml" />
     <Content Include="Views\SysSet\FeedDetail.cshtml" />
+    <Content Include="Views\SysSet\Lottery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

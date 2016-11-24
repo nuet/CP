@@ -11,7 +11,7 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using ProDAL.Manage;
+using ProDAL.Manage; 
 
 namespace ProBusiness
 {
@@ -83,6 +83,30 @@ namespace ProBusiness
                 _manageMenus = value;
             }
         }
+        private static List<Lottery> _lottertList;
+        public static List<Lottery> LottertList
+        {
+            get
+            {
+                if (_lottertList == null)
+                {
+                    _lottertList = new List<Lottery>();
+                    DataTable dt = new CommonDAL().GetLotteryList();
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Lottery model = new Lottery();
+                        model.FillData(dr);
+                        _lottertList.Add(model);
+                    } 
+                }
+                return _lottertList;
+            }
+            set
+            {
+                _lottertList = value;
+            }
+        }
+
         #endregion
          
 

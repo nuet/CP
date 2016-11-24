@@ -61,8 +61,13 @@ namespace CPiao.Controllers
             return View();
         }
 
+        public ActionResult Lottery()
+        {
+            return View();
+        }
+       
         #region Ajax
-
+        #region Roles
         /// <summary>
         /// 获取角色列表
         /// </summary>
@@ -71,7 +76,6 @@ namespace CPiao.Controllers
         {
             var list = ManageSystemBusiness.GetRoles();
             JsonDictionary.Add("items", list);
-
             return new JsonResult()
             {
                 Data = JsonDictionary,
@@ -137,6 +141,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        #endregion
 
         /// <summary>
         /// 保存角色权限
@@ -160,6 +165,7 @@ namespace CPiao.Controllers
             };
         }
 
+        #region Users
         public JsonResult GetUsers(string keyWords, int pageIndex, int status = -1, int sourcetype = 1)
         {
             int totalCount = 0, pageCount = 0;
@@ -267,8 +273,9 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        #endregion
 
-
+        #region FeedBacks
         /// <summary>
         /// 获取举报反馈信息
         /// </summary>
@@ -320,8 +327,9 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        #endregion
 
-
+        #region Active
         public JsonResult GetActiveList(string keywords, int pageIndex, int pageSize, string btime = "",
             string etime = "", int type = -1)
         {
@@ -382,6 +390,7 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        #endregion
 
         #region Ordes
 
@@ -466,6 +475,65 @@ namespace CPiao.Controllers
             };
         }
 
+        #endregion
+
+        #region Lotterys
+
+        public JsonResult GetLotterys()
+        { 
+            JsonDictionary.Add("items",  CommonBusiness.LottertList);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        public JsonResult GetLotterysByID(int autoid)
+        {
+            var model = WebSetBusiness.GetLotteryDetailByID(autoid);
+            JsonDictionary.Add("model", model);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public JsonResult SaveLottery(string entity)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            Lottery model = serializer.Deserialize<Lottery>(entity);
+            string errmsg = "";
+            if (model.AutoID<1)
+            {
+                model.AutoID = WebSetBusiness.CreateLottery(model.CPName, model.CPCode, model.IconType, model.ResultUrl, CurrentUser.UserID, ref errmsg);
+            }
+            else
+            {
+                bool bl = WebSetBusiness.UpdateLottery(model.CPName, model.CPCode, model.IconType,model.ResultUrl,model.AutoID);
+                if (!bl)
+                {
+                    model.AutoID = 0;
+                }
+            }
+            JsonDictionary.Add("model", model);
+            JsonDictionary.Add("ErrMsg", errmsg);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        public JsonResult DeleteLottery(int autoid,int status)
+        { 
+            bool bl = WebSetBusiness.UpdateUserLottery(status, autoid);
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         #endregion
 
         #endregion

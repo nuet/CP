@@ -27,8 +27,16 @@ namespace ProDAL
         {
             DataTable dt = GetDataTable("select * from Menu where Type=2 and IsHide=0 order by Sort ");
             return dt;
+        }
+        /// <summary>
+        /// 获取彩票列表
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetLotteryList()
+        {
+            DataTable dt = GetDataTable("select * from Lottery where status<>9 order by Sort ");
+            return dt;
         } 
-
         /// <summary>
         /// 查询
         /// </summary>
