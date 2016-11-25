@@ -60,7 +60,17 @@ namespace CPiao.Controllers
             ViewBag.Menus = CommonBusiness.ClientMenus.Where(m => m.PCode == ExpandClass.CLIENT_TOP_CODE).ToList();
             return View();
         }
-
+        public ActionResult LotteryPlays(string cpCode,string cpName)
+        {
+            ViewBag.Model = WebSetBusiness.GetLotteryPlaysesByCode(cpCode);
+            var plays = WebSetBusiness.GetPlays();
+            ViewBag.CPName = cpName;
+            ViewBag.CPCode = cpCode;
+            ViewBag.Menus = plays.Where(x => x.Layer == 1).ToList();
+            ViewBag.CMenus = plays.Where(x => x.Layer == 2).ToList();
+            ViewBag.TMenus = plays.Where(x => x.Layer == 3).ToList();
+            return View();
+        }
         public ActionResult Lottery()
         {
             return View();
@@ -489,7 +499,7 @@ namespace CPiao.Controllers
             };
         }
 
-        public JsonResult GetLotterysByID(int autoid)
+        public JsonResult GetLotteryByID(int autoid)
         {
             var model = WebSetBusiness.GetLotteryDetailByID(autoid);
             JsonDictionary.Add("model", model);

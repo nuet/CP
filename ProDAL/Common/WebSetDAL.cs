@@ -28,6 +28,20 @@ namespace ProDAL
 
             return GetDataTable("select * from Active where AutoID=@AutoID and Status<>9", paras, CommandType.Text);
         }
+        public DataTable GetPlays()
+        { 
+            return GetDataTable("select c.* from   Plays c where  c.Status<>9 ");
+        }
+        public DataTable GetLotteryPlays(string CPcode)
+        {
+            string sqlwhere = " where a.Status<> 9 ";
+            if (!string.IsNullOrEmpty(CPcode))
+            {
+                sqlwhere = " and a.CPCode='" + CPcode + "' ";
+            }
+
+            return GetDataTable("select c.* from Lottery a join LotteryPlays  b on a.CPCode=b.CPCOde join Plays c on b.PID=c.PID  " + sqlwhere);
+        }
         #region 新增 
 
         public bool InsertActive(string userid, string Title, string content, string Tips, string img, DateTime btime, DateTime etime,int type)
@@ -116,9 +130,9 @@ namespace ProDAL
                 new SqlParameter("@CPName", cpname),
                 new SqlParameter("@CPCode", cpcode),
                 new SqlParameter("@IconType", icontype), 
-                new SqlParameter("@ReturnUrl",resulturl) 
+                new SqlParameter("@ResultUrl",resulturl) 
             };
-            return ExecuteNonQuery("Update Lottery set [CPName]=@CPName,[CPCode]=@CPCode,IconType=@IconType,ReturnUrl=@ReturnUrl  where AutoID=@AutoID ", paras, CommandType.Text) > 0;
+            return ExecuteNonQuery("Update Lottery set [CPName]=@CPName,[CPCode]=@CPCode,IconType=@IconType,ResultUrl=@ResultUrl  where AutoID=@AutoID ", paras, CommandType.Text) > 0;
         }
 
         public bool DeleteActive(int autoid)

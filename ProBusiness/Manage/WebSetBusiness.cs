@@ -161,6 +161,30 @@ namespace ProBusiness.Manage
             }
         }
 
+        public static List<Plays> GetLotteryPlaysesByCode(string cpcode)
+        {
+            DataTable dt = WebSetDAL.BaseProvider.GetLotteryPlays(cpcode);
+            List<Plays> list = new List<Plays>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                Plays model = new Plays();
+                model.FillData(dr);
+                list.Add(model);
+            }
+            return list;
+        }
+        public static List<Plays> GetPlays()
+        {
+            DataTable dt = WebSetDAL.BaseProvider.GetPlays();
+            List<Plays> list = new List<Plays>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                Plays model = new Plays();
+                model.FillData(dr);
+                list.Add(model);
+            }
+            return list;
+        }
         #endregion
         #region 新增 
         public static bool InsertActive(Active model)

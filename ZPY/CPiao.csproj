@@ -787,6 +787,7 @@
     <Content Include="modules\template\sysset\order-detail.html" />
     <Content Include="modules\template\sysset\lottery-detail.html" />
     <Content Include="modules\template\sysset\lottery.html" />
+    <Content Include="modules\template\sysset\plays.html" />
     <Content Include="modules\webuploader\bootstrap.min.css" />
     <Content Include="modules\webuploader\uploader.css" />
     <Content Include="modules\webuploader\Uploader.swf" />
@@ -957,6 +958,7 @@
     <Content Include="Views\User\UserReward.cshtml" />
     <Content Include="Views\SysSet\FeedDetail.cshtml" />
     <Content Include="Views\SysSet\Lottery.cshtml" />
+    <Content Include="Views\SysSet\LotteryPlays.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
