@@ -87,6 +87,14 @@
                         <summary>
                             <img src="/modules/img/litte-icon/游戏.png" width="20" height="20" style="vertical-align: middle; padding-right: 10px;"/>开始游戏</summary>
                         <dl class="qh1">
+                             @foreach (Lottery model in ExpandClass.GetLottery(HttpContext.Current))
+                             {
+                                <a data-href="/Lottery/Index/@(model.CPCode)"    href="javascript:void(0);">
+                                    <dd>@(model.CPName)</dd>
+                                </a>
+                             }
+                            
+@*
                             <a target="mainframe" href="#">
                                 <dd>欢乐分分彩</dd>
                             </a>
@@ -119,7 +127,7 @@
                             </a>
                             <a target="mainframe" href="#">
                                 <dd>排列三、五</dd>
-                            </a>
+                            </a>*@
                         </dl>
                     </details>
                     <details class="menu" open>
@@ -209,6 +217,11 @@
     $(function() {
         $('#sddm a').each(function(i, v) {
             $(v).click(function() {
+                $('#mainframe').attr("src", $(v).data("href"));
+            });
+        });
+        $('.menu a').each(function (i, v) {
+            $(v).click(function () {
                 $('#mainframe').attr("src", $(v).data("href"));
             });
         });

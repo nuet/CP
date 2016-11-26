@@ -1,4 +1,5 @@
-﻿using ProEntity;
+﻿using ProBusiness;
+using ProEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,6 +88,17 @@ public static class ExpandClass
         else
         {
             return new List<Menu>();
+        }
+    }
+    public static List<Lottery> GetLottery(HttpContext httpContext)
+    {
+        if (httpContext.Session["Manager"] != null)
+        {
+            return CommonBusiness.LottertList;
+        }
+        else
+        {
+            return new List<Lottery>();
         }
     }
     /// <summary>

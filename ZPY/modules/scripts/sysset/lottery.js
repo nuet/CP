@@ -165,15 +165,16 @@
         cmenus = JSON.parse(cmenus.replace(/&quot;/g, '"'));
         tmenus = JSON.parse(tmenus.replace(/&quot;/g, '"'));
         for (var i = 0; i < cmenus.length; i++) {
-            cmenus[i].ChildMenus = tmenus;
+            cmenus[i].ChildPlays = tmenus;
         }
         for (var i = 0; i < permissions.length; i++) {
-            permissions[i].ChildMenus = cmenus;
+            permissions[i].ChildPlays = cmenus;
         }
-         
+       
         menus = JSON.parse(menus.replace(/&quot;/g, '"'));
+     
         _self.bindMenu(permissions, menus);
-
+        
         _self.bindPermissionEvent(lotterid);
 
 
@@ -187,7 +188,7 @@
                     menus += $(this).data("id") + ",";
                 }
             });
-            Global.post("/System/SaveLotteryPlays", {
+            Global.post("/SysSet/SaveLotteryPlays", {
                 lotterid: lotterid,
                 permissions: menus
             }, function (data) {
@@ -204,7 +205,7 @@
         var _self = this;
         for (var i = 0, j = permissions.length; i < j; i++) {
             var menu = permissions[i];
-            cacheMenu[menu.PID] = menu.ChildMenus;
+            cacheMenu[menu.PCode] = menu.ChildPlays;
         } 
         doT.exec("template/sysset/plays.html", function (template) {
 
@@ -224,13 +225,12 @@
                     $("#" + _this.data("id")).find("input").prop("checked", _this.prop("checked"));
                     $("#" + _this.data("id")).find("label").addClass("check").removeClass("checked");
                 }
-            });
-
-            //默认选中拥有权限
+            }); 
+            //默认选中拥有权限 
             innerHtml.find("input").each(function () {
                 var _this = $(this);
-                for (var i = 0, j = menus.length; i < j; i++) {
-                    if (_this.data("id") == menus[i].PID) {
+                for (var i = 0, j = menus.length; i < j; i++) { 
+                    if (_this.data("id") == menus[i].PIDS) {
                         _this.prop("checked", true);
                         _this.parent().addClass("checked").removeClass("check");
                     }
@@ -282,24 +282,24 @@
             if (i == cacheMenu[keys].length - 1) {
                 _item.append("<span class='lastline left'></span>"); 
                 //加载显示下属图标和缓存数据
-                if (cacheMenu[keys][i].ChildMenus && cacheMenu[keys][i].ChildMenus.length > 0) {
-                    _item.append("<span data-id='" + menuCode + "_" + cacheMenu[keys][i].PID + "'  data-eq='last' data-state='close' class='icoopen openchild left'></span>");
-                    if (!cacheMenu[cacheMenu[keys][i].PID]) {
-                        cacheMenu[cacheMenu[keys][i].PID] = cacheMenu[keys][i].ChildMenus;
+                if (cacheMenu[keys][i].ChildPlays && cacheMenu[keys][i].ChildPlays.length > 0) {
+                    _item.append("<span data-id='" + menuCode + "_" + cacheMenu[keys][i].PCode + "'  data-eq='last' data-state='close' class='icoopen openchild left'></span>");
+                    if (!cacheMenu[cacheMenu[keys][i].PCode]) {
+                        cacheMenu[cacheMenu[keys][i].PCode] = cacheMenu[keys][i].ChildPlays;
                     }
                 }
             } else {
                 _item.append("<span class='leftline left'></span>"); 
                 //加载显示下属图标和缓存数据
-                if (cacheMenu[keys][i].ChildMenus && cacheMenu[keys][i].ChildMenus.length > 0) {
-                    _item.append("<span data-id='" + menuCode + "_" + cacheMenu[keys][i].PID + "' data-eq='' data-state='close' class='icoopen openchild left'></span>");
-                    if (!cacheMenu[cacheMenu[keys][i].PID]) {
-                        cacheMenu[cacheMenu[keys][i].PID] = cacheMenu[keys][i].ChildMenus;
+                if (cacheMenu[keys][i].ChildPlays && cacheMenu[keys][i].ChildPlays.length > 0) {
+                    _item.append("<span data-id='" + menuCode + "_" + cacheMenu[keys][i].PCode + "' data-eq='' data-state='close' class='icoopen openchild left'></span>");
+                    if (!cacheMenu[cacheMenu[keys][i].PCode]) {
+                        cacheMenu[cacheMenu[keys][i].PCode] = cacheMenu[keys][i].ChildPlays;
                     }
                 }
             }
 
-            _item.append("<label class='check left'><input type='checkbox' class='left'  value='" + cacheMenu[keys][i].PID + "' data-id='" + cacheMenu[keys][i].PID + "' /><span>" + cacheMenu[keys][i].PName + "</span></label>");
+            _item.append("<label class='check left'><input type='checkbox' class='left'  value='" + cacheMenu[keys][i].PCode + "' data-id='" + menuCode + "_" + cacheMenu[keys][i].PCode + "' /><span>" + cacheMenu[keys][i].PName + "</span></label>");
 
             _div.append(_item);
 
@@ -350,7 +350,7 @@
         _div.find("input").each(function () {
             var _this = $(this);
             for (var i = 0, j = menus.length; i < j; i++) {
-                if (_this.data("id") == menus[i].PID) {
+                if (_this.data("id") == menus[i].PIDS) {
                     _this.prop("checked", true);
                     _this.parent().addClass("checked").removeClass("check");
                 }

@@ -262,7 +262,10 @@ namespace ProBusiness.Manage
             }
             return bl;
         }
-
+        public static bool UpdateLotteryPlays(string lotterid, string permissions, string operateid, string ip)
+        {
+            return WebSetDAL.BaseProvider.UpdateLotteryPlays(lotterid, permissions, operateid);
+        }
         #endregion
         public static string GetUploadImgurl(string imgurl)
         {

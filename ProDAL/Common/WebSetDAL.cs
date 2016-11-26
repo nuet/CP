@@ -40,7 +40,7 @@ namespace ProDAL
                 sqlwhere = " and a.CPCode='" + CPcode + "' ";
             }
 
-            return GetDataTable("select c.* from Lottery a join LotteryPlays  b on a.CPCode=b.CPCOde join Plays c on b.PID=c.PID  " + sqlwhere);
+            return GetDataTable("select c.*,b.PIDS from Lottery a join LotteryPlays  b on a.CPCode=b.CPCode join Plays c on b.PID=c.PCode  " + sqlwhere);
         }
         #region 新增 
 
@@ -142,7 +142,17 @@ namespace ProDAL
                 new SqlParameter("@AutoID", autoid)
             };
             return ExecuteNonQuery("update Active set Status=9 where AutoID=@AutoID ", paras, CommandType.Text) > 0;
-        } 
+        }
+
+        public bool UpdateLotteryPlays(string lotterid, string permissions, string userid)
+        {
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@CPCode",lotterid),
+                                       new SqlParameter("@UserID",userid),
+                                       new SqlParameter("@Permissions",permissions)
+                                   };
+            return ExecuteNonQuery("M_UpdateLotteryPlays", paras, CommandType.StoredProcedure) > 0;
+        }
         #endregion
     }
 }

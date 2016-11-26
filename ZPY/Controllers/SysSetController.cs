@@ -544,6 +544,22 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+
+        public JsonResult SaveLotteryPlays(string lotterid, string permissions)
+        {
+            //if (permissions.Length > 0)
+            //{
+            //    permissions = permissions.Substring(0, permissions.Length - 1);
+            //}
+            bool bl = WebSetBusiness.UpdateLotteryPlays(lotterid, permissions, CurrentUser.UserID, OperateIP);
+            JsonDictionary.Add("status", bl);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         #endregion
 
         #endregion

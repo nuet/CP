@@ -1,5 +1,5 @@
 *{padding: 0;margin:0;list-style: none;font-family: "微软雅黑";}
-html{font-size: 14px;}
+html{font-size: 14px !important;}
 body{background: #E1EAF0;}
 .container{width: 1000px;margin: 0 auto;}
 .left{float: left;}
@@ -13,17 +13,17 @@ body{background: #E1EAF0;}
 
 .next-open p{margin-top: 10px;}
 .next-open p:first-child+p{display: inline-block;margin-top: 2px;line-height: 34px;font-size: 32px;}
-.next-open p:first-child+p span{margin-top: 5px;display: inline-block;font-size: 25px;background: url(../images/order.png) no-repeat;width: 36px;height: 54px;line-height: 54px;color: #CF1B1C;font-weight: bold;margin-left: 4px;margin-right: 4px;}
+.next-open p:first-child+p span{margin-top: 5px;display: inline-block;font-size: 25px;background: url(/modules/images/order.png) no-repeat;width: 36px;height: 54px;line-height: 54px;color: #CF1B1C;font-weight: bold;margin-left: 4px;margin-right: 4px;}
 .next-open p:first-child+p span:first-child{margin-left: 10px;}
 
 .last-num p{margin-top: 6px;}
 .last-num p:first-child{margin-top: 8px;margin-left: -6px;font-size: 20px;}
 .last-num p:first-child+p{margin-left: 5px;}
-.last-num p:first-child+p span{color: #333;font-weight:bold;display: inline-block;width: 48px;height: 48px;line-height: 48px;background:url(../images/ball1.png) no-repeat;font-size: 18px;margin-right: 10px;}
-.last-num p:first-child+p span:nth-child(2){background:url(../images/ball2.png) no-repeat;}
-.last-num p:first-child+p span:nth-child(3){background:url(../images/ball3.png) no-repeat;}
-.last-num p:first-child+p span:nth-child(4){background:url(../images/ball4.png) no-repeat;}
-.last-num p:first-child+p span:nth-child(5){background:url(../images/ball5.png) no-repeat;}
+.last-num p:first-child+p span{color: #333;font-weight:bold;display: inline-block;width: 48px;height: 48px;line-height: 48px;background:url(/modules/images/ball1.png) no-repeat;font-size: 18px;margin-right: 10px;}
+.last-num p:first-child+p span:nth-child(2){background:url(/modules/images/ball2.png) no-repeat;}
+.last-num p:first-child+p span:nth-child(3){background:url(/modules/images/ball3.png) no-repeat;}
+.last-num p:first-child+p span:nth-child(4){background:url(/modules/images/ball4.png) no-repeat;}
+.last-num p:first-child+p span:nth-child(5){background:url(/modules/images/ball5.png) no-repeat;}
 .last-num p:last-child{margin-top: 5px;margin-left: -5px;}
 .last-num p:last-child span{color: #DE1B1B;margin: 0 5px;}
 
@@ -32,18 +32,17 @@ body{background: #E1EAF0;}
 .open-history ul li{line-height: 23px;font-size: 12px;}
 .open-history ul li span:first-child{margin-right: 20px;}
 .open-history ul li span strong{margin: 0 5px;color: #DE1B1B;}
-.open-history ul li span:not(:first-child){display: inline-block;width: 22px;height: 22px;background: url(../images/ball1.png) no-repeat;background-size: 22px;color: #333;text-align: center;line-height: 22px;}
+.open-history ul li span:not(:first-child){display: inline-block;width: 22px;height: 22px;background: url(/modules/images/ball1.png) no-repeat;background-size: 22px;color: #333;text-align: center;line-height: 22px;}
 
 .select-nums .navs{width: 1000px;background: #113045;color: white;height: 40px;}
 .select-nums .navs li{display: inline-block;width: 80px;height: 40px;text-align: center;line-height: 40px;cursor: pointer;font-size: 16px;}
 .select-nums .navs li:not(.navs-cur):hover{background: #1B5682;}
 .all-ways{width: 1000px;height: 40px;line-height: 30px;background: #17476B;}
-.optional .all-ways{height: 80px;}
-.all-ways span{float:left;margin-top: 7px;text-align:center;margin-left: 10px;background: url(../images/bg1.png) no-repeat;display: inline-block;width: 81px;height: 26px;color: white;line-height: 26px;}
+.fushi,.danshi{height: 40px;}
+.all-ways span{float:left;margin-top: 7px;text-align:center;margin-left: 10px;background: url(/modules/images/bg1.png) no-repeat;display: inline-block;width: 81px;height: 26px;color: white;line-height: 26px;}
 .all-ways ul{float: left;}
 .all-ways ul li{display: inline-block;color: white;line-height: 26px;margin-top: 7px;width: 90px;text-align: center;margin-left: 15px;border-radius: 4px;cursor: pointer;}
-.optional .all-ways ul li{margin-left: 10px;width: 60px;}
-.optional .fushi,.optional .danshi{height: 40px;}
+.all-ways .fushi ul li,.all-ways .danshi ul li{margin-left: 10px;width: 60px;}
 .all-ways ul li:not(.all-ways-cur):hover{background: #1B5682;}
 .all-ways ul li:first-child{margin-left: 45px;}
 
@@ -68,7 +67,7 @@ ul.num-select li div span:hover{background: #ffecec;}
 .play-action p{width: 350px;height:40px;text-align: right;display: inline-block;;float: right;margin-right: 15px;overflow: hidden;}
 .play-action p span{color: #DE1B1B;margin:0 6px;}
 .play-action input[type="button"]{float: right;margin-right: 10px;width: 90px;height: 30px;color: white;background: #CE6120;border:none;border-radius: 4px;margin-top: 5px;cursor: pointer;}
-.play-section>div textarea{width: 680px;height: 105px;margin-left: 90px;padding-left: 20px;float: left;padding-top: 10px;}
+.play-section>div textarea{width: 700px;height: 115px;margin-left: 90px;float: left;text-align: left;line-height: 15px;}
 .play-section>div textarea~input{float: left;width: 90px;margin-left: 30px;margin-right:80px;height: 32px;border-radius: 3px;margin-bottom: 10px;border:none;outline: none;cursor: pointer;}
 
 .navs-cur{background: #CF1B1C;}
@@ -79,16 +78,18 @@ ul.num-select li div span:hover{background: #ffecec;}
 
 .num-selected{background: #215E8D;width: 1000px;margin-top: 0;padding-top: 10px;}
 .num-selected table{width: 770px;border-collapse: collapse;text-align: center;color: white;float: left;margin-left: 15px;}
-.num-selected table thead{background: #103049;line-height: 28px;}
-.num-selected table tbody tr{border-bottom: 1px solid #777;line-height: 28px;width: 770px!important;}
-.num-selected table tbody tr:hover{background: #555e8d;cursor: pointer;}
-.num-selected table tbody{display: block;max-height: 225px;overflow-y:auto;}
-.num-selected table tfoot{text-align: right;}
+.num-selected table thead{background: #103049;line-height: 28px;width: 770px;text-align: center;}
+.num-selected table tbody tr{border-bottom: 1px solid #777;line-height: 22px;width: 770px!important;text-align: center;}
+.num-selected table tbody tr:hover{background: #555e8d;}
+.num-selected table tbody{display: block;max-height: 225px;overflow-y:auto;width: 770px;font-size: 12px;}
+.num-selected table tbody tr td span{color: #cf1b1c;}
+.num-selected table tbody tr td span:hover{cursor: pointer;text-decoration: underline;}
+.num-selected table tfoot{text-align: right;width: 770px;}
 .num-selected table tfoot tr td a{color: #cf1b1c;text-decoration: none;}
 .num-selected table tfoot tr td a:hover{text-decoration: underline;}
 .num-selected table thead tr{display: block;}
-.num-selected table td{width: 85.5px;}
-.num-selected table th{width: 85.5px;}
+/*.num-selected table td{width: 80px;}
+.num-selected table th{width: 80px;}*/
 .add-bet{float: left;width: 180px;margin-left: 10px;background: #103049;color: white;height: 200px;padding-left: 10px;}
 .add-bet p{line-height: 28px;}
 .add-bet p:first-child{margin-top: 10px;}
@@ -97,8 +98,8 @@ ul.num-select li div span:hover{background: #ffecec;}
 .add-bet input{width: 170px;height: 46px;background:#CE6120;color: white;margin-top: 10px;font-size: 22px;border:none;border-radius: 6px;cursor: pointer;}
 
 .chase-num{width: 1000px;height: 50px;background: #1B5682;margin-top: 10px;}
-.chase-num input[type="button"]{width: 100px;height: 32px;border-radius: 4px;color: white;border:none;font-size: 16px;margin: 10px 15px;cursor: pointer;background: #CE6120 url(../images/11.png) no-repeat 90% center;text-align: left;padding: 0 10px;}
-.chase-num input[type="button"].up{background: #CE6120 url(../images/22.png) no-repeat 90% center;}
+.chase-num input[type="button"]{width: 100px;height: 32px;border-radius: 4px;color: white;border:none;font-size: 16px;margin: 10px 15px;cursor: pointer;background: #CE6120 url(/modules/images/11.png) no-repeat 90% center;text-align: left;padding: 0 10px;}
+.chase-num input[type="button"].up{background: #CE6120 url(/modules/images/22.png) no-repeat 90% center;}
 .chase-num input[type="checkbox"]{margin: 5px;vertical-align: middle;}
 .chase-num label{color: #fff;}
 
@@ -145,7 +146,7 @@ ul.num-select li div span:hover{background: #ffecec;}
 #basic-dialog-ok{background: white;width: 300px;height: 160px;border: 1px solid #CF1B1C;}
 .box-title{width: 100%;height: 35px;background: #CF1B1C;line-height: 35px;}
 .box-title h3{width: 100px;display: inline-block;color: white;text-indent: 15px;}
-.box-title button{background: transparent url(../images/close.png) no-repeat;width: 18px;height: 18px;border:none;outline: none;cursor: pointer;float: right;margin-right: 15px;margin-top: 10px;}
+.box-title button{background: transparent url(/modules/images/close.png) no-repeat;width: 18px;height: 18px;border:none;outline: none;cursor: pointer;float: right;margin-right: 15px;margin-top: 10px;}
 .tips-title{font-size: 14px;text-align: center;margin-top: 8px;}
 .tips-title img{margin:15px 15px 5px -10px;vertical-align: middle;}
 .tips-title button{display: block;width: 70px;height: 25px;margin: 0 auto;margin-top: -5px;}

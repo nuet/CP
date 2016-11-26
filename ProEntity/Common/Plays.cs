@@ -15,7 +15,11 @@ namespace ProEntity
         public DateTime CreateTime { get; set; }
         public int Layer { get; set; }
         public int PLen { get; set; }
-        public int Status { get; set; } 
+        public string PIDS { get; set; }
+        public int Status { get; set; }
+
+        public List<Plays> ChildPlays{get;set;}
+
         /// <summary>
         /// 填充数据
         /// </summary>

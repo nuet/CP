@@ -133,6 +133,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LotteryController.cs" />
     <Compile Include="Controllers\PlugController.cs" />
     <Compile Include="Controllers\SysSetController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -185,6 +186,16 @@
     <Content Include="modules\datapager\images\snext.png" />
     <Content Include="modules\datapager\images\sprevious.png" />
     <Content Include="modules\datapager\style.css" />
+    <Content Include="modules\images\11.png" />
+    <Content Include="modules\images\22.png" />
+    <Content Include="modules\images\ball1.png" />
+    <Content Include="modules\images\ball2.png" />
+    <Content Include="modules\images\ball3.png" />
+    <Content Include="modules\images\ball4.png" />
+    <Content Include="modules\images\ball5.png" />
+    <Content Include="modules\images\ballbg.png" />
+    <Content Include="modules\images\bg1.png" />
+    <Content Include="modules\images\close.png" />
     <Content Include="modules\images\default.png" />
     <Content Include="modules\images\ico-btnadd.png" />
     <Content Include="modules\images\ico-check.png" />
@@ -201,6 +212,12 @@
     <Content Include="modules\images\icondate.png" />
     <Content Include="modules\images\ico_search.png" />
     <Content Include="modules\images\ico_searchhover.png" />
+    <Content Include="modules\images\minus.png" />
+    <Content Include="modules\images\order.png" />
+    <Content Include="modules\images\plus.png" />
+    <Content Include="modules\images\time.png" />
+    <Content Include="modules\images\tips.png" />
+    <Content Include="modules\images\tips2.png" />
     <Content Include="modules\img\bg.jpg" />
     <Content Include="modules\img\browser.png" />
     <Content Include="modules\img\down-arrow.png" />
@@ -754,6 +771,7 @@
     <Content Include="modules\scripts\home.js" />
     <Content Include="modules\scripts\imgbox.js" />
     <Content Include="modules\scripts\layout.js" />
+    <Content Include="modules\scripts\lottery\shiyiyun.js" />
     <Content Include="modules\scripts\register\forget.js" />
     <Content Include="modules\scripts\register\register.js" />
     <Content Include="modules\scripts\register\partregister.js" />
@@ -807,7 +825,6 @@
     <Content Include="Scripts\jquery.keyboard.min.js" />
     <Content Include="Scripts\laydate.js" />
     <Content Include="modules\scripts\message.js" />
-    <Content Include="modules\scripts\shiyiyun.js" />
     <Content Include="Scripts\PCASClass.js" />
     <Content Include="Scripts\sea-config.js" />
     <Content Include="Scripts\sea.js" />
@@ -959,6 +976,7 @@
     <Content Include="Views\SysSet\FeedDetail.cshtml" />
     <Content Include="Views\SysSet\Lottery.cshtml" />
     <Content Include="Views\SysSet\LotteryPlays.cshtml" />
+    <Content Include="Views\Lottery\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
