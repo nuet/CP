@@ -33,6 +33,34 @@ namespace ProEntity
         /// 开奖地址
         /// </summary>
         public string ResultUrl { get; set; }
+        /// <summary>
+        /// ID
+        /// </summary>
+        public string AppKey { get; set; }
+        /// <summary>
+        /// 密钥
+        /// </summary>
+        public string AppSecret { get; set; }
+        /// <summary>
+        /// 开奖间隔
+        /// </summary>
+        public int OpenTimes { get; set; }
+        /// <summary>
+        /// 停售时间
+        /// </summary>
+        public string CloseTime { get; set; }
+        /// <summary>
+        /// 销售时间
+        /// </summary>
+        public string OnSaleTime { get; set; }
+        /// <summary>
+        /// 封盘间隔
+        /// </summary>
+        public int SealTimes { get; set; }
+        /// <summary>
+        /// 期数
+        /// </summary>
+        public int PeriodsNum { get; set; } 
 
         public string CreateUserID { get; set; }
 

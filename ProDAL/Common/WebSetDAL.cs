@@ -71,7 +71,7 @@ namespace ProDAL
             return ExecuteNonQuery("Insert into  ChargeSet([View],[Remark],Golds,Status,CreateTime,UserID) values (@View,@Remark,@Golds,1,getDate(),@UserID)", paras, CommandType.Text) > 0;
         }
 
-        public int InsertLottery(string cpname, string cpcode, int icontype, string resulturl, string userid,ref string errmsg)
+        public int InsertLottery(string cpname, string cpcode, int icontype, string resulturl, string userid, int openTimes, string closeTime, string onSaleTime, int sealTimes, int periodsNum, ref string errmsg)
         {
             SqlParameter[] paras =
             { 
@@ -81,6 +81,11 @@ namespace ProDAL
                 new SqlParameter("@CPCode", cpcode),
                 new SqlParameter("@IconType", icontype), 
                 new SqlParameter("@ReturnUrl",resulturl),
+                new SqlParameter("@OpenTimes",openTimes),
+                new SqlParameter("@CloseTime",closeTime),
+                new SqlParameter("@OnSaleTime",onSaleTime),
+                new SqlParameter("@SealTimes",sealTimes),
+                new SqlParameter("@PeriodsNum",periodsNum),
                 new SqlParameter("@UserID", userid)
             };
             paras[0].Direction = ParameterDirection.Output;
@@ -122,7 +127,7 @@ namespace ProDAL
             return ExecuteNonQuery("Update ChargeSet set [View]=@View,[Remark]=@Remark,Golds=@Golds  where AutoID=@AutoID ", paras, CommandType.Text) > 0;
         }
 
-        public bool UpdateLottery(string cpname, string cpcode, int icontype, string resulturl, int autoid)
+        public bool UpdateLottery(string cpname, string cpcode, int icontype, string resulturl, int openTimes,string closeTime,string onSaleTime,int sealTimes,int periodsNum,int autoid)
         {
             SqlParameter[] paras =
             {  
@@ -130,9 +135,15 @@ namespace ProDAL
                 new SqlParameter("@CPName", cpname),
                 new SqlParameter("@CPCode", cpcode),
                 new SqlParameter("@IconType", icontype), 
+                new SqlParameter("@OpenTimes",openTimes),
+                new SqlParameter("@CloseTime",closeTime),
+                new SqlParameter("@OnSaleTime",onSaleTime),
+                new SqlParameter("@SealTimes",sealTimes),
+                new SqlParameter("@PeriodsNum",periodsNum),
                 new SqlParameter("@ResultUrl",resulturl) 
             };
-            return ExecuteNonQuery("Update Lottery set [CPName]=@CPName,[CPCode]=@CPCode,IconType=@IconType,ResultUrl=@ResultUrl  where AutoID=@AutoID ", paras, CommandType.Text) > 0;
+            return ExecuteNonQuery(@"Update Lottery set [CPName]=@CPName,[CPCode]=@CPCode,IconType=@IconType,ResultUrl=@ResultUrl,OpenTimes=@OpenTimes,CloseTime=@CloseTime,
+OnSaleTime=@OnSaleTime,SealTimes=@SealTimes,PeriodsNum=@PeriodsNum where AutoID=@AutoID ", paras, CommandType.Text) > 0;
         }
 
         public bool DeleteActive(int autoid)

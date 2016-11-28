@@ -198,9 +198,9 @@ namespace ProBusiness.Manage
             return WebSetDAL.BaseProvider.InsertChargeSet(model.UserID, model.View.ToLower(), model.Remark, model.Golds);
         }
 
-        public static int CreateLottery(string cpname, string cpcode, int icontype, string resulturl, string userid,ref string  errmsg)
+        public static int CreateLottery(string cpname, string cpcode, int icontype, string resulturl, string userid,int openTimes,string closeTime,string onSaleTime,int sealTimes,int periodsNum,ref string  errmsg)
         {
-            var result= WebSetDAL.BaseProvider.InsertLottery(cpname, cpcode, icontype, resulturl, userid, ref errmsg);
+            var result= WebSetDAL.BaseProvider.InsertLottery(cpname, cpcode, icontype, resulturl, userid, openTimes,closeTime, onSaleTime, sealTimes, periodsNum ,ref errmsg);
             if (result > 0)
             {
                 GetLotteryDetailByID(result);
@@ -244,9 +244,9 @@ namespace ProBusiness.Manage
             return bl;
         }
 
-        public static bool UpdateLottery(string cpname, string cpcode, int icontype, string resulturl,int autoid)
+        public static bool UpdateLottery(string cpname, string cpcode, int icontype, string resulturl,int openTimes,string closeTime,string onSaleTime,int sealTimes,int periodsNum,int autoid)
         {
-            bool bl = WebSetDAL.BaseProvider.UpdateLottery(cpname, cpcode, icontype, resulturl, autoid);
+            bool bl = WebSetDAL.BaseProvider.UpdateLottery(cpname, cpcode, icontype, resulturl,openTimes,closeTime,onSaleTime,sealTimes,periodsNum, autoid);
             if (bl)
             {
                 var model = CommonBusiness.LottertList.Where(x => x.AutoID == autoid).FirstOrDefault();
@@ -257,6 +257,11 @@ namespace ProBusiness.Manage
                     model.CPCode = cpcode;
                     model.IconType = icontype;
                     model.ResultUrl = resulturl;
+                    model.CloseTime = closeTime;
+                    model.OnSaleTime = onSaleTime;
+                    model.PeriodsNum = periodsNum;
+                    model.SealTimes = sealTimes;
+                    model.OpenTimes = openTimes;
                     CommonBusiness.LottertList.Add(model);
                 }
             }

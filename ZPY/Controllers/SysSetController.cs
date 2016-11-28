@@ -516,11 +516,11 @@ namespace CPiao.Controllers
             string errmsg = "";
             if (model.AutoID<1)
             {
-                model.AutoID = WebSetBusiness.CreateLottery(model.CPName, model.CPCode, model.IconType, model.ResultUrl, CurrentUser.UserID, ref errmsg);
+                model.AutoID = WebSetBusiness.CreateLottery(model.CPName, model.CPCode, model.IconType, model.ResultUrl, CurrentUser.UserID,model.OpenTimes,model.CloseTime,model.OnSaleTime,model.SealTimes,model.PeriodsNum, ref errmsg);
             }
             else
             {
-                bool bl = WebSetBusiness.UpdateLottery(model.CPName, model.CPCode, model.IconType,model.ResultUrl,model.AutoID);
+                bool bl = WebSetBusiness.UpdateLottery(model.CPName, model.CPCode, model.IconType, model.ResultUrl, model.OpenTimes, model.CloseTime, model.OnSaleTime, model.SealTimes, model.PeriodsNum, model.AutoID);
                 if (!bl)
                 {
                     model.AutoID = 0;

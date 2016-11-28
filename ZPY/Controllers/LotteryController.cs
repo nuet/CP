@@ -13,12 +13,16 @@ namespace CPiao.Controllers
         //
         // GET: /Lottery/
 
-        public ActionResult Index(string cpcode)
+        public ActionResult Index(string id)
         {
-            ViewBag.CPCode = cpcode; 
+            ViewBag.CPCode = id;
+            ViewBag.Model = WebSetBusiness.GetLotteryDetail(id); 
             return View();
         }
 
+        #region MyRegion 
+
+        #endregion
         public JsonResult GetNavsList(string cpcode)
         {
             List<Plays> model = WebSetBusiness.GetLotteryPlaysesByCode(cpcode);
@@ -45,7 +49,16 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-          public JsonResult GetUser
+
+        public JsonResult GetUserLottery(string cpcode)
+        {
+            JsonDictionary.Add("items","");
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
     }
 }

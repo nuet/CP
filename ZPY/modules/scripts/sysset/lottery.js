@@ -23,7 +23,12 @@
             Model.AutoID = -1;
             Model.CPCode = '';
             Model.CPName = '';
-            Model.IconType ='';
+            Model.IconType = '';
+            Model.OpenTimes = 12;
+            Model.OnSaleTime = '';
+            Model.CloseTime = '';
+            Model.SealTimes = 10;
+            Model.PeriodsNum = 1;
             //Model.Sort = 0;
             Model.ResultUrl ='';
             _self.createModel();
@@ -48,7 +53,12 @@
                         Model.CPCode = $("#modelCPCode").val();
                         Model.CPName = $("#modelCPName").val();
                         Model.IconType = $("#modelIconType").val();
-                        Model.ResultUrl = $("#modelResultUrl").val(); 
+                        Model.ResultUrl = $("#modelResultUrl").val();
+                        Model.OpenTimes = $("#modelOpenTimes").val();
+                        Model.OnSaleTime = $("#modelOnSaleTime").val();
+                        Model.CloseTime = $("#modelCloseTime").val();
+                        Model.SealTimes = $("#modelSealTimes").val();
+                        Model.PeriodsNum = $("#modelPeriodsNum").val();
                         _self.saveModel(Model);
                     },
                     callback: function () {
@@ -76,6 +86,11 @@
             $("#modelCPName").val(Model.CPName);
             $('#modelResultUrl').val(Model.ResultUrl);
             $("#modelIconType").val(Model.IconType);
+            $("#modelOpenTimes").val(Model.OpenTimes);
+            $("#modelOnSaleTime").val(Model.OnSaleTime);
+            $("#modelCloseTime").val(Model.CloseTime);
+            $("#modelSealTimes").val(Model.SealTimes);
+            $("#modelPeriodsNum").val(Model.PeriodsNum);
 
         });
     }
@@ -130,6 +145,11 @@
                         Model.CPName = model.CPName;
                         Model.IconType = model.IconType;
                         //Model.Sort = model.Sort;
+                        Model.OpenTimes = model.OpenTimes;
+                        Model.OnSaleTime = model.OnSaleTime;
+                        Model.CloseTime = model.CloseTime;
+                        Model.SealTimes = model.SealTimes;
+                        Model.PeriodsNum = model.PeriodsNum;
                         Model.ResultUrl = model.ResultUrl;
                         _self.createModel();
                     });

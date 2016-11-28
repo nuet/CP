@@ -34,24 +34,7 @@
              $numbers.find("span" + _this.data('nc')).removeClass("clicked");
          }
          getsumnum();
-     });
-   
-     $(".all-ways").find("li").click(function() {
-         $(".additems").data("type", '');
-         var names = $(this).data("name");
-         if (typeof(names) != 'undefined') {
-             $(".play-action select option").eq(0).text(options1[names].firstNum);
-             $(".play-action select option").eq(1).text(options1[names].lastNum);
-         }
-         $(".numbers span,.sel-actions span").removeClass("clicked");
-         $(".play-action .times").val("1");
-         $(".play-action p span").text("0");
-         $(this).addClass("all-ways-cur").siblings().removeClass("all-ways-cur");
-         var dataId = $(".navs-cur").data("id");
-         $("." + dataId).find(".play-section").children("div").eq($(this).index()).show();
-         $("." + dataId).find(".play-section").children("div").eq($(this).index()).siblings().hide();
-         $(".n-star textarea").val("");
-     });
+     }); 
      //加1减1：
      $("img[alt='plus']").click(function() {
          var nums = $(".play-action").find("p span:first-child").text();
@@ -327,7 +310,7 @@
      $(".navs").find("li").click(function () {
          var _this = $(this);
          var names = _this.data("name");
-         if (typeof (names) != 'undefined') {
+         if (typeof (names) != 'undefined' && names!='') {
              $(".play-action select option").eq(0).text(options1[names].firstNum);
              $(".play-action select option").eq(1).text(options1[names].lastNum);
          }
@@ -340,41 +323,99 @@
          $('.' + _this.data('id')).show().siblings("div").hide();
          $(".all-ways").css("height", "40px").html("").show();
          $(".play-action .select-fan,.play-action select").show();
-
-         switch (_this.index()) {
-             case 0:
+         var html = '';
+         switch (names) {
+             case 'sanxing1':
                  $(".n-star .play-section .zhifu").find("p").eq(0).html("从第一位、第二位、第三位中至少各选择1个号码。");
                  $(".n-star .play-section .zhidan").find("p").eq(0).html("手动输入号码，至少输入1个三位数号码组成一注。");
                  $(".n-star .play-section .zufu").find("p").eq(0).html("从01-11中任意选择3个或3个以上号码。");
                  $(".n-star .play-section .zudan").find("p").eq(0).html("手动输入号码，至少输入1个三位数号码组成一注。");
-                 $(".n-star .zhifu li").eq(2).show();
-                 $(".all-ways").html('<span>前三</span><ul><li class="all-ways-cur" data-id="zhifu" data-name="sanxing1">直选复式</li><li data-name="sanxing1" data-type="3" data-id="handin1">直选单式</li><li data-id="zufu"  data-type="3" data-name="sanxing2">组选复式</li><li data-name="sanxing2" data-type="3" data-id="handin2">组选单式</li></ul>');
+                 $(".n-star .zhifu li").eq(2).show(); 
+ 
+                 for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
+                     var tempitem = lottery.CPTypes[$(this).data("sid")][i];
+                     html += '<span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
+                     for (var j = 0; j < tempitem.ChildPlays.length; j++) {
+                         var titem = tempitem.ChildPlays[j];
+                         if (titem.PCode == '3ZHIXFS') {
+                             html += '<li class="all-ways-cur" data-id="zhifu" data-name="sanxing1" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                         } else if (titem.PCode == '3ZHIXDS') {
+                             html += '<li  data-id="handin1" data-name="sanxing1"  data-type="3" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                         } else if (titem.PCode == '3ZUXFS') {
+                             html += '<li  data-id="zufu" data-name="sanxing2"  data-type="3" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                         } else {/*3ZUXDS*/
+                             html += '<li  data-id="handin2" data-name="sanxing2"  data-type="3" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                         }
+                     }
+                     html += '</ul>';
+                 }
+                 $(".all-ways").html(html);
                  break;
-             case 1:
+             case 'erxing1':
                  $(".n-star .play-section .zhifu").find("p").eq(0).html("从第一位、第二位中至少各选择1个号码。");
                  $(".n-star .play-section .zhidan").find("p").eq(0).html("手动输入号码，至少输入1个两位数号码组成一注。");
                  $(".n-star .play-section .zufu").find("p").eq(0).html("从01-11中任意选择2个或2个以上号码。");
                  $(".n-star .play-section .zudan").find("p").eq(0).html("手动输入号码，至少输入1个两位数号码组成一注。");
                  $(".n-star .zhifu li").eq(2).hide();
-                 $(".all-ways").html('<span>前二</span><ul><li class="all-ways-cur" data-id="zhifu" data-name="erxing1">直选复式</li><li data-name="erxing1" data-type="2" data-id="handin1">直选单式</li><li data-id="zufu"  data-type="2" data-name="erxing2">组选复式</li><li data-name="erxing2" data-type="2" data-id="handin2">组选单式</li></ul>');
+
+                 for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
+                     var tempitem = lottery.CPTypes[$(this).data("sid")][i];
+                     html += '<span data-sid="'+tempitem.PIDS+'">' + tempitem.PName + '</span><ul>';
+                     for (var j = 0; j < tempitem.ChildPlays.length; j++) {
+                         var titem = tempitem.ChildPlays[j];
+                         if (titem.PCode == '3ZHIXFS') {
+                             html += '<li class="all-ways-cur" data-id="zhifu" data-name="erxing1" data-sid="'+titem.PIDS+'">'+titem.PName+'</li>';
+                         } else if (titem.PCode == '3ZHIXDS') {
+                             html += '<li  data-id="handin1" data-name="erxing1"  data-type="2" data-sid="'+titem.PIDS+'">'+titem.PName+'</li>';
+                         } else if (titem.PCode == '3ZUXFS') {
+                             html += '<li  data-id="zufu" data-name="erxing2"  data-type="2" data-sid="'+titem.PIDS+'">'+titem.PName+'</li>';
+                         } else {/*3ZUXDS*/
+                             html += '<li  data-id="handin2" data-name="erxing2"  data-type="2" data-sid="'+titem.PIDS+'">'+titem.PName+'</li>';
+                         }
+                     }
+                     html+='</ul>'; 
+                 }
+                 $(".all-ways").html(html);                 
                  break;
-             case 2:
-             case 3:
+             case 'dingweidan':
+             case 'budingwei':
                  $('.' + _this.data('id')).show().siblings("div").hide();
                  break;
-             case 4:
-                 $(".all-ways").html('<div class="fushi"><span>复式</span><ul><li class="all-ways-cur" data-id="fu1" data-type="1" data-name="renxuan1">一中一</li><li data-id="fu1" data-type="2" data-name="renxuan2">二中二</li><li data-id="fu1" data-type="3" data-name="renxuan3">三中三</li><li data-id="fu1" data-type="4" data-name="renxuan4">四中四</li><li data-id="fu1" data-type="5" data-name="renxuan5">五中五</li><li data-id="fu1" data-type="6" data-name="renxuan6">六中五</li><li data-id="fu1" data-type="7" data-name="renxuan7">七中五</li><li data-id="fu1" data-type="8" data-name="renxuan8">八中五</li></ul></div><div class="danshi"><span>单式</span><ul><li data-type="1" data-name="renxuan1">一中一</li><li data-type="2" data-name="renxuan2">二中二</li><li data-type="3" data-name="renxuan3">三中三</li><li data-type="4" data-name="renxuan4">四中四</li><li data-type="5" data-name="renxuan5">五中五</li><li data-type="6" data-name="renxuan6">六中五</li><li data-type="7" data-name="renxuan7">七中五</li><li data-type="8" data-name="renxuan8">八中五</li></ul></div>');
+             case 'renxuan1':
+                 for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
+                     var tempitem = lottery.CPTypes[$(this).data("sid")][i];
+                     html += '<div class="' + (tempitem.PCode == '2FUS' ? 'fushi' : 'danshi') + '"><span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
+                     for (var j = 0; j < tempitem.ChildPlays.length; j++) {
+                         var titem = tempitem.ChildPlays[j];
+                         html += '<li ' + (tempitem.PCode == '2FUS' ? 'data-id="fu1"' : '') + '  data-type="' + (j + 1) + '" data-name="renxuan' + (j + 1) + '" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                     }
+                     html += '</ul></div>';
+                 } 
+                 $(".all-ways").html(html); 
                  $(".all-ways").css("height", "80px");
                  break;
-             case 5:
-                 $(".all-ways").html('<div class="all-ways"><span>五位</span><ul><li class="all-ways-cur">定单双</li><li>猜中位</li></ul></div>');
+             case '':
+                 for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
+                     var tempitem = lottery.CPTypes[$(this).data("sid")][i];
+                     html += '<span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
+                     for (var j = 0; j < tempitem.ChildPlays.length; j++) {
+                         var titem = tempitem.ChildPlays[j];
+                         if (titem.PCode == '3DINGDS') {
+                             html += '<li class="all-ways-cur"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                         } else {/*3CAIZW*/
+                             html += '<li data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                         }
+                     }
+                     html += '</ul>';
+                 } 
+                 $(".all-ways").html(html); 
                  $(".play-action .select-fan,.play-action select").hide();
                  break;
          }
          $(".all-ways").find("li").click(function () {
              $(".additems").data("type", '');
              var names = $(this).data("name");
-             if (typeof (names) != 'undefined') {
+             if (typeof (names) != 'undefined' && names != '') {
                  $(".play-action select option").eq(0).text(options1[names].firstNum);
                  $(".play-action select option").eq(1).text(options1[names].lastNum);
              }
@@ -600,10 +641,38 @@ function up( a, b){
     return c;  
 }
 var lottery = {} 
- lottery.CPCode = '';
-lottery.GetLottery= function() {
-    $.post('/Lottery/GetNavsList', { cpcode: lottery.CPCode }, function(data) {
-        console.log(data);
+lottery.CPCode = '';
+ lottery.CPTypes = {};
+ lottery.GetLottery= function() {
+     $.post('/Lottery/GetNavsList', { cpcode: lottery.CPCode }, function (data) { 
+         var html = '';
+         for (var i = 0; i < data.items.length; i++) {
+             lottery.CPTypes[data.items[i].PCode] = data.items[i].ChildPlays;
+             switch (data.items[i].PCode) {
+                 case "1SANX":
+                     html += '<li data-id="n-star" data-name="sanxing1" data-sid="' + data.items[i].PIDS + '">' + data.items[i].PName + '</li>';
+                     break;
+                 case "1ERX":
+                     html += '<li data-id="n-star" data-name="erxing1" data-sid="' + data.items[i].PIDS + '">' + data.items[i].PName + '</li>';
+                     break;
+                 case "1DWEID":
+                     html += '<li data-id="fixed" data-name="dingweidan" data-sid="' + data.items[i].PIDS + '">' + data.items[i].PName + '</li>';
+                     break;
+                 case "1BUDW":
+                     html += '<li data-id="non-fixed" data-name="budingwei" data-sid="' + data.items[i].PIDS + '">' + data.items[i].PName + '</li>';
+                     break;
+                 case "1RENX":
+                     html += '<li data-id="optional" data-name="renxuan1" data-sid="' + data.items[i].PIDS + '">' + data.items[i].PName + '</li>';
+                     break;
+                 case "1QUWEIX":
+                     html += '<li data-id="interests" data-name="" data-sid="' + data.items[i].PIDS + '">' + data.items[i].PName + '</li>';
+                     break;
+             } 
+         }
+         $('.navs').html(html);
+         console.log(lottery.CPTypes);
+         bindnavs();
+         $('.navs li:first-child').click(); 
     });
 } 
 

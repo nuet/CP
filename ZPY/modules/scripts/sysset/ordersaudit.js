@@ -33,7 +33,7 @@
         //日期插件
         $("#iptCreateTime").daterangepicker({
             showDropdowns: true,
-            empty: true,
+            empty: true, 
             opens: "right",
             ranges: {
                 '今天': [moment(), moment()],

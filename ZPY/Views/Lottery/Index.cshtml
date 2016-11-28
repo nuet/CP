@@ -1,6 +1,8 @@
-﻿@{
+﻿@using ProEntity
+@{
     ViewBag.Title = "Index";
     Layout = null;
+    var model = (Lottery)ViewBag.Model;
 }
 
 <html>
@@ -18,12 +20,12 @@
     <div class="open-num">
         <div class="left next-open">
             <p>第<span>201609560539</span>期<br/>剩余开奖时间</p>
-            <p><span>00</span>:<span>36</span>:<span>09</span></p>
+            <p><span>00</span>:<span>36</span>:<span>00</span></p>
         </div>
         <div class="left last-num">
             <p>第<span>201609560538</span>期</p>
             <p><span>04</span><span>05</span><span>01</span><span>02</span><span>06</span></p>
-            <p>今日已开<span>30</span>期，剩余<span>77</span>期</p>
+            <p>今日已开<span>--</span>期，剩余<span>@(model.PeriodsNum)</span>期</p>
         </div>
         <div class="left open-history">
             <p>开奖历史记录</p>
