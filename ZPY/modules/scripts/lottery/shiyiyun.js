@@ -93,8 +93,7 @@
          }
      });
      //选号入框：
-     $(".additems").click(function() {
-         console.log($(this).data('type'));
+     $(".additems").click(function() { 
          var type = $(this).data('type');
          if ($(this).siblings("p").find("span").eq(0).text() > 0) {
              if ($(".num-selected tbody tr:first-child").find("td").eq(0).text() == "") {
@@ -224,8 +223,7 @@
                  }
              } else {
                  var everyNum = single.split(" ");
-                 if (everyNum.length != typelen) {
-                     console.log('b');
+                 if (everyNum.length != typelen) { 
                      arrSelectNum.splice(i, 1);
                      if (arrSelectNum.length > 0 && i > 0) {
                          i--;
@@ -302,7 +300,7 @@
              }
          }
      });
-     lottery.GetLottery();
+ 
  });
 //外部函数：
 
@@ -537,8 +535,7 @@
 			for (var h = 0; h < sctlen; h++) {
 				arrSelectNum[f]=allClicked.eq(h).text();
 				f++;
-			}
-            console.log(arrSelectNum);
+			} 
 			$(".play-action").find("p span:first-child").text(s);
 			$(".play-action").find("p span:last-child").text(2*s*times);
 		}else{
@@ -640,8 +637,15 @@ function up( a, b){
     }  
     return c;  
 }
-var lottery = {} 
-lottery.CPCode = '';
+var lottery = {}
+ lottery.cnum = 0;
+ lottery.CPCode;
+lottery.bindEvent=function(code)
+ {
+     lottery.CPCode = code;
+    lottery.GetLottery();
+    lottery.GetlotteryResult();
+ }
  lottery.CPTypes = {};
  lottery.GetLottery= function() {
      $.post('/Lottery/GetNavsList', { cpcode: lottery.CPCode }, function (data) { 
@@ -669,12 +673,53 @@ lottery.CPCode = '';
                      break;
              } 
          }
-         $('.navs').html(html);
-         console.log(lottery.CPTypes);
+         $('.navs').html(html); 
          bindnavs();
          $('.navs li:first-child').click(); 
     });
-} 
+ }
+
+lottery.GetlotteryResult= function() {
+    $.post('/Lottery/GetlotteryResult', { cpcode: lottery.CPCode }, function (data) {
+        var html = '';
+        for (var i = 0; i < data.items.length; i++) {
+            var nums = data.items[i].ResultNum.split(' ');
+            if (i == 0) {
+                $('#lotteryp span').each(function(i, v) {
+                    $(v).html(nums[i]);
+                });
+                $('#lotterypnum').html(data.items[i].IssueNum);
+            }
+            html += ' <li><span>第<strong>' + data.items[i].IssueNum + '</strong>期号码</span><span>' + nums[0] + '</span><span>' + nums[1] + '</span><span>' + nums[2] + '</span><span>' + nums[3] + '</span><span>' + nums[4] + '</span></li>';
+        }
+        $('#prizeul').html(html);
+        lottery.getDifDate(data.item);
+    });
+
+    lottery.getDifDate = function (item) { 
+        $('#cpissue').html(item.IssueNum);
+        $('#openlottery').html(parseInt($('#sumlottery').val()) - item.Num);
+        var time1 = getparamsdate(item.OpenTime, true);
+        var date3 = time1.getTime() - (new Date()).getTime(); //时间差秒 
+        //计算出小时数
+        var leave1 = date3 % (24 * 3600 * 1000);  //计算天数后剩余的毫秒数
+        //计算相差分钟数
+        var leave2 = leave1 % (3600 * 1000);       //计算小时数后剩余的毫秒数
+        leave2 = leave2 - (35 * 1000);
+        var minutes = Math.floor(leave2 / (60 * 1000));
+        if (leave2)
+            //计算相差秒数
+        var leave3 = leave2 % (60 * 1000);     //计算分钟数后剩余的毫秒数
+        var seconds = Math.round(leave3 / 1000);  
+        $('#lotterymin').val(minutes);
+        $('#lotterysec').val(seconds);
+        if (seconds > 0 && leave2>0) {
+            setTimeout("lottery.getDifDate()", 1000);
+        } else {
+            lottery.GetlotteryResult(item);
+        }
+    }
+}
 
 
 

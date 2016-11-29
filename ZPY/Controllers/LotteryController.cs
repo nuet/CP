@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ProBusiness;
 using ProEntity;
 
 namespace CPiao.Controllers
@@ -52,12 +53,32 @@ namespace CPiao.Controllers
 
         public JsonResult GetUserLottery(string cpcode)
         {
+            int total = 0;
+            int pageTotal = 0;
+            var items = LotteryOrderBusiness.GetUserOrders("", cpcode, CurrentUser.UserID, "", -1, 5, 1, ref total,
+                ref pageTotal, "", "");
+            JsonDictionary.Add("items","");
             JsonDictionary.Add("items","");
             return new JsonResult()
             {
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
+        }
+
+        public JsonResult GetlotteryResult(string cpcode)
+        {
+            int total = 0;
+            int pageTotal = 0;
+            var items=LotteryResultBusiness.GetPagList(cpcode, 2, 5, 1, ref total, ref pageTotal);
+            JsonDictionary.Add("item", LotteryResultBusiness.GetLotteryResult(cpcode, 0, DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00", DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59"));
+            JsonDictionary.Add("items", items);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+
         }
 
     }

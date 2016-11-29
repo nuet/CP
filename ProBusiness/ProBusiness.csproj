@@ -70,6 +70,7 @@
     <Compile Include="Common\CommonBusiness.cs" />
     <Compile Include="Common\Encrypt.cs" />
     <Compile Include="Common\LogBusiness.cs" />
+    <Compile Include="Lottery\LotteryOrderBusiness.cs" />
     <Compile Include="Manage\FeedBackBusiness.cs" />
     <Compile Include="Manage\ManageSystemBusiness.cs" />
     <Compile Include="Manage\M_UsersBusiness.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="UserAttrs\UserImgsBusiness.cs" />
     <Compile Include="UserAttrs\UserOrdersBusiness.cs" />
     <Compile Include="UserAttrs\UserReplyBusiness.cs" />
-    <Compile Include="UserAttrs\UsersFocusBusiness.cs" />
+    <Compile Include="Lottery\LotteryResultBusiness.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProDAL\ProDAL.csproj">

@@ -70,6 +70,7 @@
     <Compile Include="Common\CommonDAL.cs" />
     <Compile Include="Common\WebSetDAL.cs" />
     <Compile Include="LogDAL.cs" />
+    <Compile Include="Lottery\LotteryOrderDAL.cs" />
     <Compile Include="Mannge\FeedBackDAL.cs" />
     <Compile Include="Mannge\M_UsersDAL.cs" />
     <Compile Include="Mannge\SystemDAL.cs" />
@@ -78,7 +79,7 @@
     <Compile Include="UserAttrs\UserImgsDAL.cs" />
     <Compile Include="UserAttrs\UserOrdersDAL.cs" />
     <Compile Include="UserAttrs\UserReplyDAL.cs" />
-    <Compile Include="UserAttrs\UsersFocusDAL.cs" />
+    <Compile Include="Lottery\LotteryResultDAL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

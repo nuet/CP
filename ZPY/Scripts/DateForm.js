@@ -73,6 +73,25 @@ jQuery.fn.addFavorite = function (l, h) {
     });
 }; 
 
+function DateDiff(sDate1, sDate2) { //sDate1和sDate2是字符串 yyyy-MM-dd格式 
+    var aDate, oDate1, oDate2, iDays, ihours, iminutes, iseconds;
+    aDate = sDate1.split("-");
+    oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);//转换为MM-dd-yyyy格式 
+    aDate = sDate2.split("-");
+    oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);
+    var timeSpan = {};
+    var TotalMilliseconds = Math.abs(oDate1 - oDate2);//相差的毫秒数
+    timeSpan.Days = parseInt(TotalMilliseconds / 1000 / 60 / 60 / 24);
+    timeSpan.TotalHours = parseInt(TotalMilliseconds / 1000 / 60 / 60);
+    timeSpan.Hours = timeSpan.TotalHours % 24;
+    timeSpan.TotalMinutes = parseInt(TotalMilliseconds / 1000 / 60);
+    timeSpan.Minutes = timeSpan.TotalMinutes % 60;
+    timeSpan.TotalSeconds = parseInt(TotalMilliseconds / 1000);
+    timeSpan.Seconds = timeSpan.TotalSeconds % 60;
+    timeSpan.TotalMilliseconds = TotalMilliseconds;
+    timeSpan.Milliseconds = TotalMilliseconds % 1000;
+    return timeSpan;
+}
  /** 
   * @param {} btime 
   * @param {} etime 
@@ -114,7 +133,13 @@ jQuery.fn.addFavorite = function (l, h) {
      }
      return new Date(btime).format("yyyy-MM-dd");
  }
-
+ function getparamsdate(btime, type) {
+     btime = btime.replace("年", "/").replace("月", "/").replace("日", "");
+     if (type) {
+         btime = parseInt(btime.replace("/Date(", '').replace(")/", ''));
+     }
+     return new Date(btime);
+ }
  /*重写alert*/
  window.alert = function (msg, type, url) {
      $("#window_alert").remove();
