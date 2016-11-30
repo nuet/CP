@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using CPiao.TaskRun;
+using FluentScheduler;
 
 namespace CPiao
 {
@@ -41,6 +43,10 @@ namespace CPiao
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+            Registry registry = new Registry();
+
+            //JobManager.AddJob(action, t => { t.WithName(TaskName).ToRunNow.AndEvery(count).Minutes; }); 
+            JobManager.Initialize(new TaskBase());
         }
     }
 }

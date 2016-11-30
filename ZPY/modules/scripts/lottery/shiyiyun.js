@@ -685,39 +685,57 @@ lottery.GetlotteryResult= function() {
         for (var i = 0; i < data.items.length; i++) {
             var nums = data.items[i].ResultNum.split(' ');
             if (i == 0) {
-                $('#lotteryp span').each(function(i, v) {
-                    $(v).html(nums[i]);
-                });
+                if (nums.length > 1) {
+                    $('#lotteryp span').each(function(i, v) {
+                        $(v).html(nums[i]);
+                    });
+                }
                 $('#lotterypnum').html(data.items[i].IssueNum);
             }
-            html += ' <li><span>第<strong>' + data.items[i].IssueNum + '</strong>期号码</span><span>' + nums[0] + '</span><span>' + nums[1] + '</span><span>' + nums[2] + '</span><span>' + nums[3] + '</span><span>' + nums[4] + '</span></li>';
+            console.log(nums);
+            html += ' <li><span>第<strong>' + data.items[i].IssueNum + '</strong>期号码</span>';
+            if (nums.length > 1) {
+                html += '<span>' + nums[0] + '</span><span>' + nums[1] + '</span><span>' + nums[2] + '</span><span>' + nums[3] + '</span><span>' + nums[4] + '</span></li>';
+            } else {
+                html += '<span>' + data.items[i].ResultNum + '</span></li>';
+            }
         }
         $('#prizeul').html(html);
         lottery.getDifDate(data.item);
     });
 
-    lottery.getDifDate = function (item) { 
-        $('#cpissue').html(item.IssueNum);
-        $('#openlottery').html(parseInt($('#sumlottery').val()) - item.Num);
-        var time1 = getparamsdate(item.OpenTime, true);
-        var date3 = time1.getTime() - (new Date()).getTime(); //时间差秒 
-        //计算出小时数
-        var leave1 = date3 % (24 * 3600 * 1000);  //计算天数后剩余的毫秒数
-        //计算相差分钟数
-        var leave2 = leave1 % (3600 * 1000);       //计算小时数后剩余的毫秒数
-        leave2 = leave2 - (35 * 1000);
-        var minutes = Math.floor(leave2 / (60 * 1000));
-        if (leave2)
+    lottery.getDifDate = function (item) {
+        if (item != null) {
+
+            $('#cpissue').html(item.IssueNum);
+            $('#openlottery').html(item.Num - 1);
+            var time1 = getparamsdate(item.OpenTime, true);
+            var date3 = time1.getTime() - (new Date()).getTime(); //时间差秒 
+            //计算出小时数
+            var leave1 = date3 % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
+            //计算相差分钟数
+            var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
+            leave2 = leave2 - (35 * 1000);
+            var minutes = Math.floor(leave2 / (60 * 1000));
+            minutes = minutes > 9 ? minutes : '0' + minutes;
+            if (leave2)
             //计算相差秒数
-        var leave3 = leave2 % (60 * 1000);     //计算分钟数后剩余的毫秒数
-        var seconds = Math.round(leave3 / 1000);  
-        $('#lotterymin').val(minutes);
-        $('#lotterysec').val(seconds);
-        if (seconds > 0 && leave2>0) {
-            setTimeout("lottery.getDifDate()", 1000);
-        } else {
-            lottery.GetlotteryResult(item);
-        }
+            var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
+            var seconds = Math.round(leave3 / 1000);
+            if (seconds > 0) {
+                seconds = seconds - 1;
+            }
+            seconds = seconds > 9 ? seconds : '0' + seconds;
+            if (seconds > -1 && minutes > -1) {
+                $('#lotterymin').html(minutes);
+                $('#lotterysec').html(seconds);
+                setTimeout(function () { lottery.getDifDate(item) }, 1000);
+            } else {
+                if (seconds == 0 && minutes == 0) {
+                    lottery.GetlotteryResult(item);
+                }
+            }
+        }  
     }
 }
 

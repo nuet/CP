@@ -70,7 +70,7 @@ namespace CPiao.Controllers
         {
             int total = 0;
             int pageTotal = 0;
-            var items=LotteryResultBusiness.GetPagList(cpcode, 2, 5, 1, ref total, ref pageTotal);
+            var items=LotteryResultBusiness.GetPagList(cpcode, 2, 4, 1, ref total, ref pageTotal);
             JsonDictionary.Add("item", LotteryResultBusiness.GetLotteryResult(cpcode, 0, DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00", DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59"));
             JsonDictionary.Add("items", items);
             return new JsonResult()
@@ -78,8 +78,13 @@ namespace CPiao.Controllers
                 Data = JsonDictionary,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
+        }
+
+        public JsonResult AddLotteryOrders(string list)
+        {
 
         }
 
     }
 }
+    
