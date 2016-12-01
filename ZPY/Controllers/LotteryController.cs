@@ -66,11 +66,11 @@ namespace CPiao.Controllers
             };
         }
 
-        public JsonResult GetlotteryResult(string cpcode)
+        public JsonResult GetlotteryResult(string cpcode,int status=2,int pagesize=4)
         {
             int total = 0;
             int pageTotal = 0;
-            var items=LotteryResultBusiness.GetPagList(cpcode, 2, 4, 1, ref total, ref pageTotal);
+            var items = LotteryResultBusiness.GetPagList(cpcode, status, pagesize, 1, ref total, ref pageTotal);
             JsonDictionary.Add("item", LotteryResultBusiness.GetLotteryResult(cpcode, 0, DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00", DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59"));
             JsonDictionary.Add("items", items);
             return new JsonResult()
@@ -82,7 +82,12 @@ namespace CPiao.Controllers
 
         public JsonResult AddLotteryOrders(string list)
         {
-
+            JsonDictionary.Add("items", "");
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
     }

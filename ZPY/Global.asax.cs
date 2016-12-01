@@ -42,10 +42,8 @@ namespace CPiao
             Database.DefaultConnectionFactory = new SqlConnectionFactory(@"Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True");
 
             RegisterGlobalFilters(GlobalFilters.Filters);
-            RegisterRoutes(RouteTable.Routes);
-            Registry registry = new Registry();
-
-            //JobManager.AddJob(action, t => { t.WithName(TaskName).ToRunNow.AndEvery(count).Minutes; }); 
+            RegisterRoutes(RouteTable.Routes);  
+ 
             JobManager.Initialize(new TaskBase());
         }
     }

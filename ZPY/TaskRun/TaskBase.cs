@@ -12,12 +12,19 @@ namespace CPiao.TaskRun
 {
     public class TaskBase : Registry
     {
+        #region
+        string start = "09:03";
+        string end = "21:55";
+        #endregion
+        private Object thisLock = new Object();
+        private Object resultlock = new Object(); 
         public TaskBase()
         {
             NonReentrantAsDefault();
 
             InsertLottery();
-
+            UpdateSD11X5Status();
+            UpdateSD11X5Result();
             //NonReentrant();
             //Reentrant();
             //Disable();
@@ -42,18 +49,58 @@ namespace CPiao.TaskRun
                L.Log("[insertlottery]", "Begin...");
                TaskService.BasService.InsertAllLottery();
                L.Log("[insertlottery]", "End...");
-            }).NonReentrant().WithName("[insertlottery]").ToRunEvery(1).Days().At(00, 10);
+            }).NonReentrant().WithName("[insertlottery]").ToRunEvery(1).Days().At(09, 39);
         }
         private void UpdateSD11X5Status()
         {
-            L.Register("[non reentrant]");
+            L.Register("[updatesd11x5status]");
 
             Schedule(() =>
             {
-                 
-            }).NonReentrant().WithName("[non reentrant]").ToRunEvery(10).Minutes();
+                TimeSpan startTime = DateTime.Parse(start).TimeOfDay;
+                TimeSpan endTime = DateTime.Parse(end).TimeOfDay;
+                TimeSpan tmNow = DateTime.Now.TimeOfDay;
+                int min = DateTime.Now.Minute;
+                int sec = DateTime.Now.Second;
+                if (tmNow >= startTime && tmNow <= endTime)
+                {
+                    var s = min.ToString().Length > 1 ? min.ToString().Substring(1, 1) : min.ToString();
+                    if (s == "3")
+                    {
+                        lock (thisLock)
+                        {
+                            LotteryResultBusiness.UpdateStatus("SD11X5", 1);
+                        }
+                    }
+                }
+            }).NonReentrant().WithName("[updatesd11x5status]").ToRunEvery(10).Minutes();
         }
+        private void UpdateSD11X5Result()
+        {
+            L.Register("[updatesd11x5result]");
 
+            Schedule(() =>
+            {
+                TimeSpan startTime = DateTime.Parse("09:05").TimeOfDay;
+                TimeSpan endTime = DateTime.Parse(end).TimeOfDay;
+                TimeSpan tmNow = DateTime.Now.TimeOfDay;
+                int min = DateTime.Now.Minute;
+                int sec = DateTime.Now.Second;
+                if (tmNow >= startTime && tmNow <= endTime)
+                {
+                    var s = min.ToString().Length > 1 ? min.ToString().Substring(1, 1) : min.ToString();
+                    if (s == "5")
+                    {
+                        lock (resultlock)
+                        {
+                            //方法处理
+                            //var reuslt="012345"; var issueNum="2016120101";
+                            //
+                        }
+                    }
+                }
+            }).NonReentrant().WithName("[updatesd11x5result]").ToRunEvery(5).Minutes();
+        }
         private void Reentrant()
         {
             L.Register("[reentrant]");

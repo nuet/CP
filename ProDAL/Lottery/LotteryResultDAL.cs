@@ -11,7 +11,14 @@ namespace ProDAL
     public class LotteryResultDAL:BaseDAL
     {
         public static LotteryResultDAL BaseProvider = new LotteryResultDAL();
- 
+
+
+
+        public void InsertLotteryResultAll()
+        {
+            SqlParameter[] paras = {};
+            ExecuteNonQuery("InsertLotteryResultAll", paras, CommandType.StoredProcedure);
+        }
 
         public bool UpdateLotteryResult(string issuenum, string cpcode, int status)
         {
@@ -21,6 +28,13 @@ namespace ProDAL
                                    };
             return ExecuteNonQuery("Update LotteryResult set Status=@Status  where IssueNum=@IssueNum and CPCode=@CPCode", paras, CommandType.Text) > 0;
         }
-
+        public bool UpdateLotteryStatus(string cpcode, int status)
+        {
+            SqlParameter[] paras = {
+                                       new SqlParameter("@Status",status),
+                                       new SqlParameter("@CPCode",cpcode)
+                                   };
+            return ExecuteNonQuery("UpdateLotteryStatus", paras, CommandType.StoredProcedure) > 0;
+        }
     }
 }

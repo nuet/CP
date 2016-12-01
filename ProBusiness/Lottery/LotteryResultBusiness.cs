@@ -63,7 +63,8 @@ namespace ProBusiness
 
         public static void InsertAllLottery()
         {
-            LotteryResultDAL.ExecuteNonQuery("InsertLotteryResultAll", null, CommandType.StoredProcedure);
+            LotteryResultDAL.BaseProvider.InsertLotteryResultAll();
+        
         }
 
         #endregion
@@ -71,6 +72,9 @@ namespace ProBusiness
         #region 改
         public static  bool UpdateLotteryResult(string issuenum,string cpcode,int status) {
             return LotteryResultDAL.BaseProvider.UpdateLotteryResult(issuenum, cpcode,status);
+        }
+        public static bool UpdateStatus(string cpcode,int status){
+            return LotteryResultDAL.BaseProvider.UpdateLotteryStatus(cpcode,status);
         }
         #endregion
 

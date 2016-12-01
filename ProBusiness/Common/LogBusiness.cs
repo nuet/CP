@@ -13,6 +13,7 @@ namespace ProBusiness.Common
     public class LogBusiness
     {
         public static LogBusiness BaseBusiness = new LogBusiness();
+        public static int a = 0;
 
         #region 查询
         /// <summary>

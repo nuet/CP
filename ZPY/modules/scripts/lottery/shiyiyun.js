@@ -644,7 +644,7 @@ lottery.bindEvent=function(code)
  {
      lottery.CPCode = code;
     lottery.GetLottery();
-    lottery.GetlotteryResult();
+    lottery.GetlotteryResult(); 
  }
  lottery.CPTypes = {};
  lottery.GetLottery= function() {
@@ -680,7 +680,7 @@ lottery.bindEvent=function(code)
  }
 
 lottery.GetlotteryResult= function() {
-    $.post('/Lottery/GetlotteryResult', { cpcode: lottery.CPCode }, function (data) {
+    $.post('/Lottery/GetlotteryResult', { cpcode: lottery.CPCode, }, function (data) {
         var html = '';
         for (var i = 0; i < data.items.length; i++) {
             var nums = data.items[i].ResultNum.split(' ');
@@ -703,8 +703,9 @@ lottery.GetlotteryResult= function() {
         $('#prizeul').html(html);
         lottery.getDifDate(data.item);
     });
-
-    lottery.getDifDate = function (item) {
+    lottery.GetIssNum();
+}
+lottery.getDifDate = function (item) {
         if (item != null) {
 
             $('#cpissue').html(item.IssueNum);
@@ -736,8 +737,15 @@ lottery.GetlotteryResult= function() {
                 }
             }
         }  
-    }
 }
-
+lottery.GetIssNum= function() {
+    $.post('/Lottery/GetlotteryResult', { cpcode: lottery.CPCode,status:0,pagesize:78 }, function (data) {
+        var html = '';
+        for (var i = 0; i < data.items.length; i++) { 
+            html += '<option value="' + data.items[i].IssueNum + '">' + data.items[i].IssueNum+(i==0?"(当前期)":"")+ '</option >';
+        }
+        $('#issueslt').html(html);
+    });
+}
 
 
