@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using ProBusiness;
 using ProEntity;
 
@@ -66,7 +67,7 @@ namespace CPiao.Controllers
             };
         }
 
-        public JsonResult GetlotteryResult(string cpcode,int status=2,int pagesize=4)
+        public JsonResult GetlotteryResult(string cpcode,int status=2,int pagesize=4,int orderby=false)
         {
             int total = 0;
             int pageTotal = 0;
@@ -80,9 +81,14 @@ namespace CPiao.Controllers
             };
         }
 
-        public JsonResult AddLotteryOrders(string list)
+        public JsonResult AddLotteryOrders(string list, int usedisFee)
         {
-            JsonDictionary.Add("items", "");
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            List<LotteryOrder> models = serializer.Deserialize<List<LotteryOrder>>(list);
+            string msg = "";
+            var result = LotteryOrderBusiness.CreateUserOrderList(models, CurrentUser, OperateIP, usedisFee, ref msg);
+            JsonDictionary.Add("result", result);
+            JsonDictionary.Add("ErrMsg", msg);
             return new JsonResult()
             {
                 Data = JsonDictionary,

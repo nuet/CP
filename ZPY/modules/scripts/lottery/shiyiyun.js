@@ -15,7 +15,9 @@
                "renxuan6":{"firstNum":"138-4%","lastNum":"144.16-0%"},
                "renxuan7":{"firstNum":"39.6-4%","lastNum":"41.36-0%"},
                "renxuan8":{"firstNum":"14.8-4%","lastNum":"15.46-0%"}
-            };
+ };
+ var arrSelectNum = [];
+ var items = [];
  $(function() {
      //选号：
      $(".num-select li div.numbers").find("span").click(function() {
@@ -99,17 +101,24 @@
              if ($(".num-selected tbody tr:first-child").find("td").eq(0).text() == "") {
                  $(".num-selected tbody tr:first-child").remove();
              }
+             var item = {};
              if (type.split("_")[0] == "趣味型五位") {
                  var msg = "<tr title='" + ('投注模式:&nbsp;' + type + '\n' + '投注信息:&nbsp;' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200'>" + arrSelectNum + "</td><td width='73.3'>" + $(".play-action p span").eq(0).text() + "注" + "</td><td width='73.3'>" + $(".play-action .times").val() + "倍" + "</td><td width='73.3'>" + $(".play-action p span").eq(1).text() + "元" + "</td><td width='73.3'>0</td><td width='73.3'>100%</td><td width='73.3'><span>删除</span></td></tr>";
                  $(".num-selected tbody").prepend(msg);
+                 item.PayFee = 0;
+                 item.RPoint = 1;
              } else {
-                 var msg = "<tr title='" + ('投注模式:&nbsp;' + type + '\n' + '投注信息:&nbsp;' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200'>" + arrSelectNum + "</td><td width='73.3'>" + $(".play-action p span").eq(0).text() + "注" + "</td><td width='73.3'>" + $(".play-action .times").val() + "倍" + "</td><td width='73.3'>" + $(".play-action p span").eq(1).text() + "元" + "</td><td width='73.3'>" + $(".play-action select").find("option:selected").text().split("-")[0] + "元" + "</td><td width='73.3'>" + $(".play-action select").find("option:selected").text().split("-")[1] + "</td><td width='73.3'><span>删除</span></td></tr>";
+                 var tempr = $(".play-action select").find("option:selected").text().split("-");
+                 var msg = "<tr title='" + ('投注模式:&nbsp;' + type + '\n' + '投注信息:&nbsp;' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200'>" + arrSelectNum + "</td><td width='73.3'>" + $(".play-action p span").eq(0).text() + "注" + "</td><td width='73.3'>" + $(".play-action .times").val() + "倍" + "</td><td width='73.3'>" + $(".play-action p span").eq(1).text() + "元" + "</td><td width='73.3'>" + tempr[0] + "元" + "</td><td width='73.3'>" + tempr[1] + "</td><td width='73.3'><span>删除</span></td></tr>";
                  $(".num-selected tbody").prepend(msg);
+                 item.PayFee = tempr[0];
+                 item.RPoint = (parseFloat(tempr[1].replace('%',''))/100).toFixed(2);
              }
              $(".num-selected table tbody tr td span").unbind('click');
              $(".num-selected table tbody tr td span").click(function() {
                  if ($(".num-selected tbody tr").length == 1) {
                      $(".num-selected table tbody").html("<tr><td width='96.25'></td><td width='96.25'></td><!-- <td></td> --><td width='96.5'></td><td width='193' title='暂无投注项'>暂无投注项</td><td width='96.5'></td><td width='96.5'></td><td width='96.5'></td></tr>");
+                     
                  } else {
                      $(this).parent().parent().remove();
                  }
@@ -118,6 +127,12 @@
              $(".play-section textarea").val("");
              $(this).siblings("p").find("span").text("0");
              $(".num-select span").removeClass("clicked");
+             item.CPCode = lottery.CPCode;
+             item.CPName = lottery.CPName;
+             item.TypeName = type;
+             item.NUMBER_TYPE = $(".play-action p span").eq(0).text();
+             item.pMuch = $(".play-action .times").val();
+             item.PayFee = $(".play-action p span").eq(1).text();
          } else {
              $('#basic-dialog-ok')
                  .modal({
@@ -128,18 +143,18 @@
          }
      });
      //操作已选号：
-     $(".num-selected table tbody tr").on({
-         click: function() {
-             if ($(this).find("td").eq(0).text() != "") {
-                 //x
-             }
-         },
-         mouseover: function(v) {
-             if ($(this).find("td").eq(0).text() != "") {
-                 //
-             }
-         }
-     });
+     //$(".num-selected table tbody tr").on({
+     //    click: function() {
+     //        if ($(this).find("td").eq(0).text() != "") {
+     //            //x
+     //        }
+     //    },
+     //    mouseover: function(v) {
+     //        if ($(this).find("td").eq(0).text() != "") {
+     //            //
+     //        }
+     //    }
+     //});
      //删除选号：
      $(".num-selected table tbody tr td span").click(function() {
          $(this).parent().parent().remove();
@@ -203,12 +218,17 @@
      $(".play-section>div textarea").keyup(function() {
          var content = $(this).val();
          var typelen = $(this).parents('.select-nums').find('.all-ways').find('.all-ways-cur').data('type');
+         var arrDel = [];
+         var w = 0;
+         var arrSame = [];
+         var r = 0;
          arrSelectNum = $.trim(content).split(","); //得到每一注组成的数组
          for (var k = 0; k < arrSelectNum.length; k++) {
              for (var v = 0; v < arrSelectNum.length; v++) {
                  if (v > k) {
-                     if ($.trim(arrSelectNum[k]) === $.trim(arrSelectNum[v])) {
-                         arrSelectNum.splice(v, 1);
+                     if ($.trim(arrSelectNum[k]) === $.trim(arrSelectNum[v])) { 
+                         arrSame[r] = arrSelectNum[v];
+                         r++;
                          break;
                      }
                  }
@@ -216,18 +236,16 @@
          }
          for (var i = 0; i < arrSelectNum.length; i++) { //遍历每一注
              var single = $.trim(arrSelectNum[i]);
-             if (single.length != (3 * typelen - 1)) {
-                 arrSelectNum.splice(i, 1);
-                 if (arrSelectNum.length > 0 && i > 0) {
-                     i--;
-                 }
+
+             if (single.length != (3 * typelen - 1)) { 
+                 arrDel[w] = arrSelectNum[i];
+                 w++;
              } else {
                  var everyNum = single.split(" ");
-                 if (everyNum.length != typelen) { 
-                     arrSelectNum.splice(i, 1);
-                     if (arrSelectNum.length > 0 && i > 0) {
-                         i--;
-                     }
+                 if (everyNum.length != typelen) {
+                     console.log('b');
+                     arrDel[w] = arrSelectNum[i];
+                     w++;
                  } else {
                      var connext = false;
                      for (var c = 0; c < everyNum.length; c++) {
@@ -245,10 +263,8 @@
                          }
                      }
                      if (connext) {
-                         arrSelectNum.splice(i, 1);
-                         if (arrSelectNum.length > 0 && i > 0) {
-                             i--;
-                         }
+                         arrDel[w] = arrSelectNum[i];
+                         w++;
                      } else {
                          for (var j = 0; j < everyNum.length; j++) {
                              var everynum = everyNum[j];
@@ -256,28 +272,42 @@
                              if (
                                  !((parseint > 0 && parseint < 12) && ((everynum === "0" + parseint) || everynum == 11 || everynum == 10)
                                  )) {
-                                 arrSelectNum.splice(i, 1);
-                                 if (arrSelectNum.length > 0 && i > 0) {
-                                     i--;
-                                 }
+                                 arrDel[w] = arrSelectNum[i];
+                                 w++;
                                  break;
                              }
                          }
                      }
                  }
              }
-             if (arrSelectNum[i] == "") {
-                 arrSelectNum.splice(i, 1);
-             }
              for (var e = 0; e < arrSelectNum.length; e++) {
                  arrSelectNum[e] = $.trim(arrSelectNum[e]);
              }
              getsumnum();
          }
+
+         for (var l = 0; l < arrSelectNum.length; l++) { //除去错误的号码
+             for (var d = 0; d < arrDel.length; d++) {
+                 if (arrSelectNum[l] == arrDel[d]) {
+                     arrSelectNum.splice(l, 1);
+                     l--;
+                 }
+             }
+         }
+         for (var t = 0; t < arrSame.length; t++) { //除去相同的号码
+             for (var u = 0; u < arrSelectNum.length; u++) {
+                 if (arrSelectNum[u] == arrSame[t]) {
+                     arrSelectNum.splice(u, 1);
+                     u--;
+                     break;
+                 }
+             }
+         }
          $(".play-action").find("p span:first-child").text(arrSelectNum.length);
          var times = $(".play-action").find(".times").val();
          $(".play-action").find("p span:last-child").text(arrSelectNum.length * times * 2);
      });
+
      //手动选号的清空：
      $(".play-section textarea+input+input+input").click(function() {
          $(this).siblings("textarea").val("");
@@ -293,6 +323,7 @@
                  if (v > k) {
                      if ($.trim(arrNums[k]) === $.trim(arrNums[v])) {
                          arrNums.splice(v, 1);
+                         v--;
                          $(this).siblings("textarea").val(arrNums);
                          break;
                      }

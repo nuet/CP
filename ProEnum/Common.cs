@@ -92,6 +92,17 @@ namespace ProEnum
         [DescriptionAttribute("微信")]
         WXPay = 3
     }
+
+    public enum EnumAccountType
+    {
+        [DescriptionAttribute("账户")]
+        AccountFee = 0,
+        [DescriptionAttribute("积分")]
+        IntegerFee = 1,
+        [DescriptionAttribute("优惠券")]
+        DiscountFee = 2
+    }
+
     public enum EnumPalyType
     {   
         [DescriptionAttribute("推广注册")]

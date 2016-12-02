@@ -10,28 +10,37 @@ namespace ProDAL
 {
     public class LotteryOrderDAL : BaseDAL
     {
-        public static LotteryOrderDAL BaseProvider = new LotteryOrderDAL(); 
-        public bool CreateLotteryOrder(string ordercode, int paytype, string spname, string bankinfo, string sku, string content, decimal totalfee, string othercode, int type, decimal num, decimal paytfee, string userID, string createid, string operatip)
+        public static LotteryOrderDAL BaseProvider = new LotteryOrderDAL();
+        public bool CreateLotteryOrder(string ordercode, string orderid, string issueNum, int type, string cpcode, string cpname, string content, string typename, int num,
+           decimal payfee, string userID, int pmuch, decimal rpoint, string operatip,int usedisFee,ref string errormsg)
         {
-            string sql = @"INSERT INTO [UserOrders]([OrderCode],[BankName],[SPName],[Sku],[Content],[CreateTime],[Status],[UserID],[PayType],[TotalFee],[OtherCode],[Type],[Num],[PayFee],CreateUserID,IP)
-                    VALUES (@OrderCode,@BankName,@SPName,@Sku,@Content,getdate(), 0,@UserID, @PayType, @TotalFee, @OtherCode, @Type, @Num,@PayFee,@CreateUserID,@IP)";
+//            string sql = @"INSERT INTO [LotteryOrder]([OrderCode],[OrderID],[IssueNum],[IP],[CreateTime],[Status],[UserID],[CPCode],[CPName],[PayFee],[Content],[TypeName],[PMuch],RPoint,Type,Num)
+//                    VALUES (@OrderCode,@OrderID,@IssueNum,@IP,getdate(), 0,@UserID, @CPCode, @CPName, @PayFee, @Content, @TypeName,@PMuch,@RPoint,@Type,@Num)";
             SqlParameter[] paras = { 
-                                    new SqlParameter("@SPName",spname),
-                                    new SqlParameter("@BankName",bankinfo),
+                                    new SqlParameter("@ErrorMsg" , SqlDbType.VarChar,300),
+                                    new SqlParameter("@Result",SqlDbType.Int),
+                                    new SqlParameter("@OrderCode",ordercode),
+                                    new SqlParameter("@OrderID",orderid),
                                     new SqlParameter("@UserID",userID),
-                                    new SqlParameter("@CreateUserID",createid),
+                                    new SqlParameter("@IssueNum",issueNum),
                                     new SqlParameter("@IP",operatip), 
-                                    new SqlParameter("@Sku",sku),
-                                    new SqlParameter("@PayType",paytype),
-                                    new SqlParameter("@PayFee",paytfee),
+                                    new SqlParameter("@CPCode",cpcode),
+                                    new SqlParameter("@CPName",cpname),
+                                    new SqlParameter("@PayFee",payfee),
                                     new SqlParameter("@Content",content),
-                                    new SqlParameter("@TotalFee",totalfee),
-                                    new SqlParameter("@OtherCode",othercode),
+                                    new SqlParameter("@TypeName",typename),
+                                    new SqlParameter("@PMuch",pmuch),
+                                    new SqlParameter("@RPoint",rpoint),
                                     new SqlParameter("@Type",type),
-                                    new SqlParameter("@Num",num),
-                                    new SqlParameter("@OrderCode",ordercode),    
+                                    new SqlParameter("@UsedisFee",usedisFee), 
+                                    new SqlParameter("@Num",num)  
                                    };
-            return ExecuteNonQuery(sql, paras, CommandType.Text) > 0; 
+            paras[0].Direction = ParameterDirection.Output;
+            paras[1].Direction = ParameterDirection.Output;
+            ExecuteNonQuery("InsertLotteryOrder", paras, CommandType.StoredProcedure);
+            var result = Convert.ToInt32(paras[1].Value);
+            errormsg = paras[0].Value.ToString();
+            return result > 0;
         }
 
         public DataTable GetLotteryOrderDetail(string lcode)

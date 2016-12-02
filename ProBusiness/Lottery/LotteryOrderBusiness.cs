@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ProDAL;
 using ProDAL.UserAttrs;
 using ProEntity;
+using ProEntity.Manage;
 
 namespace ProBusiness
 {
@@ -68,10 +69,37 @@ namespace ProBusiness
         #endregion
 
         #region 添加.删除
-        
-       public static bool CreateUserOrder(string ordercode, int paytype, string spname, string bankinfo,string sku, string content, decimal totalfee, string othercode, int type, decimal num, decimal payfee,string userID,string createuserid,string operatip)
+
+
+
+       public static int CreateUserOrderList(List<LotteryOrder> models, M_Users user,string ip,int usedisFee,ref string errmsg )
        {
-           return LotteryOrderDAL.BaseProvider.CreateLotteryOrder(ordercode, paytype, spname, bankinfo, sku, content, totalfee, othercode, type, num, payfee, userID, createuserid, operatip);
+           int k = 0;
+           string msg = "";
+           models.ForEach(x =>
+           {
+               string orderCode = DateTime.Now.ToString("yyyyMMddhhMMssfff") + user.AutoID;
+               var result = CreateLotteryOrder(orderCode, x.IssueNum, x.Type,x.TypeName,x.CPCode, x.CPName, x.Content,
+                   x.Num, x.PayFee, user.UserID, x.PMuch, x.RPoint, ip,usedisFee,ref msg);
+               if (!result)
+               {
+                   msg += x.Content + "    余额不足/n";
+               }
+               else
+               {
+                   k++;
+               }
+           });
+           errmsg = msg;
+           return k;
+       }
+
+       public static bool CreateLotteryOrder(string ordercode, string issueNum, int type, string typename,string cpcode, string cpname, string content,  int num,
+           decimal payfee, string userID, int pmuch, decimal rpoint, string operatip,int usedisFee, ref string errormsg)
+       {
+           var orderid = Guid.NewGuid().ToString();
+           return LotteryOrderDAL.BaseProvider.CreateLotteryOrder(ordercode, orderid,issueNum, type, cpcode, cpname, content, typename, num,
+            payfee, userID, pmuch, rpoint, operatip,usedisFee,ref errormsg);
        }
         public static bool DeleteOrder(string ordercode)
         {

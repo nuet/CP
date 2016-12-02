@@ -26,7 +26,7 @@ namespace ProEntity
         /// </summary>
         public int Status { get; set; }
         public int Type { get; set; }
-        public int TypeName { get; set; } 
+        public string TypeName { get; set; } 
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
         /// <summary>
@@ -42,7 +42,7 @@ namespace ProEntity
         /// </summary>
         public decimal WinFee { get; set; }
         /// <summary>
-        /// 和值 开奖结果的和值
+        /// 是付款
         /// </summary>
         public decimal PayFee { get; set; }
         /// <summary>
@@ -55,7 +55,11 @@ namespace ProEntity
         public string  UserID  { get; set; }
 
         public string UserName { get; set; }
-
+        /// <summary>
+        /// 投注模式 0 元 1 角2 分
+        /// </summary>
+        public int MType { get; set; }
+        public string IP { get; set; }
         public void FillData(System.Data.DataRow dr)
         {
             dr.FillData(this);

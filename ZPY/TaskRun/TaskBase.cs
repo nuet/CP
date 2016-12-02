@@ -73,7 +73,7 @@ namespace CPiao.TaskRun
                         }
                     }
                 }
-            }).NonReentrant().WithName("[updatesd11x5status]").ToRunEvery(10).Minutes();
+            }).NonReentrant().WithName("[updatesd11x5status]").ToRunNow().AndEvery(1).Minutes();
         }
         private void UpdateSD11X5Result()
         {
@@ -99,7 +99,7 @@ namespace CPiao.TaskRun
                         }
                     }
                 }
-            }).NonReentrant().WithName("[updatesd11x5result]").ToRunEvery(5).Minutes();
+            }).NonReentrant().WithName("[updatesd11x5result]").ToRunNow().AndEvery(1).Minutes();
         }
         private void Reentrant()
         {
