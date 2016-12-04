@@ -55,10 +55,16 @@ namespace ProEntity
         public string  UserID  { get; set; }
 
         public string UserName { get; set; }
+
+        public string ResultNum { get; set; } 
         /// <summary>
         /// 投注模式 0 元 1 角2 分
         /// </summary>
         public int MType { get; set; }
+        /// <summary>
+        ///  
+        /// </summary>
+        public int WinType { get; set; }
         public string IP { get; set; }
         public void FillData(System.Data.DataRow dr)
         {

@@ -14,7 +14,7 @@ namespace ProBusiness
     {
         #region 查询   
         #endregion
-        public static List<LotteryResult> GetPagList(string cpCode,int status, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
+        public static List<LotteryResult> GetPagList(string cpCode,int status,bool orderby, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
         {
             string sqlwhere = " b.cpCode='" + cpCode + "'";
             if (status > -1)
@@ -23,7 +23,7 @@ namespace ProBusiness
             }
             DataTable dt = CommonBusiness.GetPagerData(" LotteryResult b ",
                 "b.*", sqlwhere, "b.AutoID ", pageSize, pageIndex,
-                out totalCount, out pageCount,false);
+                out totalCount, out pageCount, orderby);
             List<LotteryResult> list = new List<LotteryResult>();
             foreach (DataRow dr in dt.Rows)
             {

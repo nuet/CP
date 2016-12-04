@@ -17,9 +17,9 @@ namespace ProBusiness
 
         #region 查询
 
-       public static List<LotteryOrder> GetLotteryOrder(string keyWords, string cpcode, string userid, string lcode, string issnuenum,string type, int status, int pageSize, int pageIndex, ref int totalCount, ref int pageCount,int self=0, string begintime = "", string endtime = "")
+       public static List<LotteryOrder> GetLotteryOrder(string keyWords, string cpcode, string userid, string lcode, string issuenum, string type, int status, int winType,int pageSize, int pageIndex, ref int totalCount, ref int pageCount, int self = 0, string begintime = "", string endtime = "")
         {
-            string tablename = "LotteryOrder  a left join M_Users b  on a.UserID =b.UserID ";
+            string tablename = "LotteryOrder  a left join M_Users b  on a.UserID =b.UserID left join lotteryResult c on a.IssueNum=c.IssueNum  ";
             string sqlwhere = " a.status<>9 ";
             if (!string.IsNullOrEmpty(keyWords))
             {
@@ -32,25 +32,32 @@ namespace ProBusiness
             if (status > -1)
             {
                 sqlwhere += " and a.status=" + status;
-            } 
-            if (!string.IsNullOrEmpty(userid))
+            }
+           if (winType > -1)
+           {
+               sqlwhere += " and a.WinType=" + winType;
+           }
+           if (!string.IsNullOrEmpty(userid))
             {
-                if (self == 1)
+                if (self > 0)
                 {
-                    sqlwhere += " and a.UserID in('" + userid + "')";
-                }
-                else if (self == 2)
-                {
-                    sqlwhere += " and a.UserID='" + userid + "' ";
-                }
-                else
-                { sqlwhere += " and a.UserID='" + userid + "' ";
-
+                    if (self == 1)
+                    {
+                        sqlwhere += " and a.UserID in(select UserID from UserRelation where ParentID='" + userid + "')";
+                    }
+                    else if (self == 2)
+                    {
+                        sqlwhere += " and a.UserID in(select UserID from UserRelation where Parents like '%" + userid + "%')";
+                    }
+                    else
+                    {
+                        sqlwhere += " and a.UserID='" + userid + "' ";
+                    }
                 }
             } 
            if (!string.IsNullOrEmpty(begintime))
             {
-                sqlwhere += " and a.CreateTime>='" + begintime + " 00:00:00'";
+                sqlwhere += " and a.CreateTime>='" + begintime +"'";
             }
             if (!string.IsNullOrEmpty(endtime))
             {
@@ -60,11 +67,11 @@ namespace ProBusiness
            {
                sqlwhere += " and a.LCode ='" + lcode + "'";
            }
-           if (!string.IsNullOrEmpty(issnuenum))
+           if (!string.IsNullOrEmpty(issuenum))
            {
-               sqlwhere += " and a.issnuenum ='" + issnuenum + "'";
+               sqlwhere += " and a.IssueNum ='" + issuenum + "'";
            }
-           DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.UserName ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
+           DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.UserName,c.ResultNum ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
             List<LotteryOrder> list = new List<LotteryOrder>();
             foreach (DataRow dr in dt.Rows)
             {

@@ -61,7 +61,7 @@ namespace CPiao.Controllers
         {
             int total = 0;
             int pageTotal = 0;
-            var items = LotteryOrderBusiness.GetLotteryOrder("", cpcode, CurrentUser.UserID, "","","", -1, 20, 1, ref total,
+            var items = LotteryOrderBusiness.GetLotteryOrder("", cpcode, CurrentUser.UserID, "","","", -1,-1, 20, 1, ref total,
                 ref pageTotal);
             JsonDictionary.Add("items", items); 
             return new JsonResult()
@@ -70,11 +70,11 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-        public JsonResult GetLotteryRecord(string cpcode, int status, string lcode, string issnuenum, string type, int selfrange, string btime, string etime, int pageIndex)
+        public JsonResult GetLotteryRecord(string cpcode, int status, string lcode, string issuenum, string type, int selfrange,int winType, string btime, string etime, int pageIndex)
         {
             int total = 0;
             int pageTotal = 0;
-            var items = LotteryOrderBusiness.GetLotteryOrder("", cpcode, CurrentUser.UserID, lcode, issnuenum, type, status, PageSize, pageIndex, ref total,
+            var items = LotteryOrderBusiness.GetLotteryOrder("", cpcode, CurrentUser.UserID, lcode, issuenum, type, status, winType, PageSize, pageIndex, ref total,
                 ref pageTotal, selfrange, btime,etime);
             JsonDictionary.Add("items", items);
             JsonDictionary.Add("totalCount", total);
@@ -89,7 +89,7 @@ namespace CPiao.Controllers
         {
             int total = 0;
             int pageTotal = 0;
-            var items = LotteryResultBusiness.GetPagList(cpcode, status, pagesize, 1, ref total, ref pageTotal);
+            var items = LotteryResultBusiness.GetPagList(cpcode, status,orderby, pagesize, 1, ref total, ref pageTotal);
             JsonDictionary.Add("item", LotteryResultBusiness.GetLotteryResult(cpcode, 0, DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00", DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59"));
             JsonDictionary.Add("items", items);
             return new JsonResult()
