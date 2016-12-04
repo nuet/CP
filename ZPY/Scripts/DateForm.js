@@ -133,6 +133,13 @@ function DateDiff(sDate1, sDate2) { //sDate1和sDate2是字符串 yyyy-MM-dd格�
      }
      return new Date(btime).format("yyyy-MM-dd");
  }
+ function convertdateTostring(btime, type, tformat) {
+     btime = btime.replace("年", "/").replace("月", "/").replace("日", "");
+     if (type) {
+         btime = parseInt(btime.replace("/Date(", '').replace(")/", ''));
+     }
+     return new Date(btime).format(tformat);
+ }
  function getparamsdate(btime, type) {
      btime = btime.replace("年", "/").replace("月", "/").replace("日", "");
      if (type) {

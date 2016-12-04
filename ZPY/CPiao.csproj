@@ -801,6 +801,7 @@
     <Content Include="modules\scripts\home.js" />
     <Content Include="modules\scripts\imgbox.js" />
     <Content Include="modules\scripts\layout.js" />
+    <Content Include="modules\scripts\lottery\lotteryrecord.js" />
     <Content Include="modules\scripts\lottery\shiyiyun.js" />
     <Content Include="modules\scripts\register\forget.js" />
     <Content Include="modules\scripts\register\register.js" />

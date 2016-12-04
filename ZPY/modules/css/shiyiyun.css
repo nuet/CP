@@ -132,14 +132,22 @@ ul.num-select li div span:hover{background: #ffecec;}
 .select-table table tbody tr:hover{background: #49568e;}
 .select-table table tbody tr input[type="text"]{width: 35px;height: 22px;text-align: center;margin-right: 5px;border:none;border-radius: 4px;}
 
-.bet-record{background: #09568E;padding-top: 15px;}
+.bet-record{background: #09568E;padding-top: 15px;min-height: 150px;}
 .bet-record table{border-collapse: collapse;width: 970px;margin-left: 15px;color: white;text-align: center;line-height: 28px;margin-top: 0px;}
 .bet-record table thead{background: #103049;height: }
 .bet-record table tbody tr{height: 35px;border-bottom: 1px solid #777;}
-.bet-record table tbody{max-height: 316px;overflow-y:auto;display: block;}
+.bet-record table tbody{max-height: 316px;overflow-y:auto;display: block;font-size: 12px;}
 .bet-record table thead tr{display: block;}
-.bet-record table th,.bet-record table td{width: 97px;}
-
+/*.bet-record table th,.bet-record table td{width: 97px;}*/
+.width40{ width: 40px !important;}
+.width60{ width: 60px !important;}
+.width65{ width: 65px !important;}
+.width85{ width: 85px !important;}
+.width100{ width: 100px !important;}
+.width120{ width: 120px !important;}
+.width130{ width: 130px !important;}
+.width140{ width: 140px !important;}
+.width200{ width: 200px !important;}
 .footer{width: 1000px;height: 65px;border:1px solid #bbb;margin-bottom: 30px;background: white;}
 .footer p{float: right;margin-right: 20px;line-height: 65px;color: #777;}
 

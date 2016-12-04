@@ -234,6 +234,9 @@
          var arrSame = [];
          var r = 0;
          arrSelectNum = $.trim(content).split(","); //得到每一注组成的数组
+         for (var e = 0; e < arrSelectNum.length; e++) {
+             arrSelectNum[e] = $.trim(arrSelectNum[e]);
+         }
          for (var k = 0; k < arrSelectNum.length; k++) {
              for (var v = 0; v < arrSelectNum.length; v++) {
                  if (v > k) {
@@ -290,9 +293,6 @@
                          }
                      }
                  }
-             }
-             for (var e = 0; e < arrSelectNum.length; e++) {
-                 arrSelectNum[e] = $.trim(arrSelectNum[e]);
              }
              getsumnum();
          }
@@ -685,8 +685,8 @@ lottery.bindEvent=function(code,name)
     lottery.CPCode = code;
     lottery.CPName = name;
     lottery.GetLottery();
-    lottery.GetlotteryResult(); 
-
+    lottery.GetlotteryResult();
+     lottery.getLotteryList();
  }
  lottery.CPTypes = {};
  lottery.GetLottery= function() {
@@ -791,11 +791,27 @@ lottery.GetIssNum= function() {
     });
 }
 lottery.saveItems= function() {
- 
     $.post('/Lottery/AddLotteryOrders', { list:JSON.stringify(items),usedisFee:$('#isusedic').attr('checked')=='checked'?1:0 }, function (data) {
-        var html = '';
-        console.log(data);
+        if (data.result > 0) {
+            items = [];
+            $(".num-selected table tbody").html('');
+        } else {
+            alert(data.ErrMsg);
+        }
     });
-    
+}
+lottery.getLotteryList = function () {
+    $.post('/Lottery/GetUserLottery', { cpcode: lottery.CPCode}, function (data) {
+        var html = '';
+        for (var i=0; i < data.items.length; i++) {
+            var item = data.items[i]; 
+            html += ' <tr><td class="width140">' + item.LCode + '</td><td class="width120">' + convertdateTostring(item.CreateTime, true, "yyyy-MM-dd hh:mm:ss") + '</td><td class="width130">' + item.TypeName + '</td><td class="width85">' + item.IssueNum + '</td><td class="width200">' + item.Content + '</td><td class="width60">' + item.PMuch + '</td><td class="width40">元</td><td class="width65">' + item.PayFee + '</td><td class="width85">' + item.WinFee + '</td><td class="width40">' + (item.Status == 0 ? "未开奖" : (item.Status == 1 ? "已中奖" : (item.Status == 2 ? "未中奖" : (item.Status == 3 ? "已撤单" : "已删除")))) + '</td></tr>';
+        }
+        if (html == "") {
+            html += '<tr><td></td><td></td><td></td><td></td><td>暂无投注记录</td><td></td><td></td><td></td><td></td><td></td></tr>';
+        }
+        $('.bet-record tbody').html(html);
+    });
+
 }
 

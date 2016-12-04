@@ -1,4 +1,5 @@
-﻿@{
+﻿@using ProEntity
+@{
     ViewBag.Title = "LotteryRecord";
     Layout = null;
 }
@@ -12,9 +13,12 @@
 		<title>游戏平台 - 投注记录</title>
 		<link rel="stylesheet" type="text/css" href="/modules/css/help.css" />
 		<link rel="stylesheet" type="text/css" href="/modules/css/need/laydate.css" />
-		<link rel="stylesheet" type="text/css" href="/modules/css/skins/dahong/laydate.css" />
+	    <link rel="stylesheet" type="text/css" href="/modules/css/skins/dahong/laydate.css"/>
+           <link rel="stylesheet" type="text/css" href="/modules/datapager/style.css"/>
+        <script type="text/javascript" src="/Scripts/jquery-1.11.3.min.js"></script> 
 		<script type="text/javascript" src="/Scripts/laydate.js"></script>
-		<script type="text/javascript" src="/Scripts/date.js"></script>
+	    <script type="text/javascript" src="/Scripts/date.js"></script>
+         <script type="text/javascript" src="/modules/datapager/paginate.js"></script> 
 		<style>
 			div,p,span,dl,dt,dd,a,table,tr,td,thead,th,tbody{margin: 0;padding: 0;list-style: none;}
 		</style>
@@ -26,100 +30,81 @@
 			</p>
 		</div>
 		<div class="chooseRecords">
-			<div class="filter">
-				<form action="#" method="get">
-					<input type="hidden" name="isgetdate" value="1" />
-					<label for="starttime">
-						<span class="text-middle-input">活动时间：</span>
-						<input type="text" class="start-time input laydate-icon" value="" style="width: 220px;"  onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/> 
-						<span class="text-middle-input">&nbsp;至&nbsp;</span>
-						<input type="text" class="endtime input laydate-icon" value="" style="width: 220px;" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/> 
-					</label>
-					<label for="state">
-						<span class="text-middle-input">状态：</span>
-						<select class="input state" id="state" name="status">
-							<option value="0" selected="">全部</option>
-							<option value="1">已中奖</option>
-							<option value="2">未中奖</option>
-							<option value="3">未开奖</option>
-							<option value="4">已撤单</option>
-						</select>
-					</label>
-					<label for="gamesaction">
-						<span class="text-middle-input">奖金：</span>
-						<select class="input state" name="isfree">
-							<option value="0" selected="selected">全部</option>
-							<option value="1">现金</option>
-							<option value="2">优惠券</option>
-						</select>
-					</label>
-					<label for="gamemodel">
-						<span class="text-middle-input">游戏名称：</span>
-						<select class="input gamemodel" id="lotteryid" name="lotteryid" style="width: 130px;">
-							<option value="0">所有游戏</option>
-							<option value="1">重庆时时彩</option>
-							<option value="2">黑龙江时时彩</option>
-							<option value="3">新疆时时彩</option>
-							<option value="4">天津时时彩</option>
-							<option value="5">上海时时乐</option>
-							<option value="6">十一运夺金</option>
-							<option value="7">多乐彩</option>
-							<option value="8">广东十一选五</option>
-							<option value="9">福彩3D</option>
-							<option value="10">排列三、五</option>
-							<option value="11">重庆十一选五</option>
-							<option value="12">欢乐分分彩</option>
-						</select>
-					</label>
-					<label for="gametype">
-						<span class="text-middle-input">游戏玩法：</span>
-						<select class="input gametype" name="methodid" id="methodid">
-							<option value="0">所有玩法</option>
-						</select>
-					</label>
-					<label for="gametype">
-						<span class="text-middle-input">游戏奖期：</span>
-						<select class="input gametype" name="issue" id="issue">
-							<option value="0">所有奖期</option>
-						</select>
-					</label>
-					<label for="gametype">
-						<span class="text-middle-input">游戏模式：</span>
-						<select class="input gametype" name="modes" id="modes">
-							<option value="0">所有模式</option>
-							<option value="1">元</option>
-							<option value="2">角</option>
-							<option value="3">分</option>
-						</select>
-					</label>
-					<label for="orderid">
-						<span class="text-middle-input">注单编号：</span>
-						<input class="input orderid" id="projectno" name="projectno" value/>
-					</label>
-					<label for="gameuser">
-						<span class="text-middle-input">游戏用户：</span>
-						<input class="input gameuser" id="username" name="username" value/>
-					</label>
-					<label for="gameuser">
-						<span class="text-middle-input">范围：</span>
-						<select class="input gameuser" name="range">
-							<option>全部</option>
-							<option selected>自己</option>
-							<option>直接下级</option>
-							<option>所有下级</option>
-						</select>
-					</label>
-					<label for="gameuser">
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<span style="color: #FF7E00;">温馨提示：点击注单编号可以查看详细注单信息以及撤单</span>
-					</label>
-					<div class="filter-button-box">
+			<div class="filter"> 
+				<label for="starttime">
+					<span class="text-middle-input">活动时间：</span>
+					<input type="text" class="start-time input laydate-icon" value="" style="width: 220px;"  onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/> 
+					<span class="text-middle-input">&nbsp;至&nbsp;</span>
+					<input type="text" class="endtime input laydate-icon" value="" style="width: 220px;" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/> 
+				</label>
+				<label for="status">
+					<span class="text-middle-input">状态：</span>
+					<select class="input state" id="status">
+						<option value="-1" selected="">全部</option>
+						<option value="1">已中奖</option>
+						<option value="2">未中奖</option>
+						<option value="0">未开奖</option>
+						<option value="3">已撤单</option>
+					</select>
+				</label>
+				<label for="usetype">
+					<span class="text-middle-input">奖金：</span>
+					<select class="input state" id="usetype">
+						<option value="0" selected="selected">全部</option>
+						<option value="1">现金</option>
+						<option value="2">优惠券</option>
+					</select>
+				</label>
+				<label for="gamemodel">
+					<span class="text-middle-input">游戏名称：</span>
+				    <select class="input gamemodel" id="lotteryslt" style="width: 130px;">
+                         <option value="">所有游戏</option>
+                         @foreach (Lottery model in ExpandClass.GetLottery(HttpContext.Current))
+                             {
+                                 <option value="@(model.CPCode)">@(model.CPName)</option>
+                             }
+				    </select>
+				</label>
+				<label for="gametype">
+					<span class="text-middle-input">游戏玩法：</span>
+					<select class="input gametype"  id="lotteryplays">
+						<option value="">所有玩法</option>
+					</select>
+				</label>
+				<label for="gametype">
+					<span class="text-middle-input">游戏奖期：</span>
+					<select class="input gametype" name="issue" id="issueslt">
+						<option value="">所有奖期</option>
+					</select>
+				</label> 
+				<label for="orderid">
+					<span class="text-middle-input">注单编号：</span>
+					<input class="input orderid" id="lcode"/>
+				</label>
+			@*	<label for="gameuser">
+					<span class="text-middle-input">游戏用户：</span>
+					<input class="input gameuser" id="username" name="username" value/>
+				</label>*@
+				<label for="selfrange">
+					<span class="text-middle-input">范围：</span>
+					<select class="input gameuser" id="selfrange">
+						<option  value="-1">全部</option>
+						<option value="0">自己</option>
+						<option value="1">直接下级</option>
+						<option value="2">所有下级</option>
+					</select>
+				</label>
+			@*	<label for="gameuser">
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span style="color: #FF7E00;">温馨提示：点击注单编号可以查看详细注单信息以及撤单</span>
+				</label>*@
+				<div class="filter-button-box">
 						<div class="search">搜索</div>
 						<a href="/Lottery/LotteryRecord" target="_self" style="color: white;">
 							<div class="clear">清空</div>
 						</a>
 					</div>
-				</form>
+ 
 			</div>
 		
 		
@@ -156,17 +141,16 @@
 			    		</tbody>
 			    		<tfoot>
 			    			<tr>
-			    				<td colspan="13" style="text-align: center;"></td>
+						        <td colspan="13" style="text-align: center;">
+						             <div class="spana" id="pager"></div>
+						        </td>
 			    			</tr>
 			    		</tfoot>
 			    	</table>
 			    </div>	
 			</div>
-		</div>
-		
-
-		
+		</div> 
 	</body>
-	
+<script type="text/javascript" src="/modules/scripts/lottery/lotteryrecord.js"></script>
 </html>
 

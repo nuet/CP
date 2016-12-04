@@ -61,7 +61,7 @@ namespace CPiao.Controllers
         {
             int total = 0;
             int pageTotal = 0;
-            var items = LotteryOrderBusiness.GetLotteryOrder("", cpcode, CurrentUser.UserID, "","","", -1, 5, 1, ref total,
+            var items = LotteryOrderBusiness.GetLotteryOrder("", cpcode, CurrentUser.UserID, "","","", -1, 20, 1, ref total,
                 ref pageTotal);
             JsonDictionary.Add("items", items); 
             return new JsonResult()
@@ -70,7 +70,21 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
+        public JsonResult GetLotteryRecord(string cpcode, int status, string lcode, string issnuenum, string type, int selfrange, string btime, string etime, int pageIndex)
+        {
+            int total = 0;
+            int pageTotal = 0;
+            var items = LotteryOrderBusiness.GetLotteryOrder("", cpcode, CurrentUser.UserID, lcode, issnuenum, type, status, PageSize, pageIndex, ref total,
+                ref pageTotal, selfrange, btime,etime);
+            JsonDictionary.Add("items", items);
+            JsonDictionary.Add("totalCount", total);
+            JsonDictionary.Add("pageCount", pageTotal);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         public JsonResult GetlotteryResult(string cpcode,int status=2,int pagesize=4,bool orderby=false)
         {
             int total = 0;
