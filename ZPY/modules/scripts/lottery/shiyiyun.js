@@ -17,7 +17,11 @@
                "renxuan8":{"firstNum":"14.8-4%","lastNum":"15.46-0%"}
  };
  var arrSelectNum = [];
- var items = [];
+ var items = []; 
+ var lottery = {}
+ lottery.cnum = 0;
+ lottery.CPCode;
+ lottery.CPName;
  $(function() {
      //选号：
      $(".num-select li div.numbers").find("span").click(function() {
@@ -102,37 +106,49 @@
                  $(".num-selected tbody tr:first-child").remove();
              }
              var item = {};
+             item.PayFee = $(".play-action p span").eq(1).text();
+             item.Num = $(".play-action p span").eq(0).text();
+             item.pMuch = $(".play-action .times").val();
+             item.TypeName = type;
              if (type.split("_")[0] == "趣味型五位") {
-                 var msg = "<tr title='" + ('投注模式:&nbsp;' + type + '\n' + '投注信息:&nbsp;' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200'>" + arrSelectNum + "</td><td width='73.3'>" + $(".play-action p span").eq(0).text() + "注" + "</td><td width='73.3'>" + $(".play-action .times").val() + "倍" + "</td><td width='73.3'>" + $(".play-action p span").eq(1).text() + "元" + "</td><td width='73.3'>0</td><td width='73.3'>100%</td><td width='73.3'><span>删除</span></td></tr>";
-                 $(".num-selected tbody").prepend(msg);
-                 item.PayFee = 0;
+                 item.WinFee = 0;
                  item.RPoint = 1;
+                 var msg = "<tr title='" + ('投注模式:&nbsp;' + type + '\n' + '投注信息:&nbsp;' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200'>" + arrSelectNum + "</td><td width='73.3'>" + item.Num + "注" + "</td><td width='73.3'>" + item.pMuch + "倍" + "</td><td width='73.3'>" + item.PayFee + "元" + "</td><td width='73.3'>0</td><td width='73.3'>100%</td><td width='73.3'><span>删除</span></td></tr>";
+                 $(".num-selected tbody").prepend(msg);
+                
+
              } else {
                  var tempr = $(".play-action select").find("option:selected").text().split("-");
-                 var msg = "<tr title='" + ('投注模式:&nbsp;' + type + '\n' + '投注信息:&nbsp;' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200'>" + arrSelectNum + "</td><td width='73.3'>" + $(".play-action p span").eq(0).text() + "注" + "</td><td width='73.3'>" + $(".play-action .times").val() + "倍" + "</td><td width='73.3'>" + $(".play-action p span").eq(1).text() + "元" + "</td><td width='73.3'>" + tempr[0] + "元" + "</td><td width='73.3'>" + tempr[1] + "</td><td width='73.3'><span>删除</span></td></tr>";
+                 item.WinFee = tempr[0];
+                 item.RPoint = (parseFloat(tempr[1].replace('%', '')) / 100).toFixed(2);
+                 var msg = "<tr title='" + ('投注模式:&nbsp;' + type + '\n' + '投注信息:&nbsp;' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200'>" + arrSelectNum + "</td><td width='73.3'>" + item.Num + "注" + "</td><td width='73.3'>" + item.pMuch + "倍" + "</td><td width='73.3'>" + item.PayFee + "元" + "</td><td width='73.3'>" + tempr[0] + "元" + "</td><td width='73.3'>" + tempr[1] + "</td><td width='73.3'><span>删除</span></td></tr>";
                  $(".num-selected tbody").prepend(msg);
-                 item.PayFee = tempr[0];
-                 item.RPoint = (parseFloat(tempr[1].replace('%',''))/100).toFixed(2);
              }
              $(".num-selected table tbody tr td span").unbind('click');
-             $(".num-selected table tbody tr td span").click(function() {
-                 if ($(".num-selected tbody tr").length == 1) {
+             $(".num-selected table tbody tr td span").click(function () {
+                 var index = $(this).parent().parent().index();
+                 $('#totalnum').html(parseInt($('#totalnum').html()) - parseInt(items[index].Num));
+                 $('#totalfee').html(parseFloat(parseFloat($('#totalfee').html()) - parseFloat(items[index].PayFee)).toFixed(2));
+                 items.splice(index, 1);
+                 if ($(".num-selected tbody tr").length == 1) { 
                      $(".num-selected table tbody").html("<tr><td width='96.25'></td><td width='96.25'></td><!-- <td></td> --><td width='96.5'></td><td width='193' title='暂无投注项'>暂无投注项</td><td width='96.5'></td><td width='96.5'></td><td width='96.5'></td></tr>");
-                     
                  } else {
                      $(this).parent().parent().remove();
                  }
-             })
+             });
+             $('#totalnum').html(parseInt(item.Num) + parseInt($('#totalnum').html()));
+             $('#totalfee').html(parseFloat(parseFloat(item.PayFee) + parseFloat($('#totalfee').html())).toFixed(2));
              $(".play-action .times").val("1");
              $(".play-section textarea").val("");
              $(this).siblings("p").find("span").text("0");
              $(".num-select span").removeClass("clicked");
              item.CPCode = lottery.CPCode;
              item.CPName = lottery.CPName;
-             item.TypeName = type;
-             item.NUMBER_TYPE = $(".play-action p span").eq(0).text();
-             item.pMuch = $(".play-action .times").val();
-             item.PayFee = $(".play-action p span").eq(1).text();
+             item.IssueNum = $('#issueslt').val();
+             var typeid = typeof ($('.all-ways .all-ways-cur')) != 'undefined' ? $('.all-ways .all-ways-cur').data('sid') : $('.navs .navs-cur').data('sid');
+             item.Type = typeid;
+             item.Content = JSON.stringify(arrSelectNum);
+             items.push(item); 
          } else {
              $('#basic-dialog-ok')
                  .modal({
@@ -141,20 +157,7 @@
              $('#basic-dialog-ok').find(".tips-title span.tip1").text("号码选择不完整，请重新选择");
              return false;
          }
-     });
-     //操作已选号：
-     //$(".num-selected table tbody tr").on({
-     //    click: function() {
-     //        if ($(this).find("td").eq(0).text() != "") {
-     //            //x
-     //        }
-     //    },
-     //    mouseover: function(v) {
-     //        if ($(this).find("td").eq(0).text() != "") {
-     //            //
-     //        }
-     //    }
-     //});
+     }); 
      //删除选号：
      $(".num-selected table tbody tr td span").click(function() {
          $(this).parent().parent().remove();
@@ -163,15 +166,16 @@
      $(".num-selected table tfoot tr td a").click(function() {
          $("body").append("<div class='cover-layer'></div>");
          $(".alert1").show().css("z-index", "10001");
-         $(".alert1 p button").eq(0).click(function() {
+         $(".alert1 p .btn").eq(0).click(function() {
              $(".num-selected table tbody").html("<tr><td width='96.25'></td><td width='96.25'></td><!-- <td></td> --><td width='96.5'></td><td width='193' title='暂无投注项'>暂无投注项</td><td width='96.5'></td><td width='96.5'></td><td width='96.5'></td></tr>");
              $(".alert1").hide();
              $(".cover-layer").remove();
+             items = [];
              return;
          });
      });
      //弹出框操作：(清空所有，立即投注，)
-     $(".alert1 h3 img,.alert1 p button:last-child").click(function() {
+     $(".alert1 h3 img,.alert1 p .btn:last-child").click(function() {
          $(".alert1").hide();
          $(".cover-layer").remove();
          if ($(".alert1 p:last-child span").length != 0) {
@@ -181,10 +185,10 @@
          $(".alert1 h3+p").html('<img src="images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
          $(".alert1 p:last-child span").remove();
          $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "-10px" });
-         $(".alert1 p button").eq(0).css("margin-left", "35px");
+         $(".alert1 p .btn").eq(0).css("margin-left", "35px");
      });
      //立即投注：
-     $(".add-bet input").click(function() {
+     $("#btnSave").click(function () {
          if ($(".num-selected table tbody tr:first-child").find("td").eq(0).text() == "") {
              $('#basic-dialog-ok').modal({
                  "opacity": 30
@@ -195,11 +199,17 @@
              $("body").append("<div class='cover-layer'></div>");
              $(".alert1").show().css("z-index", "10001");
              $(".alert1").css({ "width": "464px", "height": "286px", "top": "35%" });
-             $(".alert1 h3+p").html('<img src="images/tips2.png" width="40" style="margin-left:-10px;"><span>你确定加入<strong>16023658</strong>期？</span><br/><textarea style="width:90%;height:100px;margin:0 auto;margin-top:-10px;"></textarea>').css("text-align", "center");
-             $(".alert1 h3+p textarea").text("4545");
-             $(".alert1 p:last-child").prepend('<span class="totle-money">投注总金额<strong style="margin:0 5px;">2400</strong>元</span>');
+             $(".alert1 h3+p").html('<img src="/modules/images/tips2.png" width="40" style="margin-left:-10px;"><span>你确定加入<strong>' + $('#issueslt').val() + '</strong>期？</span><br/><textarea style="width:90%;height:100px;margin:0 auto;margin-top:-10px;"></textarea>').css("text-align", "center");
+             var incontent = '';
+             $('.num-selected tbody tr').each(function(i,v) {
+                 var s = $(v).attr('title');
+                 s = s.replace('投注模式:', '').replace('\n','').replace('投注信息:', '      ');
+                 incontent += s + '\n';
+             });
+             $(".alert1 h3+p textarea").text(incontent);
+             $(".alert1 p:last-child").prepend('<span class="totle-money">投注总金额<strong style="margin:0 5px;">' + $('#totalfee').html() + '</strong>元</span>');
              $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "10px" });
-             $(".alert1 p button").eq(0).css("margin-left", "45px").click(function() {
+             $(".alert1 p .btn").eq(0).css("margin-left", "45px").click(function() {
                  //投注进去：
                  $(".alert1").hide();
                  $(".cover-layer").remove();
@@ -209,7 +219,8 @@
                  $(".alert1 h3+p").html('<img src="images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
                  $(".alert1 p:last-child span").remove();
                  $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "-10px" });
-                 $(".alert1 p button").eq(0).css("margin-left", "35px");
+                 $(".alert1 p .btn").eq(0).css("margin-left", "35px");
+                 lottery.saveItems();
                  return;
              });
          }
@@ -330,8 +341,8 @@
                  }
              }
          }
-     });
- 
+     }); 
+   
  });
 //外部函数：
 
@@ -668,14 +679,14 @@ function up( a, b){
     }  
     return c;  
 }
-var lottery = {}
- lottery.cnum = 0;
- lottery.CPCode;
-lottery.bindEvent=function(code)
+
+lottery.bindEvent=function(code,name)
  {
-     lottery.CPCode = code;
+    lottery.CPCode = code;
+    lottery.CPName = name;
     lottery.GetLottery();
     lottery.GetlotteryResult(); 
+
  }
  lottery.CPTypes = {};
  lottery.GetLottery= function() {
@@ -770,7 +781,8 @@ lottery.getDifDate = function (item) {
         }  
 }
 lottery.GetIssNum= function() {
-    $.post('/Lottery/GetlotteryResult', { cpcode: lottery.CPCode,status:0,pagesize:78 }, function (data) {
+    $.post('/Lottery/GetlotteryResult', {
+        cpcode: lottery.CPCode, status: 0, pagesize: 78, orderby: true}, function (data) {
         var html = '';
         for (var i = 0; i < data.items.length; i++) { 
             html += '<option value="' + data.items[i].IssueNum + '">' + data.items[i].IssueNum+(i==0?"(当前期)":"")+ '</option >';
@@ -778,5 +790,12 @@ lottery.GetIssNum= function() {
         $('#issueslt').html(html);
     });
 }
-
+lottery.saveItems= function() {
+ 
+    $.post('/Lottery/AddLotteryOrders', { list:JSON.stringify(items),usedisFee:$('#isusedic').attr('checked')=='checked'?1:0 }, function (data) {
+        var html = '';
+        console.log(data);
+    });
+    
+}
 

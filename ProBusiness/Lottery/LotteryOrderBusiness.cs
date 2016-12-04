@@ -17,7 +17,7 @@ namespace ProBusiness
 
         #region 查询
 
-       public static List<LotteryOrder> GetUserOrders(string keyWords, string cpcode,string userid, string type, int status,int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string begintime = "", string endtime = "")
+       public static List<LotteryOrder> GetLotteryOrder(string keyWords, string cpcode, string userid, string lcode, string issnuenum,string type, int status, int pageSize, int pageIndex, ref int totalCount, ref int pageCount,int self=0, string begintime = "", string endtime = "")
         {
             string tablename = "LotteryOrder  a left join M_Users b  on a.UserID =b.UserID ";
             string sqlwhere = " a.status<>9 ";
@@ -27,7 +27,7 @@ namespace ProBusiness
             }
             if (!string.IsNullOrEmpty(type))
             {
-                sqlwhere += " and a.Type='" + type+"'";
+                sqlwhere += " and a.Type like '%" + type+"%'";
             }
             if (status > -1)
             {
@@ -35,7 +35,18 @@ namespace ProBusiness
             } 
             if (!string.IsNullOrEmpty(userid))
             {
-                sqlwhere += " and a.UserID='" + userid + "' ";
+                if (self == 1)
+                {
+                    sqlwhere += " and a.UserID in('" + userid + "')";
+                }
+                else if (self == 2)
+                {
+                    sqlwhere += " and a.UserID='" + userid + "' ";
+                }
+                else
+                { sqlwhere += " and a.UserID='" + userid + "' ";
+
+                }
             } 
            if (!string.IsNullOrEmpty(begintime))
             {
@@ -45,7 +56,15 @@ namespace ProBusiness
             {
                 sqlwhere += " and a.CreateTime<'" + endtime + " 23:59:59:999'";
             }
-            DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.UserName ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
+           if (!string.IsNullOrWhiteSpace(lcode))
+           {
+               sqlwhere += " and a.LCode ='" + lcode + "'";
+           }
+           if (!string.IsNullOrEmpty(issnuenum))
+           {
+               sqlwhere += " and a.issnuenum ='" + issnuenum + "'";
+           }
+           DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.UserName ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
             List<LotteryOrder> list = new List<LotteryOrder>();
             foreach (DataRow dr in dt.Rows)
             {
@@ -78,12 +97,13 @@ namespace ProBusiness
            string msg = "";
            models.ForEach(x =>
            {
+               string errormsg = "";
                string orderCode = DateTime.Now.ToString("yyyyMMddhhMMssfff") + user.AutoID;
-               var result = CreateLotteryOrder(orderCode, x.IssueNum, x.Type,x.TypeName,x.CPCode, x.CPName, x.Content,
-                   x.Num, x.PayFee, user.UserID, x.PMuch, x.RPoint, ip,usedisFee,ref msg);
+               var result = CreateLotteryOrder(orderCode, x.IssueNum, x.Type,x.TypeName,x.CPCode, x.CPName, x.Content.Replace("\"",""),
+                   x.Num, x.PayFee, user.UserID, x.PMuch, x.RPoint, ip, usedisFee, ref errormsg);
                if (!result)
                {
-                   msg += x.Content + "    余额不足/n";
+                   msg += x.Content + "    " + errormsg+"/n";
                }
                else
                {
@@ -94,7 +114,7 @@ namespace ProBusiness
            return k;
        }
 
-       public static bool CreateLotteryOrder(string ordercode, string issueNum, int type, string typename,string cpcode, string cpname, string content,  int num,
+       public static bool CreateLotteryOrder(string ordercode, string issueNum, string type, string typename,string cpcode, string cpname, string content,  int num,
            decimal payfee, string userID, int pmuch, decimal rpoint, string operatip,int usedisFee, ref string errormsg)
        {
            var orderid = Guid.NewGuid().ToString();

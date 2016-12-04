@@ -18,7 +18,12 @@ namespace CPiao.Controllers
         public ActionResult Index(string id)
         {
             ViewBag.CPCode = id;
-            ViewBag.Model = WebSetBusiness.GetLotteryDetail(id); 
+            ViewBag.Model = WebSetBusiness.GetLotteryDetail(id);
+            return View();
+        }
+
+        public ActionResult LotteryRecord()
+        {
             return View();
         }
 
@@ -56,10 +61,9 @@ namespace CPiao.Controllers
         {
             int total = 0;
             int pageTotal = 0;
-            var items = LotteryOrderBusiness.GetUserOrders("", cpcode, CurrentUser.UserID, "", -1, 5, 1, ref total,
-                ref pageTotal, "", "");
-            JsonDictionary.Add("items","");
-            JsonDictionary.Add("items","");
+            var items = LotteryOrderBusiness.GetLotteryOrder("", cpcode, CurrentUser.UserID, "","","", -1, 5, 1, ref total,
+                ref pageTotal);
+            JsonDictionary.Add("items", items); 
             return new JsonResult()
             {
                 Data = JsonDictionary,
@@ -67,7 +71,7 @@ namespace CPiao.Controllers
             };
         }
 
-        public JsonResult GetlotteryResult(string cpcode,int status=2,int pagesize=4,int orderby=false)
+        public JsonResult GetlotteryResult(string cpcode,int status=2,int pagesize=4,bool orderby=false)
         {
             int total = 0;
             int pageTotal = 0;
@@ -81,7 +85,7 @@ namespace CPiao.Controllers
             };
         }
 
-        public JsonResult AddLotteryOrders(string list, int usedisFee)
+        public JsonResult AddLotteryOrders(string list, int usedisFee=0)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             List<LotteryOrder> models = serializer.Deserialize<List<LotteryOrder>>(list);

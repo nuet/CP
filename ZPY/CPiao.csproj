@@ -191,7 +191,22 @@
     <Content Include="modules\css\keycommon.css" />
     <Content Include="modules\css\layout.css" />
     <Content Include="modules\css\message.css" />
+    <Content Include="modules\css\need\laydate.css" />
     <Content Include="modules\css\shiyiyun.css" />
+    <Content Include="modules\css\skins\dahong\icon.png" />
+    <Content Include="modules\css\skins\dahong\laydate.css" />
+    <Content Include="modules\css\skins\danlan\icon.png" />
+    <Content Include="modules\css\skins\danlan\laydate.css" />
+    <Content Include="modules\css\skins\default\icon.png" />
+    <Content Include="modules\css\skins\default\laydate.css" />
+    <Content Include="modules\css\skins\molv\icon.png" />
+    <Content Include="modules\css\skins\molv\laydate.css" />
+    <Content Include="modules\css\skins\qianhuang\icon.png" />
+    <Content Include="modules\css\skins\qianhuang\laydate.css" />
+    <Content Include="modules\css\skins\yahui\icon.png" />
+    <Content Include="modules\css\skins\yahui\laydate.css" />
+    <Content Include="modules\css\skins\yalan\icon.png" />
+    <Content Include="modules\css\skins\yalan\laydate.css" />
     <Content Include="modules\css\slide.css" />
     <Content Include="modules\css\system\role.css" />
     <Content Include="modules\css\system\system.css" />
@@ -992,6 +1007,7 @@
     <Content Include="Views\SysSet\Lottery.cshtml" />
     <Content Include="Views\SysSet\LotteryPlays.cshtml" />
     <Content Include="Views\Lottery\Index.cshtml" />
+    <Content Include="Views\Lottery\LotteryRecord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

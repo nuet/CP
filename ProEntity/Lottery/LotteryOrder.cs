@@ -25,7 +25,7 @@ namespace ProEntity
         /// 状态 0 未开奖 1 开奖中 2 已开奖    --9 开奖失败  轮训处理再次开奖 
         /// </summary>
         public int Status { get; set; }
-        public int Type { get; set; }
+        public string Type { get; set; }
         public string TypeName { get; set; } 
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }

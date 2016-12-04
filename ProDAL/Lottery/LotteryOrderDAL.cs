@@ -11,11 +11,9 @@ namespace ProDAL
     public class LotteryOrderDAL : BaseDAL
     {
         public static LotteryOrderDAL BaseProvider = new LotteryOrderDAL();
-        public bool CreateLotteryOrder(string ordercode, string orderid, string issueNum, int type, string cpcode, string cpname, string content, string typename, int num,
+        public bool CreateLotteryOrder(string ordercode, string orderid, string issueNum, string type, string cpcode, string cpname, string content, string typename, int num,
            decimal payfee, string userID, int pmuch, decimal rpoint, string operatip,int usedisFee,ref string errormsg)
-        {
-//            string sql = @"INSERT INTO [LotteryOrder]([OrderCode],[OrderID],[IssueNum],[IP],[CreateTime],[Status],[UserID],[CPCode],[CPName],[PayFee],[Content],[TypeName],[PMuch],RPoint,Type,Num)
-//                    VALUES (@OrderCode,@OrderID,@IssueNum,@IP,getdate(), 0,@UserID, @CPCode, @CPName, @PayFee, @Content, @TypeName,@PMuch,@RPoint,@Type,@Num)";
+        { 
             SqlParameter[] paras = { 
                                     new SqlParameter("@ErrorMsg" , SqlDbType.VarChar,300),
                                     new SqlParameter("@Result",SqlDbType.Int),
