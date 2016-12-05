@@ -123,12 +123,12 @@ ul.num-select li div span:hover{background: #ffecec;}
 .select-table{width: 1000px;margin-top: 15px;}
 .select-table table{width:970px;margin-left: 15px;border-collapse: collapse;color: white;text-align: center;line-height: 28px;}
 .select-table table td{width: 242px;}
-.select-table table th{width: 231px;}
+.select-table table th{width: 231px;font-size: 14px;}
 .select-table table td:first-child,.select-table table th:first-child{width: 30px;text-align: right;}
 .select-table table thead{background: #103049;width: 100%;}
 .select-table table thead tr{display: block;}
 .select-table table tbody{height: 316px;overflow-y:scroll;display: block;}
-.select-table table tbody tr{height: 35px;border-bottom: 1px solid #777;}
+.select-table table tbody tr{height: 35px;border-bottom: 1px solid #777;font-size: 14px;}
 .select-table table tbody tr:hover{background: #49568e;}
 .select-table table tbody tr input[type="text"]{width: 35px;height: 22px;text-align: center;margin-right: 5px;border:none;border-radius: 4px;}
 
@@ -154,7 +154,7 @@ ul.num-select li div span:hover{background: #ffecec;}
 #basic-dialog-ok{background: white;width: 300px;height: 160px;border: 1px solid #CF1B1C;}
 .box-title{width: 100%;height: 35px;background: #CF1B1C;line-height: 35px;}
 .box-title h3{width: 100px;display: inline-block;color: white;text-indent: 15px;}
-.box-title button{background: transparent url(/modules/images/close.png) no-repeat;width: 18px;height: 18px;border:none;outline: none;cursor: pointer;float: right;margin-right: 15px;margin-top: 10px;}
+.box-title input{background: transparent url(/modules/images/close.png) no-repeat;width: 18px;height: 18px;border:none;outline: none;cursor: pointer;float: right;margin-right: 15px;margin-top: 10px;}
 .tips-title{font-size: 14px;text-align: center;margin-top: 8px;}
 .tips-title img{margin:15px 15px 5px -10px;vertical-align: middle;}
 .tips-title button{display: block;width: 70px;height: 25px;margin: 0 auto;margin-top: -5px;}

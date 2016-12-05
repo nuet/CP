@@ -61,6 +61,7 @@
     <Compile Include="ExpandFillData.cs" />
     <Compile Include="Lottery\LotteryResult.cs" />
     <Compile Include="Lottery\LotteryOrder.cs" />
+    <Compile Include="Lottery\LotteryBettAuto.cs" />
     <Compile Include="Manage\Active.cs" />
     <Compile Include="Manage\FeedBack.cs" />
     <Compile Include="Manage\MemberLevel.cs" />

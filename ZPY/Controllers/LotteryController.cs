@@ -62,7 +62,7 @@ namespace CPiao.Controllers
             int total = 0;
             int pageTotal = 0;
             var items = LotteryOrderBusiness.GetLotteryOrder("", cpcode, CurrentUser.UserID, "","","", -1,-1, 20, 1, ref total,
-                ref pageTotal);
+                ref pageTotal, 0, DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00", DateTime.Now.ToString("yyyy-MM-dd"));
             JsonDictionary.Add("items", items); 
             return new JsonResult()
             {
@@ -90,7 +90,9 @@ namespace CPiao.Controllers
             int total = 0;
             int pageTotal = 0;
             var items = LotteryResultBusiness.GetPagList(cpcode, status,orderby, pagesize, 1, ref total, ref pageTotal);
-            JsonDictionary.Add("item", LotteryResultBusiness.GetLotteryResult(cpcode, 0, DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00", DateTime.Now.ToString("yyyy-MM-dd") + " 23:59:59"));
+            JsonDictionary.Add("item",
+                LotteryResultBusiness.GetLotteryResult(cpcode, 0, DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00",
+                    DateTime.Now.ToString("yyyy-MM-dd")));
             JsonDictionary.Add("items", items);
             return new JsonResult()
             {

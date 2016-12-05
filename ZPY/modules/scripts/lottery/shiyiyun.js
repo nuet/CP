@@ -16,12 +16,11 @@
                "renxuan7":{"firstNum":"39.6-4%","lastNum":"41.36-0%"},
                "renxuan8":{"firstNum":"14.8-4%","lastNum":"15.46-0%"}
  };
- var arrSelectNum = [];
- var items = []; 
- var lottery = {}
- lottery.cnum = 0;
+ var arrSelectNum = [],items = []; 
+ var lottery = {} 
  lottery.CPCode;
  lottery.CPName;
+ var reg = /^[0-9]*$/;
  $(function() {
      //选号：
      $(".num-select li div.numbers").find("span").click(function() {
@@ -40,28 +39,42 @@
              $numbers.find("span" + _this.data('nc')).removeClass("clicked");
          }
          getsumnum();
-     }); 
+     });  
      //加1减1：
      $("img[alt='plus']").click(function() {
          var nums = $(".play-action").find("p span:first-child").text();
          var $val = $(this).siblings(".times").val();
-         $(this).siblings(".times").val(parseInt($val) + 1);
-         var times1 = $(this).siblings(".times").val();
-         $(".play-action").find("p span:last-child").text(nums * times1 * 2);
+         if ($val < 99999) {
+             var pmuch = parseInt($val) + 1;
+             $(this).siblings(".times").val(pmuch); 
+             $(".play-action").find("p span:last-child").text(nums * pmuch * 2);
+         }
      });
      $("img[alt='minus']").click(function() {
          var nums = $(".play-action").find("p span:first-child").text();
          var $val = $(this).siblings(".times").val();
          if ($val > 1) {
-             $(this).siblings(".times").val($val - 1);
-             var times2 = $(this).siblings(".times").val();
-             $(".play-action").find("p span:last-child").text(nums * times2 * 2);
+             var pmuch = parseInt($val) - 1;
+             $(this).siblings(".times").val(pmuch);
+             $(".play-action").find("p span:last-child").text(nums * pmuch * 2);
          }
      });
+
      //手动修改倍数改变钱数：
      $(".times").keyup(function() {
          var nums = $(".play-action").find("p span:first-child").text();
          var times2 = $(this).val();
+         if (!reg.test(times2)) {
+             times2 = 1;
+         } else {
+             if (times2.length > 5) {
+                 times2 = parseInt(times2.substring(0,5));
+             }
+             else if (times2 > 99999) {
+                 times2 = 99999;
+             }
+         }
+         $(this).val(times2);
          $(this).siblings("p").find("span:last-child").text(nums * times2 * 2);
      });
      //追号3个导航：
@@ -69,19 +82,19 @@
          $(this).addClass("chase-action-cur").siblings().removeClass("chase-action-cur");
          switch ($(this).index()) {
          case 0:
-             $(".lrl-chase p:nth-child(2)").html('起始倍数：<img src="images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="images/plus.png" alt="plus" width="27">倍<span>最低收益率：<input type="text" value="50"/>%</span><span>追号期数：</span><input type="text" value="10"/>');
+             $(".lrl-chase p:nth-child(2)").html('起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">倍<span>最低收益率：<input type="text" value="50"/>%</span><span>追号期数：</span><input type="text" value="10"/>');
              break;
          case 1:
-             $(".lrl-chase p:nth-child(2)").html('起始倍数：<img src="images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="images/plus.png" alt="plus" width="27">倍<span>追号期数：</span><input type="text" value="10"/>');
+             $(".lrl-chase p:nth-child(2)").html('起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">倍<span>追号期数：</span><input type="text" value="10"/>');
              break;
          case 2:
-             $(".lrl-chase p:nth-child(2)").html('隔&nbsp;<img src="images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="images/plus.png" alt="plus" width="27">期<span>倍数：</span><input type="text" value="2"/><span>追号期数：</span><input type="text" value="10"/>');
+             $(".lrl-chase p:nth-child(2)").html('隔&nbsp;<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">期<span>倍数：</span><input type="text" value="2"/><span>追号期数：</span><input type="text" value="10"/>');
              break;
          }
      });
      //发起追号：
      $(".chase-num").find("input[type='button']").click(function() {
-         $this = $(this);
+         $this = $(this); 
          if ($(".num-selected table tbody tr:first-child").find("td").eq(0).text() != "") {
              $this.toggleClass("up");
              $(".chase-action").toggle();
@@ -91,17 +104,30 @@
                  $this.siblings().find("input[type='checkbox']").prop("checked", false);
              }
          } else {
-             $('#basic-dialog-ok').modal({
-                 "opacity": 30
-             });
-             $('#basic-dialog-ok').find(".tips-title span.tip1").text("请先添加投注内容");
+             if ($(".chase-action").css('display')=="none") {
+                 $('#basic-dialog-ok').modal({
+                     "opacity": 30
+                 });
+                 $('#basic-dialog-ok').find(".tips-title span.tip1").text("请先添加投注内容");
+             } else {
+                 $this.toggleClass("up");
+                 $(".chase-action").toggle();
+                 $this.siblings().find("input[type='checkbox']").prop("checked", false);
+             }
              return false;
+         }
+     });
+     $(".times").blur(function() {
+         var nums = $(".play-action").find("p span:first-child").text();
+         if ($(this).val() == "") {
+             $(this).val("1");
+             $(this).siblings("p").find("span:last-child").text(nums * ($(this).val()) * 2);
          }
      });
      //选号入框：
      $(".additems").click(function() { 
          var type = $(this).data('type');
-         if ($(this).siblings("p").find("span").eq(0).text() > 0) {
+         if ($(this).siblings("p").find("span").eq(1).text() > 0) {
              if ($(".num-selected tbody tr:first-child").find("td").eq(0).text() == "") {
                  $(".num-selected tbody tr:first-child").remove();
              }
@@ -122,18 +148,18 @@
                  item.WinFee = tempr[0];
                  item.RPoint = (parseFloat(tempr[1].replace('%', '')) / 100).toFixed(2);
                  var msg = "<tr title='" + ('投注模式:&nbsp;' + type + '\n' + '投注信息:&nbsp;' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200'>" + arrSelectNum + "</td><td width='73.3'>" + item.Num + "注" + "</td><td width='73.3'>" + item.pMuch + "倍" + "</td><td width='73.3'>" + item.PayFee + "元" + "</td><td width='73.3'>" + tempr[0] + "元" + "</td><td width='73.3'>" + tempr[1] + "</td><td width='73.3'><span>删除</span></td></tr>";
-                 $(".num-selected tbody").prepend(msg);
-             }
-             $(".num-selected table tbody tr td span").unbind('click');
-             $(".num-selected table tbody tr td span").click(function () {
+                 $(".num-selected tbody").append(msg);
+             } 
+             $(".num-selected table tbody tr td span").unbind('click').bind('click',function () {
                  var index = $(this).parent().parent().index();
                  $('#totalnum').html(parseInt($('#totalnum').html()) - parseInt(items[index].Num));
                  $('#totalfee').html(parseFloat(parseFloat($('#totalfee').html()) - parseFloat(items[index].PayFee)).toFixed(2));
                  items.splice(index, 1);
-                 if ($(".num-selected tbody tr").length == 1) { 
+                 if ($(".num-selected tbody tr").length == 1) {
                      $(".num-selected table tbody").html("<tr><td width='96.25'></td><td width='96.25'></td><!-- <td></td> --><td width='96.5'></td><td width='193' title='暂无投注项'>暂无投注项</td><td width='96.5'></td><td width='96.5'></td><td width='96.5'></td></tr>");
                  } else {
                      $(this).parent().parent().remove();
+                     lvhide();
                  }
              });
              $('#totalnum').html(parseInt(item.Num) + parseInt($('#totalnum').html()));
@@ -148,7 +174,8 @@
              var typeid = typeof ($('.all-ways .all-ways-cur')) != 'undefined' ? $('.all-ways .all-ways-cur').data('sid') : $('.navs .navs-cur').data('sid');
              item.Type = typeid;
              item.Content = JSON.stringify(arrSelectNum);
-             items.push(item); 
+             items.push(item);
+             lvhide();
          } else {
              $('#basic-dialog-ok')
                  .modal({
@@ -171,6 +198,7 @@
              $(".alert1").hide();
              $(".cover-layer").remove();
              items = [];
+             lvhide();
              return;
          });
      });
@@ -256,8 +284,7 @@
                  w++;
              } else {
                  var everyNum = single.split(" ");
-                 if (everyNum.length != typelen) {
-                     console.log('b');
+                 if (everyNum.length != typelen) { 
                      arrDel[w] = arrSelectNum[i];
                      w++;
                  } else {
@@ -488,6 +515,26 @@
          });
          $(".all-ways").find("li").eq(0).click();
      });
+ }
+
+ function lvhide() {
+     var k = 0; 
+     if (items.length > 0) {
+         for (var i = 0; i < items.length; i++) {
+             console.log(i);
+             if (items[i].TypeName == items[0].TypeName) {
+                 k++;
+             } else {
+                 break;
+             }
+         }
+     } 
+     if (k == items.length) {
+         $(".chase-action>ul li:first-child").click().show();
+     } else {
+         $(".chase-action>ul li:nth-child(2)").click();
+         $(".chase-action>ul li:first-child").hide();
+     }
  }
 
  function getsumnum(){
@@ -733,8 +780,7 @@ lottery.GetlotteryResult= function() {
                     });
                 }
                 $('#lotterypnum').html(data.items[i].IssueNum);
-            }
-            console.log(nums);
+            } 
             html += ' <li><span>第<strong>' + data.items[i].IssueNum + '</strong>期号码</span>';
             if (nums.length > 1) {
                 html += '<span>' + nums[0] + '</span><span>' + nums[1] + '</span><span>' + nums[2] + '</span><span>' + nums[3] + '</span><span>' + nums[4] + '</span></li>';
