@@ -27,6 +27,11 @@ namespace CPiao.Controllers
             return View();
         }
 
+        public ActionResult BettAutoRecord()
+        {
+            return View();
+        }
+
         #region MyRegion 
 
         #endregion

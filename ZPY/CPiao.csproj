@@ -803,6 +803,7 @@
     <Content Include="modules\scripts\layout.js" />
     <Content Include="modules\scripts\lottery\lotteryrecord.js" />
     <Content Include="modules\scripts\lottery\shiyiyun.js" />
+    <Content Include="modules\scripts\lottery\bettautorecord.js" />
     <Content Include="modules\scripts\register\forget.js" />
     <Content Include="modules\scripts\register\register.js" />
     <Content Include="modules\scripts\register\partregister.js" />
@@ -1009,6 +1010,7 @@
     <Content Include="Views\SysSet\LotteryPlays.cshtml" />
     <Content Include="Views\Lottery\Index.cshtml" />
     <Content Include="Views\Lottery\LotteryRecord.cshtml" />
+    <Content Include="Views\Lottery\BettAutoRecord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
