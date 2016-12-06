@@ -86,7 +86,12 @@ namespace ProEntity
 
         public string UserName { get; set; }
 
-        public string ResultNum { get; set; } 
+        public string ResultNum { get; set; }
+        /// <summary>
+        /// 期数 倍数 总金额
+        /// </summary>
+        public string JsonContent { get; set; }
+        public string Remark { get; set; }
         /// <summary>
         /// 投注模式 0 元 1 角2 分
         /// </summary>

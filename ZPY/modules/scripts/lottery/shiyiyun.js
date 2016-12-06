@@ -82,13 +82,17 @@
          $(this).addClass("chase-action-cur").siblings().removeClass("chase-action-cur");
          switch ($(this).index()) {
          case 0:
-             $(".lrl-chase p:nth-child(2)").html('起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">倍<span>最低收益率：<input type="text" value="50"/>%</span><span>追号期数：</span><input type="text" value="10"/>');
+             $(".lrl-chase p:nth-child(2)").html('起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" id="bmuch" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">倍' +
+                 '<span>最低收益率：<input id="profits" type="text" value="50"/>%</span><span>追号期数：</span>' +
+                 '<input type="text" id="bettNum" value="10"/>');
              break;
          case 1:
-             $(".lrl-chase p:nth-child(2)").html('起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">倍<span>追号期数：</span><input type="text" value="10"/>');
+             $(".lrl-chase p:nth-child(2)").html('起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" id="bmuch" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">倍<span>' +
+                 '追号期数：</span><input id="bettNum" type="text" value="10"/>');
              break;
          case 2:
-             $(".lrl-chase p:nth-child(2)").html('隔&nbsp;<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">期<span>倍数：</span><input type="text" value="2"/><span>追号期数：</span><input type="text" value="10"/>');
+             $(".lrl-chase p:nth-child(2)").html('隔&nbsp;<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" id="bmuch" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">期' +
+                 '<span>倍数：</span><input type="text"  id="bmuch" value="2"/><span>追号期数：</span><input id="bettNum" type="text" value="10"/>');
              break;
          }
      });
@@ -170,8 +174,7 @@
              $(".num-select span").removeClass("clicked");
              item.CPCode = lottery.CPCode;
              item.CPName = lottery.CPName;
-             item.IssueNum = $('#issueslt').val();
-             var typeid = typeof ($('.all-ways .all-ways-cur')) != 'undefined' ? $('.all-ways .all-ways-cur').data('sid') : $('.navs .navs-cur').data('sid');
+             var typeid = (typeof ($('.all-ways .all-ways-cur')) != 'undefined' && typeof ($('.all-ways .all-ways-cur').data('sid')) != 'undefined') ? $('.all-ways .all-ways-cur').data('sid') : $('.navs .navs-cur').data('sid');
              item.Type = typeid;
              item.Content = JSON.stringify(arrSelectNum);
              items.push(item);
@@ -184,11 +187,7 @@
              $('#basic-dialog-ok').find(".tips-title span.tip1").text("号码选择不完整，请重新选择");
              return false;
          }
-     }); 
-     //删除选号：
-     $(".num-selected table tbody tr td span").click(function() {
-         $(this).parent().parent().remove();
-     });
+     });  
      //清空选号：
      $(".num-selected table tfoot tr td a").click(function() {
          $("body").append("<div class='cover-layer'></div>");
@@ -198,6 +197,8 @@
              $(".alert1").hide();
              $(".cover-layer").remove();
              items = [];
+             $('#totalnum').html('0');
+             $('#totalfee').html('0');
              lvhide();
              return;
          });
@@ -520,8 +521,7 @@
  function lvhide() {
      var k = 0; 
      if (items.length > 0) {
-         for (var i = 0; i < items.length; i++) {
-             console.log(i);
+         for (var i = 0; i < items.length; i++) { 
              if (items[i].TypeName == items[0].TypeName) {
                  k++;
              } else {
@@ -733,7 +733,10 @@ lottery.bindEvent=function(code,name)
     lottery.CPName = name;
     lottery.GetLottery();
     lottery.GetlotteryResult();
-     lottery.getLotteryList();
+    lottery.getLotteryList();
+    $('#saveBett').click(function () {
+        lottery.saveBett();
+     });
  }
  lottery.CPTypes = {};
  lottery.GetLottery= function() {
@@ -769,7 +772,7 @@ lottery.bindEvent=function(code,name)
  }
 
 lottery.GetlotteryResult= function() {
-    $.post('/Lottery/GetlotteryResult', { cpcode: lottery.CPCode, }, function (data) {
+    $.post('/Lottery/GetlotteryResult', { cpcode: lottery.CPCode }, function (data) {
         var html = '';
         for (var i = 0; i < data.items.length; i++) {
             var nums = data.items[i].ResultNum.split(' ');
@@ -795,7 +798,6 @@ lottery.GetlotteryResult= function() {
 }
 lottery.getDifDate = function (item) {
         if (item != null) {
-
             $('#cpissue').html(item.IssueNum);
             $('#openlottery').html(item.Num - 1);
             var time1 = getparamsdate(item.OpenTime, true);
@@ -828,7 +830,8 @@ lottery.getDifDate = function (item) {
 }
 lottery.GetIssNum= function() {
     $.post('/Lottery/GetlotteryResult', {
-        cpcode: lottery.CPCode, status: 0, pagesize: 78, orderby: true}, function (data) {
+        cpcode: lottery.CPCode, status: 0, pagesize: 78, orderby: true, btime: new Date().format('yyyy-MM-dd') + ' 00:00:00', etime: new Date().format('yyyy-MM-dd')
+    }, function (data) {
         var html = '';
         for (var i = 0; i < data.items.length; i++) { 
             html += '<option value="' + data.items[i].IssueNum + '">' + data.items[i].IssueNum+(i==0?"(当前期)":"")+ '</option >';
@@ -836,7 +839,10 @@ lottery.GetIssNum= function() {
         $('#issueslt').html(html);
     });
 }
-lottery.saveItems= function() {
+lottery.saveItems = function () {
+    for (var i = 0; i < items.length; i++) {
+        items[i].IssueNum = $('#issueslt').val();
+    }
     $.post('/Lottery/AddLotteryOrders', { list:JSON.stringify(items),usedisFee:$('#isusedic').attr('checked')=='checked'?1:0 }, function (data) {
         if (data.result > 0) {
             items = [];
@@ -860,5 +866,26 @@ lottery.getLotteryList = function () {
         $('.bet-record tbody').html(html);
     });
 
+}
+lottery.saveBett= function() {
+    var bettlist=[];
+    for (var i = 0; i < items.length; i++) {
+        var m = items[i];
+        m.BettNum = $('#bettNum').val();
+        m.BaseMuch = $('#bmuch').val();
+        m.StartNum = $('#issueslt').val();
+        m.Profits = typeof ($('#profits').val()) != 'undefined' ? parseFloat(parseFloat($('#profits').val()) / 100).toFixed(2) : 0;
+        m.JsonContent = "";
+        bettlist.push(m);
+    } 
+    if (bettlist.length > 0) {
+        $.post('/Lottery/AddLotteryBett', { list: JSON.stringify(bettlist), isStart: $(".chase-num input[type='checkbox']").prop('checked') == true ? 1 : 0 }, function (data) {
+            if (data.result > 0) {
+                $(".chase-num").find("input[type='button']").click();
+            } else {
+                alert(data.ErrMsg);
+            }
+        });
+    } 
 }
 

@@ -14,12 +14,20 @@ namespace ProBusiness
     {
         #region 查询   
         #endregion
-        public static List<LotteryResult> GetPagList(string cpCode,int status,bool orderby, int pageSize, int pageIndex, ref int totalCount, ref int pageCount)
+        public static List<LotteryResult> GetPagList(string cpCode,int status,bool orderby, int pageSize, int pageIndex, ref int totalCount, ref int pageCount,string btime="",string etime="")
         {
             string sqlwhere = " b.cpCode='" + cpCode + "'";
             if (status > -1)
             {
                 sqlwhere += " and b.Status=" + status;
+            }
+            if (!string.IsNullOrEmpty(btime))
+            {
+                sqlwhere += " and b.CreateTime>='" + btime + "'";
+            }
+            if (!string.IsNullOrEmpty(etime))
+            {
+                sqlwhere += " and b.CreateTime<='" + etime + " 23:59:59:999'";
             }
             DataTable dt = CommonBusiness.GetPagerData(" LotteryResult b ",
                 "b.*", sqlwhere, "b.AutoID ", pageSize, pageIndex,
@@ -47,7 +55,7 @@ namespace ProBusiness
             } 
             if (!string.IsNullOrEmpty(etime))
             {
-                sqlwhere += " and b.CreateTime<='" + etime+"'";
+                sqlwhere += " and b.CreateTime<='" + etime+ " 23:59:59:999'";
             }
 
             DataTable dt = LotteryResultDAL.GetDataTable("select top 1 *  from  LotteryResult b " + sqlwhere + " Order by AutoID asc  ");

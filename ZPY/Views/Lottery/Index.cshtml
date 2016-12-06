@@ -276,9 +276,12 @@
     <div class="lrl-chase">
         <p>追号期数：<select><option>请选择</option><option>5期</option><option>10期</option><option>15期</option><option>20期</option><option>25期</option><option>全部</option></select>
         </p>
-        <p>起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">倍<span>最低收益率：<input type="text" value="50"/>%</span><span>追号期数：</span><input type="text" value="10"/>
+        <p>起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27">
+            <input type="text" class="times" id="bmuch" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">倍
+            <span>最低收益率：<input type="text" id="profits" value="50"/>%</span><span>追号期数：</span>
+            <input type="text" id="bettNum" value="10"/>
         </p>
-        <p><input type="button" value="生成追号单"/><span class="totle">追号总期数：<em>0</em>期，追号总金额：<em>0.00</em>元</span></p>
+        <p><input type="button" id="saveBett" value="生成追号单"/><span class="totle">追号总期数：<em>0</em>期，追号总金额：<em>0.00</em>元</span></p>
     </div>
     <div class="select-table">
         <table border="0" cellpadding="0" cellspacing="0">

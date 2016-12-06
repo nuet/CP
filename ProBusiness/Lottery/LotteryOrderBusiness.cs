@@ -140,7 +140,7 @@ namespace ProBusiness
         }
 
 
-        public static int CreateBettOrderList(List<LotteryBettAuto> models, M_Users user, string ip, int usedisFee, ref string errmsg)
+        public static int CreateBettOrderList(List<LotteryBettAuto> models, M_Users user, string ip, int isStart, ref string errmsg)
         {
             int k = 0;
             string msg = "";
@@ -148,8 +148,8 @@ namespace ProBusiness
             {
                 string errormsg = "";
                 string orderCode = DateTime.Now.ToString("yyyyMMddhhMMssfff") + user.AutoID;
-                var result = CreateLotteryOrder(orderCode, x.StartNum, x.Type, x.TypeName, x.CPCode, x.CPName, x.Content.Replace("\"", ""),
-                    x.Num, x.PayFee, user.UserID, x.PMuch, x.RPoint, ip, usedisFee, ref errormsg);
+                var result = CreateBettOrder(orderCode, x.StartNum, x.Type, x.TypeName, x.CPCode, x.CPName, x.Content.Replace("\"", ""),
+                    x.Num, x.PayFee, user.UserID, x.PMuch, x.RPoint, ip, isStart,x.BettNum,x.BMuch,0,x.Profits,x.WinFee, x.BettType,x.JsonContent,ref errormsg);
                 if (!result)
                 {
                     msg += x.Content + "    " + errormsg + "/n";
@@ -162,11 +162,11 @@ namespace ProBusiness
             errmsg = msg;
             return k;
         }
-        public static bool CreateBettOrder(string ordercode, string issueNum, string type, string typename, string cpcode, string cpname, string content, int num,
-           decimal payfee, string userID, int pmuch, decimal rpoint, string operatip, int isStart,int bettnum,int bmuch,decimal totalfee,decimal profits, ref string errormsg)
+        public static bool CreateBettOrder(string ordercode, string issueNum, string type, string typename, string cpcode, string cpname, string content, int num, decimal payfee, string userID,
+           int pmuch, decimal rpoint, string operatip, int isStart, int bettnum, int bmuch, decimal totalfee, decimal profits, decimal winfee, int bettType,string jsonContent, ref string errormsg)
         { 
-            return LotteryOrderDAL.BaseProvider.CreateBettOrder(ordercode,  issueNum, type, cpcode, cpname, content, typename, num,
-             payfee, userID, pmuch, rpoint, operatip, isStart,bettnum,bmuch,totalfee,profits, ref errormsg);
+            return LotteryOrderDAL.BaseProvider.CreateBettOrder(ordercode,  issueNum, type, typename, cpcode, cpname, content, num,
+             payfee, userID, pmuch, rpoint, operatip, isStart, bettnum, bmuch, totalfee, profits, winfee,bettType,jsonContent, ref errormsg);
         }
        #endregion 
     }

@@ -85,11 +85,12 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-        public JsonResult GetlotteryResult(string cpcode,int status=2,int pagesize=4,bool orderby=false)
+        public JsonResult GetlotteryResult(string cpcode,int status=2,int pagesize=4,bool orderby=false,string btime="",string etime="")
         {
             int total = 0;
             int pageTotal = 0;
-            var items = LotteryResultBusiness.GetPagList(cpcode, status,orderby, pagesize, 1, ref total, ref pageTotal);
+
+            var items = LotteryResultBusiness.GetPagList(cpcode, status, orderby, pagesize, 1, ref total, ref pageTotal, btime,etime);
             JsonDictionary.Add("item",
                 LotteryResultBusiness.GetLotteryResult(cpcode, 0, DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00",
                     DateTime.Now.ToString("yyyy-MM-dd")));
@@ -115,7 +116,20 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
+        public JsonResult AddLotteryBett(string list, int isStart = 0)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            List<LotteryBettAuto> models = serializer.Deserialize<List<LotteryBettAuto>>(list);
+            string msg = "";
+            var result = LotteryOrderBusiness.CreateBettOrderList(models, CurrentUser, OperateIP, isStart, ref msg);
+            JsonDictionary.Add("result", result);
+            JsonDictionary.Add("ErrMsg", msg);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
     }
 }
     
