@@ -101,15 +101,15 @@ namespace CPiao.TaskRun
                 }
             }).NonReentrant().WithName("[updatesd11x5result]").ToRunNow().AndEvery(1).Minutes();
         }
-        private void Reentrant()
+        private void BeetAuto()
         {
-            L.Register("[reentrant]");
+            L.Register("[beetAuto]");
 
             Schedule(() =>
             {
-                L.Log("[reentrant]", "Sleeping a minute...");
+                L.Log("[beetAuto]", "Sleeping a minute...");
                 Thread.Sleep(TimeSpan.FromMinutes(3));
-            }).WithName("[reentrant]").ToRunNow().AndEvery(10).Minutes();
+            }).WithName("[beetAuto]").ToRunNow().AndEvery(30).Minutes();
         }
 
         private void Disable()

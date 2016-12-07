@@ -55,14 +55,14 @@ records.getParams= function() {
 }
 records.getRecords = function () {
     records.getParams();
-    $.post('/Lottery/GetLotteryRecord', Params,
+    $.post('/Lottery/GetBettAutoRecord', Params,
     function (data) {
         var html = '';
         if (data.items != null && data.items.length > 0) {
             for (var i = 0; i < data.items.length; i++) {
                 var item = data.items[i];
-                html += '<tr><td>' + item.LCode + '</td><td>' + item.UserName + '</td><td>'+convertdateTostring(item.CreateTime,true,'yyyy-MM-dd hh:mm:ss')+'</td><td>'+item.CPName+'</td><td>'+item.TypeName+'</td>' +
-                    '<td>' + item.IssueNum + '</td><td>' + item.Content + '</td><td>' + item.PMuch + '</td><td>元</td><td>' + item.PayFee + '</td><td>' + item.WinFee + '</td><td>' + item.ResultNum + '</td>' +
+                html += '<tr><td>' + item.BCode + '</td><td>' + item.UserName + '</td><td>'+convertdateTostring(item.CreateTime,true,'yyyy-MM-dd hh:mm:ss')+'</td><td>'+item.CPName+'</td><td>'+item.TypeName+'</td>' +
+                    '<td>' + item.IssueNum + '</td><td>' + item.BettNum + '</td><td>' + item.ComNum + '</td><td>' + item.Content + '</td><td>元</td><td>'+item.TotalFee+'</td><td>' + item.ComFee + '</td>' +
                     '<td>' + (item.Status == 0 ? "未开奖" : (item.Status == 1 ? "已中奖" : (item.Status == 2 ? "未中奖" : (item.Status == 3 ? "已撤单" : "已删除")))) + '</td></tr>';
             }
         } else {

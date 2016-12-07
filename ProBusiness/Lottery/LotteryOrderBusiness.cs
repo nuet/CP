@@ -92,6 +92,85 @@ namespace ProBusiness
            }
            return model;
        }
+
+       public static List<LotteryBettAuto> GetBettAutoRecord(string keyWords, string cpcode, string userid, string bCode, string issuenum, string type, int status, int winType, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, int self = 0, string begintime = "", string endtime = "")
+        {
+            string tablename = "LotteryBettAuto  a left join M_Users b  on a.UserID =b.UserID   ";
+            string sqlwhere = " a.status<>9 ";
+            if (!string.IsNullOrEmpty(keyWords))
+            {
+                sqlwhere += " and (b.UserName like '%" + keyWords + "%' or a.StartNum like '%" + keyWords + "%' or a.BCode like '%" + keyWords + "%'  or a.TypeName like '%" + keyWords + "%')";
+            }
+            if (!string.IsNullOrEmpty(type))
+            {
+                sqlwhere += " and a.Type like '%" + type+"%'";
+            }
+            if (status > -1)
+            {
+                sqlwhere += " and a.status=" + status;
+            }
+           if (winType > -1)
+           {
+               sqlwhere += " and a.WinType=" + winType;
+           }
+           if (!string.IsNullOrEmpty(userid))
+            {
+                if (self > 0)
+                {
+                    if (self == 1)
+                    {
+                        sqlwhere += " and a.UserID in(select UserID from UserRelation where ParentID='" + userid + "')";
+                    }
+                    else if (self == 2)
+                    {
+                        sqlwhere += " and a.UserID in(select UserID from UserRelation where Parents like '%" + userid + "%')";
+                    }
+                    else
+                    {
+                        sqlwhere += " and a.UserID='" + userid + "' ";
+                    }
+                }
+            } 
+           if (!string.IsNullOrEmpty(begintime))
+            {
+                sqlwhere += " and a.CreateTime>='" + begintime +"'";
+            }
+            if (!string.IsNullOrEmpty(endtime))
+            {
+                sqlwhere += " and a.CreateTime<'" + endtime + " 23:59:59:999'";
+            }
+            if (!string.IsNullOrWhiteSpace(bCode))
+           {
+               sqlwhere += " and a.BCode ='" + bCode + "'";
+           }
+           if (!string.IsNullOrEmpty(issuenum))
+           {
+               sqlwhere += " and a.StartNum ='" + issuenum + "'";
+           }
+           DataTable dt = CommonBusiness.GetPagerData(tablename, "a.*,b.UserName ", sqlwhere, "a.AutoID ", pageSize, pageIndex, out totalCount, out pageCount);
+           List<LotteryBettAuto> list = new List<LotteryBettAuto>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                LotteryBettAuto model = new LotteryBettAuto();
+                model.FillData(dr);
+                list.Add(model);
+            }
+            return list;
+        }
+       public static List<LotteryBettAuto> GetBettAutoByStatus()
+       { 
+           DataTable dt =LotteryOrderDAL.GetDataTable(
+                   "select  a.*,b.UserName from LotteryBettAuto  a left join M_Users b  on a.UserID =b.UserID where a.Status=0 and b.Status<>9");
+           List<LotteryBettAuto> list = new List<LotteryBettAuto>();
+           foreach (DataRow dr in dt.Rows)
+           {
+               LotteryBettAuto model = new LotteryBettAuto();
+               model.FillData(dr);
+               list.Add(model);
+           }
+           return list;
+       }
+       
         #endregion
 
         #region 添加.删除

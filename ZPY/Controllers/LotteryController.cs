@@ -107,6 +107,21 @@ namespace CPiao.Controllers
             };
         }
 
+        public JsonResult GetBettAutoRecord(string cpcode, int status, string lcode, string issuenum, string type, int selfrange, int winType, string btime, string etime, int pageIndex)
+        {
+            int total = 0;
+            int pageTotal = 0;
+            var items = LotteryOrderBusiness.GetBettAutoRecord("", cpcode, CurrentUser.UserID, lcode, issuenum, type, status, winType, PageSize, pageIndex, ref total,
+                ref pageTotal, selfrange, btime, etime);
+            JsonDictionary.Add("items", items);
+            JsonDictionary.Add("totalCount", total);
+            JsonDictionary.Add("pageCount", pageTotal);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         public JsonResult AddLotteryOrders(string list, int usedisFee=0)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();

@@ -63,6 +63,11 @@ namespace ProEntity
         /// </summary>
         public decimal TotalFee { get; set; }
         /// <summary>
+        /// 完成金额
+        /// </summary>
+        public decimal ComFee { get; set; }
+
+        /// <summary>
         /// 是付款
         /// </summary>
         public decimal PayFee { get; set; }
@@ -80,7 +85,7 @@ namespace ProEntity
         public int BettType { get; set; }
 
         /// <summary>
-        /// 用户ＩＤ
+        /// 用户ID
         /// </summary>
         public string  UserID  { get; set; }
 

@@ -833,13 +833,18 @@ lottery.GetIssNum= function() {
         cpcode: lottery.CPCode, status: 0, pagesize: 78, orderby: true, btime: new Date().format('yyyy-MM-dd') + ' 00:00:00', etime: new Date().format('yyyy-MM-dd')
     }, function (data) {
         var html = '';
+        var zhhtml = '';
         for (var i = 0; i < data.items.length; i++) { 
-            html += '<option value="' + data.items[i].IssueNum + '">' + data.items[i].IssueNum+(i==0?"(当前期)":"")+ '</option >';
+            html += '<option value="' + data.items[i].IssueNum + '">' + data.items[i].IssueNum + (i == 0 ? "(当前期)" : "") + '</option >';
+            zhhtml += '<tr><td><input type="checkbox"></td><td>' + data.items[i].IssueNum + '</td><td><input type="text" value="0">倍</td>' +
+                '<td>¥0.00</td><td>' + convertdateTostring(data.items[i].OpenTime, true, "yyyy-MM-dd hh:mm:ss") + '</td></tr>';
         }
         $('#issueslt').html(html);
+        $('.select-table tbody').html(zhhtml);
     });
 }
 lottery.saveItems = function () {
+    fibonacci(15);
     for (var i = 0; i < items.length; i++) {
         items[i].IssueNum = $('#issueslt').val();
     }
@@ -852,6 +857,25 @@ lottery.saveItems = function () {
         }
     });
 }
+function fibonacci(end) {
+    var num1 = 0;
+    var num2 = 1;
+    var num3;
+    document.write(num1 + "<br/>");
+    document.write(num2 + "<br/>");
+    for (var i = 3; i <= end; i++) {
+        num3 = num1 + num2;
+        num1 = num2;
+        num2 = num3;
+        if (num3 > end) {
+            break;
+        }
+        document.write(num3 + "<br/>");
+    }
+}
+
+
+fibonacci(1000);
 lottery.getLotteryList = function () {
     $.post('/Lottery/GetUserLottery', { cpcode: lottery.CPCode}, function (data) {
         var html = '';
@@ -872,7 +896,7 @@ lottery.saveBett= function() {
     for (var i = 0; i < items.length; i++) {
         var m = items[i];
         m.BettNum = $('#bettNum').val();
-        m.BaseMuch = $('#bmuch').val();
+        m.BMuch = $('#bmuch').val();
         m.StartNum = $('#issueslt').val();
         m.Profits = typeof ($('#profits').val()) != 'undefined' ? parseFloat(parseFloat($('#profits').val()) / 100).toFixed(2) : 0;
         m.JsonContent = "";
@@ -882,6 +906,7 @@ lottery.saveBett= function() {
         $.post('/Lottery/AddLotteryBett', { list: JSON.stringify(bettlist), isStart: $(".chase-num input[type='checkbox']").prop('checked') == true ? 1 : 0 }, function (data) {
             if (data.result > 0) {
                 $(".chase-num").find("input[type='button']").click();
+                alert('追号单生成成功');
             } else {
                 alert(data.ErrMsg);
             }
