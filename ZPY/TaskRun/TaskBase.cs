@@ -25,6 +25,7 @@ namespace CPiao.TaskRun
             InsertLottery();
             UpdateSD11X5Status();
             UpdateSD11X5Result();
+            BeetAuto();
             //NonReentrant();
             //Reentrant();
             //Disable();
@@ -108,8 +109,8 @@ namespace CPiao.TaskRun
             Schedule(() =>
             {
                 L.Log("[beetAuto]", "Sleeping a minute...");
-                Thread.Sleep(TimeSpan.FromMinutes(3));
-            }).WithName("[beetAuto]").ToRunNow().AndEvery(30).Minutes();
+                TaskService.BasService.BettAutoInsert();
+            }).WithName("[beetAuto]").ToRunNow().AndEvery(1).Minutes();
         }
 
         private void Disable()

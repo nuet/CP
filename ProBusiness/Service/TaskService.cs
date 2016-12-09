@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text; 
 using Newtonsoft.Json;
+using LLibrary;
+
 namespace ProBusiness
 {
     public class TaskService
@@ -21,32 +23,34 @@ namespace ProBusiness
              list.ForEach(x =>
              {
                  string errmsg = "";
+                 var issuenum = GetIssueNum(x.ComNum, x.JsonContent);
+                 var totalmuch = GetIssueNum(x.ComNum, x.JsonContent, 1);
+                 var pMuch=string.IsNullOrEmpty(totalmuch) ? x.BMuch : Convert.ToInt32(totalmuch)
                  try
                  {
-                     var issuenum = GetIssueNum(x.ComNum, x.JsonContent);
-
                      if (!string.IsNullOrEmpty(issuenum))
                      {
-                         var totalmuch = GetIssueNum(x.ComNum, x.JsonContent, 1);
-                         var pMuch =string.IsNullOrEmpty(totalmuch)?x.BMuch: Convert.ToInt32(totalmuch);
                          LotteryOrderBusiness.CreateLotteryOrder(x.BCode, issuenum, x.Type, x.TypeName, x.CPCode,
                              x.CPName,
-                             x.Content, x.Num, x.PayFee * pMuch / x.PMuch, x.UserID, pMuch, x.RPoint, x.IP, 0, ref errmsg);
+                             x.Content, x.Num, x.PayFee*pMuch/x.PMuch, x.UserID, pMuch, x.RPoint, x.IP, 0, ref errmsg);
                          if (!string.IsNullOrEmpty(errmsg))
                          {
-                             msg += issuenum + ":" + errmsg + ";";
+                             errmsg=issuenum + ":" + errmsg + ";"; 
                          }
-                     }
+                     } 
                  }
                  catch (Exception ex)
                  {
-                     //
-                 }  
+                     errmsg = x.BCode + "第" + (x.ComNum + 1) + "期插入失败";
+                    
+                     L.Log("[BettAutoInsert] ", x.BCode + "第"+(x.ComNum+1)+"期插入失败");
+                 }
+                  msg += errmsg;
+                 LotteryOrderBusiness.UpdateBettAutoByCode(x.BCode, x.ComNum+1,pMuch*x.PayFee, errmsg);
              });
              return msg;
         }
-
-
+        
         public string GetIssueNum(string cpcode, string issuenum, int comnum, string jsoncontent)
         {
             string comissuenum = "";
@@ -68,7 +72,7 @@ namespace ProBusiness
         {
             string comissuenum = "";
             var jsonarr = jsoncontent.Split('|');
-            if (jsonarr.Length>0 && !string.IsNullOrEmpty(jsonarr[comnum))
+            if (jsonarr.Length>0 && !string.IsNullOrEmpty(jsonarr[comnum]))
             {
                 comissuenum= jsonarr[comnum].Split(',')[type];
             } 

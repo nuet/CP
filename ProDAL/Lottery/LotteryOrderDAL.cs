@@ -84,8 +84,18 @@ namespace ProDAL
             return GetDataTable("select * from LotteryOrder where LCode=@LCode", paras, CommandType.Text);
         }
 
+        public bool UpdateBettAutoByCode(string bCode, int comnum,decimal comfee, string remark)
+        {
+            SqlParameter[] paras = { 
+                                    new SqlParameter("@BCode",bCode),
+                                    new SqlParameter("@ComNum",comnum), 
+                                    new SqlParameter("@ComFee",comfee), 
+                                    new SqlParameter("@Remark",remark)
+                                   };
 
-        
+            return ExecuteNonQuery("UpdateBettAutoByCode", paras, CommandType.StoredProcedure) > 0;
+        }
+
 
     }
 }

@@ -91,23 +91,47 @@
              break;
          case 2:
              $(".lrl-chase p:nth-child(2)").html('隔&nbsp;<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" value="1" class="times" id="profits"/><img src="/modules/images/plus.png" alt="plus" width="27">期<span>倍数：</span><input type="text" value="2" id="bmuch" /><span>追号期数：</span><input type="text" value="0" id="bettNum" />');
+             $("#bmuch").keyup(function() {
+                 var nums = $(this).val();
+                 if (!reg.test(nums) || nums == "") {
+                     $(this).val("0");
+                 } else {
+                     if (nums.split("")[0] == "0" && nums.length > 1) {
+                         $(this).val(nums.substring(1));
+                     }
+                     if ($(this).val().length > 5) {
+                         $(this).val(parseInt($(this).val().substring(0, 5)));
+                     } else if ($(this).val() > 99999) {
+                         $(this).val("99999");
+                     }
+                 }
+                 addTimes($("#profits").val(), $("#bmuch").val());
+             });
              break;
-         }
+         } 
+         BettHtml();
          bindselectnavs();
+         $(".totle em").text('0');
      });
      bindselectnavs();
      //选择追号期数：
      $(".lrl-chase select").change(function() {
          var selOption = $(".lrl-chase select").val();
-         if (selOption == '0') { 
-             $(".totle em").text(selOption);
-             $(".select-table table tbody").html(selectbettnum);
-         } 
+         if (selOption == '0') {
+             $(".totle em").text('0'); 
+             BettHtml();
+         }  
+         var stype = $(".chase-action .chase-action-cur").data('type');
+         if (stype == "2") {
+             addTimes($("#profits").val(), $("#bmuch").val());
+         } else if (stype=="1") {
+             $('.select-table table tbody tr input[type="text"]').val($('#bmuch').val());
+         }
          $("#bettNum").val(selOption);
          $("#bettNum").keyup();
+         BettNumChange();
      });
     
-
 
      //发起追号：
      $(".chase-num").find("input[type='button']").click(function() {
@@ -392,40 +416,19 @@
      $(".lrl-chase p:nth-child(2)").find('img').click(function () {
          var _this = $(this);
          plusormin(_this, _this.attr('alt'), false);
-         var times3 = $(".lrl-chase .times#bmuch").val();
-         if (times3) {
-             if (_this.parents(".chase-action").find(".chase-action-cur").text() == "同倍追号") { //若是同倍追号，所有倍数同时改变
-                 $(".select-table table tbody tr input[type='text']").val($(".lrl-chase .times#bmuch").val()).change();
-             } else {
-                 $(".select-table table tbody tr:first-child td").eq(2).find("input").val(times3).change();
-             }
-         }
+         BettNumChange();
      });
      //手动改变 加减的倍数
      $(".lrl-chase .times").keyup(function () { 
          var _this = $(this);
          handchange(_this, false);
-         var times3 = $(".lrl-chase .times#bmuch").val();
-         if (times3) {
-             if (_this.parents(".chase-action").find(".chase-action-cur").text() == "同倍追号") {
-                 $(".select-table table tbody tr input[type='text']").val($(".lrl-chase .times#bmuch").val()).change();
-             } else {
-                 $(".select-table table tbody tr:first-child td").eq(2).find("input").val(times3).change();
-             }
-         }
+         BettNumChange(); 
      });
      //手动修改times框失去焦点时，操作利润率追号和同倍追号的下边各tr里的倍数
      $(".lrl-chase .times").blur(function () {
          if ($(this).val() == "") {
              $(this).val("1");
-             var times3 = $(".lrl-chase .times#bmuch").val();
-             if (times3) {
-                 if (_this.parents(".chase-action").find(".chase-action-cur").text() == "同倍追号") {
-                     $(".select-table table tbody tr input[type='text']").val($(".lrl-chase .times#bmuch").val()).change();
-                 } else {
-                     $(".select-table table tbody tr:first-child td").eq(2).find("input").val(times3).change();
-                 }
-             }
+             BettNumChange(); 
          }
 
      });
@@ -454,6 +457,38 @@
      });
  }
 
+ function BettNumChange() { 
+     var times3 = $(".lrl-chase .times#bmuch").val();
+     if (times3) {
+         if ($(".chase-action .chase-action-cur").data('type') == "1") { //若是同倍追号，所有倍数同时改变
+             $(".select-table table tbody tr input[type='text']").each(function (i, v) {
+                 $(v).val($(".lrl-chase .times#bmuch").val());
+                 if ($(v).parent().parent().data('ck') == 'checked') {
+                     $(v).val($(".lrl-chase .times#bmuch").val()).change();
+                 } else {
+                     $(v).val($(".lrl-chase .times#bmuch").val());
+                 }
+             });
+         } else {
+             $(".select-table table tbody tr:first-child td").eq(2).find("input").val(times3).change();
+         }
+     } else if ($(".chase-action .chase-action-cur").data('type') == "2") { 
+         addTimes($("#profits").val(), $("#bmuch").val());
+     }
+ }
+
+//翻倍倍数实现：
+ function addTimes(m, n) {
+     $(".select-table table tbody tr input[type='text']").each(function(i, v) {
+         var j = (i + 1) / m; 
+         var times5 = Math.pow(n, Math.ceil(j)- 1);
+         if ($(v).parent().parent().data('ck') == 'checked') {
+             $(v).val(times5).change();
+         } else {
+             $(v).val(times5);
+         } 
+     });
+ }
  function bindnavs() {
      $(".navs").find("li").click(function () {
          var _this = $(this);
@@ -957,51 +992,54 @@ lottery.GetIssNum= function() {
                 '<td>¥0.00</td><td>' + convertdateTostring(data.items[i].OpenTime, true, "yyyy-MM-dd hh:mm:ss") + '</td></tr>';
         }
         $('#issueslt').html(html);
-        $('.select-table tbody').html(zhhtml);
+       
         selectbettnum = zhhtml;
-        if (zhhtml != '') {
-            //金额计算：
-            $(".select-table table tbody tr input[type='text']").change(function () {
-                var _this = $(this);
-                var nums = _this.val();
-                if (!reg.test(nums) || nums == "") {
-                    _this.val("0");
-                } else {
-                    if (nums.split("")[0] == "0" && nums.length > 1) {
-                        _this.val(nums.substring(1));
-                    }
-                    if (_this.val().length > 5) {
-                        _this.val(parseInt($(this).val().substring(0, 5)));
-                    } else if ($(this).val() > 99999) {
-                        _this.val("99999");
-                    }
-                }
-                var totalfee = $("#totalfee").text();
-                var times4 = _this.parent().parent().find("td").eq(2).find("input").val();
-                _this.parent().parent().find("td").eq(3).text("￥" + totalfee * times4 + ".00");
-                sumtotalFee();
-            }); 
-            //操作checkbox改变追号期数
-            $(".select-table table tbody tr input[type='checkbox']").change(function() {
-                if ($(this).parent().parent().data('ck') == '') {
-                    $(this).parent().parent().data('ck', 'checked');
-                } else {
-                    $(this).parent().parent().data('ck', '');
-                }
-                console.log($(this).parent().parent().data('ck'));
-                var num = $(".select-table table tbody tr input[type='checkbox']:checked").length;
-                $("#bettNum").val(num);
-                $(".totle em").eq(0).text(num); 
-                if ($(this).prop("checked") == false) {
-                    $(this).parent().parent().find("td").eq(3).text("￥0.00");
-                    $(this).parent().parent().find("td").eq(2).find("input").val("0").change();
-                }
-            });
-        }
+        BettHtml();
     });
 }
 
-function sumtotalFee() {
+  function BettHtml() {
+    $('.select-table tbody').html(selectbettnum);
+    if (selectbettnum != '') {
+        //金额计算：
+        $(".select-table table tbody tr input[type='text']").change(function () {
+            var _this = $(this);
+            var nums = _this.val();
+            if (!reg.test(nums) || nums == "") {
+                _this.val("0");
+            } else {
+                if (nums.split("")[0] == "0" && nums.length > 1) {
+                    _this.val(nums.substring(1));
+                }
+            }
+            var totalfee = $("#totalfee").text();
+            var times4 = _this.parent().parent().find("td").eq(2).find("input").val();
+            _this.parent().parent().find("td").eq(3).text("￥" + totalfee * times4 + ".00");
+            sumtotalFee();
+        });
+        //操作checkbox改变追号期数
+        $(".select-table table tbody tr input[type='checkbox']").change(function () {
+            if ($(this).parent().parent().data('ck') == '') {
+                $(this).parent().parent().data('ck', 'checked');
+            } else {
+                $(this).parent().parent().data('ck', '');
+            }
+            var totalfee = $("#totalfee").text();
+            var times4 = $(this).parent().parent().find("td").eq(2).find("input").val();
+            if (times4 < 1) {
+                $(this).parent().parent().find("td").eq(2).find("input").val(1);
+                times4 = 1;
+            }
+            $(this).parent().parent().find("td").eq(3).text("￥" + totalfee * times4 + ".00");
+            var num = $(".select-table table tbody tr input[type='checkbox']:checked").length;
+            $("#bettNum").val(num);
+            $(".totle em").eq(0).text(num);
+            sumtotalFee();
+        });
+    }
+}
+
+ function sumtotalFee() {
     var q = 0;
      $(".select-table table tbody tr").each(function () {
          if ($(this).data('ck')=='checked') {
@@ -1061,10 +1099,13 @@ function sumtotalFee() {
 lottery.saveBett= function() {
     var bettlist = [];
     var jsoncontent = "";
+    var tmucj = 1;
     $(".select-table table tbody tr").each(function() {
         var _this = $(this);
         if (_this.data('ck') == 'checked') {
-            jsoncontent += _this.find('td').eq(1).html() + "," + _this.find('input[type="text"]').val() + "|";
+            var num = _this.find('input[type="text"]').val();
+            jsoncontent += _this.find('td').eq(1).html() + "," + num + "|";
+            tmucj += parseInt(num);
         }
     });
     for (var i = 0; i < items.length; i++) {
@@ -1072,6 +1113,7 @@ lottery.saveBett= function() {
         m.BettNum = $('#bettNum').val();
         m.BMuch = $('#bmuch').val();
         m.StartNum = $('#issueslt').val();
+        m.TotalFee = parseFloat(tmucj * m.PayFee).toFixed(2);
         m.Profits = typeof ($('#profits').val()) != 'undefined' ? parseFloat(parseFloat($('#profits').val()) / 100).toFixed(2) : 0;
         m.JsonContent = jsoncontent;
         m.BettType = $('.chase-action .chase-action-cur').data('type');

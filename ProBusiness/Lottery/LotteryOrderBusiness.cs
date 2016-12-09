@@ -228,7 +228,7 @@ namespace ProBusiness
                 string errormsg = "";
                 string orderCode = DateTime.Now.ToString("yyyyMMddhhMMssfff") + user.AutoID;
                 var result = CreateBettOrder(orderCode, x.StartNum, x.Type, x.TypeName, x.CPCode, x.CPName, x.Content.Replace("\"", ""),
-                    x.Num, x.PayFee, user.UserID, x.PMuch, x.RPoint, ip, isStart,x.BettNum,x.BMuch,0,x.Profits,x.WinFee, x.BettType,x.JsonContent,ref errormsg);
+                    x.Num, x.PayFee, user.UserID, x.PMuch, x.RPoint, ip, isStart,x.BettNum,x.BMuch,x.TotalFee,x.Profits,x.WinFee, x.BettType,x.JsonContent,ref errormsg);
                 if (!result)
                 {
                     msg += x.Content + "    " + errormsg + "/n";
@@ -248,5 +248,15 @@ namespace ProBusiness
              payfee, userID, pmuch, rpoint, operatip, isStart, bettnum, bmuch, totalfee, profits, winfee,bettType,jsonContent, ref errormsg);
         }
        #endregion 
+
+        #region 修改
+
+       public static bool UpdateBettAutoByCode(string bCode, int comnum,decimal comfee, string remark)
+       {
+           return LotteryOrderDAL.BaseProvider.UpdateBettAutoByCode(bCode, comnum,comfee, remark);
+       }
+
+       #endregion
+        
     }
 }

@@ -10,6 +10,7 @@ using ProEntity;
 
 namespace CPiao.Controllers
 {
+    [CPiao.Common.UserAuthorize]
     public class LotteryController : BaseController
     {
         //
