@@ -84,6 +84,7 @@
          switch ($(this).index()) {
          case 0:
              $(".lrl-chase p:nth-child(2)").html('起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1" id="bmuch" /><img src="/modules/images/plus.png" alt="plus" width="27">倍<span>最低收益率：<input type="text" value="50" id="profits" />%</span><span>追号期数：</span><input type="text" value="0" id="bettNum" />');
+             times(1);
              break;
          case 1:
              $(".lrl-chase p:nth-child(2)").html('起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1" id="bmuch" /><img src="/modules/images/plus.png" alt="plus" width="27">倍<span>追号期数：</span><input type="text" value="0" id="bettNum" />');
@@ -470,7 +471,9 @@
                  }
              });
          } else {
+             times(times3);
              $(".select-table table tbody tr:first-child td").eq(2).find("input").val(times3).change();
+             
          }
      } else if ($(".chase-action .chase-action-cur").data('type') == "2") { 
          addTimes($("#profits").val(), $("#bmuch").val());
@@ -651,7 +654,15 @@
          $(".play-action").find("p span:last-child").text(nums * $val * 2);
      }
  }
-
+//利润率翻倍
+ function times(num) {
+     var prpfits= Math.ceil(parseInt($('#profits').val())/10);
+     $(".select-table table tbody tr input[type='text']").each(function(i, v) {
+         if (i > 0) {
+             $(v).val(num * Math.ceil(2 * prpfits * Math.pow((prpfits + 1), i - 1)));
+         }
+     });
+ }
  //手动改变倍数
  function handchange(obj, issums) {
      var times2 = obj.val();
@@ -1100,11 +1111,15 @@ lottery.saveBett= function() {
     var bettlist = [];
     var jsoncontent = "";
     var tmucj = 1;
+    var startnum = '';
     $(".select-table table tbody tr").each(function() {
         var _this = $(this);
         if (_this.data('ck') == 'checked') {
             var num = _this.find('input[type="text"]').val();
             jsoncontent += _this.find('td').eq(1).html() + "," + num + "|";
+            if (tmucj == 1) {
+                startnum = _this.find('td').eq(1).html();
+            }
             tmucj += parseInt(num);
         }
     });
@@ -1112,7 +1127,7 @@ lottery.saveBett= function() {
         var m = items[i];
         m.BettNum = $('#bettNum').val();
         m.BMuch = $('#bmuch').val();
-        m.StartNum = $('#issueslt').val();
+        m.StartNum = startnum;
         m.TotalFee = parseFloat(tmucj * m.PayFee).toFixed(2);
         m.Profits = typeof ($('#profits').val()) != 'undefined' ? parseFloat(parseFloat($('#profits').val()) / 100).toFixed(2) : 0;
         m.JsonContent = jsoncontent;

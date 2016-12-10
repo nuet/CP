@@ -66,7 +66,22 @@ namespace ProBusiness
             }
             return model;
         }
+        public static LotteryResult GetLotteryResult(string cpCode, string status)
+        {
+            string sqlwhere = " where  b.cpCode='" + cpCode + "'";
+            if (!string.IsNullOrEmpty(status ))
+            {
+                sqlwhere += " and b.Status in (" + status+") ";
+            } 
 
+            DataTable dt = LotteryResultDAL.GetDataTable("select top 1 *  from  LotteryResult b " + sqlwhere + " Order by AutoID asc  ");
+            LotteryResult model = new LotteryResult();
+            foreach (DataRow dr in dt.Rows)
+            {
+                model.FillData(dr);
+            }
+            return model;
+        }
         #region Insert
 
         public static void InsertAllLottery()

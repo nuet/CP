@@ -18,8 +18,9 @@ namespace ProEntity
         public string PIDS { get; set; }
         public int Status { get; set; }
 
-        public List<Plays> ChildPlays{get;set;}
-
+        public List<Plays> ChildPlays{get;set;} 
+        // , , ,拼接
+        public string Content { get; set; }
         /// <summary>
         /// 填充数据
         /// </summary>

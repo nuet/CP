@@ -319,7 +319,7 @@
                 }
             }
 
-            _item.append("<label class='check left'><input type='checkbox' class='left'  value='" + cacheMenu[keys][i].PCode + "' data-id='" + menuCode + "_" + cacheMenu[keys][i].PCode + "' /><span>" + cacheMenu[keys][i].PName + "</span></label>");
+            _item.append("<label class='check left'><input type='checkbox' class='left'  value='" + cacheMenu[keys][i].PCode + "' data-id='" + menuCode + "_" + cacheMenu[keys][i].PCode + "' /><span>" + cacheMenu[keys][i].PName + "</span></label><input type='text' style='opacity: 1;' value='" + cacheMenu[keys][i].Content + "' />");
 
             _div.append(_item);
 
