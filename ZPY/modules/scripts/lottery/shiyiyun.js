@@ -1062,7 +1062,7 @@ lottery.GetIssNum= function() {
  }
 
  lottery.saveItems = function () {
-    fibonacci(15);
+ 
     for (var i = 0; i < items.length; i++) {
         items[i].IssueNum = $('#issueslt').val();
     }
@@ -1076,22 +1076,22 @@ lottery.GetIssNum= function() {
     });
 }
 
- function fibonacci(end) {
-     var num1 = 0;
-     var num2 = 1;
-     var num3;
-     document.write(num1 + "<br/>");
-     document.write(num2 + "<br/>");
-     for (var i = 3; i <= end; i++) {
-         num3 = num1 + num2;
-         num1 = num2;
-         num2 = num3;
-         if (num3 > end) {
-             break;
-         }
-         document.write(num3 + "<br/>");
-     }
- }
+ //function fibonacci(end) {
+ //    var num1 = 0;
+ //    var num2 = 1;
+ //    var num3;
+ //    document.write(num1 + "<br/>");
+ //    document.write(num2 + "<br/>");
+ //    for (var i = 3; i <= end; i++) {
+ //        num3 = num1 + num2;
+ //        num1 = num2;
+ //        num2 = num3;
+ //        if (num3 > end) {
+ //            break;
+ //        }
+ //        document.write(num3 + "<br/>");
+ //    }
+ //}
 
  lottery.getLotteryList = function () {
     $.post('/Lottery/GetUserLottery', { cpcode: lottery.CPCode}, function (data) {

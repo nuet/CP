@@ -6,9 +6,10 @@
     <div></div>
     <span class="{%=(i==$data.length-1)?'lastline':'leftline'%} left"></span>
     <span data-id="{%=item.PCode%}" data-eq="{%=(i==$data.length-1)?'last':''%}" data-state="close" class="{%=(item.ChildPlays.length>0)?'icoopen left openchild':''%} "></span>
-    <label class="left check" data-cid="{%=item.PCode%}" >
-        <input type="checkbox" value="{%=item.PCode%}" data-id="{%=item.PCode%}" class="left" /> 
+    <label class="left check" data-cid="{%=item.PCode%}">
+        <input type="checkbox" value="{%=item.PCode%}" data-id="{%=item.PCode%}" class="left"/>
         <span class="left">{%=item.PName%}</span>
     </label>
+    <input type='text' style=' width:30%; border:0px;opacity: 1;' class='pcontent' value='' />
 </div>
 {% } %}

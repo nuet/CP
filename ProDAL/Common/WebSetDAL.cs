@@ -40,7 +40,7 @@ namespace ProDAL
                 sqlwhere = " and a.CPCode='" + CPcode + "' ";
             }
 
-            return GetDataTable("select c.*,b.PIDS from Lottery a join LotteryPlays  b on a.CPCode=b.CPCode join Plays c on b.PID=c.PCode  " + sqlwhere);
+            return GetDataTable("select c.*,b.PIDS,b.Content from Lottery a join LotteryPlays  b on a.CPCode=b.CPCode join Plays c on b.PID=c.PCode  " + sqlwhere);
         }
         #region 新增 
 

@@ -191,8 +191,7 @@
             permissions[i].ChildPlays = cmenus;
         }
        
-        menus = JSON.parse(menus.replace(/&quot;/g, '"'));
-     
+        menus = JSON.parse(menus.replace(/&quot;/g, '"')); 
         _self.bindMenu(permissions, menus);
         
         _self.bindPermissionEvent(lotterid);
@@ -204,10 +203,15 @@
         $("#savePermission").click(function () {
             var menus = "";
             $("#rolePermission input").each(function () {
-                if ($(this).prop("checked")) {
-                    menus += $(this).data("id") + ",";
+                if ($(this).prop("checked")) { 
+                    var pcontent = $(this).parent().parent().find('.pcontent');
+                    if (pcontent.length > 0 && pcontent.val().length>0) {
+                        menus += $(this).data("id") + "|" + pcontent.val() + ",";
+                    } else {
+                        menus += $(this).data("id") + "|,";
+                    }
                 }
-            });
+            }); 
             Global.post("/SysSet/SaveLotteryPlays", {
                 lotterid: lotterid,
                 permissions: menus
@@ -222,6 +226,7 @@
     }
 
     ObjectJS.bindMenu = function (permissions, menus) {
+        
         var _self = this;
         for (var i = 0, j = permissions.length; i < j; i++) {
             var menu = permissions[i];
@@ -253,6 +258,10 @@
                     if (_this.data("id") == menus[i].PIDS) {
                         _this.prop("checked", true);
                         _this.parent().addClass("checked").removeClass("check");
+                        var pcontent = _this.parent().parent().find('.pcontent');
+                        if (pcontent.length > 0) {
+                            pcontent.val(menus[i].Content);
+                        }
                     }
                 }
             });
@@ -319,13 +328,12 @@
                 }
             }
 
-            _item.append("<label class='check left'><input type='checkbox' class='left'  value='" + cacheMenu[keys][i].PCode + "' data-id='" + menuCode + "_" + cacheMenu[keys][i].PCode + "' /><span>" + cacheMenu[keys][i].PName + "</span></label><input type='text' style='opacity: 1;' value='" + cacheMenu[keys][i].Content + "' />");
+            _item.append("<label class='check left'><input type='checkbox' class='left'  value='" + cacheMenu[keys][i].PCode + "' data-id='" + menuCode + "_" + cacheMenu[keys][i].PCode + "' /><span>" + cacheMenu[keys][i].PName + "</span></label><input type='text' style=' width:40%; border:0px;opacity: 1;' class='pcontent' value='' />");
 
             _div.append(_item);
 
             _item.find("input").change(function () {
-                var _this = $(this);
-                console.log(_this.data("id"));
+                var _this = $(this); 
                 if (_this.prop("checked")) {
                     _this.parent().addClass("checked").removeClass("check");
                     $("#" + _this.data("id")).find("input").prop("checked", _this.prop("checked"));
@@ -373,7 +381,12 @@
                 if (_this.data("id") == menus[i].PIDS) {
                     _this.prop("checked", true);
                     _this.parent().addClass("checked").removeClass("check");
+                    var pcontent = _this.parent().parent().find('.pcontent');
+                    if (pcontent.length > 0) {
+                        pcontent.val(menus[i].Content);
+                    } 
                 }
+
             }
         });
         return _div;
