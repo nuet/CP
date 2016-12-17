@@ -19,7 +19,7 @@ namespace ProBusiness
 
        public static List<LotteryOrder> GetLotteryOrder(string keyWords, string cpcode, string userid, string lcode, string issuenum, string type, int status, int winType,int pageSize, int pageIndex, ref int totalCount, ref int pageCount, int self = 0, string begintime = "", string endtime = "")
         {
-            string tablename = "LotteryOrder  a left join M_Users b  on a.UserID =b.UserID left join lotteryResult c on a.IssueNum=c.IssueNum  ";
+            string tablename = "LotteryOrder  a left join M_Users b  on a.UserID =b.UserID left join lotteryResult c on a.IssueNum=c.IssueNum   and a.CPCode=c.CPCode ";
             string sqlwhere = " a.status<>9 ";
             if (!string.IsNullOrEmpty(keyWords))
             {

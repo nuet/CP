@@ -210,6 +210,7 @@
     <Content Include="modules\css\slide.css" />
     <Content Include="modules\css\system\role.css" />
     <Content Include="modules\css\system\system.css" />
+    <Content Include="modules\css\tianjinssc.css" />
     <Content Include="modules\css\webuploader.css" />
     <Content Include="modules\datapager\images\next.png" />
     <Content Include="modules\datapager\images\previous.png" />
@@ -804,6 +805,7 @@
     <Content Include="modules\scripts\lottery\lotteryrecord.js" />
     <Content Include="modules\scripts\lottery\shiyiyun.js" />
     <Content Include="modules\scripts\lottery\bettautorecord.js" />
+    <Content Include="modules\scripts\lottery\tianjinssc.js" />
     <Content Include="modules\scripts\register\forget.js" />
     <Content Include="modules\scripts\register\register.js" />
     <Content Include="modules\scripts\register\partregister.js" />
@@ -1011,6 +1013,7 @@
     <Content Include="Views\Lottery\Index.cshtml" />
     <Content Include="Views\Lottery\LotteryRecord.cshtml" />
     <Content Include="Views\Lottery\BettAutoRecord.cshtml" />
+    <Content Include="Views\Lottery\HighLottery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

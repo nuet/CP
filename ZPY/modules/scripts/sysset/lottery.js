@@ -143,8 +143,7 @@
                         Model.AutoID = model.AutoID;
                         Model.CPCode = model.CPCode;
                         Model.CPName = model.CPName;
-                        Model.IconType = model.IconType;
-                        //Model.Sort = model.Sort;
+                        Model.IconType = model.IconType; 
                         Model.OpenTimes = model.OpenTimes;
                         Model.OnSaleTime = model.OnSaleTime;
                         Model.CloseTime = model.CloseTime;
@@ -164,11 +163,11 @@
     //保存实体
     ObjectJS.saveModel = function (model) {
         var _self = this;
-        Global.post("/SysSet/SaveLottery", { entity: JSON.stringify(model) }, function (data) {
+        Global.post("/SysSet/SaveLottery", { entity: JSON.stringify(model) }, function(data) {
             if (data.model.AutoID > 0) {
                 _self.getList();
             }
-        })
+        });
     }
     //删除
     ObjectJS.deleteModel = function (id,status, callback) {

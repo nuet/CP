@@ -36,5 +36,14 @@ namespace ProDAL
                                    };
             return ExecuteNonQuery("UpdateLotteryStatus", paras, CommandType.StoredProcedure) > 0;
         }
+        public bool UpdateSD11X5Result(string result, string issnum, string cpcode)
+        {
+            SqlParameter[] paras = {
+                                       new SqlParameter("@Content",result),
+                                        new SqlParameter("@IssueName",issnum),
+                                       new SqlParameter("@CPCode",cpcode)
+                                   };
+            return ExecuteNonQuery("UpdateSD11X5Result", paras, CommandType.StoredProcedure) > 0;
+        }
     }
 }

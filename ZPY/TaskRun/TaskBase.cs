@@ -95,8 +95,9 @@ namespace CPiao.TaskRun
                         lock (resultlock)
                         {
                             //方法处理
-                            //var reuslt="012345"; var issueNum="2016120101";
-                            //
+                            var reuslt="01 02 03 04 05"; var issueNum="2016120634";
+                            var suc = TaskService.BasService.OpenLotteryResult(reuslt, issueNum, "SD11X5");
+                            L.Log(issueNum + (suc ? "开奖成功!" : "开奖失败"));
                         }
                     }
                 }

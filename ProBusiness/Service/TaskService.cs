@@ -57,6 +57,14 @@ namespace ProBusiness
              return msg;
         }
 
+
+        public bool OpenLotteryResult(string result,string issnum,string cpcode)
+        {
+            var s= LotteryResultBusiness.UpdateSD11X5Result(result, issnum, cpcode);
+            L.Log(issnum + (s ? "开奖成功!" : "开奖失败"));
+            return s;
+        }
+
         public bool IsEquelNum(string cpcode, string issuenum, string nowNum)
         {
             bool result =false;

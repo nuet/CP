@@ -99,6 +99,12 @@ namespace ProBusiness
         public static bool UpdateStatus(string cpcode,int status){
             return LotteryResultDAL.BaseProvider.UpdateLotteryStatus(cpcode,status);
         }
+
+        public static bool UpdateSD11X5Result(string result, string issnum, string cpcode)
+        {
+            return LotteryResultDAL.BaseProvider.UpdateSD11X5Result(result, issnum,cpcode);
+        }
+
         #endregion
 
     }

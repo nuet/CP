@@ -132,8 +132,6 @@
          $("#bettNum").keyup();
          BettNumChange();
      });
-    
-
      //发起追号：
      $(".chase-num").find("input[type='button']").click(function() {
          $this = $(this); 
@@ -183,7 +181,6 @@
                  item.RPoint = 1;
                  var msg = "<tr title='" + ('投注模式:&nbsp;' + type + '\n' + '投注信息:&nbsp;' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200'>" + arrSelectNum + "</td><td width='73.3'>" + item.Num + "注" + "</td><td width='73.3'>" + item.pMuch + "倍" + "</td><td width='73.3'>" + item.PayFee + "元" + "</td><td width='73.3'>0</td><td width='73.3'>100%</td><td width='73.3'><span>删除</span></td></tr>";
                  $(".num-selected tbody").prepend(msg);
-                
 
              } else {
                  var tempr = $(".play-action select").find("option:selected").text().split("-");
@@ -993,7 +990,7 @@ lottery.getDifDate = function (item) {
 }
 lottery.GetIssNum= function() {
     $.post('/Lottery/GetlotteryResult', {
-        cpcode: lottery.CPCode, status: 0, pagesize: 78, orderby: true, btime: new Date().format('yyyy-MM-dd') + ' 00:00:00', etime: new Date().format('yyyy-MM-dd')
+        cpcode: lottery.CPCode, status: 0, pagesize: lottery.CPCode=="GD115"?84:78, orderby: true, btime: new Date().format('yyyy-MM-dd') + ' 00:00:00', etime: new Date().format('yyyy-MM-dd')
     }, function (data) {
         var html = '';
         var zhhtml = '';
@@ -1074,24 +1071,7 @@ lottery.GetIssNum= function() {
             alert(data.ErrMsg);
         }
     });
-}
-
- //function fibonacci(end) {
- //    var num1 = 0;
- //    var num2 = 1;
- //    var num3;
- //    document.write(num1 + "<br/>");
- //    document.write(num2 + "<br/>");
- //    for (var i = 3; i <= end; i++) {
- //        num3 = num1 + num2;
- //        num1 = num2;
- //        num2 = num3;
- //        if (num3 > end) {
- //            break;
- //        }
- //        document.write(num3 + "<br/>");
- //    }
- //}
+} 
 
  lottery.getLotteryList = function () {
     $.post('/Lottery/GetUserLottery', { cpcode: lottery.CPCode}, function (data) {

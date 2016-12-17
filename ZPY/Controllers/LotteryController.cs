@@ -20,6 +20,17 @@ namespace CPiao.Controllers
         {
             ViewBag.CPCode = id;
             ViewBag.Model = WebSetBusiness.GetLotteryDetail(id);
+            if (id == "TJSSC" || id == "XJSSC" || id == "HLJSSC")
+            {
+                return RedirectToAction("HighLottery", "Lottery", new {id = id});
+            }
+            return View();
+        }
+
+        public ActionResult HighLottery(string id)
+        {
+            ViewBag.CPCode = id;
+            ViewBag.Model = WebSetBusiness.GetLotteryDetail(id);
             return View();
         }
 
