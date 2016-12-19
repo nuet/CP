@@ -526,7 +526,7 @@
                              html += '<li  data-id="handin1" data-name="sanxing1"  data-type="3" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                          } else if (titem.PCode == '3ZUXFS') {
                              html += '<li  data-id="zufu" data-name="sanxing2"  data-type="3" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
-                         } else {/*3ZUXDS*/
+                         } else {
                              html += '<li  data-id="handin2" data-name="sanxing2"  data-type="3" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                          }
                      }
@@ -540,7 +540,6 @@
                  $(".n-star .play-section .zufu").find("p").eq(0).html("从01-11中任意选择2个或2个以上号码。");
                  $(".n-star .play-section .zudan").find("p").eq(0).html("手动输入号码，至少输入1个两位数号码组成一注。");
                  $(".n-star .zhifu li").eq(2).hide();
-
                  for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
                      var tempitem = lottery.CPTypes[$(this).data("sid")][i];
                      html += '<span data-sid="'+tempitem.PIDS+'">' + tempitem.PName + '</span><ul>';
@@ -552,7 +551,7 @@
                              html += '<li  data-id="handin1" data-name="erxing1"  data-type="2" data-sid="'+titem.PIDS+'">'+titem.PName+'</li>';
                          } else if (titem.PCode == '3ZUXFS') {
                              html += '<li  data-id="zufu" data-name="erxing2"  data-type="2" data-sid="'+titem.PIDS+'">'+titem.PName+'</li>';
-                         } else {/*3ZUXDS*/
+                         } else {
                              html += '<li  data-id="handin2" data-name="erxing2"  data-type="2" data-sid="'+titem.PIDS+'">'+titem.PName+'</li>';
                          }
                      }
@@ -560,10 +559,10 @@
                  }
                  $(".all-ways").html(html);                 
                  break;
-             case 'dingweidan':
-             case 'budingwei':
-                 $('.' + _this.data('id')).show().siblings("div").hide();
-                 break;
+             //case 'dingweidan':
+             //case 'budingwei':
+             //    $('.' + _this.data('id')).show().siblings("div").hide();
+             //    break;
              case 'renxuan1':
                  for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
                      var tempitem = lottery.CPTypes[$(this).data("sid")][i];
@@ -574,8 +573,8 @@
                      }
                      html += '</ul></div>';
                  } 
-                 $(".all-ways").html(html); 
                  $(".all-ways").css("height", "80px");
+                 $(".all-ways").html(html);
                  break;
              case '':
                  for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {

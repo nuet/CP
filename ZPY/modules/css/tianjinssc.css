@@ -39,7 +39,7 @@ body{background: #E1EAF0;}
 .select-nums .navs li:not(.navs-cur):hover{background: #1B5682;}
 
 
-.all-ways{width: 1000px;height: 80px;line-height: 30px;background: #17476B;}
+.all-ways{width: 1000px;height: 40px;line-height: 30px;background: #17476B;}
 .zhixuan,.zuxuan{width: 100%;}
 .all-ways span{float:left;margin-top: 7px;text-align:center;margin-left: 10px;background: url(../images/bg1.png) no-repeat;display: inline-block;width: 81px;height: 26px;color: white;line-height: 26px;}
 /*.all-ways ul{float: left;}*/

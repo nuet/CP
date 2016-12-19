@@ -268,7 +268,7 @@
 </div>
 
 <div class="play-action">
-    <img src="images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="images/plus.png" alt="plus" width="27">倍
+    <img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" class="times" value="1"/><img src="/modules/images/plus.png" alt="plus" width="27">倍
     <span class="select-fan">选择奖金返点：</span><select><option>1782-4%</option><option>1861.2-0%</option></select><input type="button" class='additems' value="添加投注" data-type=""/>
     <p>您选择了<span>0</span>注，共<span>0</span>元
     </p>
@@ -285,21 +285,15 @@
         <tfoot><tr><td colspan="8"><a href="javascript:void(0);">清空所有</a></td></tr></tfoot>
     </table>
     <div class="alert1">
-        <h3>温馨提示<img src="images/close.png">
+        <h3>温馨提示<img src="/modules/images/close.png">
         </h3>
-        <p><img src="images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span></p>
+        <p><img src="/modules/images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span></p>
         <p><button>确定</button><button>取消</button>
         </p>
     </div>
     <div class="add-bet">
         <p>起始期：</p>
-        <select id="issueslt">
-            <option><span>201609560538</span>(当前期)</option>
-            <option><span>201609560539</span></option>
-            <option><span>201609560540</span></option>
-            <option><span>201609560541</span></option>
-            <option><span>201609560542</span></option>
-        </select>
+        <select id="issueslt"></select>
         <p>总注数：<span id="totalnum">0</span>注
         </p>
         <p>总金额：<span id="totalfee">0.00</span>元
@@ -322,7 +316,7 @@
                     </span>      
                 <div class="tips-content">
                     <div class="tips-title">
-                        <img src="images/tips.png" width="40"><span class="tip1"></span>
+                        <img src="/modules/images/tips.png" width="40"><span class="tip1"></span>
                         <button type="button" class="simplemodal-close">确定</button>
                     </div>
                 </div>
@@ -336,7 +330,7 @@
     <div class="lrl-chase">
         <p>追号期数：<select><option>请选择</option><option>5期</option><option>10期</option><option>15期</option><option>20期</option><option>25期</option></select>
         </p>
-        <p>起始倍数：<img src="images/minus.png" alt="minus" width="27"><input type="text" value="1" id="bmuch" class="times"/><img src="images/plus.png" alt="plus" width="27">倍<span>最低收益率：<input type="text" value="50" id="profits" />%</span><span>追号期数：</span><input type="text" value="0" id="bettNum"/>
+        <p>起始倍数：<img src="/modules/images/minus.png" alt="minus" width="27"><input type="text" value="1" id="bmuch" class="times"/><img src="/modules/images/plus.png" alt="plus" width="27">倍<span>最低收益率：<input type="text" value="50" id="profits" />%</span><span>追号期数：</span><input type="text" value="0" id="bettNum"/>
         </p>
         <p><input type="button" value="生成追号单" id="saveBett"/><span class="totle">追号总期数：<em>0</em>期，追号总金额：<em>0</em>元</span></p>
     </div>
