@@ -288,7 +288,7 @@
         <h3>温馨提示<img src="/modules/images/close.png">
         </h3>
         <p><img src="/modules/images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span></p>
-        <p><button>确定</button><button>取消</button>
+        <p><input type="button" class="btn" style="margin-left: 45px;" value="确定"><input value="取消" class="btn" type="button"/>
         </p>
     </div>
     <div class="add-bet">
@@ -298,7 +298,9 @@
         </p>
         <p>总金额：<span id="totalfee">0.00</span>元
         </p>
-        <input type="button" value="立即投注"/>
+        <p><input type="checkbox" style="width: 14px; height: 14px;" id="isusedic"/>&nbsp;<label for="isusedic" >是否使用优惠券</label>
+        </p>
+        <input type="button" id="btnSave" value="立即投注"/>
     </div>
     <div class="clear"></div>
     <div class="chase-num">

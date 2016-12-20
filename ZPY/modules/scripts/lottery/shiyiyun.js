@@ -246,7 +246,7 @@
              $(".alert1 p:last-child span").remove();
          }
          $(".alert1").css({ "width": "300px", "height": "160px", "top": "40%" });
-         $(".alert1 h3+p").html('<img src="images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
+         $(".alert1 h3+p").html('<img src="/modules/images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
          $(".alert1 p:last-child span").remove();
          $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "-10px" });
          $(".alert1 p .btn").eq(0).css("margin-left", "35px");
@@ -280,7 +280,7 @@
                  $(".alert1 p:last-child span").remove();
                  //恢复弹出框原样：
                  $(".alert1").css({ "width": "300px", "height": "160px", "top": "40%" });
-                 $(".alert1 h3+p").html('<img src="images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
+                 $(".alert1 h3+p").html('<img src="/modules/images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
                  $(".alert1 p:last-child span").remove();
                  $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "-10px" });
                  $(".alert1 p .btn").eq(0).css("margin-left", "35px");

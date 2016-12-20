@@ -68,10 +68,10 @@ namespace ProBusiness
         public bool IsEquelNum(string cpcode, string issuenum, string nowNum)
         {
             bool result =false;
+            int num = Convert.ToInt32(issuenum.Substring(issuenum.Length - 2, 2));
+            var comissuenum = DateTime.Now.ToString("yyyyMMdd").Substring(2, 6);
             if (cpcode == "SD11X5")
             {
-                int num = Convert.ToInt32(issuenum.Substring(issuenum.Length - 2, 2)); 
-                var comissuenum = DateTime.Now.ToString("yyyyMMdd").Substring(2, 6);
                 if (num == 78)
                 {
                     comissuenum = DateTime.Now.AddDays(1).ToString("yyyyMMdd").Substring(2, 6);
@@ -80,24 +80,91 @@ namespace ProBusiness
                 comissuenum = comissuenum + num.ToString().PadLeft(2, '0');
                 return (comissuenum == nowNum);
             }
+            else if (cpcode == "GD115" || cpcode == "TJSSC")
+            {
+                if (num == 84)
+                {
+                    comissuenum = DateTime.Now.AddDays(1).ToString("yyyyMMdd").Substring(2, 6);
+                    num = num - 84;
+                }
+                comissuenum = comissuenum + num.ToString().PadLeft(2, '0');
+                return (comissuenum == nowNum);
+            }
+            else if (cpcode == "JX115")
+            {
+                comissuenum = DateTime.Now.ToString("yyyyMMdd");
+                if (num == 65)
+                {
+                    comissuenum = DateTime.Now.AddDays(1).ToString("yyyyMMdd");
+                    num = num - 65;
+                }
+                comissuenum = comissuenum + num.ToString().PadLeft(2, '0');
+                return (comissuenum == nowNum);
+            }
+            else if (cpcode == "XJ115")
+            {
+                if (num == 65)
+                {
+                    comissuenum = DateTime.Now.AddDays(1).ToString("yyyyMMdd");
+                    num = num - 65;
+                }
+                comissuenum = comissuenum + num.ToString().PadLeft(2, '0');
+                return (comissuenum == nowNum);
+            }
+            else if (cpcode == "HLJSSC")
+            {
+                num = Convert.ToInt32(issuenum) + 1;
+                return num == Convert.ToInt32(nowNum);
+            }
             return result;
         }
 
         public string GetIssueNum(string cpcode, string issuenum, int comnum, string jsoncontent)
         {
-            string comissuenum = "";
-             if (cpcode == "SD11X5")
+            string comissuenum = DateTime.Now.ToString("yyyyMMdd");
+            int num = Convert.ToInt32(issuenum.Substring(issuenum.Length - 2, 2));
+            num = num + comnum;
+            if (cpcode == "SD11X5")
             {
-                int num = Convert.ToInt32(issuenum.Substring(issuenum.Length - 2, 2));
-                num = num + comnum;
-                comissuenum = DateTime.Now.ToString("yyyyMMdd").Substring(2, 6);
+                comissuenum = comissuenum.Substring(2, 6);
                 if (num > 78)
                 {
                     comissuenum = DateTime.Now.AddDays(1).ToString("yyyyMMdd").Substring(2, 6);
                     num = num - 78;
                 }
-                comissuenum = comissuenum + num.ToString().PadLeft(2,'0');
             }
+            else if (cpcode == "GD115" || cpcode == "TJSSC")
+            {
+                comissuenum = comissuenum.Substring(2, 6);
+                if (num > 84)
+                {
+                    comissuenum = DateTime.Now.AddDays(1).ToString("yyyyMMdd").Substring(2, 6);
+                    num = num - 84;
+                }
+            }
+            else if (cpcode == "JX115")
+            {
+                comissuenum = DateTime.Now.ToString("yyyyMMdd");
+                if (num > 65)
+                {
+                    comissuenum = DateTime.Now.AddDays(1).ToString("yyyyMMdd");
+                    num = num - 65;
+                }
+            }
+            else if (cpcode == "XJSSC")
+            {
+                if (num > 96)
+                {
+                    comissuenum = DateTime.Now.AddDays(1).ToString("yyyyMMdd");
+                    num = num - 96;
+                }
+            }
+            else if (cpcode=="HLJSSC")
+            {
+                num = Convert.ToInt32(issuenum) + 1;
+                return num.ToString().PadLeft(7, '0');
+            }
+            comissuenum = comissuenum + num.ToString().PadLeft(2,'0');
             return comissuenum;
         }
         public string GetIssueNum(int comnum, string jsoncontent,int type=0)

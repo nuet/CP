@@ -96,7 +96,7 @@ ul.num-select li div span:hover{background: #ffecec;}
 .num-selected table thead tr{display: block;}
 /*.num-selected table td{width: 80px;}
 .num-selected table th{width: 80px;}*/
-.add-bet{float: left;width: 180px;margin-left: 10px;background: #103049;color: white;height: 200px;padding-left: 10px;}
+.add-bet{float: left;width: 180px;margin-left: 10px;background: #103049;color: white;height: 240px;padding-left: 10px;}
 .add-bet p{line-height: 28px;}
 .add-bet p:first-child{margin-top: 10px;}
 .add-bet select{height: 24px;border-radius: 4px;width: 170px;padding-left: 5px;margin-top: 6px;margin-bottom: 6px;}
@@ -163,9 +163,8 @@ ul.num-select li div span:hover{background: #ffecec;}
 .alert1 h3 img{float: right;margin:10px 15px 5px -10px;vertical-align: middle;}
 .alert1 p{width: 100%;}
 .alert1 h3+p img{margin:20px 15px 15px 15px;vertical-align: middle;}
-.alert1 p:last-child{margin-top: -10px;text-align: center;}
-.alert1 p button{display: inline-block;width: 70px;height: 25px;margin-right: 15px;}
-.alert1 p button:first-child{margin-left: 35px;}
+.alert1 p:last-child{margin-top: -10px;text-align: center;}  
+.alert1 p .btn {display: inline-block;width: 70px;height: 25px;margin-right: 15px;}
 
 .cover-layer{width:100%;height:1600px;position:absolute;top:0;left:0;right:0;z-index:1000;cursor:default;background:rgba(0,0,0,0.3);}
 .totle-money{float:left;margin-left:25px;display:inline-block;width:200px;text-align:center;height:25px;line-height:25px;background:#4B4B4B;color:#fc3;border-radius:6px;}

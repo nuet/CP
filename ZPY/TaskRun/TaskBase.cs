@@ -72,6 +72,17 @@ namespace CPiao.TaskRun
                         {
                             LotteryResultBusiness.UpdateStatus("SD11X5", 1);
                         }
+                    }else if (s == "9")
+                    {
+                        lock (thisLock)
+                        {
+                            LotteryResultBusiness.UpdateStatus("SD11X5", 1);
+                            LotteryResultBusiness.UpdateStatus("TJSSC", 1);
+                            LotteryResultBusiness.UpdateStatus("GD115", 1);
+                            LotteryResultBusiness.UpdateStatus("JX115", 1);
+                            LotteryResultBusiness.UpdateStatus("HLJSSC", 1);
+                            LotteryResultBusiness.UpdateStatus("XJSSC", 1);
+                        }
                     }
                 }
             }).NonReentrant().WithName("[updatesd11x5status]").ToRunNow().AndEvery(1).Minutes();
@@ -79,7 +90,6 @@ namespace CPiao.TaskRun
         private void UpdateSD11X5Result()
         {
             L.Register("[updatesd11x5result]");
-
             Schedule(() =>
             {
                 TimeSpan startTime = DateTime.Parse("09:05").TimeOfDay;
@@ -100,16 +110,30 @@ namespace CPiao.TaskRun
                             L.Log(issueNum + (suc ? "开奖成功!" : "开奖失败"));
                         }
                     }
+                    else if (s == "9")
+                    {
+                        lock (resultlock)
+                        {
+                            //方法处理
+                            var reuslt = "01 02 03 04 05"; var issueNum = "2016120634";
+                            var suc = TaskService.BasService.OpenLotteryResult(reuslt, issueNum, "JX115");
+                            L.Log(issueNum + (suc ? "开奖成功!" : "开奖失败"));
+                        }
+                        lock (resultlock)
+                        {
+                            var reuslt = "01 02 03 04 05";
+                            var isseueNum = "";
+                            var suc = TaskService.BasService.OpenLotteryResult(reuslt, isseueNum, "GD115");
+                        }
+                    }
                 }
             }).NonReentrant().WithName("[updatesd11x5result]").ToRunNow().AndEvery(1).Minutes();
         }
         private void BeetAuto()
         {
             L.Register("[beetAuto]");
-
             Schedule(() =>
-            {
-                L.Log("[beetAuto]", "Sleeping a minute...");
+            { 
                 TaskService.BasService.BettAutoInsert();
             }).WithName("[beetAuto]").ToRunNow().AndEvery(1).Minutes();
         }

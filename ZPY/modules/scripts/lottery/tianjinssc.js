@@ -420,7 +420,7 @@ var reg=/^[0-9]*$/;
      $(".num-selected table tfoot tr td a").click(function() {
          $("body").append("<div class='cover-layer'></div>");
          $(".alert1").show().css("z-index", "10001");
-         $(".alert1 p button").eq(0).click(function() {
+         $(".alert1 p .btn").eq(0).click(function () {
              $(".num-selected table tbody").html("<tr><td width='96.25'></td><td width='96.25'></td><!-- <td></td> --><td width='96.5'></td><td width='193' title='暂无投注项'>暂无投注项</td><td width='96.5'></td><td width='96.5'></td><td width='96.5'></td></tr>");
              items = [];
              lvhide();
@@ -432,17 +432,17 @@ var reg=/^[0-9]*$/;
          });
      });
      //弹出框操作：(清空所有，立即投注，)
-     $(".alert1 h3 img,.alert1 p button:last-child").click(function() {
+     $(".alert1 h3 img,.alert1 p .btn:last-child").click(function () {
          $(".alert1").hide();
          $(".cover-layer").remove();
          if ($(".alert1 p:last-child span").length != 0) {
              $(".alert1 p:last-child span").remove();
          }
          $(".alert1").css({ "width": "300px", "height": "160px", "top": "40%" });
-         $(".alert1 h3+p").html('<img src="images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
+         $(".alert1 h3+p").html('<img src="/modules/images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
          $(".alert1 p:last-child span").remove();
          $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "-10px" });
-         $(".alert1 p button").eq(0).css("margin-left", "35px");
+         $(".alert1 p .btn").eq(0).css("margin-left", "35px");
      });
      //立即投注：
      $("#btnSave").click(function() {
@@ -473,7 +473,7 @@ var reg=/^[0-9]*$/;
                  $(".alert1 p:last-child span").remove();
                  //恢复弹出框原样：
                  $(".alert1").css({ "width": "300px", "height": "160px", "top": "40%" });
-                 $(".alert1 h3+p").html('<img src="images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
+                 $(".alert1 h3+p").html('<img src="/modules/images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
                  $(".alert1 p:last-child span").remove();
                  $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "-10px" });
                  $(".alert1 p .btn").eq(0).css("margin-left", "35px");
