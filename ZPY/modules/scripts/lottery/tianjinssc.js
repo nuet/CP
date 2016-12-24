@@ -58,186 +58,6 @@ var reg=/^[0-9]*$/;
          }
          getsumnum();
      });
-     //$(".navs").find("li").click(function() {
-     //    var names = $(this).data("name");
-     //    if (typeof(names) != 'undefined') {
-     //        $(".play-action select option").eq(0).text(options1[names].firstNum);
-     //        $(".play-action select option").eq(1).text(options1[names].lastNum);
-     //    }
-     //    $(this).addClass("navs-cur").siblings().removeClass("navs-cur");
-     //    $(".numbers span,.sel-actions span").removeClass("clicked");
-     //    $(".play-action .times").val("1");
-     //    $(".play-action p span").text("0");
-     //    $(".additems").data("type", '');
-     //    $(".n-star textarea").val("");
-     //    switch ($(this).index()) {
-     //    case 0:
-     //        $(".n-star").show().siblings("div").not(".all-ways").hide(); //五星
-     //        $(".all-ways").show();
-     //        $(".all-ways").css("height", "40px");
-     //        $(".play-action .select-fan,.play-action select").show();
-     //        $(".all-ways").html('<div class="zhixuan"><span>直选</span><ul><li class="all-ways-cur" data-type="zhifu-wuxing">直选复式</li><li data-type="handin-wuxingd">直选单式</li><li data-type="zhifu-wuxingzu">五星组合</li></ul></div>');
-     //        break;
-     //    case 1:
-     //        $(".n-star").show().siblings("div").not(".all-ways").hide(); //四星
-     //        $(".all-ways").show();
-     //        $(".all-ways").css("height", "40px");
-     //        $(".play-action .select-fan,.play-action select").show();
-     //        $(".all-ways").html('<div class="zhixuan"><span>直选</span><ul><li class="all-ways-cur" data-type="zhifu-sixing">直选复式</li><li data-type="handin-sixingd">直选单式</li><li data-type="zhifu-sixingzu">四星组合</li></ul></div>');
-     //        break;
-     //    case 2:
-     //        $(".n-star").show().siblings("div").not(".all-ways").hide(); //后三星
-     //        $(".all-ways").show();
-     //        $(".all-ways").css("height", "80px");
-     //        $(".play-action .select-fan,.play-action select").show();
-     //        $(".all-ways").html('<div class="zhixuan"><span>直选</span><ul><li class="all-ways-cur" data-type="zhifu-hsanxing">直选复式</li><li data-type="handin-hsanxingd">直选单式</li><li data-type="zhi-hhezhi">直选和值</li></ul></div><div class="zuxuan"><span>组选</span><ul><li data-type="zuxuans-hsanxing">组三</li><li data-type="zuxuanl-hsanxing">组六</li><li data-type="handin-hsanxingz">混合组选</li><li data-type="zu-hhezhi">组选和值</li></ul></div>');
-     //        break;
-     //    case 3:
-     //        $(".n-star").show().siblings("div").not(".all-ways").hide(); //前三星
-     //        $(".all-ways").show();
-     //        $(".all-ways").css("height", "80px");
-     //        $(".play-action .select-fan,.play-action select").show();
-     //        $(".all-ways").html('<div class="zhixuan"><span>直选</span><ul><li class="all-ways-cur" data-type="zhifu-qsanxing">直选复式</li><li data-type="handin-qsanxingd">直选单式</li><li data-type="zhi-qhezhi">直选和值</li></ul></div><div class="zuxuan"><span>组选</span><ul><li data-type="zuxuans-qsanxing">组三</li><li data-type="zuxuanl-qsanxing">组六</li><li data-type="handin-qsanxingz">混合组选</li><li data-type="zu-qhezhi">组选和值</li></ul></div>');
-     //        break;
-     //    case 4:
-     //        $(".n-star").show().siblings("div").not(".all-ways").hide(); //二星
-     //        $(".all-ways").show();
-     //        $(".all-ways").css("height", "80px");
-
-     //        $(".all-ways").html('<div class="houer"><span>后二</span><ul><li class="all-ways-cur" data-type="zhifu-erxingh">直选复式</li><li data-type="handin-erxinghzhi">直选单式</li><li data-type="zuxuan-erxingh">组选复式</li><li data-type="handin-erxinghz">组选单式</li></ul></div><div class="qianer"><span>前二</span><ul><li data-type="zhifu-erxingq">直选复式</li><li data-type="handin-erxingqzhi">直选单式</li><li data-type="zuxuan-erxingq">组选复式</li><li data-type="handin-erxingqz">组选单式</li></ul></div>');
-     //        $(".play-section .zhifu>p").html("从十位和个位上至少各选1个号码。");
-
-     //        $(".play-action .select-fan,.play-action select").show();
-     //        break;
-     //    case 5:
-     //        $(".fixed").show().siblings("div").hide(); //定位胆
-     //        $(".all-ways").html('');
-     //        $(".play-action .select-fan,.play-action select").show();
-     //        break;
-     //    case 6:
-     //        $(".non-fixed").show().siblings("div").not(".all-ways").hide(); //不定位
-     //        $(".all-ways").show();
-     //        $(".all-ways").html('<div class="yima"><span>一码</span><ul><li class="all-ways-cur" data-type="yima">后三一码不定位</li></ul></div><div class="erma"><span>二码</span><ul><li class="all-ways-cur" data-type="erma">后三二码不定位</li></ul></div>');
-     //        $(".all-ways").css("height", "80px");
-     //        $(".play-action .select-fan,.play-action select").show();
-     //        break;
-     //    case 7:
-     //        $(".interests").show().siblings("div").not(".all-ways").hide(); //趣味型
-     //        $(".all-ways").show();
-     //        $(".all-ways").html('<span>大小单双</span><ul><li class="all-ways-cur" data-type="qdxds">前二大小单双</li><li data-type="hdxds">后二大小单双</li></ul>');
-     //        $(".all-ways").css("height", "40px");
-     //        $(".play-action .select-fan,.play-action select").hide();
-     //        break;
-     //    }
-     //    $(".all-ways").find("li").click(function() {
-     //        var allwaysType = $(this).data("type");
-     //        $(".play-action .select-fan,.play-action select").show();
-     //        if (allwaysType.indexOf("zhifu") > -1) { //五星、四星的直选复式和组选4个，三星后三和前三2个、二星直选复式2个，
-     //            $(".n-star .play-section .zhifu").show().siblings().hide();
-     //            $(".zhifu li").show();
-     //            if (allwaysType.indexOf("wuxing") > -1) { //五星的直选复式和组选
-     //                if (allwaysType == "zhifu-wuxing") { //五星直选复式
-     //                    $(".zhifu>p").text("从万位、千位、百位、十位、个位中选择一个5位数号码组成一注。");
-     //                } else { //五星组选
-     //                    $(".zhifu>p").text("从万位、千位、百位、十位、个位中至少各选1个号码组成1-5星的组合，共五注。");
-     //                    $(".play-action .select-fan,.play-action select").hide();
-     //                }
-     //            } else if (allwaysType.indexOf("sixing") > -1) { //四星的直选复式和组选
-     //                $(".zhifu li").eq(0).hide();
-     //                if (allwaysType == "zhifu-sixing") { //四星直选复式
-     //                    $(".zhifu>p").text("从千位、百位、十位、个位中选择一个4位数号码组成一注。");
-     //                } else { //四星组选
-     //                    $(".zhifu>p").text("从千位、百位、十位、个位中至少各选1个号码组成1-4星的组合，共四注。");
-     //                    $(".play-action .select-fan,.play-action select").hide();
-     //                }
-     //            } else if (allwaysType.indexOf("sanxing") > -1) { //三星直选复式
-     //                if (allwaysType == "zhifu-hsanxing") { //后三星直选复式
-     //                    $(".zhifu>p").text("从百位、十位、个位中至少各选1个号码组成一注。");
-     //                    $(".zhifu li").eq(0).hide().end().eq(1).hide();
-     //                } else { //前三星直选复式
-     //                    $(".zhifu>p").text("从万位、千位、百位中至少各选1个号码组成一注。");
-     //                    $(".zhifu li").eq(3).hide().end().eq(4).hide();
-     //                }
-     //            } else if (allwaysType == "zhifu-erxingh") {
-     //                $(".zhifu>p").text("从十位和个位上至少各选1个号码。");
-     //                $(".zhifu li").eq(0).hide().end().eq(1).hide().end().eq(2).hide();
-     //            } else if (allwaysType == "zhifu-erxingq") {
-     //                $(".zhifu>p").text("从万位和千位上至少各选1个号码。");
-     //                $(".zhifu li").eq(2).hide().end().eq(3).hide().end().eq(4).hide();
-     //            }
-     //        } else if (allwaysType.indexOf("handin") > -1) { //手动输入 五星、四星直选单式2个，三星后三和前三的 直选单式、混合组选4个，二星的直选单式和组选单式4个
-     //            $(".n-star .play-section .handin").show().siblings().hide();
-     //            $(".n-star .play-section .handin p:last-child").text("每注号码之间请使用英文逗号（,）隔开。");
-     //            if (allwaysType.indexOf("wuxing") > -1) { //五星直选单式
-     //                $(".handin p:first-child").text("手动输入号码，至少输入1个五位数号码组成一注。");
-     //                $(".n-star .play-section .handin p:last-child").text("每注号码之间请使用英文逗号（,）隔开。(一次最大可投注5000注)")
-     //            } else if (allwaysType.indexOf("sixing") > -1) { //四星直选单式
-     //                $(".handin p:first-child").text("手动输入号码，至少输入1个四位数号码组成一注。");
-     //                $(".n-star .play-section .handin p:last-child").text("每注号码之间请使用英文逗号（,）隔开。(一次最大可投注5000注)")
-     //            } else if (allwaysType.indexOf("sanxing") > -1) { //三星后三和前三
-     //                $(".handin p:first-child").text("手动输入号码，至少输入1个三位数号码组成一注。");
-     //                //混合组选去掉返点select。
-     //                if (allwaysType.indexOf("sanxingz") > -1) { //三星（前后）的混合组选
-     //                    $(".play-action .select-fan,.play-action select").hide();
-     //                }
-     //            } else if (allwaysType.indexOf("erxing") > -1) {
-     //                $(".handin p:first-child").text("手动输入号码，至少输入1个两位数号码组成一注。");
-     //            }
-     //        } else if (allwaysType.indexOf("hezhi") > -1) { //和值  三星后三和前三的 直选和值、组选和值4个
-     //            $(".n-star .play-section .hezhi").show().siblings().hide();
-     //            if (allwaysType.indexOf("zu") > -1) { //组选和值
-     //                $(".hezhi>p").text("从1-26中任意选择1个或1个以上号码。");
-     //                $(".zh-hezhi").hide();
-     //                $(".zu-hezhi").show();
-     //                $(".play-action .select-fan,.play-action select").hide();
-     //            } else { //直选和值
-     //                $(".hezhi>p").text("从0-27中任意选择1个或1个以上号码。");
-     //                $(".zu-hezhi").hide();
-     //                $(".zh-hezhi").show();
-     //            }
-     //        } else if (allwaysType.indexOf("zuxuan") > -1) { //组选  三星后三和前三的  组三、组六4个，二星的组选复式2个
-     //            $(".n-star .play-section .zuxuans").show().siblings().hide();
-     //            if (allwaysType.indexOf("l") == -1) { //三星后三和前三的  组三，二星的组选复式
-     //                $(".zuxuans>p").text("从0-9中任意选择2个或2个以上号码。");
-     //                if (allwaysType.indexOf("zuxuans") > -1) {
-     //                    $(".zuxuans li p").text("组三");
-     //                } else {
-     //                    $(".zuxuans li p").text("组选");
-     //                }
-     //            } else { //组六
-     //                $(".zuxuans>p").text("从0-9中任意选择3个或3个以上号码。");
-     //                $(".zuxuans li p").text("组六");
-     //            }
-     //        } else if (allwaysType.indexOf("yima") > -1) { //不定位
-     //            $(".non-fixed .play-section>p").text("从0-9中任意选择1个或1个以上号码。");
-     //            $(".non-fixed .play-section ul p").text("一码");
-     //        } else if (allwaysType.indexOf("erma") > -1) { //不定位
-     //            $(".non-fixed .play-section>p").text("从0-9中任意选择2个或2个以上号码。");
-     //            $(".non-fixed .play-section ul p").text("二码");
-     //        } else if (allwaysType.indexOf("qdxds") > -1) { //前二大小单双
-     //            $(".interests .play-section>p").text("从万位、千位中的“大、小、单、双”中至少各选一个组成一注。");
-     //            $(".interests .num-select li").show().eq(2).hide().end().eq(3).hide().end().eq(4).hide();
-     //        } else if (allwaysType.indexOf("hdxds") > -1) { //后二大小单双
-     //            $(".interests .play-section>p").text("从十位、个位中的“大、小、单、双”中至少各选一个组成一注。");
-     //            $(".interests .num-select li").show().eq(0).hide().end().eq(1).hide().end().eq(2).hide();
-     //        }
-
-     //        $(".additems").data("type", '');
-     //        var names = $(this).data("name");
-     //        if (typeof(names) != 'undefined') {
-     //            $(".play-action select option").eq(0).text(options1[names].firstNum);
-     //            $(".play-action select option").eq(1).text(options1[names].lastNum);
-     //        }
-
-     //        $(".numbers span,.sel-actions span").removeClass("clicked");
-     //        $(".play-action .times").val("1");
-     //        $(".play-action p span").text("0");
-     //        $(this).addClass("all-ways-cur").parents(".all-ways").find("li").not($(this)).removeClass("all-ways-cur");
-     //        $(".n-star textarea").val("");
-     //    });
-     //    $(".all-ways").find("li").eq(0).click();
-     //});
-     //$(".navs").find("li").eq(0).click();
 
      //加1减1：
      $("img[alt='plus']").click(function() {
@@ -402,7 +222,6 @@ var reg=/^[0-9]*$/;
              item.CPName = lottery.CPName;
              item.IssueNum = $('#issueslt').val();
              var typeid = (typeof ($('.all-ways .all-ways-cur')) != 'undefined' && typeof ($('.all-ways .all-ways-cur').data('sid')) != 'undefined') ? $('.all-ways .all-ways-cur').data('sid') : $('.navs .navs-cur').data('sid');
-             //typeof ($('.all-ways .all-ways-cur')) != 'undefined' ? $('.all-ways .all-ways-cur').data('sid') : $('.navs .navs-cur').data('sid');
              item.Type = typeid;
              item.Content = JSON.stringify(arrSelectNum);
              items.push(item);
@@ -420,7 +239,7 @@ var reg=/^[0-9]*$/;
      $(".num-selected table tfoot tr td a").click(function() {
          $("body").append("<div class='cover-layer'></div>");
          $(".alert1").show().css("z-index", "10001");
-         $(".alert1 p .btn").eq(0).click(function () {
+         $(".alert1 p .btn").eq(0).unbind("click").bind("click",function () {
              $(".num-selected table tbody").html("<tr><td width='96.25'></td><td width='96.25'></td><!-- <td></td> --><td width='96.5'></td><td width='193' title='暂无投注项'>暂无投注项</td><td width='96.5'></td><td width='96.5'></td><td width='96.5'></td></tr>");
              items = [];
              lvhide();
@@ -466,7 +285,7 @@ var reg=/^[0-9]*$/;
              $(".alert1 h3+p textarea").text(incontent);
              $(".alert1 p:last-child").prepend('<span class="totle-money">投注总金额<strong style="margin:0 5px;">' + $('#totalfee').html() + '</strong>元</span>');
              $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "10px" });
-             $(".alert1 p .btn").eq(0).css("margin-left", "45px").click(function() {
+             $(".alert1 p .btn").eq(0).css("margin-left", "45px").unbind("click").bind("click",function() {
                  //投注进去：
                  $(".alert1").hide();
                  $(".cover-layer").remove();
@@ -999,7 +818,7 @@ function times(num) {
     var prpfits= Math.ceil(parseInt($('#profits').val())/10);
     $(".select-table table tbody tr input[type='text']").each(function(i, v) {
         if (i > 0) {
-            $(v).val(num * Math.ceil(2 * prpfits * Math.pow((prpfits + 1), i - 1)));
+            $(v).val(num * Math.ceil(prpfits * Math.pow((prpfits + 1), i - 1)));
         }
     });
 }
@@ -1034,7 +853,6 @@ function lvhide() {
              }
          }
      }
-     console.log(k);
      if (k == items.length) {
          $(".chase-action>ul li:first-child").show().click();
      } else {
@@ -1240,17 +1058,13 @@ function getsumnum(){
         arrSelectNum=[];  
         var whichplay=$(".all-ways").siblings("div:visible").find(".numbers:visible");
         var $span=whichplay.find("span.clicked");
-    	$span.each(function(i,v){
-            arrSelectNum[i]=$(v).text();
-    	})
+        $span.each(function(i, v) {
+            arrSelectNum[i] = $(v).text();
+        });
     }
-
-    //console.log(s);
     $(".play-action").find("p span:first-child").text(s);
 	$(".play-action").find("p span:last-child").text(2*s*times);
-
 	$('.additems').data('type',type);
-
 } 
 
 
@@ -1384,46 +1198,46 @@ lottery.GetIssNum = function () {
     });
 }
 
-function BettHtml() {
-    $('.select-table tbody').html(selectbettnum);
-    if (selectbettnum != '') {
-        //金额计算：
-        $(".select-table table tbody tr input[type='text']").change(function () {
-            var _this = $(this);
-            var nums = _this.val();
-            if (!reg.test(nums) || nums == "") {
-                _this.val("0");
-            } else {
-                if (nums.split("")[0] == "0" && nums.length > 1) {
-                    _this.val(nums.substring(1));
-                }
-            }
-            var totalfee = $("#totalfee").text();
-            var times4 = _this.parent().parent().find("td").eq(2).find("input").val();
-            _this.parent().parent().find("td").eq(3).text("￥" + totalfee * times4 + ".00");
-            sumtotalFee();
-        });
-        //操作checkbox改变追号期数
-        $(".select-table table tbody tr input[type='checkbox']").change(function () {
-            if ($(this).parent().parent().data('ck') == '') {
-                $(this).parent().parent().data('ck', 'checked');
-            } else {
-                $(this).parent().parent().data('ck', '');
-            }
-            var totalfee = $("#totalfee").text();
-            var times4 = $(this).parent().parent().find("td").eq(2).find("input").val();
-            if (times4 < 1) {
-                $(this).parent().parent().find("td").eq(2).find("input").val(1);
-                times4 = 1;
-            }
-            $(this).parent().parent().find("td").eq(3).text("￥" + totalfee * times4 + ".00");
-            var num = $(".select-table table tbody tr input[type='checkbox']:checked").length;
-            $("#bettNum").val(num);
-            $(".totle em").eq(0).text(num);
-            sumtotalFee();
-        });
-    }
-}
+//function BettHtml() {
+//    $('.select-table tbody').html(selectbettnum);
+//    if (selectbettnum != '') {
+//        //金额计算：
+//        $(".select-table table tbody tr input[type='text']").change(function () {
+//            var _this = $(this);
+//            var nums = _this.val();
+//            if (!reg.test(nums) || nums == "") {
+//                _this.val("0");
+//            } else {
+//                if (nums.split("")[0] == "0" && nums.length > 1) {
+//                    _this.val(nums.substring(1));
+//                }
+//            }
+//            var totalfee = $("#totalfee").text();
+//            var times4 = _this.parent().parent().find("td").eq(2).find("input").val();
+//            _this.parent().parent().find("td").eq(3).text("￥" + totalfee * times4 + ".00");
+//            sumtotalFee();
+//        });
+//        //操作checkbox改变追号期数
+//        $(".select-table table tbody tr input[type='checkbox']").change(function () {
+//            if ($(this).parent().parent().data('ck') == '') {
+//                $(this).parent().parent().data('ck', 'checked');
+//            } else {
+//                $(this).parent().parent().data('ck', '');
+//            }
+//            var totalfee = $("#totalfee").text();
+//            var times4 = $(this).parent().parent().find("td").eq(2).find("input").val();
+//            if (times4 < 1) {
+//                $(this).parent().parent().find("td").eq(2).find("input").val(1);
+//                times4 = 1;
+//            }
+//            $(this).parent().parent().find("td").eq(3).text("￥" + totalfee * times4 + ".00");
+//            var num = $(".select-table table tbody tr input[type='checkbox']:checked").length;
+//            $("#bettNum").val(num);
+//            $(".totle em").eq(0).text(num);
+//            sumtotalFee();
+//        });
+//    }
+//}
 
 function sumtotalFee() {
     var q = 0;

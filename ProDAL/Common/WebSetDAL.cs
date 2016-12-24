@@ -30,7 +30,7 @@ namespace ProDAL
         }
         public DataTable GetPlays()
         { 
-            return GetDataTable("select c.* from   Plays c where  c.Status<>9 ");
+            return GetDataTable("select c.* from   Plays c where  c.Status<>9 order by c.AutoID");
         }
         public DataTable GetLotteryPlays(string CPcode)
         {
@@ -40,7 +40,7 @@ namespace ProDAL
                 sqlwhere = " and a.CPCode='" + CPcode + "' ";
             }
 
-            return GetDataTable("select c.*,b.PIDS,b.Content from Lottery a join LotteryPlays  b on a.CPCode=b.CPCode join Plays c on b.PID=c.PCode  " + sqlwhere);
+            return GetDataTable("select c.*,b.PIDS,b.Content from Lottery a join LotteryPlays  b on a.CPCode=b.CPCode join Plays c on b.PID=c.PCode  " + sqlwhere + " order by b.AutoID");
         }
         #region 新增 
 

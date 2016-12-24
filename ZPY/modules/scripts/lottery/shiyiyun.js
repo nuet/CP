@@ -227,7 +227,7 @@
      $(".num-selected table tfoot tr td a").click(function() {
          $("body").append("<div class='cover-layer'></div>");
          $(".alert1").show().css("z-index", "10001");
-         $(".alert1 p .btn").eq(0).click(function() {
+         $(".alert1 p .btn").eq(0).unbind("click").bind("click",function() {
              $(".num-selected table tbody").html("<tr><td width='96.25'></td><td width='96.25'></td><!-- <td></td> --><td width='96.5'></td><td width='193' title='暂无投注项'>暂无投注项</td><td width='96.5'></td><td width='96.5'></td><td width='96.5'></td></tr>");
              $(".alert1").hide();
              $(".cover-layer").remove();
@@ -273,7 +273,7 @@
              $(".alert1 h3+p textarea").text(incontent);
              $(".alert1 p:last-child").prepend('<span class="totle-money">投注总金额<strong style="margin:0 5px;">' + $('#totalfee').html() + '</strong>元</span>');
              $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "10px" });
-             $(".alert1 p .btn").eq(0).css("margin-left", "45px").click(function() {
+             $(".alert1 p .btn").eq(0).css("margin-left", "45px").unbind("click").bind("click",function() {
                  //投注进去：
                  $(".alert1").hide();
                  $(".cover-layer").remove();
@@ -655,7 +655,7 @@
      var prpfits= Math.ceil(parseInt($('#profits').val())/10);
      $(".select-table table tbody tr input[type='text']").each(function(i, v) {
          if (i > 0) {
-             $(v).val(num * Math.ceil(2 * prpfits * Math.pow((prpfits + 1), i - 1)));
+             $(v).val(num * Math.ceil( prpfits * Math.pow((prpfits + 1), i - 1)));
          }
      });
  }
