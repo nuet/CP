@@ -24,10 +24,20 @@ namespace CPiao.Controllers
             {
                 return RedirectToAction("HighLottery", "Lottery", new {id = id});
             }
+            else if (id == "SHSSL" || id == "3D")
+            {
+                return RedirectToAction("SSC3D", "Lottery", new { id = id });
+            }
             return View();
         }
 
         public ActionResult HighLottery(string id)
+        {
+            ViewBag.CPCode = id;
+            ViewBag.Model = WebSetBusiness.GetLotteryDetail(id);
+            return View();
+        }
+        public ActionResult SSC3D(string id)
         {
             ViewBag.CPCode = id;
             ViewBag.Model = WebSetBusiness.GetLotteryDetail(id);

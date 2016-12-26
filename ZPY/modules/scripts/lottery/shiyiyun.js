@@ -399,7 +399,7 @@
                          arrNums.splice(v, 1);
                          v--;
                          $(this).siblings("textarea").val(arrNums);
-                         break;
+                         //break;
                      }
                  }
              }

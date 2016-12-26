@@ -192,6 +192,7 @@
     <Content Include="modules\css\layout.css" />
     <Content Include="modules\css\message.css" />
     <Content Include="modules\css\need\laydate.css" />
+    <Content Include="modules\css\shanghaissl.css" />
     <Content Include="modules\css\shiyiyun.css" />
     <Content Include="modules\css\skins\dahong\icon.png" />
     <Content Include="modules\css\skins\dahong\laydate.css" />
@@ -811,6 +812,7 @@
     <Content Include="modules\scripts\register\partregister.js" />
     <Content Include="modules\scripts\rfriend\recommend.js" />
     <Content Include="modules\scripts\rfriend\rfriend.js" />
+    <Content Include="modules\scripts\lottery\shanghaissl.js" />
     <Content Include="modules\scripts\sysset\banks.js" />
     <Content Include="modules\scripts\sysset\feedback.js" />
     <Content Include="modules\scripts\sysset\ordersaudit.js" />
@@ -1014,6 +1016,7 @@
     <Content Include="Views\Lottery\LotteryRecord.cshtml" />
     <Content Include="Views\Lottery\BettAutoRecord.cshtml" />
     <Content Include="Views\Lottery\HighLottery.cshtml" />
+    <Content Include="Views\Lottery\SSC3D.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
