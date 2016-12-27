@@ -50,147 +50,7 @@
              break;
          }
          getsumnum();
-     });
-     $(".navs").find("li").click(function() {
-         var names = $(this).data("name");
-         if (typeof(names) != 'undefined') {
-             $(".play-action select option").eq(0).text(options1[names].firstNum);
-             $(".play-action select option").eq(1).text(options1[names].lastNum);
-         }
-
-         $(this).addClass("navs-cur").siblings().removeClass("navs-cur");
-         $(".numbers span,.sel-actions span").removeClass("clicked");
-         $(".play-action .times").val("1");
-         $(".play-action p span").text("0");
-         $(".additems").data("type", '');
-         $(".n-star textarea").val("");
-         switch ($(this).index()) {
-         case 0:
-             $(".n-star").show().siblings("div").not(".all-ways").hide();
-             $(".all-ways").show();
-             $(".all-ways").css("height", "80px");
-             $(".play-action .select-fan,.play-action select").show();
-             $(".all-ways").html('<div class="zhixuan"><span>直选</span><ul><li class="all-ways-cur" data-type="zhifu-sanxing">直选复式</li>' +
-                 '<li data-type="handin-sanxingd">直选单式</li>' +
-                 '<li data-type="zhi-hezhi">直选和值</li></ul></div>' +
-                 '<div class="zuxuan"><span>组选</span><ul><li data-type="zuxuans-sanxing">组三</li>' +
-                 '<li data-type="zuxuanl-sanxing">组六</li><li data-type="handin-sanxingz">混合组选</li>' +
-                 '<li data-type="zu-hezhi">组选和值</li></ul></div>');
-             break;
-         case 1:
-             $(".n-star").show().siblings("div").not(".all-ways").hide();
-             $(".all-ways").show();
-             $(".all-ways").css("height", "80px");
-
-             $(".all-ways").html('<div class="houer"><span>后二</span><ul><li class="all-ways-cur" data-type="zhifu-erxingh">直选复式</li><li data-type="handin-erxinghzhi">直选单式</li><li data-type="zuxuan-erxingh">组选复式</li><li data-type="handin-erxinghz">组选单式</li></ul></div><div class="qianer"><span>前二</span><ul><li data-type="zhifu-erxingq">直选复式</li><li data-type="handin-erxingqzhi">直选单式</li><li data-type="zuxuan-erxingq">组选复式</li><li data-type="handin-erxingqz">组选单式</li></ul></div>');
-             $(".play-section .zhifu>p").html("从十位和个位上至少各选1个号码。");
-
-             $(".play-action .select-fan,.play-action select").show();
-             break;
-         case 2:
-             $(".fixed").show().siblings("div").hide();
-             $(".all-ways").html('');
-             $(".play-action .select-fan,.play-action select").show();
-             break;
-         case 3:
-             $(".non-fixed").show().siblings("div").not(".all-ways").hide();
-             $(".all-ways").show();
-             $(".all-ways").html('<div class="yima"><span>一码</span><ul><li class="all-ways-cur" data-type="yima">一码不定位</li></ul></div><div class="erma"><span>二码</span><ul><li data-type="erma">二码不定位</li></ul></div>');
-             $(".all-ways").css("height", "80px");
-             $(".play-action .select-fan,.play-action select").show();
-             break;
-         case 4:
-             $(".interests").show().siblings("div").not(".all-ways").hide();
-             $(".all-ways").show();
-             $(".all-ways").html('<span>大小单双</span><ul><li class="all-ways-cur" data-type="qdxds">前二大小单双</li><li data-type="hdxds">后二大小单双</li></ul>');
-             $(".all-ways").css("height", "40px");
-             $(".play-action .select-fan,.play-action select").hide();
-             break;
-         }
-         $(".all-ways").find("li").click(function() {
-             var allwaysType = $(this).data("type");
-             $(".play-action .select-fan,.play-action select").show();
-             if (allwaysType.indexOf("zhifu") > -1) {
-                 $(".n-star .play-section .zhifu").show().siblings().hide();
-                 $(".zhifu li").show();
-                 if (allwaysType == "zhifu-sanxing") {
-                     $(".zhifu>p").text("从百位、十位、个位中至少各选1个号码。");
-                 } else if (allwaysType == "zhifu-erxingh") {
-                     $(".zhifu>p").text("从十位和个位上至少各选1个号码。");
-                     $(".zhifu li").eq(0).hide();
-                 } else if (allwaysType == "zhifu-erxingq") {
-                     $(".zhifu>p").text("从百位和十位上至少各选1个号码。");
-                     $(".zhifu li").eq(2).hide();
-                 }
-
-             } else if (allwaysType.indexOf("handin") > -1) {
-                 $(".n-star .play-section .handin").show().siblings().hide();
-                 if (allwaysType.indexOf("sanxing") > -1) {
-                     $(".handin p:first-child").text("手动输入号码，至少输入1个三位数号码。");
-                     //混合组选去掉返点select。
-                     if (allwaysType.indexOf("handin-sanxingz") > -1) {
-                         $(".play-action .select-fan,.play-action select").hide();
-                     }
-                 } else if (allwaysType.indexOf("erxing") > -1) {
-                     $(".handin p:first-child").text("手动输入号码，至少输入1个两位数号码。");
-                 }
-             } else if (allwaysType.indexOf("-hezhi") > -1) {
-                 $(".n-star .play-section .hezhi").show().siblings().hide();
-                 if (allwaysType.indexOf("zu") > -1) {
-                     $(".hezhi>p").text("从1-26中任意选择1个或1个以上号码。");
-                     $(".zh-hezhi").hide();
-                     $(".zu-hezhi").show();
-                     $(".play-action .select-fan,.play-action select").hide();
-                 } else {
-                     $(".hezhi>p").text("从0-27中任意选择1个或1个以上号码。");
-                     $(".zu-hezhi").hide();
-                     $(".zh-hezhi").show();
-                 }
-             } else if (allwaysType.indexOf("zuxuan") > -1) {
-                 $(".n-star .play-section .zuxuans").show().siblings().hide();
-                 if (allwaysType.indexOf("l") == -1) {
-                     $(".zuxuans>p").text("从0-9中任意选择2个或2个以上号码。");
-                     if (allwaysType.indexOf("zuxuans") > -1) {
-                         $(".zuxuans li p").text("组三");
-                     } else {
-                         $(".zuxuans li p").text("组选");
-                     }
-                 } else {
-                     $(".zuxuans>p").text("从0-9中任意选择3个或3个以上号码。");
-                     $(".zuxuans li p").text("组六");
-                 }
-             } else if (allwaysType.indexOf("yima") > -1) {
-                 $(".non-fixed .play-section>p").text("从0-9中任意选择1个或1个以上号码。");
-                 $(".non-fixed .play-section ul p").text("一码");
-             } else if (allwaysType.indexOf("erma") > -1) {
-                 $(".non-fixed .play-section>p").text("从0-9中任意选择2个或2个以上号码。");
-                 $(".non-fixed .play-section ul p").text("二码");
-             } else if (allwaysType.indexOf("qdxds") > -1) {
-                 $(".interests .play-section>p").text("从百位、十位中的“大、小、单、双”中至少各选一个组成一注。");
-                 $(".interests .num-select li").show().eq(2).hide();
-             } else if (allwaysType.indexOf("hdxds") > -1) {
-                 $(".interests .play-section>p").text("从十位、个位中的“大、小、单、双”中至少各选一个组成一注。");
-                 $(".interests .num-select li").show().eq(0).hide();
-             }
-
-
-             $(".additems").data("type", '');
-             var names = $(this).data("name");
-             if (typeof(names) != 'undefined') {
-                 $(".play-action select option").eq(0).text(options1[names].firstNum);
-                 $(".play-action select option").eq(1).text(options1[names].lastNum);
-             }
-
-             $(".numbers span,.sel-actions span").removeClass("clicked");
-             $(".play-action .times").val("1");
-             $(".play-action p span").text("0");
-             $(this).addClass("all-ways-cur").parents(".all-ways").find("li").not($(this)).removeClass("all-ways-cur");
-             $(".n-star textarea").val("");
-         });
-         $(".all-ways").find("li").eq(0).click();
-     });
-     $(".navs").find("li").eq(0).click();
-
+     }); 
      //加1减1：
      $("img[alt='plus']").click(function() {
          var _this = $(this);
@@ -706,24 +566,26 @@ function bindnavs() {
                 $(".n-star .play-section .zufu").find("p").eq(0).html("从01-11中任意选择3个或3个以上号码。");
                 $(".n-star .play-section .zudan").find("p").eq(0).html("手动输入号码，至少输入1个三位数号码组成一注。");
                 $(".n-star .zhifu li").eq(2).show();
-
+                $(".all-ways").css("height", "80px").html("").show();
                 for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
                     var tempitem = lottery.CPTypes[$(this).data("sid")][i];
-                    html += '<span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
+                    html += '<div class="' + (tempitem.PCode == '2ZHIX' ? 'zhixuan' : 'zuxuan') + '"><span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
                     for (var j = 0; j < tempitem.ChildPlays.length; j++) {
                         var titem = tempitem.ChildPlays[j];
                         if (titem.PCode == '3ZHIXFS') {
-                            html += '<li class="all-ways-cur" data-id="zhifu" data-name="sanxing1" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                            html += '<li class="all-ways-cur" data-type="zhifu-sanxing" data-name="1QIANS1" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         } else if (titem.PCode == '3ZHIXDS') {
-                            html += '<li  data-id="handin1" data-name="sanxing1"  data-type="3" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
-                        } else if (titem.PCode == '3ZUXFS') {
-                            html += '<li  data-id="zufu" data-name="sanxing2"  data-type="3" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                            html += '<li  data-name="1QIANS1"  data-type="handin-sanxingd" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        } else if (titem.PCode == '3ZHIXHZ') {
+                            html += '<li data-name="1QIANS1"  data-type="zhi-hezhi" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        } else if (titem.PCode == '3ZUS') {
+                            html += '<li  data-id="zufu" data-name="1QIANS1"  data-type="zuxuans-sanxing" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        } else if (titem.PCode == '3ZUL') {
+                            html += '<li  data-name="1QIANS1"  data-type="zuxuanl-sanxing" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         } else if (titem.PCode == '3HHZUX') {
-                            html += '<li  data-type="handin-' + tp + 'sanxingz" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                            html += '<li  data-type="handin-sanxingz" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         } else if (titem.PCode == '3ZUXHZ') {
-                            html += '<li  data-type="zu-' + tp + 'hezhi" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
-                        } else {
-                            html += '<li  data-id="handin2" data-name="sanxing2"  data-type="3" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                            html += '<li  data-type="zu-hezhi" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         }
                     }
                     html += '</ul>';
@@ -736,52 +598,62 @@ function bindnavs() {
                 $(".n-star .play-section .zufu").find("p").eq(0).html("从01-11中任意选择2个或2个以上号码。");
                 $(".n-star .play-section .zudan").find("p").eq(0).html("手动输入号码，至少输入1个两位数号码组成一注。");
                 $(".n-star .zhifu li").eq(2).hide();
+                $(".all-ways").css("height", "80px").html("").show();
+                var isfrist = false;
                 for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
                     var tempitem = lottery.CPTypes[$(this).data("sid")][i];
-                    html += '<span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
+                    html += '<div class="' + (tempitem.PCode == '2HE' ? 'houer' : 'qianer') + '"><span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
+                    var tp = (tempitem.PCode == '2HE' ? 'h' : 'q');
                     for (var j = 0; j < tempitem.ChildPlays.length; j++) {
                         var titem = tempitem.ChildPlays[j];
                         if (titem.PCode == '3ZHIXFS') {
-                            html += '<li class="all-ways-cur" data-id="zhifu" data-name="erxing1" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                            html += '<li class="' + (!isfrist ? "all-ways-cur" : "") + '"  data-type="zhifu-erxing'+ tp + '" data-name="erxing1" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                            isfrist = true;
                         } else if (titem.PCode == '3ZHIXDS') {
-                            html += '<li  data-id="handin1" data-name="erxing1"  data-type="2" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                            html += '<li data-name="erxing1"  data-type="handin-erxing' + tp + 'zhi" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         } else if (titem.PCode == '3ZUXFS') {
-                            html += '<li  data-id="zufu" data-name="erxing2"  data-type="2" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                            html += '<li data-type="zuxuan-erxing' + tp + '" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         } else {
-                            html += '<li  data-id="handin2" data-name="erxing2"  data-type="2" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                            html += '<li data-name="erxing2"  data-type="handin-erxing' + tp + 'z" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         }
                     }
                     html += '</ul>';
                 }
                 $(".all-ways").html(html);
                 break;
-                case 'dingweidan':
-                case 'budingwei':
+            case 'dingweidan':
                     $('.' + _this.data('id')).show().siblings("div").hide();
-                    break;
-            case 'renxuan1':
+                break;
+            case 'budingwei':
+                $(".all-ways").css("height", "80px").html("").show();
+                var isfrist = false;
                 for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
                     var tempitem = lottery.CPTypes[$(this).data("sid")][i];
-                    html += '<div class="' + (tempitem.PCode == '2FUS' ? 'fushi' : 'danshi') + '"><span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
+                    html += '<div class="' + (tempitem.PCode == '2YM' ? 'yima' : 'erma') + '"><span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
+                    var tp = (tempitem.PCode == '2YM' ? 'yi' : 'er');
                     for (var j = 0; j < tempitem.ChildPlays.length; j++) {
                         var titem = tempitem.ChildPlays[j];
-                        html += '<li ' + (tempitem.PCode == '2FUS' ? 'data-id="fu1"' : '') + '  data-type="' + (j + 1) + '" data-name="renxuan' + (j + 1) + '" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        if (titem.PCode == '3HSYMBDW') {
+                            html += '<li class="' + (!isfrist ? "all-ways-cur" : "") + '"  data-type="' + tp + 'ma" data-name="erxing1" data-sid="' + titem.PIDS + '" style="width:120px;">' + titem.PName + '</li>';
+                            isfrist = true;
+                        } else if (titem.PCode == '3HSEMBDW') {
+                            html += '<li data-name="erxing1"  data-type="' + tp + 'ma" data-sid="' + titem.PIDS + '" style="width:120px;">' + titem.PName + '</li>';
+                        }  
                     }
-                    html += '</ul></div>';
+                    html += '</ul>';
                 }
-                $(".all-ways").css("height", "80px");
                 $(".all-ways").html(html);
-                break;
+                break; 
             case '':
                 for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
                     var tempitem = lottery.CPTypes[$(this).data("sid")][i];
                     html += '<span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
                     for (var j = 0; j < tempitem.ChildPlays.length; j++) {
                         var titem = tempitem.ChildPlays[j];
-                        if (titem.PCode == '3DINGDS') {
-                            html += '<li class="all-ways-cur"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
-                        } else {
-                            html += '<li data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        if (titem.PCode == '3QEDXDS') {
+                            html += '<li class="all-ways-cur"  data-type="qdxds" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        } else if (titem.PCode == "3HEDXDS") {
+                            html += '<li data-type="hdxds" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         }
                     }
                     html += '</ul>';

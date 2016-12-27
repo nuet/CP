@@ -10,7 +10,7 @@ namespace CPiao.Controllers
 {
     public class BaseController : Controller
     {
-        protected int PageSize = 20;
+        protected int PageSize = 12;
 
         protected Dictionary<string, object> JsonDictionary = new Dictionary<string, object>();
 

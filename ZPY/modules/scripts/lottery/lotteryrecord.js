@@ -80,7 +80,7 @@ records.getRecords = function () {
             mouse: 'slide',
             onChange: function (page) {
                 Params.pageIndex = page;
-                GetReplay();
+                records.getRecords();
             }
         });
     });
