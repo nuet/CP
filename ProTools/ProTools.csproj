@@ -39,9 +39,13 @@
       <HintPath>..\packages\L.3.0.0\lib\L.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\ZPY\DLL\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,7 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfig.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="HttpRequest.cs" />
+    <Compile Include="KCWBase.cs" />
     <Compile Include="SendMail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -989,7 +989,7 @@ lottery.getDifDate = function (item) {
 }
 lottery.GetIssNum= function() {
     $.post('/Lottery/GetlotteryResult', {
-        cpcode: lottery.CPCode, status: 0, pagesize: lottery.CPCode=="GD115"?84:78, orderby: true, btime: new Date().format('yyyy-MM-dd') + ' 00:00:00', etime: new Date().format('yyyy-MM-dd')
+        cpcode: lottery.CPCode, status: 0, pagesize: lottery.CPCode=="GD11X5"?84:78, orderby: true, btime: new Date().format('yyyy-MM-dd') + ' 00:00:00', etime: new Date().format('yyyy-MM-dd')
     }, function (data) {
         var html = '';
         var zhhtml = '';
