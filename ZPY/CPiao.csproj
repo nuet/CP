@@ -147,6 +147,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LotteryController.cs" />
     <Compile Include="Controllers\PlugController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SysSetController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1017,6 +1018,10 @@
     <Content Include="Views\Lottery\BettAutoRecord.cshtml" />
     <Content Include="Views\Lottery\HighLottery.cshtml" />
     <Content Include="Views\Lottery\SSC3D.cshtml" />
+    <Content Include="Views\Report\ReportList.cshtml" />
+    <Content Include="Views\Report\ReportSee.cshtml" />
+    <Content Include="Views\Report\ReportToday.cshtml" />
+    <Content Include="Views\Report\ReportProfit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -24,7 +24,7 @@ namespace CPiao.Controllers
             {
                 return RedirectToAction("HighLottery", "Lottery", new {id = id});
             }
-            else if (id == "SHSSL" || id == "3D")
+            else if (id == "SHSSL" || id == "FC3D")
             {
                 return RedirectToAction("SSC3D", "Lottery", new { id = id });
             }

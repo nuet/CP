@@ -147,7 +147,7 @@ ul.num-select li div span:hover{background: #ffecec;}
 .width120{ width: 120px !important;}
 .width130{ width: 130px !important;}
 .width140{ width: 140px !important;}
-.width200{ width: 200px !important;}
+.width200{ width: 200px !important;word-break: break-all; }
 .footer{width: 1000px;height: 65px;border:1px solid #bbb;margin-bottom: 30px;background: white;}
 .footer p{float: right;margin-right: 20px;line-height: 65px;color: #777;}
 

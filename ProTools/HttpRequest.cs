@@ -23,9 +23,9 @@ namespace ProTools
         public static T RequestServer<T>(KCWAppUrl etype, Dictionary<string, object> paras, RequestType requestType = RequestType.Get)
         { 
             string type=GetEnumDesc<KCWAppUrl>(etype);
-            string url = AppConfig.AppUrl + "/" + type + "?token" + AppConfig.AppKey;
+            string url = AppConfig.AppUrl + "/" + type;
             string paraStr = string.Empty; 
-
+            paras.Add("token",AppConfig.AppKey);
             if (paras != null && paras.Count > 0)
             {
                 paraStr += CreateParameterStr(paras);
@@ -86,22 +86,22 @@ namespace ProTools
                     response.Close();
 
                 }
+                
             }
             catch (System.Net.WebException webException)
             {
                 HttpWebResponse response = webException.Response as HttpWebResponse;
-                Stream responseStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                strResult = reader.ReadToEnd();
-
-                reader.Close();
+                if (response != null)
+                {
+                    Stream responseStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    strResult = reader.ReadToEnd();
+                    reader.Close();
+                }
                 response.Close();
+                 
             }
-
-
-
             return JsonConvert.DeserializeObject<T>(strResult);
-
         }
 
         private static String CreateParameterStr(Dictionary<String, Object> parameters)

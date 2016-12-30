@@ -17,19 +17,29 @@ namespace CPiao.TaskRun
         string start = "09:03";
         string end = "21:55";
         #endregion
-        private Object thisLock = new Object();
-        private Object resultlock = new Object();
-        private Object gdlock = new Object(); 
+        private Object thisLock = new Object(); 
+        private Object gdlock = new Object();
+        private Object sdlock = new Object();
+        private Object hljlock = new Object();
+        private Object jxlock = new Object();
+        private Object xjlock = new Object();
+        private Object tjlock = new Object();
+        private Object fc3dlock = new Object(); 
+        private Object shlock = new Object(); 
         public TaskBase()
         {
             NonReentrantAsDefault();
 
             InsertLottery();
-            UpdateSD11X5Status();
+            UpdateLotteryStatus();
             UpdateSD11X5Result();
             UpdateGD11X5Result();
             UpdateJX11X5Result();
-            UpdateSHSSLResult()
+            UpdateSHSSLResult();
+            UpdateTJSSCResult();
+            UpdateXJSSCResult();
+            UpdateHLJSSCResult();
+            UpdateFC3DResult();
             BeetAuto();
             //NonReentrant();
             //Reentrant();
@@ -57,9 +67,9 @@ namespace CPiao.TaskRun
                L.Log("[insertlottery]", "End...");
             }).NonReentrant().WithName("[insertlottery]").ToRunEvery(1).Days().At(09, 39);
         }
-        private void UpdateSD11X5Status()
+        private void UpdateLotteryStatus()
         {
-            L.Register("[updatesd11x5status]");
+            L.Register("[updatelotterystatus]");
 
             Schedule(() =>
             {
@@ -90,8 +100,16 @@ namespace CPiao.TaskRun
                             LotteryResultBusiness.UpdateStatus("XJSSC", 1);
                         }
                     }
+                    else if (min == 55 && DateTime.Now.Hour==21)
+                    {
+                        lock (thisLock)
+                        {
+                            LotteryResultBusiness.UpdateStatus("FCSD", 1);
+                        }
+                    }
+
                 }
-            }).NonReentrant().WithName("[updatesd11x5status]").ToRunNow().AndEvery(1).Minutes();
+            }).NonReentrant().WithName("[updatelotterystatus]").ToRunNow().AndEvery(1).Minutes();
         }
         private void UpdateSD11X5Result()
         {
@@ -104,18 +122,19 @@ namespace CPiao.TaskRun
                 int min = DateTime.Now.Minute;
                 int sec = DateTime.Now.Second;
                 if (tmNow >= startTime && tmNow <= endTime)
-                {
-                    var s = min.ToString().Length > 1 ? min.ToString().Substring(1, 1) : min.ToString();
-                    if (s == "5")
+                { 
+                    lock (sdlock)
                     {
-                        lock (resultlock)
+                        //方法处理
+                        KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
+                                Getparas("SD11X5"));
+                        if (kcwresult.Data.Count > 0)
                         {
-                            //方法处理
-                            var reuslt="01 02 03 04 05"; var issueNum="2016120634";
-                            var suc = TaskService.BasService.OpenLotteryResult(reuslt, issueNum, "SD11X5");
-                            L.Log(issueNum + (suc ? "开奖成功!" : "开奖失败"));
+                            var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '),
+                                kcwresult.Data[0].Expect, "SD11X5");
+                            L.Log("SD11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
                         }
-                    } 
+                    }  
                 }
             }).NonReentrant().WithName("[updatesd11x5result]").ToRunNow().AndEvery(1).Minutes();
         }
@@ -130,18 +149,18 @@ namespace CPiao.TaskRun
                 int min = DateTime.Now.Minute;
                 int sec = DateTime.Now.Second;
                 if (tmNow >= startTime && tmNow <= endTime)
-                {
-                    var s = min.ToString().Length > 1 ? min.ToString().Substring(1, 1) : min.ToString();
-                    if (s == "9")
+                { 
+                    lock (jxlock)
                     {
-                        lock (resultlock)
+                        //方法处理
+                        KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
+                                Getparas("JX11X5"));
+                        if (kcwresult.Data.Count > 0)
                         {
-                            //方法处理
-                            var reuslt = "01 02 03 04 05"; var issueNum = "2016120634";
-                            var suc = TaskService.BasService.OpenLotteryResult(reuslt, issueNum, "JX11X5");
-                            L.Log(issueNum + (suc ? "开奖成功!" : "开奖失败"));
-                        } 
-                    }
+                            var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "JX11X5");
+                            L.Log("JX11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                        }
+                    }  
                 }
             }).NonReentrant().WithName("[UpdateJX11X5Result]").ToRunNow().AndEvery(1).Minutes();
         }
@@ -156,48 +175,147 @@ namespace CPiao.TaskRun
                 int min = DateTime.Now.Minute;
                 int sec = DateTime.Now.Second;
                 if (tmNow >= startTime && tmNow <= endTime)
-                {
-                    var s = min.ToString().Length > 1 ? min.ToString().Substring(1, 1) : min.ToString();
-                    if (s == "9")
+                { 
+                    lock (gdlock)
                     {
-                        lock (gdlock)
+                        KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
+                                Getparas("GD11X5"));
+                        if (kcwresult.Data.Count > 0)
                         {
-                            var reuslt = "01 02 03 04 05";
-                            var isseueNum = "";
-                            var suc = TaskService.BasService.OpenLotteryResult(reuslt, isseueNum, "GD11X5");
+                            var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "GD11X5");
+                            L.Log("GD11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
                         }
-                    }
+                    } 
                 }
             }).NonReentrant().WithName("[UpdateGD11X5Result]").ToRunNow().AndEvery(1).Minutes();
         }
         private void UpdateSHSSLResult()
         {
-            L.Register("[UpdateGD11X5Result]");
+            L.Register("[UpdateSHSSLResult]");
             Schedule(() =>
             {
                 TimeSpan startTime = DateTime.Parse("10:26").TimeOfDay;
                 TimeSpan endTime = DateTime.Parse("22:10").TimeOfDay;
+                TimeSpan tmNow = DateTime.Now.TimeOfDay; 
+                if (tmNow >= startTime && tmNow <= endTime)
+                { 
+                    lock (shlock)
+                    {
+                        KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
+                                Getparas("SHSSL")); 
+                        if (kcwresult.Data.Count > 0)
+                        {
+                                var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "SHSSL");
+                                L.Log("SHSSL:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                        } 
+                    } 
+                }
+            }).NonReentrant().WithName("[UpdateSHSSLResult]").ToRunNow().AndEvery(1).Minutes();
+        }
+        private void UpdateTJSSCResult()
+        {
+            L.Register("[UpdateTJSSCResult]");
+            Schedule(() =>
+            {
+                TimeSpan startTime = DateTime.Parse("09:09").TimeOfDay;
+                TimeSpan endTime = DateTime.Parse("23:02").TimeOfDay;
+                TimeSpan tmNow = DateTime.Now.TimeOfDay; 
+                if (tmNow >= startTime && tmNow <= endTime)
+                { 
+                    lock (tjlock)
+                    {
+                        KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
+                                Getparas("TJSSC")); 
+                        if (kcwresult.Data.Count > 0)
+                        {
+                                var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "TJSSC");
+                                L.Log("TJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                        } 
+                    }
+                }
+            }).NonReentrant().WithName("[UpdateTJSSCResult]").ToRunNow().AndEvery(1).Minutes();
+        }
+        private void UpdateHLJSSCResult()
+        {
+            L.Register("[UpdateHLJSSCResult]");
+            Schedule(() =>
+            {
+                TimeSpan startTime = DateTime.Parse("09:09").TimeOfDay;
+                TimeSpan endTime = DateTime.Parse("23:02").TimeOfDay;
+                TimeSpan tmNow = DateTime.Now.TimeOfDay; 
+                if (tmNow >= startTime && tmNow <= endTime)
+                { 
+                    lock (hljlock)
+                    {
+                        KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
+                                Getparas("HLJSSC")); 
+                        if (kcwresult.Data.Count > 0)
+                        {
+                                var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "HLJSSC");
+                                L.Log("HLJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                        } 
+                    }
+                }
+            }).NonReentrant().WithName("[UpdateHLJSSCResult]").ToRunNow().AndEvery(1).Minutes();
+        }
+        private void UpdateFC3DResult()
+        {
+            L.Register("[UpdateFC3DResult]");
+            Schedule(() =>
+            {
+                TimeSpan startTime = DateTime.Parse("20:30").TimeOfDay;
+                TimeSpan endTime = DateTime.Parse("20:46").TimeOfDay;
                 TimeSpan tmNow = DateTime.Now.TimeOfDay;
-                int min = DateTime.Now.Minute;
-                int sec = DateTime.Now.Second;
                 if (tmNow >= startTime && tmNow <= endTime)
                 {
-                    var s = min.ToString().Length > 1 ? min.ToString().Substring(1, 1) : min.ToString();
-                    if (s == "5")
+                    if (DateTime.Now.Minute%2 == 0)
                     {
-                        lock (gdlock)
+                        lock (fc3dlock)
                         {
-                            KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
-                                    Getparas("SHSSL")); 
+
+                            KCWBase<DataResult> kcwresult =
+                                ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
+                                    Getparas("FC3D"));
                             if (kcwresult.Data.Count > 0)
                             {
-                                 TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode, kcwresult.Data[0].Expect, "SHSSL");
-                            } 
+                                var suc =
+                                    TaskService.BasService.OpenLotteryResult(
+                                        kcwresult.Data[0].OpenCode.Replace(',', ' '),
+                                        kcwresult.Data[0].Expect, "FC3D");
+                                L.Log("FC3D:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                            }
                         }
                     }
                 }
-            }).NonReentrant().WithName("[UpdateGD11X5Result]").ToRunNow().AndEvery(1).Minutes();
+            }).NonReentrant().WithName("[UpdateFC3DResult]").ToRunNow().AndEvery(1).Minutes();
         }
+        private void UpdateXJSSCResult()
+        {
+            L.Register("[UpdateXJSSCResult]");
+            Schedule(() =>
+            {
+                TimeSpan startTime = DateTime.Parse("09:09").TimeOfDay;
+                TimeSpan endTime = DateTime.Parse("23:02").TimeOfDay;
+                TimeSpan tmNow = DateTime.Now.TimeOfDay;
+                if (tmNow >= startTime && tmNow <= endTime)
+                {
+                    lock (xjlock)
+                    {
+                        KCWBase<DataResult> kcwresult =
+                            ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
+                                Getparas("XJSSC"));
+                        if (kcwresult.Data.Count > 0)
+                        {
+                            var suc =
+                                TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',', ' '),
+                                    kcwresult.Data[0].Expect, "XJSSC");
+                            L.Log("XJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                        }
+                    }
+                }
+            }).NonReentrant().WithName("[UpdateXJSSCResult]").ToRunNow().AndEvery(1).Minutes();
+        }
+
         private void BeetAuto()
         {
             L.Register("[beetAuto]");
@@ -214,7 +332,7 @@ namespace CPiao.TaskRun
             paraDir.Add("code",code); 
             if (!string.IsNullOrEmpty(format))
             {
-                paraDir.Add("format", 1);
+                paraDir.Add("format", format);
             }
             if (!string.IsNullOrEmpty(adate))
             {
