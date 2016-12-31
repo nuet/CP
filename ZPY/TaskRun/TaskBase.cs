@@ -338,7 +338,7 @@ namespace CPiao.TaskRun
             {
                 paraDir.Add("date", adate);
             }
-            paraDir.Add("row", row > 0 ? row : 5);
+            paraDir.Add("rows", row > 0 ? row : 5);
             return paraDir;
         }
 
