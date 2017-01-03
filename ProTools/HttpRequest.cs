@@ -86,7 +86,7 @@ namespace ProTools
                     response.Close();
 
                 }
-                
+                return JsonConvert.DeserializeObject<T>(strResult);
             }
             catch (System.Net.WebException webException)
             {
@@ -99,9 +99,9 @@ namespace ProTools
                     reader.Close();
                 }
                 response.Close();
-                 
+                return default(T);
             }
-            return JsonConvert.DeserializeObject<T>(strResult);
+           
         }
 
         private static String CreateParameterStr(Dictionary<String, Object> parameters)

@@ -33,6 +33,10 @@ namespace ProBusiness
             {
                 sqlwhere += " and a.status=" + status;
             }
+            if (!string.IsNullOrEmpty(cpcode))
+            {
+                sqlwhere += " and a.cpcode='" + cpcode+"'";
+            }
            if (winType > -1)
            {
                sqlwhere += " and a.WinType=" + winType;
@@ -177,7 +181,7 @@ namespace ProBusiness
 
 
 
-       public static int CreateUserOrderList(List<LotteryOrder> models, M_Users user,string ip,int usedisFee,ref string errmsg )
+       public static int CreateUserOrderList(List<LotteryOrder> models, M_Users user,string ip,int usedisFee,int palytype,ref string errmsg )
        {
            int k = 0;
            string msg = "";
@@ -186,7 +190,7 @@ namespace ProBusiness
                string errormsg = "";
                string orderCode = DateTime.Now.ToString("yyyyMMddhhMMssfff") + user.AutoID;
                var result = CreateLotteryOrder(orderCode, x.IssueNum, x.Type,x.TypeName,x.CPCode, x.CPName, x.Content.Replace("\"",""),
-                   x.Num, x.PayFee, user.UserID, x.PMuch, x.RPoint, ip, usedisFee, ref errormsg);
+                   x.Num, x.PayFee, user.UserID, x.PMuch, x.RPoint, ip, usedisFee,palytype, "",ref errormsg);
                if (!result)
                {
                    msg += x.Content + "    " + errormsg+"/n";
@@ -201,11 +205,11 @@ namespace ProBusiness
        }
 
        public static bool CreateLotteryOrder(string ordercode, string issueNum, string type, string typename,string cpcode, string cpname, string content,  int num,
-           decimal payfee, string userID, int pmuch, decimal rpoint, string operatip,int usedisFee, ref string errormsg)
+           decimal payfee, string userID, int pmuch, decimal rpoint, string operatip,int usedisFee,int palytype, string bCode,ref string errormsg)
        {
            var orderid = Guid.NewGuid().ToString();
            return LotteryOrderDAL.BaseProvider.CreateLotteryOrder(ordercode, orderid,issueNum, type, cpcode, cpname, content, typename, num,
-            payfee, userID, pmuch, rpoint, operatip,usedisFee,ref errormsg);
+            payfee, userID, pmuch, rpoint, operatip, usedisFee, palytype, bCode,ref errormsg);
        }
         public static bool DeleteOrder(string ordercode)
         {

@@ -1214,7 +1214,7 @@ lottery.saveItems = function () {
     for (var i = 0; i < items.length; i++) {
         items[i].IssueNum = $('#issueslt').val();
     }
-    $.post('/Lottery/AddLotteryOrders', { list: JSON.stringify(items), usedisFee: $('#isusedic').attr('checked') == 'checked' ? 1 : 0 }, function (data) {
+    $.post('/Lottery/AddLotteryOrders', { list: JSON.stringify(items), usedisFee: $('#isusedic').prop('checked')? 1 : 0 }, function (data) {
         if (data.result > 0) {
             items = [];
             $(".num-selected table tbody").html('');

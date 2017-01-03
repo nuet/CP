@@ -9,7 +9,17 @@ namespace ProEntity
     public class LotteryOrder
     {
         public long AutoID { get; set; }
+        /// <summary>
+        /// 投注单号
+        /// </summary>
         public string LCode { get; set; }
+        /// <summary>
+        /// 追号单号
+        /// </summary>
+        public string BCode { get; set; }
+        /// <summary>
+        /// 投注ID
+        /// </summary>
         public string LID { get; set; }
         public string CPCode { get; set; }
         public string CPName { get; set; } 

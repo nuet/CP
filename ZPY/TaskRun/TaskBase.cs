@@ -128,7 +128,7 @@ namespace CPiao.TaskRun
                         //方法处理
                         KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
                                 Getparas("SD11X5"));
-                        if (kcwresult.Data.Count > 0)
+                        if (kcwresult!=null && kcwresult.Data.Count > 0)
                         {
                             var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '),
                                 kcwresult.Data[0].Expect, "SD11X5");
@@ -155,7 +155,7 @@ namespace CPiao.TaskRun
                         //方法处理
                         KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
                                 Getparas("JX11X5"));
-                        if (kcwresult.Data.Count > 0)
+                        if (kcwresult!=null && kcwresult.Data.Count > 0)
                         {
                             var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "JX11X5");
                             L.Log("JX11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
@@ -180,7 +180,7 @@ namespace CPiao.TaskRun
                     {
                         KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
                                 Getparas("GD11X5"));
-                        if (kcwresult.Data.Count > 0)
+                        if (kcwresult != null && kcwresult.Data.Count > 0)
                         {
                             var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "GD11X5");
                             L.Log("GD11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
@@ -202,8 +202,8 @@ namespace CPiao.TaskRun
                     lock (shlock)
                     {
                         KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
-                                Getparas("SHSSL")); 
-                        if (kcwresult.Data.Count > 0)
+                                Getparas("SHSSL"));
+                        if (kcwresult != null && kcwresult.Data.Count > 0)
                         {
                                 var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "SHSSL");
                                 L.Log("SHSSL:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
@@ -225,8 +225,8 @@ namespace CPiao.TaskRun
                     lock (tjlock)
                     {
                         KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
-                                Getparas("TJSSC")); 
-                        if (kcwresult.Data.Count > 0)
+                                Getparas("TJSSC"));
+                        if (kcwresult != null && kcwresult.Data.Count > 0)
                         {
                                 var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "TJSSC");
                                 L.Log("TJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
@@ -248,8 +248,8 @@ namespace CPiao.TaskRun
                     lock (hljlock)
                     {
                         KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
-                                Getparas("HLJSSC")); 
-                        if (kcwresult.Data.Count > 0)
+                                Getparas("HLJSSC"));
+                        if (kcwresult != null && kcwresult.Data.Count > 0)
                         {
                                 var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "HLJSSC");
                                 L.Log("HLJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
@@ -276,7 +276,7 @@ namespace CPiao.TaskRun
                             KCWBase<DataResult> kcwresult =
                                 ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
                                     Getparas("FC3D"));
-                            if (kcwresult.Data.Count > 0)
+                            if (kcwresult != null && kcwresult.Data.Count > 0)
                             {
                                 var suc =
                                     TaskService.BasService.OpenLotteryResult(
@@ -304,7 +304,7 @@ namespace CPiao.TaskRun
                         KCWBase<DataResult> kcwresult =
                             ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
                                 Getparas("XJSSC"));
-                        if (kcwresult.Data.Count > 0)
+                        if (kcwresult != null && kcwresult.Data.Count > 0)
                         {
                             var suc =
                                 TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',', ' '),

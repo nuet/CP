@@ -96,7 +96,7 @@ ul.num-select li div span:hover{background: #ffecec;}
 .num-selected table thead tr{display: block;}
 /*.num-selected table td{width: 80px;}
 .num-selected table th{width: 80px;}*/
-.add-bet{float: left;width: 180px;margin-left: 10px;background: #103049;color: white;height: 200px;padding-left: 10px;}
+.add-bet{float: left;width: 180px;margin-left: 10px;background: #103049;color: white;height: 230px;padding-left: 10px;}
 .add-bet p{line-height: 28px;}
 .add-bet p:first-child{margin-top: 10px;}
 .add-bet select{height: 24px;border-radius: 4px;width: 170px;padding-left: 5px;margin-top: 6px;margin-bottom: 6px;}
@@ -172,8 +172,30 @@ ul.num-select li div span:hover{background: #ffecec;}
 .alert1 p{width: 100%;}
 .alert1 h3+p img{margin:20px 15px 15px 15px;vertical-align: middle;}
 .alert1 p:last-child{margin-top: -10px;text-align: center;}
-.alert1 p button{display: inline-block;width: 70px;height: 25px;margin-right: 15px;}
-.alert1 p button:first-child{margin-left: 35px;}
+.alert1 p .btn{display: inline-block;width: 70px;height: 25px;margin-right: 15px;} 
+.mLeft35{ margin-left: 35px;}
 
 .cover-layer{width:100%;height:1600px;position:absolute;top:0;left:0;right:0;z-index:1000;cursor:default;background:rgba(0,0,0,0.3);}
 .totle-money{float:left;margin-left:25px;display:inline-block;width:200px;text-align:center;height:25px;line-height:25px;background:#4B4B4B;color:#fc3;border-radius:6px;}
+
+
+ .alert {background-color: #333;opacity:0.8; font-size: 13px; position: fixed; top:35%; z-index: 99999; 
+         padding:20px;padding-left:40px;  overflow:auto; border-radius:5px;min-width:140px;max-width:260px;}
+.alert .alert-wrap { word-wrap: break-word;  word-break:break-all;color:#fff;font-size:14px;}
+.alert-wrap .alert-icon-right:before {content:"\e613";}
+.alert-wrap .alert-icon-right {color:#fefefe;font-size:20px;float:left;}
+.alert-wrap .alert-icon-warn:before {content:"\e64a";}
+.alert-wrap .alert-icon-warn {color:#fefefe;font-size:20px;float:left;}
+.alert-wrap .alert-msg {float:left;color:#fff;font-size:16px;line-height:24px; padding:0 20px 0 15px;max-width:160px;}
+.alert-wrap .alert-close:before {content:"\e628";}
+.alert-wrap .alert-close {float:left;color:#ddd;font-size:20px;padding-top:0px;cursor:pointer;}
+.alert-wrap .alert-close:hover {color:#fff;}
+/*confirm样式*/
+.confirm-layer {position: fixed; z-index:99998; top:0; left:0;right:0; bottom:0; background-color:#000; opacity:0.7;}
+.confirm { border: 1px solid #ccc; background-color: #fff; font-size: 13px; position: fixed; top:35%; z-index: 99999; width:260px; overflow:auto;padding:20px;border-radius:3px; }
+.confirm .confirm-wrap { word-wrap: break-word;  word-break:break-all;font-size:16px;  }
+.confirm .confirm-bottom { margin-top:20px; text-align:right; }
+.confirm-bottom .sure { padding:10px 24px; background-color:#D64242; color:#fff; border:none; cursor:pointer; display:inline-block; border-radius:3px; }
+.confirm-bottom .sure:hover {  background-color:#AC1716;  }
+.confirm-bottom .close { padding:5px 40px; color:#999; border:none; cursor:pointer; display:inline-block; }
+.confirm-bottom .close:hover {color:#D64242; }

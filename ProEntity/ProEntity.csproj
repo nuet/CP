@@ -74,7 +74,7 @@
     <Compile Include="UserAttr\UserImgs.cs" />
     <Compile Include="UserAttr\UserOrders.cs" />
     <Compile Include="UserAttr\UserReply.cs" />
-    <Compile Include="UserAttr\UserReport.cs" />
+    <Compile Include="UserAttr\UserReportDay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

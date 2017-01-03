@@ -20,7 +20,8 @@
 		<script type="text/javascript" src="/Scripts/laydate.js"></script>
 	    <script type="text/javascript" src="/Scripts/date.js"></script>
         <script type="text/javascript" src="/modules/datapager/paginate.js"></script>
-        <script  type="text/javascript" src="/Scripts/DateForm.js"></script>
+	    <script type="text/javascript" src="/Scripts/DateForm.js"></script>
+         <script  type="text/javascript" src="/modules/scripts/report/reportsee.js"></script>
 		<style>
 			div,p,span,dl,dt,dd,a,table,tr,td,thead,th,tbody{margin: 0;padding: 0;list-style: none;}
 		    body{margin: 10px 0 0 0;}
@@ -61,7 +62,7 @@
 			    		<thead>
 			    			<tr>
 			    				<th class="th-1" style="width: 13%;">用户名</th>
-			    				<th class="th-2" style="width: 15%;">所属组</th>
+			    @*				<th class="th-2" style="width: 15%;">所属组</th>*@
 			    				<th class="th-3" style="width: 14%;">返点级别</th>
 			    				<th class="th-5" style="width: 14%;">投注总额</th>
 			    				<th class="th-6" style="width: 14%;">返点总额</th>
@@ -71,17 +72,19 @@
 			    		</thead>
 			    		<tbody>
 			    			<tr>
-			    				<td>huihui</td><td>组</td><td>0.2</td><td>5000</td> <td>2000</td><td>10000</td> <td>100</td>				
+						        <td>huihui</td>
+                                @*<td>组</td>*@
+                                <td>0.2</td><td>5000</td> <td>2000</td><td>10000</td> <td>100</td>				
 			    			</tr>
 			    			<tr>
-			    				<td height="37" colspan="9" style="text-align: center;" class="needq">
+			    				<td height="37" colspan="6" style="text-align: center;" class="needq">
 			    					<span>请选择查询条件之后进行查询</span>
 			    				</td>
 			    			</tr>
 			    		</tbody>
 			    		<tfoot>
 			    			<tr>
-						        <td colspan="7" style="text-align: center;">
+						        <td colspan="6" style="text-align: center;">
 						             <div class="spana" id="pager"></div>
 						        </td>
 			    			</tr>

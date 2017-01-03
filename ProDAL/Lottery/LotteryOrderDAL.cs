@@ -12,7 +12,7 @@ namespace ProDAL
     {
         public static LotteryOrderDAL BaseProvider = new LotteryOrderDAL();
         public bool CreateLotteryOrder(string ordercode, string orderid, string issueNum, string type, string cpcode, string cpname, string content, string typename, int num,
-           decimal payfee, string userID, int pmuch, decimal rpoint, string operatip,int usedisFee,ref string errormsg)
+           decimal payfee, string userID, int pmuch, decimal rpoint, string operatip,int usedisFee,int palytype,string bCode,ref string errormsg)
         { 
             SqlParameter[] paras = { 
                                     new SqlParameter("@ErrorMsg" , SqlDbType.VarChar,300),
@@ -29,7 +29,9 @@ namespace ProDAL
                                     new SqlParameter("@TypeName",typename),
                                     new SqlParameter("@PMuch",pmuch),
                                     new SqlParameter("@RPoint",rpoint),
+                                    new SqlParameter("@BCode",bCode), 
                                     new SqlParameter("@Type",type),
+                                    new SqlParameter("@PlayType",palytype), 
                                     new SqlParameter("@UsedisFee",usedisFee), 
                                     new SqlParameter("@Num",num)  
                                    };

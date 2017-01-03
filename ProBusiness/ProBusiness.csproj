@@ -93,6 +93,7 @@
     <Compile Include="UserAttrs\UserOrdersBusiness.cs" />
     <Compile Include="UserAttrs\UserReplyBusiness.cs" />
     <Compile Include="Lottery\LotteryResultBusiness.cs" />
+    <Compile Include="UserAttrs\UserReportBussiness.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProDAL\ProDAL.csproj">

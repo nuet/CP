@@ -297,7 +297,7 @@
      $(".num-selected table tfoot tr td a").click(function() {
          $("body").append("<div class='cover-layer'></div>");
          $(".alert1").show().css("z-index", "10001");
-         $(".alert1 p button").eq(0).click(function() {
+         $(".alert1 p .btn").eq(0).unbind("click").bind("click", function () {
              $(".num-selected table tbody").html("<tr><td width='96.25'></td><td width='96.25'></td><!-- <td></td> --><td width='96.5'></td><td width='193' title='暂无投注项'>暂无投注项</td><td width='96.5'></td><td width='96.5'></td><td width='96.5'></td></tr>");
              items = [];
              lvhide();
@@ -309,7 +309,7 @@
          });
      });
      //弹出框操作：(清空所有，立即投注，)
-     $(".alert1 h3 img,.alert1 p button:last-child").click(function() {
+     $(".alert1 h3 img,.alert1 p .btn:last-child").click(function() {
          $(".alert1").hide();
          $(".cover-layer").remove();
          if ($(".alert1 p:last-child span").length != 0) {
@@ -319,10 +319,10 @@
          $(".alert1 h3+p").html('<img src="/modules/images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
          $(".alert1 p:last-child span").remove();
          $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "-10px" });
-         $(".alert1 p button").eq(0).css("margin-left", "35px");
+         $(".alert1 p .btn").eq(0).css("margin-left", "35px");
      });
      //立即投注：
-     $(".add-bet input").click(function() {
+     $("#btnSave").click(function () {
          if ($(".num-selected table tbody tr:first-child").find("td").eq(1).text() == "") {
              $('#basic-dialog-ok').modal({
                  "opacity": 30
@@ -343,7 +343,7 @@
              $(".alert1 h3+p textarea").text(incontent);
              $(".alert1 p:last-child").prepend('<span class="totle-money">投注总金额<strong style="margin:0 5px;">' + $('#totalfee').html() + '</strong>元</span>');
              $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "10px" });
-             $(".alert1 p button").eq(0).css("margin-left", "45px").click(function() {
+             $(".alert1 p .btn").eq(0).css("margin-left", "45px").unbind("click").bind("click",function() {
                  //投注进去：
                  $(".alert1").hide();
                  $(".cover-layer").remove();
@@ -353,7 +353,8 @@
                  $(".alert1 h3+p").html('<img src="/modules/images/tips.png" width="40"><span>是否清空确认区中所有投注内容？</span>').css("text-align", "center");
                  $(".alert1 p:last-child span").remove();
                  $(".alert1 p:last-child").css({ "text-align": "center", "margin-top": "-10px" });
-                 $(".alert1 p button").eq(0).css("margin-left", "35px");
+                 $(".alert1 p .btn").eq(0).css("margin-left", "35px");
+                 lottery.saveItems();
                  return;
              });
          }
@@ -455,7 +456,7 @@
 //外部函数：
 
 //利润率追号倍数实现(20%及以上)：
-function times(){
+ function times(num) {
     var prpfits = Math.ceil(parseInt($('#profits').val()) / 10);
     $(".select-table table tbody tr input[type='text']").each(function (i, v) {
         if (i > 0) {
@@ -546,8 +547,10 @@ function bindnavs() {
         var _this = $(this);
         var names = _this.data("name");
         if (typeof (names) != 'undefined' && names != '') {
-            $(".play-action select option").eq(0).text(options1[names].firstNum);
-            $(".play-action select option").eq(1).text(options1[names].lastNum);
+            if (typeof (options1[names]) != 'undefined') {
+                $(".play-action select option").eq(0).text(options1[names].firstNum);
+                $(".play-action select option").eq(1).text(options1[names].lastNum);
+            }
         }
         _this.addClass("navs-cur").siblings().removeClass("navs-cur");
         $(".numbers span,.sel-actions span").removeClass("clicked");
@@ -731,9 +734,11 @@ function bindnavs() {
 
             $(".additems").data("type", '');
             var names = $(this).data("name");
-            if (typeof (names) != 'undefined') {
-                $(".play-action select option").eq(0).text(options1[names].firstNum);
-                $(".play-action select option").eq(1).text(options1[names].lastNum);
+            if (typeof (names) != 'undefined' && names != '') {
+                if (typeof (options1[names]) != 'undefined') {
+                    $(".play-action select option").eq(0).text(options1[names].firstNum);
+                    $(".play-action select option").eq(1).text(options1[names].lastNum);
+                }
             }
 
             $(".numbers span,.sel-actions span").removeClass("clicked");
@@ -1194,12 +1199,11 @@ function sumtotalFee() {
     });
 }
 
-lottery.saveItems = function () {
-
+lottery.saveItems = function () { 
     for (var i = 0; i < items.length; i++) {
         items[i].IssueNum = $('#issueslt').val();
     }
-    $.post('/Lottery/AddLotteryOrders', { list: JSON.stringify(items), usedisFee: $('#isusedic').attr('checked') == 'checked' ? 1 : 0 }, function (data) {
+    $.post('/Lottery/AddLotteryOrders', { list: JSON.stringify(items), usedisFee: $('#isusedic').prop('checked') ? 1 : 0 }, function (data) {
         if (data.result > 0) {
             items = [];
             $(".num-selected table tbody").html('');

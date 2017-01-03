@@ -149,7 +149,7 @@ namespace CPiao.Controllers
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             List<LotteryOrder> models = serializer.Deserialize<List<LotteryOrder>>(list);
             string msg = "";
-            var result = LotteryOrderBusiness.CreateUserOrderList(models, CurrentUser, OperateIP, usedisFee, ref msg);
+            var result = LotteryOrderBusiness.CreateUserOrderList(models, CurrentUser, OperateIP, usedisFee,3, ref msg);
             JsonDictionary.Add("result", result);
             JsonDictionary.Add("ErrMsg", msg);
             return new JsonResult()

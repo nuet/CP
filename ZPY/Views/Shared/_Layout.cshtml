@@ -37,7 +37,7 @@
                     </a>
                     <div class="navdiv"> 
                        @foreach (Menu items in ExpandClass.GetChildMenuByCode(HttpContext.Current, model.MenuCode))
-                       {
+                       { 
                            <a data-href="/@(items.Controller)/@(items.View)" href="javascript:void(0);">@(items.Name)</a>
                        }
                     </div>
@@ -89,9 +89,12 @@
                         <dl class="qh1">
                              @foreach (Lottery model in ExpandClass.GetLottery(HttpContext.Current))
                              {
-                                <a data-href="/Lottery/Index/@(model.CPCode)"    href="javascript:void(0);">
-                                    <dd>@(model.CPName)</dd>
-                                </a>
+                                 if (model.Status == 1)
+                                 {
+                                     <a data-href="/Lottery/Index/@(model.CPCode)" href="javascript:void(0);">
+                                         <dd>@(model.CPName)</dd>
+                                     </a>
+                                 }
                              }
                         </dl>
                     </details>

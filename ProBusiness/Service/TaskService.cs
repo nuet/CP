@@ -30,13 +30,14 @@ namespace ProBusiness
                  {
                      var totalmuch = GetIssueNum(x.ComNum, x.JsonContent, 1);
                      var pMuch = string.IsNullOrEmpty(totalmuch) ? x.BMuch : Convert.ToInt32(totalmuch);
+                     int comnum = x.ComNum + 1;
                      try
                      {
                          if (!string.IsNullOrEmpty(issuenum))
                          {
-                             LotteryOrderBusiness.CreateLotteryOrder(x.BCode, issuenum, x.Type, x.TypeName, x.CPCode,
+                             LotteryOrderBusiness.CreateLotteryOrder(x.BCode + comnum, issuenum, x.Type, x.TypeName, x.CPCode,
                                  x.CPName,
-                                 x.Content, x.Num, x.PayFee*pMuch/x.PMuch, x.UserID, pMuch, x.RPoint, x.IP, 0,
+                                 x.Content, x.Num, x.PayFee*pMuch/x.PMuch, x.UserID, pMuch, x.RPoint, x.IP, 0,4,x.BCode,
                                  ref errmsg);
                              if (!string.IsNullOrEmpty(errmsg))
                              {
@@ -46,12 +47,12 @@ namespace ProBusiness
                      }
                      catch (Exception ex)
                      {
-                         errmsg = x.BCode + "第" + (x.ComNum + 1) + "期插入失败";
+                         errmsg = x.BCode + "第" + comnum + "期插入失败";
 
-                         L.Log("[BettAutoInsert] ", x.BCode + "第" + (x.ComNum + 1) + "期插入失败");
+                         L.Log("[BettAutoInsert] ", x.BCode + "第" + comnum + "期插入失败");
                      }
                      msg += errmsg;
-                     LotteryOrderBusiness.UpdateBettAutoByCode(x.BCode, x.ComNum + 1, pMuch*x.PayFee, errmsg);
+                     LotteryOrderBusiness.UpdateBettAutoByCode(x.BCode, comnum, pMuch * x.PayFee, errmsg);
                  }
              });
              return msg;
