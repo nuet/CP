@@ -128,7 +128,18 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
+        public JsonResult GetLotteryWin(int pagesize = 5,decimal winFee=3000)
+        {
+            int total = 0;
+            int pageTotal = 0;
+            var items = LotteryResultBusiness.GetLotteryWin("", 2, winFee, pagesize, 1, ref total, ref pageTotal, DateTime.Now.AddDays(-2).ToString("yyyy-MM-dd") + " 00:00:00", DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
+            JsonDictionary.Add("items", items);
+            return new JsonResult()
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         public JsonResult GetBettAutoRecord(string cpcode, int status, string lcode, string issuenum, string type, int selfrange, int winType, string btime, string etime, int pageIndex)
         {
             int total = 0;

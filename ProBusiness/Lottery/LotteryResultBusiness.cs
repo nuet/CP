@@ -41,6 +41,37 @@ namespace ProBusiness
             }
             return list;
         }
+        public static List<LotteryOrder> GetLotteryWin(string cpCode, int status, decimal winFee, int pageSize, int pageIndex, ref int totalCount, ref int pageCount, string btime = "", string etime = "")
+        {
+            string sqlwhere = " b.cpCode='" + cpCode + "'";
+            if (status > -1)
+            {
+                sqlwhere += " and b.Status=" + status;
+            }
+            if (!string.IsNullOrEmpty(btime))
+            {
+                sqlwhere += " and b.CreateTime>='" + btime + "'";
+            }
+            if (winFee > 0)
+            {
+                sqlwhere += " and b.WinFee>="+winFee;
+            }
+            if (!string.IsNullOrEmpty(etime))
+            {
+                sqlwhere += " and b.CreateTime<='" + etime + " 23:59:59:999'";
+            }
+            DataTable dt = CommonBusiness.GetPagerData(" LotteryOrder b join M_Users a on a.UserID=b.UserID ",
+                " b.* ,a.UserName", sqlwhere, " b.AutoID ", pageSize, pageIndex,
+                out totalCount, out pageCount);
+            List<LotteryOrder> list = new List<LotteryOrder>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                LotteryOrder model = new LotteryOrder();
+                model.FillData(dr);
+                list.Add(model);
+            }
+            return list;
+        }
         public static LotteryResult GetLotteryResult(string cpCode, int status ,string btime ,string etime)
         {
             string sqlwhere = " where  b.cpCode='" + cpCode + "'";

@@ -21,6 +21,8 @@ namespace CPiao.Controllers
         public ActionResult UserList(string id="")
         {
             ViewBag.UserID = id;
+            ViewBag.UserPoint = CurrentUser.UsableRebate;
+            ViewBag.Rebate = CurrentUser.Rebate;
             ViewBag.Layers = CurrentUser.Layers;
             return View();
         }
@@ -134,6 +136,25 @@ namespace CPiao.Controllers
         }
 
         [HttpPost]
+        public JsonResult UserUpdPoint(string id,decimal addpoint)
+        {
+            var result = M_UsersBusiness.UpdateM_UserRebate(id, CurrentUser.UserID, addpoint);
+            if (result)
+            {
+                var model = CurrentUser;
+                model.UsableRebate = model.UsableRebate - addpoint;
+                Session["Manage"] = model;
+            }
+            JsonDictionary.Add("result", result);
+            JsonDictionary.Add("ErrMsg", result ? "" : "配置失败,请稍后再试");
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        [HttpPost]
         public JsonResult GetChildList(string userid="",bool type=false)
         {
             var list=M_UsersBusiness.GetUsersRelationList(userid==""?CurrentUser.UserID:userid, type);
@@ -145,6 +166,16 @@ namespace CPiao.Controllers
             };
         }
 
+        public JsonResult GetUserAccount()
+        {
+            var model = M_UsersBusiness.GetUserAccount(CurrentUser.UserID);
+            JsonDictionary.Add("item", model);
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
         public JsonResult GetMsgList(int type,int pageIndex)
         {

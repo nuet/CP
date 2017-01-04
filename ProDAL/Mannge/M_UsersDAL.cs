@@ -182,6 +182,19 @@ namespace ProDAL.Manage
 
             return ExecuteNonQuery("update M_Users set Status=@Status where userID=@userID and Status not in (0,9)", paras, CommandType.Text) > 0;
         }
+        public bool UpdateM_UserRebate(string userid,string parentid, decimal point,SqlTransaction tran)
+        {
+            SqlParameter[] paras = { 
+                                    new SqlParameter("@userID",userid),
+                                    new SqlParameter("@ParentID",parentid),
+                                    new SqlParameter("@Rebate",point),
+                                   };
+
+            return ExecuteNonQuery(tran, @"if((select UsableRebate-@Rebate  from M_Users where userID=@ParentID)>0)  
+                                         begin  
+                                         update M_Users set Rebate=Rebate+@Rebate,UsableRebate=UsableRebate+@Rebate where userID=@userID and Status !=9  
+                                         update M_Users set UsableRebate=UsableRebate-@Rebate where userID=@ParentID end", paras, CommandType.Text) > 0;
+        }
         public bool Update_userLevel(string userid, string levelID)
         {
             SqlParameter[] paras = { 

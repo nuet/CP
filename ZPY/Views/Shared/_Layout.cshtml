@@ -57,12 +57,12 @@
                         <img src="/modules/img/head.jpg" alt="用户头像" title="" class="picture" />
                     </div>
                     <li><span>
-                        <img src="/modules/img/litte-icon/1.png" width="16" height="16" style="vertical-align: middle;" /></span><span>余额：</span><span>3333333333.00</span></li>
+                        <img src="/modules/img/litte-icon/1.png" width="16" height="16" style="vertical-align: middle;" /></span><span>余额：</span><span id="uaccount">0.00</span></li>
                     <li><span>
-                        <img src="/modules/img/litte-icon/jfen.png" width="16" height="16" style="vertical-align: middle;" /></span><span>积分：</span><span>3333.00</span></li>
+                        <img src="/modules/img/litte-icon/jfen.png" width="16" height="16" style="vertical-align: middle;" /></span><span>积分：</span><span id="uintegal">0.00</span></li>
                     <li><span>
-                        <img src="/modules/img/litte-icon/coupon.png" width="16" height="16" style="vertical-align: middle;" /></span><span>优惠券：</span><span style="left: 78px;">3333.00</span></li>
-                    <div class="left-info-with">
+                        <img src="/modules/img/litte-icon/coupon.png" width="16" height="16" style="vertical-align: middle;" /></span><span>优惠券：</span><span style="left: 78px;" id="udiscount">0.00</span></li>
+                @*    <div class="left-info-with">
                         <div class="recharge">
                             <a target="mainframe" href="recharge.html">充值</a>
                         </div>
@@ -71,7 +71,7 @@
                         <div class="withdraw">
                             <a target="mainframe" href="withdraw_cash.html">提现</a>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="left-info-with">
                         <div class="withdraw">
                             <a id="loginout" href="javascript:void(0)">退出</a>
@@ -119,7 +119,7 @@
                 <div class="winning">中奖公告</div>
                 <div class="msg">
                     <ul id="sItem">
-                        <li>
+                    @*    <li>
                             <div>恭喜 <span class="blod name">【萤火虫】</span>重庆时时彩 1616561651008 期, 喜中 <span class="amount">3,600.00 </span>大奖</div>
                         </li>
                         <li>
@@ -133,7 +133,7 @@
                         </li>
                         <li>
                             <div>恭喜 <span class="blod name">【蝈蝈3】</span>重庆时时彩 1616561651009 期, 喜中 <span class="amount">5,600.00 </span>大奖</div>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
             </div>
@@ -188,57 +188,80 @@
                 $('#mainframe').attr("src", $(v).data("href"));
             });
         });
-        $('.menu a').each(function (i, v) {
-            $(v).click(function () {
+        $('.menu a').each(function(i, v) {
+            $(v).click(function() {
                 $('#mainframe').attr("src", $(v).data("href"));
             });
         });
-        $('#sddm li').each(function (i, v) {
-            $(v).click(function () {
+        $('#sddm li').each(function(i, v) {
+            $(v).click(function() {
                 if (!$(v).hasClass('on2')) {
                     $(v).siblings().removeClass('on2');
                     $(v).addClass('on2');
                 }
             });
         });
-        $('#sddm li a:first-child').each(function (i, v) {
+        $('#sddm li a:first-child').each(function(i, v) {
             $(v).mouseover(function() {
                 $(v).next().show();
-                
-            }).mouseout(function () {
-                $(v).next().hide(); 
+
+            }).mouseout(function() {
+                $(v).next().hide();
             });
         });
-        $('.navdiv').each(function (i, v) {
-            $(v).mouseover(function () { 
+        $('.navdiv').each(function(i, v) {
+            $(v).mouseover(function() {
                 $('.navdiv').hide();
                 $(v).show();
-            }).mouseout(function () {
-                $(v).hide(); 
+            }).mouseout(function() {
+                $(v).hide();
             });
         });
-        $('#loginout').click(function() {$.post('/Home/Logout',null,function (){window.location.href='/Home/Login';});});
+        $('#loginout').click(function () { $.post('/Home/Logout', null, function () { window.location.href = '/Home/Login'; }); });
+        getAccount();
+        getLotteryResult();
+        setInterval("getAccount()", 7000);
+        setInterval("getLotteryResult()", 300000);
     });
-    $(document).ready(function () {   
-        $("#sItem li:not(:first)").css("display", "none");
-        var B = $("#sItem li:last");
-        var C = $("#sItem li:first");
-        setInterval(function () {
-            if (B.is(":visible")) {
-                C.fadeIn(500).addClass("in");
-                B.hide();
-            } else {
-                $("#sItem li:visible").addClass("in");
-                $("#sItem li.in").next().fadeIn(500);
-                $("li.in").hide().removeClass("in");
+    $(document).ready(function() {
+       
+
+    });
+
+    function getAccount() {
+        $.post('/User/GetUserAccount', {}, function (data) {
+            $('#uaccount').html(data.item.AccountFee);
+            $('#uintegal').html(data.item.InteFee);
+            $('#udiscount').html(data.item.DiscountFee);
+        });
+    }
+    function getLotteryResult() {
+        $.post('/Lottery/GetLotteryWin', {}, function (data) {
+            var html = '';
+            for (var i = 0; i < data.items.length; i++) {
+                var item = data.items[i];
+                html += '<li><div>恭喜 <span class="blod name">【'+item.UserName+'】</span>'+item.CPName+' '+item.IssueNum+' 期, 喜中 <span class="amount">'+item.WinFee+' </span>大奖</div></li> ';
             }
-        }, 4000);   
-        $(".left-header .left-href a").on("click", function (evt) {
-            $(".left-header .left-href .up").removeClass("up");
-            $(this).addClass("up");
-        }); 
-      
-    });
+            $('#sItem').html(html);
+            $("#sItem li:not(:first)").css("display", "none");
+            var B = $("#sItem li:last");
+            var C = $("#sItem li:first");
+            setInterval(function () {
+                if (B.is(":visible")) {
+                    C.fadeIn(500).addClass("in");
+                    B.hide();
+                } else {
+                    $("#sItem li:visible").addClass("in");
+                    $("#sItem li.in").next().fadeIn(500);
+                    $("li.in").hide().removeClass("in");
+                }
+            }, 4000);
+            $(".left-header .left-href a").on("click", function (evt) {
+                $(".left-header .left-href .up").removeClass("up");
+                $(this).addClass("up");
+            });
+        });
+    }
 </script>
 
 @RenderSection("scripts", false)

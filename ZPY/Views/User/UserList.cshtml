@@ -22,7 +22,7 @@
         .b_box li>a {color: #666;}
         .b_box li.on, li.on>a {border: none;color:rgb(207, 27, 28);font-weight: bold;}
         .n {background-color: #797979 !important;}
-        .n, .n_links {margin: 4px 3px 1px 0px;float: right;background-color: #ff7e00;color: #FFF;border-radius: 2px;min-width: 12px;text-align: center;line-height: 14px;height: 12px;padding: 0px 3px 2px 3px;}
+        .n, .n_links {margin: 4px 3px 1px 0px;float: right;background-color: #ff7e00;color: #FFF;border-radius: 2px;min-width: 12px;text-align: center;line-height: 14px;padding: 0px 3px 2px 3px;}
         .b_box li.on>a::before {top: -3px;margin: 0 6px;transform: rotateZ(0deg);}
         .b_box li a::before {content: '';display: inline-block;width: 5px;height: 3px;margin: 0 5px;position: relative;top: -3px;background: url(/modules/img/down-arrow.png);transform: rotateZ(-90deg);}
         .b_box li a.no-icon::before {background: url();}
@@ -30,7 +30,7 @@
         .b_box.n_links {cursor: pointer;}
         .b_box li:last-child {border-bottom: none;}
         .b_box li:hover{background-color: #fff;}
-        .b_box .n,.b_box .n_links {margin: 4px 3px 1px 0px;float: right;background-color: #ff7e00;color: #FFF;border-radius: 2px;min-width: 12px;text-align: center;line-height: 14px;height: 12px;padding: 0px 3px 2px 3px;}
+        .b_box .n,.b_box .n_links {margin: 4px 3px 1px 0px;float: right;background-color: #ff7e00;color: #FFF;border-radius: 2px;min-width: 12px;text-align: center;line-height: 14px;padding: 0px 3px 2px 3px;}
         #ext {background-color: #f1faff;border-top: 1px solid #7eadcb;border-bottom: 1px solid #7eadcb;}
         #ext>li:first-child {}
         #ext li {}
@@ -199,23 +199,24 @@
         <input id="Layers" hidden="hidden" style="display: none;" type="text" value="@ViewBag.Layers"/>
     </div>
 </div>
-<div class="layer" style="display: block;">
+<div class="layer" style="display: none;">
     <div class="layer1">
         返点设置
     </div>
     <div class="layer2">
         <div style="width: 340px; margin: 0 auto;">
             <ul style="font-size: 14px; color: #797979;">
-                <li style="line-height: 24px;height: 24px;"><span>用 户 &nbsp;名:</span>&nbsp;</li>
-                <li style="line-height: 24px;height: 24px;"><span>饭店级别:</span>&nbsp;</li>
-                <li style="line-height: 24px;height: 24px;"><span>你的返点:</span>&nbsp;<span></span>(可用返点)</li>
-                <li style="line-height: 24px;height: 24px;"><span>保留返点:</span>&nbsp;<input type="text" id="addpoint" style="width: 60px;" /></li>
-                <li style="line-height: 24px;height: 24px;"><span>注意事项:</span><span> 例如：您自身返点为0.8， 而您在下面 “保留返点”处选择 0.5，您开设新账户的返点为0.3。</span></li>
+                <li style="line-height: 24px; height: 24px;"><span>用 户 &nbsp;名:</span>&nbsp;<span id="childuser"></span></li>
+                <li style="line-height: 24px; height: 24px;"><span>返点级别:</span>&nbsp;<span id="childpoint"></span></li>
+                <li style="line-height: 24px; height: 24px;"><span>你的返点:</span>&nbsp;<span id="ablepoint">@(ViewBag.Rebate)</span>&nbsp;[可用返点@(ViewBag.UserPoint)]</li>
+                <li style="line-height: 24px; height: 24px;"><span>保留返点:</span>&nbsp;<input type="text" id="addpoint" style="width: 60px;"/>&nbsp;(0-@ViewBag.UserPoint)</li>
+                <li style="line-height: 24px; height: 24px;"><span>注意事项:</span><span> 例如：您自身返点为0.8， 而您在下面 “保留返点”处选择 0.5，您开设新账户的返点为0.3。</span></li>
             </ul>
+            <span id="childuserid" style="display: none;"></span>
         </div>
 
     </div>
-    <div class="layer3" onclick="closeLogin()">确认</div><div class="layer3" style="float: right; margin-top: -30px; margin-right: 10px; background-color: #666666;" onclick="closeLogin()">取消</div>
+    <div class="layer3"  id="upduserpoint">确认</div><div class="layer3" style="float: right; margin-top: -30px; margin-right: 10px; background-color: #666666;" onclick="closeLogin()">取消</div>
 </div>
 <div id="fade" class="black_overlay" style="display: none;"></div>
 <script type="text/javascript" src="/modules/scripts/userinfo/userinfo.js"></script>

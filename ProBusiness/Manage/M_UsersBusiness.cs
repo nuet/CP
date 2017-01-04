@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Data.SqlClient;
 //using System.Web.ModelBinding;
 using ProBusiness.Common;
 using ProBusiness.Manage;
+using ProDAL;
 using ProEntity.Manage;
 using ProDAL.Manage;
 using ProEntity;
+using ProEntity.UserAttr;
 using ProEnum;
 
 
@@ -275,6 +278,19 @@ namespace ProBusiness
 
             return model;
         }
+
+        public static UserAccount GetUserAccount(string id)
+        {
+            string clumstr = " select a.*  from UserAccount a where  a.UserID='" + id + "'";
+            DataTable dt = M_UsersDAL.GetDataTable(clumstr);
+            UserAccount model = new UserAccount();
+            foreach (DataRow item in dt.Rows)
+            {
+                model.FillData(item);
+            }
+            return model;
+        }
+
         #endregion
 
         #region 改
@@ -347,8 +363,25 @@ namespace ProBusiness
         public static bool UpdateM_UserStatus(string userid, int status)
         {
             return M_UsersDAL.BaseProvider.UpdateM_UserStatus(userid, status);
-        }  
+        }
+        public static bool UpdateM_UserRebate(string userid,string parentid, decimal point)
+        {
+            SqlConnection conn = new SqlConnection(M_UsersDAL.ConnectionString);
+            conn.Open();
+            SqlTransaction tran = conn.BeginTransaction();
+            if (!M_UsersDAL.BaseProvider.UpdateM_UserRebate(userid, parentid, point, tran))
+                {
+                    tran.Rollback();
+                    conn.Dispose();
+                    return false;
+                } 
 
+            tran.Commit();
+            conn.Dispose();
+
+            return true;
+             
+        } 
         public static bool CheckEmail(string loginname, string email)
         {
            var result= CommonBusiness.Select("M_Users", "count(1)", " LoginName='" + loginname + "' and email='" + email + "' ");
