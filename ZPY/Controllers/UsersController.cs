@@ -120,6 +120,18 @@ namespace CPiao.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        [HttpPost]
+        public JsonResult UserDelete(string id)
+        {
+            var result = M_UsersBusiness.DeleteM_User(id,9);
+            JsonDictionary.Add("result", result);
+            JsonDictionary.Add("ErrMsg", result?"":"删除失败,请稍后再试");
+            return new JsonResult
+            {
+                Data = JsonDictionary,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
         [HttpPost]
         public JsonResult GetChildList(string userid="",bool type=false)

@@ -127,12 +127,19 @@ userList.UserInfoList = function () {
         if (data.items.length > 0) {
             for (var i = 0; i < data.items.length; i++) {
                 var item = data.items[i];
-                html += '<tr style="'+(item.UserID== $('.b_box').data('id')?"background-color: #F5EDE4;":"")+'"><td class="' + (item.ChildCount > 0 ? "colorblue" : "") + '" data-id="' + item.UserID + '">' + item.UserName + '</td><td>' + (item.Type == 1 ? (parseInt(item.Layers) - layers) + "级代理" : "会员用户") + '</td><td>' + item.AccountFee + '</td><td>' + item.Rebate + '</td><td>' + convertdate(item.CreateTime, true) + '</td><td>关闭</td><td>' + (item.SourceType == 0 ? "手动" : "自动") + '</td><td>删除</td></tr>';
+                html += '<tr style="'+(item.UserID== $('.b_box').data('id')?"background-color: #F5EDE4;":"")+'"><td class="' + (item.ChildCount > 0 ? "colorblue" : "") + '" data-id="' + item.UserID + '">' + item.UserName + '</td>' +
+                    '<td>' + (item.Type == 1 ? (parseInt(item.Layers) - layers) + "级代理" : "会员用户") + '</td><td>' + item.AccountFee + '</td><td>' + item.Rebate + '</td><td>' + convertdate(item.CreateTime, true) + '</td>' +
+                    '<td>关闭</td><td>' + (item.SourceType == 0 ? "手动" : "自动") + '</td><td><span class="updSpan" style="cursor:pointer;color:#F55;" data-type="' + item.UserID + '">返点设置</span>&nbsp; &nbsp;<span class="delSpan" style="cursor:pointer;color:#F55;" data-type="' + item.UserID + '">删除</span></td></tr>';
             } 
         } else {
             html = '<tr><td height="37" colspan="13" style="text-align: center;" class="needq"><span>暂无数据</span></td></tr>';
         }
         $('#usertbody').html(html);
+        $('.delSpan').each(function(i, v) {
+            $(v).click(function() {
+                userList.DeleteUser($(v).data('type'));
+            });
+        });
         $('#usertbody .colorblue').click(function() {
             $('#UserID').val($(this).data('id'));
             userList.UserInfoList();
@@ -152,7 +159,18 @@ userList.UserInfoList = function () {
             }
         });
     });
-} 
+}
+
+userList.DeleteUser = function (id) {
+    $.post('UserDelete', {id:id}, function(data) {
+        if (data.result) {
+            userList.UserInfoList();
+        } else {
+            alert(data.ErrMsg);
+        }
+    });
+
+}
    
  
  
