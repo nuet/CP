@@ -813,6 +813,7 @@
     <Content Include="modules\scripts\register\partregister.js" />
     <Content Include="modules\scripts\report\reportlist.js" />
     <Content Include="modules\scripts\report\reportsee.js" />
+    <Content Include="modules\scripts\report\reportprofit.js" />
     <Content Include="modules\scripts\rfriend\recommend.js" />
     <Content Include="modules\scripts\rfriend\rfriend.js" />
     <Content Include="modules\scripts\lottery\shanghaissl.js" />

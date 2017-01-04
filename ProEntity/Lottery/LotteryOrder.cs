@@ -36,7 +36,8 @@ namespace ProEntity
         /// </summary>
         public int Status { get; set; }
         public string Type { get; set; }
-        public string TypeName { get; set; } 
+        public string TypeName { get; set; }
+        public string Remark { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
         /// <summary>
@@ -65,7 +66,9 @@ namespace ProEntity
         public string  UserID  { get; set; }
 
         public string UserName { get; set; }
-
+        public decimal Account { get; set; }
+        public int PlayType { get; set; }
+        public string PlayTypeName { get; set; }
         public string ResultNum { get; set; } 
         /// <summary>
         /// 投注模式 0 元 1 角2 分

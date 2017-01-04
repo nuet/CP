@@ -21,7 +21,8 @@
 		<script type="text/javascript" src="/Scripts/laydate.js"></script>
 	    <script type="text/javascript" src="/Scripts/date.js"></script>
         <script type="text/javascript" src="/modules/datapager/paginate.js"></script>
-        <script  type="text/javascript" src="/Scripts/DateForm.js"></script>
+	    <script type="text/javascript" src="/Scripts/DateForm.js"></script>
+	    <script type="text/javascript" src="/modules/scripts/report/reportprofit.js"></script>
 		<style>
 			div,p,span,dl,dt,dd,a,table,tr,td,thead,th,tbody{margin: 0;padding: 0;list-style: none;} 
 			a{text-decoration: none;color: black;}
@@ -39,9 +40,9 @@
 					<input type="hidden" name="isrequery" value="1" />
 					<label for="starttime">
 						<span class="text-middle-input">时间：</span>
-						<input type="text" class="start-time input laydate-icon"value="" style="width: 210px;"onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" /> 
+						<input type="text" class="start-time input laydate-icon" value=""  id="btime" style="width: 210px;"onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" /> 
 						<span class="text-middle-input">&nbsp;至&nbsp;</span>
-						<input type="text" class="endtime input laydate-icon" value="" style="width: 200px;" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/> 
+						<input type="text" class="endtime input laydate-icon" value=""  id="etime" style="width: 200px;" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/> 
 					</label>
 					<label for="gameuser">
 						&nbsp;&nbsp;&nbsp;&nbsp;
@@ -63,29 +64,25 @@
 			    				<th class="th-1" style="width: 10%;">用户名</th>
 			    				<th class="th-2" style="width: 12%;">返点级别</th>
 			    				<th class="th-3" style="width: 14%;">充值总额</th>
-			    				<th class="th-4" style="width: 13%;" >提款总额</th>
+			    				<th class="th-4" style="width: 13%;">提款总额</th>
 			    				<th class="th-5" style="width: 13%;">投注总额</th>
 			    				<th class="th-6" style="width: 12%;">返点总额</th>
 			    				<th class="th-7" style="width: 14%;">派奖总额</th>
-			    				<th class="th-8" style="width: 13%;">盈亏总额</th>
-			    				@*<th class="th-9" style="width: 10%;">操作</th>*@
+			    				<th class="th-8" style="width: 13%;">盈亏总额</th> 
 			    			</tr>
 			    		</thead>
-			    		<tbody>
+			    		<tbody> 
 			    			<tr>
-			    				<td>用户名</td><td>返点级别</td><td>充值总额</td><td>提款总额</td><td>投注总额</td>
-						        <td>返点总额</td><td>派奖总额</td><td>盈亏总额</td>
-                                @*<td>删除</td>*@
-			    			</tr>
-			    			<tr>
-			    				<td height="37" colspan="9" style="text-align: center;" class="needq">
+			    				<td height="37" colspan="8" style="text-align: center;" class="needq">
 			    					<span>请选择查询条件之后进行查询</span>
 			    				</td>
 			    			</tr>
 			    		</tbody>
 			    		<tfoot>
 			    			<tr>
-			    				<td colspan="13" style="text-align: center;"></td>
+			    				<td colspan="8" style="text-align: center;">
+						             <div class="spana" id="pager"></div>
+						        </td>
 			    			</tr>
 			    		</tfoot>
 			    	</table>

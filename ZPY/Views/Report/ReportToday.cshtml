@@ -31,11 +31,11 @@
 			    		<thead style="background: #fff;">
 			    			<tr>
 			    				<td class="td-info" style="text-align: right;">我的账号：</td>
-			    				<td style="text-align: left;">huihui</td>
+			    				<td style="text-align: left;">@ViewBag.LogName</td>
 			    			</tr>
 			    			<tr>
 			    				<td class="td-info" style="text-align: right;">我的昵称：</td>
-			    				<td style="text-align: left;">大灰狼</td>
+			    				<td style="text-align: left;">@ViewBag.UserName</td>
 			    			</tr>
 			    		@*	<tr>
 			    				<td class="td-info" style="text-align: right;">团队余额：</td>
@@ -43,11 +43,11 @@
 			    			</tr>*@
 			    			<tr>
 			    				<td class="td-info" style="text-align: right;">今日参与游戏：</td>
-			    				<td style="text-align: left;">0.000 游戏币</td>
+			    				<td style="text-align: left;">@ViewBag.TotalPayMent 游戏币</td>
 			    			</tr>
 			    			<tr>
 			    				<td class="td-info" style="text-align: right;">今日中奖：</td>
-			    				<td style="text-align: left;">0.000 游戏币</td>
+			    				<td style="text-align: left;">@ViewBag.TotalWin 游戏币</td>
 			    			</tr>
 			    		</thead>
 			    	</table>

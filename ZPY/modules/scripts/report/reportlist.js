@@ -15,6 +15,8 @@ var Params = {
 
 $(function () {
     $('#search').click(function () {
+        Params.pageIndex = 1;
+        records.getParams();
         records.getRecords();
     });
     $('#lotteryslt').change(function () {
@@ -39,11 +41,27 @@ $(function () {
             });
         }
     });
-
+    $('.button1').each(function (i, v) {
+        $(v).click(function () {
+            Params.playtype = $(v).data('playtype');
+            Params.selfrange =0;
+            Params.state = $('.state').val();  
+            Params.winType = $('#winType').val();
+            Params.cpcode = $('#lotteryslt').val();
+            Params.issuenum = $('#issueslt').val();
+            Params.lcode = $('#lcode').val();
+            Params.btime = $('#btime').val();
+            Params.etime = $('#etime').val();
+            Params.type = $('#lotteryplays').val();
+            Params.pageIndex = 1;
+            records.getRecords();
+        });
+    });
 });
 
-records.getParams = function () {
-    Params.status = $('#status').val();
+records.getParams = function () { 
+    Params.state = $('.state').val();
+    Params.playtype = $('#playtype').val();
     Params.selfrange = $('#selfrange').val();
     Params.winType = $('#winType').val();
     Params.cpcode = $('#lotteryslt').val();
@@ -54,16 +72,13 @@ records.getParams = function () {
     Params.type = $('#lotteryplays').val();
 }
 records.getRecords = function () {
-    records.getParams();
-    $.post('/Lottery/GetLotteryRecord', Params,
+    $.post('/Report/GetLotteryOrderReportList', Params,
     function (data) {
         var html = '';
         if (data.items != null && data.items.length > 0) {
             for (var i = 0; i < data.items.length; i++) {
                 var item = data.items[i];
-                html += '<tr><td>' + item.LCode + '</td><td>' + item.UserName + '</td><td>' + convertdateTostring(item.CreateTime, true, 'yyyy-MM-dd hh:mm:ss') + '</td><td>' + item.CPName + '</td><td>' + item.TypeName + '</td>' +
-                    '<td>' + item.IssueNum + '</td><td>' + item.Content + '</td><td>' + item.PMuch + '</td><td>元</td><td>' + item.PayFee + '</td><td>' + item.WinFee + '</td><td>' + item.ResultNum + '</td>' +
-                    '<td>' + (item.Status == 0 ? "未开奖" : (item.Status == 1 ? "已中奖" : (item.Status == 2 ? "未中奖" : (item.Status == 3 ? "已撤单" : "已删除")))) + '</td></tr>';
+                html += '<tr><td>' + item.AutoID + '</td><td>' + item.UserName + '</td><td>2016-12-03 12:00:00</td><td>' + item.PlayTypeName + '</td><td>' + item.CPName + '</td><td>' + item.TypeName + '</td><td>' + item.IssueNum + '</td><td>元</td><td>' + item.WinFee + '</td><td>' + item.PayFee + '</td><td>' + item.Account + '</td><td>' + item.Remark + '</td></tr>';
             }
         } else {
             html += '<tr><td height="37" colspan="13" style="text-align: center;" class="needq"><span>暂无记录</span></td></tr>';

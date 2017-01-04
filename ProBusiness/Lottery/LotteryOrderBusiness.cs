@@ -174,8 +174,19 @@ namespace ProBusiness
            }
            return list;
        }
-       
-        #endregion
+
+       public static UserReportDay GetUserWinDay(string userid)
+       {
+           DataTable dt = LotteryOrderDAL.GetDataTable("select sum(PayFee) as TotalPayMent,sum(WinFee) TotalWin from LotteryOrder where UserID='" + userid + "' and CreateTime>=convert(varchar(10),getdate(),120)");
+           UserReportDay model = new UserReportDay();
+           foreach (DataRow dr in dt.Rows)
+           {
+               model.FillData(dr);
+           }
+           return model;
+       }
+
+       #endregion
 
         #region 添加.删除
 
