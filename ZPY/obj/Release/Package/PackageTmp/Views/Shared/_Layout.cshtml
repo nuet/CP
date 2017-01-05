@@ -7,101 +7,151 @@
         Menu controllerMenu = ExpandClass.GetController(HttpContext.Current, controller);
     }
 <html>
-<head>
+<head> 
     <title>@ViewBag.Title</title> 
-    <link rel="stylesheet" type="text/css" href="/modules/css/head-foot.css">
-    <link rel="stylesheet" type="text/css" href="/modules/css/index.css">
-    <link rel="stylesheet" type="text/css" href="/modules/css/slide.css"> 
-    <link rel="stylesheet" type="text/css" href="/modules/jpaginate/css/style.css" media="screen"/>
-    <link href="/modules/css/iconfont/iconfont.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="/modules/images/logo.jpg">
-     <style type="text/css">
-        .navs ul li{width: 87px;}
-        .navs ul li:last-child{margin-left: 20px;}
-    </style>
+    <link rel="stylesheet" type="text/css" href="/modules/css/head.css">  
     @RenderSection("css", false)
 </head>
 
-<body>
+<body id="mainbody">
    
     <script type="text/javascript" src="/Scripts/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript"src="/Scripts/DateForm.js"></script>
-    <script src="/modules/jpaginate/jquery.paginate.js" type="text/javascript"></script>
-    
-    <script src="/Scripts/slide.js" type="text/javascript"></script>
-    <script src="/Scripts/jquery.simplemodal.js" type="text/javascript"></script>
-    <script src="/Scripts/scroll.js" type="text/javascript"></script>
-    <script type="text/javascript" src="/Scripts/PCASClass.js"></script>
-    
+    <script type="text/javascript"src="/Scripts/DateForm.js"></script> 
 
+<!-- 头部导航栏 -->
 <header>
-    <ul class="log-reg">
-        
-        @if (CurrentUser != null)
-        {
-            <li class="logoed "><a style="margin-right: 10px" href="/User/UserInfo" title="个人中心">@(CurrentUser.LoginName)</a>|</li>
-            <li class="logoed "><a href="/Home/Logout" style="margin-right: 10px" title="退出">退出</a>|</li>
-        }
-        else
-        {
-            <li class="nologo"><a href="/Home/Login" style="margin-right: 10px;" title="登录">登录</a>|</li>
-            <li class="nologo"><a href="/Home/Register" style="margin-right: 10px;" title="注册">注册</a>|</li>
-        }
-
-        <li><a href="/Help/Helps" title="在线帮助">在线帮助</a></li>
-        <li><a href="javasript:void(0);" title="租友网-租女友，租男友" rel="sidebar" id="#fvweb">收藏本站</a></li>
-    </ul>
-    <a href="/Home/Index"><img src="/modules/images/logo.jpg" alt="网站logo"></a>
-    <p class="siteExp">租友网（***.com）-最真实的中国租友网站&nbsp;见父母&nbsp;参加聚会&nbsp;唱歌&nbsp;看电影</p>
+    <div class="header">
+        <div class="logo" style="cursor: pointer;">
+            <a href="">
+                <img src="/modules/img/litte-icon/logo.png" alt="logo" title="logo" width="153" height="36"/></a>
+        </div>
+        <div class="nav-box">
+            <ul id="sddm"> 
+            <li class="@(controller == "home" ? "button2 on2" : "lebutton2ft")"><a href="javascript:void(0);"  data-href="/Help/Security">首页</a></li>
+            <li class="@(controller == "active" ? "button2 on2" : "lebutton2ft")"><a href="javascript:void(0);" data-href="/Help/Active">活动</a></li>
+            @foreach (Menu model in ExpandClass.GetChildMenuByCode(HttpContext.Current, ExpandClass.CLIENT_TOP_CODE))
+            {                   
+                <li class="@(model.MenuCode.ToUpper() == (controllerMenu != null ? controllerMenu.PCode.ToUpper() : "101000000") ? "button2 on2" : "button2")"  data-code="@(model.MenuCode)">            
+                    <a  href="javascript:void(0);"  data-href="/@(model.Controller)/@(model.View)">
+                        @(model.Name)
+                    </a>
+                    <div class="navdiv"> 
+                       @foreach (Menu items in ExpandClass.GetChildMenuByCode(HttpContext.Current, model.MenuCode))
+                       { 
+                           <a data-href="/@(items.Controller)/@(items.View)" href="javascript:void(0);">@(items.Name)</a>
+                       }
+                    </div>
+                </li> 
+            } 
+            </ul>
+        </div>
+    </div>
 </header>
-<div class="navs">
-    <ul>
-        <li><a href="/Home/Index" title="首页">首页</a></li>
-        <li><a id="usera" href="/User/UserInfo" title="会员中心">会员中心</a></li>
-        <li><a href="/RFriend/RentFriend/0" title="出租男友">出租男友</a></li>
-        <li><a href="/RFriend/RentFriend/1" title="出租女友">出租女友</a></li>
-        <li><a href="/RFriend/UserPic" title="租友相册">租友相册</a></li>
-        <li><a href="/RFriend/ReCommend" title="租友推荐">租友推荐</a></li>
-        <li><a href="/RFriend/HireMsg" class="hires" title="聘请信息">聘请信息</a></li>
-        <li><a href="javasript:void(0);" title="出租担保" id="guarantee" class="open-basic-dialog-ok">出租担保</a></li>
-        <li>在线会员<span id="onlinenum" style="color: #000000; font-weight: bold;font-family: serif;">8888</span>人<br/>共有<span id="membernum"  style="color: #000000; font-weight: bold; font-family: serif;">666</span>位会员定居</li>
-    </ul>
-</div>
-<div class="main-body">
-    <div class="main-content">
-        @RenderBody()
-    </div>
-</div> 
-
-<div id="basic-dialog-ok" style="display: none;">
-    <!-- 普通弹出层 [[ -->
-    <div class="box-title">
-        <h3>出租担保说明</h3>
-    </div>
-    <div class="box-main">
-        <div class="tips">
-            <span class="tips-ico">
-                    <span class="ico-ok"><!-- 图标class可以为： ico-ok , ico-error , ico-info , ico-question , ico-warn , ico-wait --></span>
-                </span>      
-            <div class="tips-content">
-                <div class="tips-title">
-                    <p>为了给本站会员提供更安全，更便捷的出租，聘请业务，本站特推出担保服务。以下为出租担保详细。</p>
-                    <p>1.双方通过本站谈好价格，约好时间地点，谈好相关事宜。</p>
-                    <p>2.提交申请，需提交的信息：姓名，性别，年龄，现居地，原籍，电话，QQ，手持身份证照片一张，具体事由（如：租女友回家过年等）,承诺（如：租期内保证对方安全等。），租金。</p>
-                    <p>3.聘请方把租金打入本站指定账号（收取5%的担保费用,担保费用由谁来出，双方定好！）</p>
-                    <p>4.租期结束，聘请方电话确认，本站将把租金转入对方账号</p>
-                    <p>5.如中间出现纠纷，由双方协商解决。本站只提供资金担保，其它事项与本站无关。</p>
-                    <p>出租担保请联系本站唯一客服QQ，其它均为假冒，以免上当受骗！</p>
-                    <p>QQ：2422169063</p>
-                </div>
-                <div class="tips-line"></div>
+  <div class="main-content">
+        <!-- 左边导航栏 -->
+        <div class="left-header">
+            <!-- 信息栏 -->
+            <div class="left-info">
+                <ul>
+                    <div style="width: 60px; height: 70px; margin-left: 60px;">
+                        <img src="/modules/img/head.jpg" alt="用户头像" title="" class="picture" />
+                    </div>
+                    <li><span>
+                        <img src="/modules/img/litte-icon/1.png" width="16" height="16" style="vertical-align: middle;" /></span><span>余额：</span><span id="uaccount">0.00</span></li>
+                    <li><span>
+                        <img src="/modules/img/litte-icon/jfen.png" width="16" height="16" style="vertical-align: middle;" /></span><span>积分：</span><span id="uintegal">0.00</span></li>
+                    <li><span>
+                        <img src="/modules/img/litte-icon/coupon.png" width="16" height="16" style="vertical-align: middle;" /></span><span>优惠券：</span><span style="left: 78px;" id="udiscount">0.00</span></li>
+                @*    <div class="left-info-with">
+                        <div class="recharge">
+                            <a target="mainframe" href="recharge.html">充值</a>
+                        </div>
+                    </div>
+                    <div class="left-info-with">
+                        <div class="withdraw">
+                            <a target="mainframe" href="withdraw_cash.html">提现</a>
+                        </div>
+                    </div>*@
+                    <div class="left-info-with">
+                        <div class="withdraw">
+                            <a id="loginout" href="javascript:void(0)">退出</a>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <!-- 左导航 -->
+            <div class="left-href">
+                <section id="conter">
+                    <section style="float: left; margin: 0 auto; width: 100%;">
+                    <details class="menu" open>
+                        <summary>
+                            <img src="/modules/img/litte-icon/游戏.png" width="20" height="20" style="vertical-align: middle; padding-right: 10px;"/>开始游戏</summary>
+                        <dl class="qh1">
+                             @foreach (Lottery model in ExpandClass.GetLottery(HttpContext.Current))
+                             {
+                                 if (model.Status == 1)
+                                 {
+                                     <a data-href="/Lottery/Index/@(model.CPCode)" href="javascript:void(0);">
+                                         <dd>@(model.CPName)</dd>
+                                     </a>
+                                 }
+                             }
+                        </dl>
+                    </details>
+                    <details class="menu" open>
+                        <summary>
+                            <img src="/modules/img/litte-icon/record.png" width="20" height="20" style="vertical-align: middle; padding-right: 10px;"/>游戏记录</summary>
+                        <dl class="qh2">
+                            <a  data-href="/Lottery/LotteryRecord"  href="javascript:void(0);" >
+                                <dd>投注记录</dd>
+                            </a>
+                            <a data-href="/Lottery/BettAutoRecord"  href="javascript:void(0);">
+                                <dd>追号记录</dd>
+                            </a>
+                        </dl>
+                    </details>
+                </section>
+                </section>
             </div>
         </div>
-        <div class="box-buttons"><button type="button" class="simplemodal-close">关 闭</button>
+        <div class="right">
+            <div class="right-header">
+                <div class="winning">中奖公告</div>
+                <div class="msg">
+                    <ul id="sItem">
+                    @*    <li>
+                            <div>恭喜 <span class="blod name">【萤火虫】</span>重庆时时彩 1616561651008 期, 喜中 <span class="amount">3,600.00 </span>大奖</div>
+                        </li>
+                        <li>
+                            <div>恭喜 <span class="blod name">【灰灰鸟】</span>重庆时时彩 1616561651006 期, 喜中 <span class="amount">4,600.00 </span>大奖</div>
+                        </li>
+                        <li>
+                            <div>恭喜 <span class="blod name">【蝈蝈】</span>重庆时时彩 1616561651009 期, 喜中 <span class="amount">5,600.00 </span>大奖</div>
+                        </li>
+                        <li>
+                            <div>恭喜 <span class="blod name">【蝈蝈2】</span>重庆时时彩 1616561651009 期, 喜中 <span class="amount">5,600.00 </span>大奖</div>
+                        </li>
+                        <li>
+                            <div>恭喜 <span class="blod name">【蝈蝈3】</span>重庆时时彩 1616561651009 期, 喜中 <span class="amount">5,600.00 </span>大奖</div>
+                        </li>*@
+                    </ul>
+                </div>
+            </div>
+            <div class="right-main">
+              
+                <div class="main-body">
+                    @*<div class="main-content">*@
+                        @RenderBody()
+                    @*</div>*@
+                </div>
+                  <iframe src="/Help/Security" frameborder="0" class="frame" name="mainframe" id="mainframe" width="100%" height="100%" scrolling="auto">#document
+                     
+                </iframe>
+
+            </div>
         </div>
     </div>
-    <!-- 普通弹出层 ]] -->
-</div>
+
 
 <div id="feedback-dialog" class="feedback-dialog" style="display: none;">
     <!-- 普通弹出层 [[ -->
@@ -130,53 +180,91 @@
     <!-- 普通弹出层 ]] -->
 </div>
 <input type="hidden" value="@controller" id="pagecontroller"/>
-<input type="hidden" value="@action" id="pageaction"/>
-    
+<input type="hidden" value="@action" id="pageaction"/>  
 <script type="text/javascript">
-    /* 提示框 */
-    $('.open-basic-dialog-ok').click(function(e) {
-        $('#basic-dialog-ok').modal({
-            "opacity": 50
+    $(function() {
+        $('#sddm a').each(function(i, v) {
+            $(v).click(function() {
+                $('#mainframe').attr("src", $(v).data("href"));
+            });
         });
-        return false;
+        $('.menu a').each(function(i, v) {
+            $(v).click(function() {
+                $('#mainframe').attr("src", $(v).data("href"));
+            });
+        });
+        $('#sddm li').each(function(i, v) {
+            $(v).click(function() {
+                if (!$(v).hasClass('on2')) {
+                    $(v).siblings().removeClass('on2');
+                    $(v).addClass('on2');
+                }
+            });
+        });
+        $('#sddm li a:first-child').each(function(i, v) {
+            $(v).mouseover(function() {
+                $(v).next().show();
+
+            }).mouseout(function() {
+                $(v).next().hide();
+            });
+        });
+        $('.navdiv').each(function(i, v) {
+            $(v).mouseover(function() {
+                $('.navdiv').hide();
+                $(v).show();
+            }).mouseout(function() {
+                $(v).hide();
+            });
+        });
+        $('#loginout').click(function () { $.post('/Home/Logout', null, function () { window.location.href = '/Home/Login'; }); });
+        getAccount();
+        getLotteryResult();
+        setInterval("getAccount()", 7000);
+        setInterval("getLotteryResult()", 300000);
     });
-    $('#fvweb').addFavorite('租友网-租女友，租男友', location.href);
+    $(document).ready(function() {
+       
+
+    });
+
+    function getAccount() {
+        $.post('/User/GetUserAccount', {}, function (data) {
+            $('#uaccount').html(data.item.AccountFee);
+            $('#uintegal').html(data.item.InteFee);
+            $('#udiscount').html(data.item.DiscountFee);
+        });
+    }
+    function getLotteryResult() {
+        $.post('/Lottery/GetLotteryWin', {}, function (data) {
+            var html = '';
+            for (var i = 0; i < data.items.length; i++) {
+                var item = data.items[i];
+                html += '<li><div>恭喜 <span class="blod name">【'+item.UserName+'】</span>'+item.CPName+' '+item.IssueNum+' 期, 喜中 <span class="amount">'+item.WinFee+' </span>大奖</div></li> ';
+            }
+            $('#sItem').html(html);
+            $("#sItem li:not(:first)").css("display", "none");
+            var B = $("#sItem li:last");
+            var C = $("#sItem li:first");
+            setInterval(function () {
+                if (B.is(":visible")) {
+                    C.fadeIn(500).addClass("in");
+                    B.hide();
+                } else {
+                    $("#sItem li:visible").addClass("in");
+                    $("#sItem li.in").next().fadeIn(500);
+                    $("li.in").hide().removeClass("in");
+                }
+            }, 4000);
+            $(".left-header .left-href a").on("click", function (evt) {
+                $(".left-header .left-href .up").removeClass("up");
+                $(this).addClass("up");
+            });
+        });
+    }
 </script>
 
 @RenderSection("scripts", false)
-     <footer>
-        <div class="foot">
-            <div class="friendLink">
-            	<p>友情链接：</p>
-                <ul>
-                    <li><a href="" title="北京租友网">北京租友网</a></li>
-                    <li><a href="" title="上海租友网">上海租友网</a></li>
-                    <li><a href="" title="广州租友网">广州租友网</a></li>
-                    <li><a href="" title="成都租友网">成都租友网</a></li>
-                    <li><a href="" title="重庆租友网">重庆租友网</a></li>
-                    <li><a href="" title="山东租友网">山东租友网</a></li>
-                    <li><a href="" title="陪玩网">陪玩网</a></li>
-                    <li><a href="" title="百度">百度</a></li>
-                    <li><a href="" title="伴玩人租友网">伴玩人租友网</a></li>
-                    <li><a href="" title="租友论坛">租友论坛</a></li>
-                    <li><a href="" title="租友网">租友网</a></li>
-                </ul>
-            </div>
-            <div class="bottomMsg">
-                <p>
-                    <a href="" title="网站介绍">网站介绍</a> -
-                    <a href="" title="联系我们">联系我们</a> -
-                    <a href="" title="免责申明">免责申明</a> -
-                    <a href="" title="交友须知">交友须知</a> -
-                    <a href="" title="隐私保护">隐私保护</a> -
-                    <a href="" title="服务条款">服务条款</a> -
-                    <a href="/Home/Index" title="返回首页">返回首页</a>
-                </p>
-                <p>租友网免费开放平台，同城租男友，租女友就上租友网</p>
-                <p>Powered by www.zu.com&copy;2004-2016租友网&nbsp;版权所有&nbsp;浙ICP备125454654</p>
-            </div>
-        </div>
-    </footer>
 </body>
     
 </html>

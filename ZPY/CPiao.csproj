@@ -245,6 +245,7 @@
     <Content Include="modules\images\icondate.png" />
     <Content Include="modules\images\ico_search.png" />
     <Content Include="modules\images\ico_searchhover.png" />
+    <Content Include="modules\images\img-noimg.png" />
     <Content Include="modules\images\minus.png" />
     <Content Include="modules\images\order.png" />
     <Content Include="modules\images\plus.png" />

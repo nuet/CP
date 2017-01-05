@@ -118,8 +118,9 @@ namespace CPiao.Controllers
             int pageTotal = 0;
 
             var items = LotteryResultBusiness.GetPagList(cpcode, status, orderby, pagesize, 1, ref total, ref pageTotal, btime,etime);
+            //GetlotteryResult
             JsonDictionary.Add("item",
-                LotteryResultBusiness.GetLotteryResult(cpcode, 0, DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00",
+                LotteryResultBusiness.GetLotteryResult(cpcode, 0, DateTime.Now.AddMinutes(-40).ToString("yyyy-MM-dd HH:mm:ss") ,
                     DateTime.Now.ToString("yyyy-MM-dd")));
             JsonDictionary.Add("items", items);
             return new JsonResult()

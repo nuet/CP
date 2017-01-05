@@ -1,225 +1,202 @@
-﻿//new PCAS("province3", "city3", "area3");
-var reg = /^[1-9]*[1-9][0-9]*$/; 
+﻿var reg = /^[1-9]*[1-9][0-9]*$/; 
+var receivers = "";
+var tempModel;
 $(function() {
-    $('#focusit').click(function () { focususer(); });
-    getUserRate();
-    $('#feedlink').click(function () { feedshow(); });
-    $('.feed-cancle').click(function () { feedcancle(); });
-    $('.feed-ok').click(function () { feedSave(); });
-    $('#zhdialog .tips-content li').each(function (i, v) {
-        $(v).click(function () {
-            var content = $(v).html();
-             var item= {
-                GUID: $('#userinfoli').data('id'),
-                Content: content.replace("\n", "<br>").replace(/</g, "&lt").replace(/>/g, "&gt"),
-                Type: 0
-            }
-            SaveZH(item);
-        });
-    });
-    $('.showreply').click(function() {
-        showreply($(this), $('#replydialog'));
-    });
-    $('.showzh').click(function () {
-        showreply($(this), $('#zhdialog'));
-    });
-    $('#nextli').click(function () {
-        $('#nextli').parent().hide();
-        $('.payli').show();
-    });
-    $('input:radio[name="jinbi"]').each(function (i, v) { 
-        $(v).click(function() {
-            $('#othergold').val(''); 
-        });
-    });
-    $('#othergold').change(function () {
-        if ($(this).val() != '') {
-            $('input:radio[name="jinbi"]').each(function (i, v) {
-                $(v).removeAttr("checked");
-            });
-        }
-    });
-    $('#paybtn').click(function() {
-        var golds = $('input:radio[name="change"]:checked').val();
-        var paytype = $('input:radio[name="payway"]:checked').val();
-        if (typeof (golds) == 'undefined') { golds = $('#othergold').val(); }
-        if (!reg.test(golds)) {  alert('金额格式不正确，请重新选择或输入'); return false;  }
-        if (typeof (paytype) == 'undefined') {  alert('支付类型为选择'); return false; }
-        $.post('/Help/PayOtherMoney', { gold: golds, paytype: paytype },
-        function (data) {
-            if (data.result) {
-                $('#zhdialog').hide();
-                alert('提交成功');
-            } else {
-                alert(data.errorMsg);
-                location.href = '/Home/Login';
-            }
-        });
-    });
-    $(document).click(function (e) { 
-        if (!$(e.target).parents().hasClass("replybtns") && !$(e.target).parents().hasClass("tips-content") && !$(e.target).parents().hasClass("showreply")
-            && !$(e.target).hasClass("box-main") && !$(e.target).parents().hasClass("box-main")) {
-            $("#replydialog").hide();
-        }
-        if (!$(e.target).parents().hasClass("tips-content") && !$(e.target).parents().hasClass("showzh")
-           && !$(e.target).hasClass("box-main") && !$(e.target).parents().hasClass("box-main")) {
-            $("#zhdialog").hide();
-        }
-    });
-});
-
-function focususer() {
-    $.post('/User/Focususer', { id: $('#userinfoli').data('id') }, function (data) {
-        alert(data.result==1?"关注成功":data.result==-2?"不能关注自己":"请登录后在操作");
-    });
-}
-
-function getUserRate() {
-    $.post('/User/GetUserRateds', { type: 2, userid: $('#userinfoli').data('id'), pageIndex: 1, pageSize: 5 }, function (data) {
-        var html = '';
-        for (var i = 0; i < data.items.length; i++) {
-            var item = data.items[i];
-            if (item.Rated != null && item.Rated != "") {
-                html += ' <li><img src="' + (item.UserAvatar != "" ? item.UserAvatar : "/modules/images/pingjia.png") + '" width="30px">' + (item.Rated.length > 30 ? item.Rated.substring(0, 30) : item.Rated) + '</li>';
-            }
-        }
-        $('#userrade').html(html);
-        getNewNeeds();
-        getuserlike('',6);
-    });
-}
-
-function getUserLink(cname) {
-    $.post('/User/GetUserLinkInfo', { cname: cname, seeid: $('#userinfoli').data('id'), seename: $('#userinfoli').data('name') }, function (data) {
-        if (data.msgError != "") {
-            alert(data.msgError);
-        } else {
-            if (cname == "MobilePhone") {
-                $('#userMobilePhone').html('手机：' + data.result).next().hide();
-            } else if (cname == "Email") {
-                $('#userEmail').html('邮箱：' + data.result).next().hide();
-            } else if (cname == "QQ") {
-                $('#userQQ').html('Q&nbsp;Q：' + data.result).next().hide();
-            } else {
-                $('#userWX').html('Q&nbsp;Q：' + data.result).next().hide();
-            }
-        }
-    });
-}
-
-function getNewNeeds() {
-    $.post('/User/GetNewNeeds', { type: "1,2", pageIndex: 1, pageSize: 10 }, function (data) {
-        var html = "";
-        for (var i = 0; i < data.items.length; i++) {
-            html += "<li style='cursor:pointer;' data-value='" + data.items[i].AutoID + "'><a href='/RFriend/HireDetail/"+data.items[i].AutoID+"' >&nbsp;&nbsp;" + (i+1) + "、" + data.items[i].Title + "</a></li>";
-        }
-        $('#needul').html(html);
-        $('.myscroll3').myScroll({
-            speed: 40, //数值越大，速度越慢
-            rowHeight: 38 //li的高度
-        });
-    });
-}
-
-function getuserlike(address, pagesize) {
-      $.post('/RFriend/GetUserRecommenCount', {
-        sex:-1,
-        pageIndex: 1,
-        pageSize: pagesize,
-        address: address,
-        age: '',
-        cdesc: 'b.RecommendCount'
-    }, function (data) {
-        var html = "";
-        for (var i = 0; i < data.items.length; i++) {
-            var item = data.items[i]; 
-            html += ' <li><a  href="/User/UserMsg/' + item.UserID + '"><img src="' + ((item.Avatar != "" && item.Avatar != null) ? item.Avatar : "/modules/images/photo2.jpg") + '" width="70px" height="70px"></a></li>';
+    $('#receivelist option').dblclick(function () {
+        if ($(this).val() == "" || $(this).val() == null) { 
+            return false;
         } 
-        $('#likeul').html(html); 
+        if (receivers.indexOf($(this).val()) == -1) {
+            receivers += $(this).val() + ",";
+            var html = '<div id="id_' + $(this).val() + '" data-id="' + $(this).val() + '" class="receiver" onclick="removed(\'' + $(this).val() + '\');">' + $(this).text() + '<span class="delete-icon" title="点击移除"></span></div>';
+            $('#receivediv').append(html);
+        } else {
+            alert('收件人已存在,不能重复添加!');
+        }
+    });
+    $('#send-message').click(function() {
+        var receivers = '';
+        $('.receiver').each(function(i, v) {
+            receivers += $(v).data('id') + ",";
+        });
+        if (receivers != "") {
+            if ($('#receive_name').val() != '') {
+                repModel.FromReplyID = '';
+                repModel.FromReplyUserID = '';
+                repModel.GuID = receivers;
+                repModel.Content = $('#write-content').val();
+                repModel.Title = $('#receive_name').val();
+                SavaReply();
+            } else {
+                alert('标题为空,发送失败');
+            }
+        } else {
+            alert('收件人未选择,发送失败');
+            return false;
+        }
+    });
+    $('#save').click(function () {
+        var receivers = tempModel.CreateUserID;
+        if (receivers != "") { 
+            repModel.FromReplyID = tempModel.ReplyID;
+            repModel.FromReplyUserID = tempModel.GuID;
+            repModel.GuID = receivers;
+            console.log(new Date());
+            repModel.Content = encodeURI("<font  color='#FF3300'>" + new Date().format("yyyy-MM-dd hh:mm:ss") + "写：</font>" + $('#recontent').val() + "<br>");
+            repModel.Title = 'Re:' + tempModel.Title;
+            SavaReply(); 
+        } else {
+            alert('收件人未选择,发送失败');
+            return false;
+        }
+    });
+    $('.btn1').click(function () {
+        var _this = $(this);
+        UpdStatus(_this,1);
+    });
+    $('.btn2').click(function () {
+        var _this = $(this);
+        UpdStatus(_this, 9);
+    });
+    $('#back').click(function () {
+        $('#replaydetail').hide();
+        $('.pws_tabs_scale_show').show();
+    });
+    $(".checkAll").click(function () {
+        var _this = $(this); 
+        if (_this.attr('checked') == 'checked') {
+            _this.removeAttr('checked');
+            _this.parents('.sx').find('.check').click();
+        } else {
+            _this.attr('checked', 'checked');
+            _this.parents('.sx').find('.check').click(); 
+        }
+    });
+   
+}); 
+var  Params= {type:0,pageIndex:1}
+
+function removed(id) { 
+    $('#id_' + id).remove();
+    receivers=receivers.replace(id + ',', '');
+}
+
+function GetReplay() {
+    $.post('/User/GetMsgList', Params,
+    function (data) {
+        var html = '';
+        if (data.items!=null && data.items.length > 0) {
+            for (var i = 0; i < data.items.length; i++) {
+                html += '<tr><td style="width: 40px; text-align: left;"><input type="checkbox" class="check" style="margin-left: 12px;" data-id="' + data.items[i].ReplyID + '" name="check"/> </td>' +
+                    '<td  data-id="' + data.items[i].ReplyID + '" class="adetail">' + data.items[i].Title + '</td><td>' + data.items[i].FromName + '</td><td>' + convertdate(data.items[i].CreateTime, true) + '</td></tr>';
+            }
+        } else {
+            html += '<tr><td colspan="4" style="text-align: center;">暂无数据</td></tr> ';
+        }
+        $('#sxmsg' + Params.type).html(html);
+        $("#sxmsg" + Params.type+" .check").click(function () {
+            var _this = $(this);
+            if (_this.attr('checked') == 'checked') {
+                _this.removeAttr('checked');
+                _this.parents('.sx').find('.checkAll').removeAttr('checked');
+            } else {
+                _this.attr('checked', 'checked'); 
+                if ($("#sxmsg" + Params.type + " .check:checked").length == $("#sxmsg" + Params.type + " .check").length) {
+                    _this.parents('.sx').find('.checkAll').attr('checked', 'checked');
+                }
+            }
+        });
+
+        if (Params.type == 0) {
+            $("#sxmsg" + Params.type + " .adetail").click(function() {
+                var id = $(this).data('id');
+                $.post('/User/ReplyDetail', { id: id }, function(data) {
+                    if (data.Item != null) {
+                        var item = data.Item;
+                        tempModel = item;
+                        $('.scribe-title').html(item.Title);
+                        $('#sendusername').html(item.UserName);
+                        $('#sendtime').html(convertdate(item.CreateTime, true));
+                        $('#recontent').val(''); 
+                        var content = decodeURI(item.Content).repeat('<font/g', '||').split('||');
+                        var html1 = '';
+                        for (var j = 0; j < content.length; j++) {
+                            if (content[j] != '') {
+                                html1 += '<div style="margin-top: 10px; color: #666666; width: 80%; border-top: 1px #666666 dotted;">' + content[j] + '</div>';
+                            }
+                        }
+                        if (html1 == "") {
+                            html1 = decodeURI(item.Content);
+                        }
+                        $('.message-content').html(html1);
+                        $('.pws_tabs_scale_show').hide();
+                        $('#replaydetail').show();
+                    }
+                });
+            });
+        } 
+        $('.pws_tabs_list').css("height", (106 + $('#sxmsg' + Params.type + " tr").length * 41)+'px');
+        $("#pager" + Params.type).paginate({
+            total_count: data.totalCount,
+            count: data.pageCount,
+            start: Params.pageIndex,
+            display: 5,
+            border: true,
+            rotate: true,
+            images: false,
+            mouse: 'slide',
+            onChange: function(page) {
+                Params.pageIndex = page;
+                GetReplay();
+            }
+        });
     });
 }
 
-function feedSave() {
-    if ($('#feedtitel').val() == '') {
-        $('.feedtips').html('请填写标题');
-        return false;
-    }
-    var item={
-        TipedID: $('#tipedid').val(),
-        TipedName:$('#tipedname').val(),
-        Remark:$('#feedcontent').val(),
-        Title:$('#feedtitel').val(),
-        Type: $('#feedtype option:selected').val()
-    }
-    $.post('/Help/SaveFeedBack', { entity: JSON.stringify(item) },
-    function(data) {
-        if (data.result) {
-            alert('提交成功');
-        } else {
-            alert(data.errorMsg); 
-        }
-        feedcancle();
-    }); 
-}
-
-function feedcancle() {
-    $('#feedback-dialog').hide();
-    $('.feedtips').html('');
-    $('#feedtitel').val('');
-    $('#tipedid').val('');
-    $('#tipedname').val('');
-    $('#feedcontent').val(''); 
-}
-function feedshow() {
-    $('#feedback-dialog').show(); 
-    $('#tipedid').val($('#userinfoli').data('id'));
-    $('#tipedname').val($('#userinfoli').data('name'));
-}
-
-function showreply(_this,obj) {
-    var xy = _this.position();
-    var top = xy.top + 20;
-    $('.reply-dialog').hide(); 
-    if (obj.attr('id') == 'replydialog') {
-        $('#replycontent').val('');
-        top = top +13;
-    } 
-    obj.css({ left: xy.left, top: top });
-    obj.show();
+var repModel = { 
+    GuID: '',
+    Content: '',
+    Title: '',
+    FromReplyID: '',
+    FromReplyUserID: '',
+    Type:0
 }
 
 function SavaReply() {
-    if ($('#replycontent').val() == '') { 
+    if (repModel.Title == '' || repModel.GuID=='') {
         return false;
-    }
-    var item = {
-        GUID: $('#userinfoli').data('id'),
-        Content: $('#replycontent').val(), 
-        Type: 1
-    }
-    $.post('/Help/SaveReply', { entity: JSON.stringify(item) },
+    } 
+    $.post('/User/SaveReply', { entity: JSON.stringify(repModel) },
     function (data) {
         if (data.result) {
-            $('#replycontent').val('');
-            $('#replydialog').hide();
+            $('.receive_content').val('');
+            $('#receive_name').val('');
+            $('#receivediv').html('');
             alert('提交成功');
+            receivers = '';
+            if ($('#replaydetail').css('display') == 'block') {
+                $('#back').click();
+            }
         } else {
-            alert(data.errorMsg);
-            location.href = '/Home/Login';
+            alert(data.ErrMsg); 
         } 
     });
 };
-
-function SaveZH(item) {
-    $.post('/Help/SaveReply', { entity: JSON.stringify(item) },
-    function (data) {
-        if (data.result) { 
-            $('#zhdialog').hide();
-            alert('提交成功');
-        } else {
-            alert(data.errorMsg);
-            location.href = '/Home/Login';
-        } 
-    });
+function UpdStatus(obj, status) {
+    var list = $('#' + obj.parent().data('type') + ' .check:checked');
+    if (list.length > 0) {
+        var ids = '';
+        list.each(function (i, v) { ids = $(v).data('id') + ','; });
+        $.post('/User/UpdStatus', { ids: ids, status: status }, function(data) {
+            if (data.result) { 
+                GetReplay();
+            } else {
+                alert(data.ErrMsg);
+            }
+        });
+    } else {
+        alert('未选择操作项，操作失败!');
+    }
 }
+ 
  
