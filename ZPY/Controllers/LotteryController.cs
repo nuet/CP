@@ -120,7 +120,7 @@ namespace CPiao.Controllers
             var items = LotteryResultBusiness.GetPagList(cpcode, status, orderby, pagesize, 1, ref total, ref pageTotal, btime,etime);
             //GetlotteryResult
             JsonDictionary.Add("item",
-                LotteryResultBusiness.GetLotteryResult(cpcode, 0, DateTime.Now.AddMinutes(-40).ToString("yyyy-MM-dd HH:mm:ss") ,
+                LotteryResultBusiness.GetLotteryResult(cpcode, 0, cpcode == "FC3D" ? DateTime.Now.ToString("yyyy-MM-dd")+" 00:00:00" : DateTime.Now.AddMinutes(-40).ToString("yyyy-MM-dd HH:mm:ss"),
                     DateTime.Now.ToString("yyyy-MM-dd")));
             JsonDictionary.Add("items", items);
             return new JsonResult()

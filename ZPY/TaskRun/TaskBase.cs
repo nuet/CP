@@ -15,7 +15,7 @@ namespace CPiao.TaskRun
     {
         #region
         string start = "09:03";
-        string end = "21:55";
+        string end = "23:59";
         #endregion
         private Object thisLock = new Object(); 
         private Object gdlock = new Object();
@@ -85,26 +85,28 @@ namespace CPiao.TaskRun
                     {
                         lock (thisLock)
                         {
-                            LotteryResultBusiness.UpdateStatus("SD11X5", 1);
+                            LotteryResultBusiness.UpdateStatus("SD11X5,", 1);
                         }
                     }
                     else if (s == "9")
                     {
                         lock (thisLock)
-                        {
-                            LotteryResultBusiness.UpdateStatus("SD11X5", 1);
-                            LotteryResultBusiness.UpdateStatus("TJSSC", 1);
-                            LotteryResultBusiness.UpdateStatus("GD11X5", 1);
-                            LotteryResultBusiness.UpdateStatus("JX11X5", 1);
-                            LotteryResultBusiness.UpdateStatus("HLJSSC", 1);
-                            LotteryResultBusiness.UpdateStatus("XJSSC", 1);
+                        {  
+                            LotteryResultBusiness.UpdateStatus("GD11X5,JX11X5,HLJSSC,XJSSC,TJSSC,", 1); 
                         }
                     }
                     else if (min == 55 && DateTime.Now.Hour==21)
                     {
                         lock (thisLock)
                         {
-                            LotteryResultBusiness.UpdateStatus("FCSD", 1);
+                            LotteryResultBusiness.UpdateStatus("FCSD,", 1);
+                        }
+                    }
+                    if (min %2==0)
+                    {
+                        lock (thisLock)
+                        {
+                            LotteryResultBusiness.UpdateStatus("SHSSL,", 1);
                         }
                     }
 

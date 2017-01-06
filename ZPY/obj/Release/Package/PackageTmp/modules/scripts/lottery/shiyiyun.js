@@ -955,8 +955,12 @@ lottery.GetlotteryResult= function() {
     });
     lottery.GetIssNum();
 }
+ var kkk;
 lottery.getDifDate = function (item) {
-        if (item != null) {
+    if (item != null) {
+        if (kkk != null && item.AutoID > 0) {
+            clearTimeout(kkk);
+        }
             $('#cpissue').html(item.IssueNum);
             $('#openlottery').html(item.Num - 1);
             var time1 = getparamsdate(item.OpenTime, true);
@@ -981,9 +985,9 @@ lottery.getDifDate = function (item) {
                 $('#lotterysec').html(seconds);
                 setTimeout(function () { lottery.getDifDate(item) }, 1000);
             } else {
-                if (seconds == 0 && minutes == 0) {
-                    lottery.GetlotteryResult(item);
-                }
+                //if (seconds == 0 && minutes == 0) {
+                    kkk = setTimeout(function() { lottery.GetlotteryResult(); }, 3000);
+                //}
             }
         }  
 }

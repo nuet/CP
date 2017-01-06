@@ -97,8 +97,8 @@ namespace ProTools
                     StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                     strResult = reader.ReadToEnd();
                     reader.Close();
+                    response.Close();
                 }
-                response.Close();
                 return default(T);
             }
            
