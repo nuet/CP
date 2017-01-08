@@ -16,7 +16,7 @@
       <publishTime>11/02/2016 15:16:12</publishTime>
     </File>
     <File Include="bin/CPiao.dll">
-      <publishTime>01/06/2017 17:32:09</publishTime>
+      <publishTime>01/08/2017 10:14:02</publishTime>
     </File>
     <File Include="bin/CPiao.pdb">
       <publishTime>01/05/2017 10:57:17</publishTime>
@@ -2680,13 +2680,13 @@
       <publishTime>01/04/2017 16:26:04</publishTime>
     </File>
     <File Include="modules/scripts/lottery/shanghaissl.js">
-      <publishTime>01/06/2017 17:30:55</publishTime>
+      <publishTime>01/08/2017 09:55:03</publishTime>
     </File>
     <File Include="modules/scripts/lottery/shiyiyun.js">
-      <publishTime>01/06/2017 17:30:13</publishTime>
+      <publishTime>01/08/2017 09:34:43</publishTime>
     </File>
     <File Include="modules/scripts/lottery/tianjinssc.js">
-      <publishTime>01/06/2017 17:31:23</publishTime>
+      <publishTime>01/08/2017 09:33:42</publishTime>
     </File>
     <File Include="modules/scripts/message.js">
       <publishTime>11/18/2016 14:51:16</publishTime>

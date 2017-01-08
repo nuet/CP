@@ -967,9 +967,11 @@ lottery.getDifDate = function (item) {
             var date3 = time1.getTime() - (new Date()).getTime(); //时间差秒 
             //计算出小时数
             var leave1 = date3 % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
+      
             //计算相差分钟数
             var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
-            leave2 = leave2 - (35 * 1000);
+            //leave2 = leave2 - (35 * 1000);
+            console.log(leave2);
             var minutes = Math.floor(leave2 / (60 * 1000));
             minutes = minutes > 9 ? minutes : '0' + minutes;
             if (leave2)
@@ -986,7 +988,9 @@ lottery.getDifDate = function (item) {
                 setTimeout(function () { lottery.getDifDate(item) }, 1000);
             } else {
                 //if (seconds == 0 && minutes == 0) {
-                    kkk = setTimeout(function() { lottery.GetlotteryResult(); }, 3000);
+                if (kkk != null) {
+                    kkk = setTimeout(function () { lottery.GetlotteryResult(); }, 3000);
+                }
                 //}
             }
         }  

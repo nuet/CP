@@ -1167,6 +1167,7 @@ lottery.getDifDate = function (item) {
         if (leave2)
             //计算相差秒数
             var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
+        console.log(leave2);
         var seconds = Math.round(leave3 / 1000);
         if (seconds > 0) {
             seconds = seconds - 1;
@@ -1178,7 +1179,9 @@ lottery.getDifDate = function (item) {
             setTimeout(function () { lottery.getDifDate(item) }, 1000);
         } else {
            // if (seconds == 0 && minutes == 0) {
+            if (kkk != null) {
                 kkk = setTimeout(function () { lottery.GetlotteryResult(); }, 3000);
+            }
             //}
         }
     }

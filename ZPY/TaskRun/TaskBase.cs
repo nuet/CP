@@ -30,7 +30,7 @@ namespace CPiao.TaskRun
         {
             NonReentrantAsDefault();
 
-            InsertLottery();
+           // InsertLottery();
             UpdateLotteryStatus();
             UpdateSD11X5Result();
             UpdateGD11X5Result();
@@ -60,12 +60,12 @@ namespace CPiao.TaskRun
 
         private void InsertLottery()
         { 
-            Schedule(() =>
-            {
-               L.Log("[insertlottery]", "Begin...");
-               TaskService.BasService.InsertAllLottery();
-               L.Log("[insertlottery]", "End...");
-            }).NonReentrant().WithName("[insertlottery]").ToRunEvery(1).Days().At(09, 39);
+            //Schedule(() =>
+            //{
+            //   L.Log("[insertlottery]", "Begin...");
+            //   TaskService.BasService.InsertAllLottery();
+            //   L.Log("[insertlottery]", "End...");
+            //}).NonReentrant().WithName("[insertlottery]").ToRunEvery(1).Days().At(04, 30);
         }
         private void UpdateLotteryStatus()
         {
@@ -78,6 +78,10 @@ namespace CPiao.TaskRun
                 TimeSpan tmNow = DateTime.Now.TimeOfDay;
                 int min = DateTime.Now.Minute;
                 int sec = DateTime.Now.Second;
+                if (tmNow > DateTime.Parse("00:00").TimeOfDay && tmNow > DateTime.Parse("02:10").TimeOfDay)
+                {
+                    LotteryResultBusiness.UpdateStatus("XJSSC,", 1); 
+                }
                 if (tmNow >= startTime && tmNow <= endTime)
                 {
                     var s = min.ToString().Length > 1 ? min.ToString().Substring(1, 1) : min.ToString();
@@ -102,7 +106,7 @@ namespace CPiao.TaskRun
                             LotteryResultBusiness.UpdateStatus("FCSD,", 1);
                         }
                     }
-                    if (min %2==0)
+                    if (min ==0 || min==30)
                     {
                         lock (thisLock)
                         {

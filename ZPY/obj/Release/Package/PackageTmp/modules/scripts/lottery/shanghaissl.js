@@ -1108,26 +1108,29 @@ lottery.getDifDate = function (item) {
             clearTimeout(kkk);
         }
         $('#cpissue').html(item.IssueNum);
-        $('#openlottery').html(item.Num - 1);
+        if (item.CPCode != 'FC3D') {
+            $('#openlottery').html(item.Num - 1);
+        }  
         var time1 = getparamsdate(item.OpenTime, true);
         var date3 = time1.getTime() - (new Date()).getTime(); //时间差秒  
         //计算出小时数
         var leave1 = date3 % (24 * 3600 * 1000); //计算天数后剩余的毫秒数 
         
         //计算相差分钟数
-        var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
-        console.log(item.CPCode);
+        var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数 
+
         if (item.CPCode === "SHSSL") { leave2 = leave2 - (35 * 1000); }
 
         var hours = leave1 / (3600 * 1000);
       
-        hours = hours > 9 ? Math.int(hours) : '0' + Math.floor(hours);
+        hours = hours > 10 ? parseInt(hours) : '0' + Math.floor(hours);
         //leave2 = leave2 - (35 * 1000);
         var minutes = Math.floor(leave2 / (60 * 1000));
         minutes = minutes > 9 ? minutes : '0' + minutes;
         if (leave2)
             //计算相差秒数
             var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
+        console.log(leave2);
         var seconds = Math.round(leave3 / 1000);
         if (seconds > 0) {
             seconds = seconds - 1;
@@ -1140,7 +1143,9 @@ lottery.getDifDate = function (item) {
             setTimeout(function () { lottery.getDifDate(item) }, 1000);
         } else {
             //if (seconds == 0 && minutes == 0 && hours == 0) {
-                kkk = setTimeout(function () { lottery.GetlotteryResult(); }, 3000);
+            if (kkk != null) {
+                kkk = setTimeout(function() { lottery.GetlotteryResult(); }, 3000);
+            }
             //}
         }
     }

@@ -37,8 +37,8 @@
            	.pw{clear: both;}
            	.next{clear: both;height:30px;}
            	.next .next1{width: 50px; height: 20px;border: 2px solid white;border-radius: 4px;background: transparent;
-           	    padding: 3px 105px 3px 110px; color: white;font-weight: 600;font-size: 18px;
-                float: right;margin-right: 40px;cursor: pointer;outline: medium;text-decoration:none;}
+           	    padding: 3px 45px 3px 50px; color: white;font-weight: 600;font-size: 18px;
+                float: left;margin-right: 10px;cursor: pointer;outline: medium;text-decoration:none;}
              .next1:hover{border: solid 2px #60e0ec;color: #60e0ec; -webkit-opacity: 0.8;  -moz-opacity: 0.8; opacity: 08;filter:alpha(opacity=80);}
            	.p{width: 150px;bottom: 10px;right: 20px;position: absolute;color: white;font-size:16px;font-weight: 600;}
            	footer{max-width:78%;min-width:0px;height:28px;margin: 0 auto;/*margin-top: 50px;*/transform: rotateY(100%);font-size: 12px;position: absolute;left: 0;right: 0;}
@@ -67,7 +67,8 @@
 						</ul>
 					</div>
 					<div class="next" >
-						<a href="javascript:void(0);" class="next1">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
+					    <a href="javascript:void(0);" class="next1" id="logbtn" style="color: #60e0ec;">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
+                        <a href="/Home/Register" class="next1">注&nbsp;&nbsp;&nbsp;&nbsp;册</a>
 					</div> 
 				</div>
 			</div>
@@ -84,10 +85,10 @@
 <script type="text/javascript">
     $(document).on("keypress", function (e) {
         if (e.keyCode == 13) {
-            $("#next1").click();
+            $("#logbtn").click();
         }
     });
-    $(".next1").click(function () {
+    $("#logbtn").click(function () {
         var reg1 = /^[a-zA-Z 0-9]+$/;
         var reg = /[\da-zA-Z]*\d+[a-zA-Z]+[\da-zA-Z]*/;
         if ($(".name-input").val() == "" || $(".name-input1").val() == "") {

@@ -213,6 +213,7 @@
     <Content Include="modules\css\system\role.css" />
     <Content Include="modules\css\system\system.css" />
     <Content Include="modules\css\tianjinssc.css" />
+    <Content Include="modules\css\usershared.css" />
     <Content Include="modules\css\webuploader.css" />
     <Content Include="modules\datapager\images\next.png" />
     <Content Include="modules\datapager\images\previous.png" />
@@ -230,6 +231,7 @@
     <Content Include="modules\images\bg1.png" />
     <Content Include="modules\images\close.png" />
     <Content Include="modules\images\default.png" />
+    <Content Include="modules\images\footer_bg.gif" />
     <Content Include="modules\images\ico-btnadd.png" />
     <Content Include="modules\images\ico-check.png" />
     <Content Include="modules\images\ico-checked.png" />
@@ -871,6 +873,7 @@
     <Content Include="Scripts\sea.js" />
     <Content Include="Scripts\webuploader.html5only.min.js" />
     <Content Include="modules\scripts\withdraw.js" />
+    <Content Include="Scripts\yzm.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -1026,6 +1029,7 @@
     <Content Include="Views\Report\ReportSee.cshtml" />
     <Content Include="Views\Report\ReportToday.cshtml" />
     <Content Include="Views\Report\ReportProfit.cshtml" />
+    <Content Include="Views\User\UserSpread.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
