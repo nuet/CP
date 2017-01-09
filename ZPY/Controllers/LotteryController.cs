@@ -28,6 +28,10 @@ namespace CPiao.Controllers
             {
                 return RedirectToAction("SSC3D", "Lottery", new { id = id });
             }
+            else if (id == "CQSSC")
+            {
+                return RedirectToAction("CQLottery", "Lottery", new { id = id });
+            }
             return View();
         }
 
@@ -43,7 +47,12 @@ namespace CPiao.Controllers
             ViewBag.Model = WebSetBusiness.GetLotteryDetail(id);
             return View();
         }
-
+        public ActionResult CQLottery(string id)
+        {
+            ViewBag.CPCode = id;
+            ViewBag.Model = WebSetBusiness.GetLotteryDetail(id);
+            return View();
+        }
         public ActionResult LotteryRecord()
         {
             return View();

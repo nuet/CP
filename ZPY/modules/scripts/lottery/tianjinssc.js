@@ -1177,12 +1177,10 @@ lottery.getDifDate = function (item) {
             $('#lotterymin').html(minutes);
             $('#lotterysec').html(seconds);
             setTimeout(function () { lottery.getDifDate(item) }, 1000);
-        } else {
-           // if (seconds == 0 && minutes == 0) {
+        } else { 
             if (kkk != null) {
                 kkk = setTimeout(function () { lottery.GetlotteryResult(); }, 3000);
-            }
-            //}
+            } 
         }
     }
 }

@@ -180,6 +180,7 @@
     <Content Include="modules\assets\styles.css" />
     <Content Include="modules\css\active.css" />
     <Content Include="modules\css\base.css" />
+    <Content Include="modules\css\chongqingssc.css" />
     <Content Include="modules\css\diyUpload.css" />
     <Content Include="modules\css\head.css" />
     <Content Include="modules\css\help.css" />
@@ -807,6 +808,7 @@
     <Content Include="modules\scripts\home.js" />
     <Content Include="modules\scripts\imgbox.js" />
     <Content Include="modules\scripts\layout.js" />
+    <Content Include="modules\scripts\lottery\chongqingssc.js" />
     <Content Include="modules\scripts\lottery\lotteryrecord.js" />
     <Content Include="modules\scripts\lottery\shiyiyun.js" />
     <Content Include="modules\scripts\lottery\bettautorecord.js" />
@@ -1030,6 +1032,7 @@
     <Content Include="Views\Report\ReportToday.cshtml" />
     <Content Include="Views\Report\ReportProfit.cshtml" />
     <Content Include="Views\User\UserSpread.cshtml" />
+    <Content Include="Views\Lottery\CQLottery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

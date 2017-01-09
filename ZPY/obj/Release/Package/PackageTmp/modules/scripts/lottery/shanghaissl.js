@@ -1083,7 +1083,7 @@ lottery.GetlotteryResult = function () {
                         if (i > 1) {
                             $(v).html(nums[i-2]);
                         } else {
-                            $(v).html(0);
+                            $(v).html('--');
                         }
                     });
                 }
@@ -1091,7 +1091,7 @@ lottery.GetlotteryResult = function () {
             }
             html += ' <li><span>第<strong>' + data.items[i].IssueNum + '</strong>期号码</span>';
             if (nums.length > 1) {
-                html += '<span>0</span><span>0</span><span>' + nums[0] + '</span><span>' + nums[1] + '</span><span>' + nums[2] + '</span></li>';
+                html += '<span>--</span><span>--</span><span>' + nums[0] + '</span><span>' + nums[1] + '</span><span>' + nums[2] + '</span></li>';
             } else {
                 html += '<span>' + data.items[i].ResultNum + '</span></li>';
             }

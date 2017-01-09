@@ -16,7 +16,7 @@
       <publishTime>11/02/2016 15:16:12</publishTime>
     </File>
     <File Include="bin/CPiao.dll">
-      <publishTime>01/08/2017 10:14:02</publishTime>
+      <publishTime>01/09/2017 11:20:33</publishTime>
     </File>
     <File Include="bin/CPiao.pdb">
       <publishTime>01/05/2017 10:57:17</publishTime>
@@ -234,6 +234,9 @@
     <File Include="modules/css/category.css">
       <publishTime>10/10/2016 17:06:25</publishTime>
     </File>
+    <File Include="modules/css/chongqingssc.css">
+      <publishTime>01/09/2017 09:48:37</publishTime>
+    </File>
     <File Include="modules/css/clients.css">
       <publishTime>10/10/2016 17:06:25</publishTime>
     </File>
@@ -384,6 +387,9 @@
     <File Include="modules/css/userpic.css">
       <publishTime>11/04/2016 08:33:26</publishTime>
     </File>
+    <File Include="modules/css/usershared.css">
+      <publishTime>01/08/2017 17:45:09</publishTime>
+    </File>
     <File Include="modules/css/webuploader.css">
       <publishTime>10/10/2016 17:29:58</publishTime>
     </File>
@@ -494,6 +500,9 @@
     </File>
     <File Include="modules/images/email.png">
       <publishTime>11/08/2016 16:03:42</publishTime>
+    </File>
+    <File Include="modules/images/footer_bg.gif">
+      <publishTime>01/08/2017 17:40:39</publishTime>
     </File>
     <File Include="modules/images/gua.png">
       <publishTime>10/10/2016 17:41:35</publishTime>
@@ -2676,11 +2685,14 @@
     <File Include="modules/scripts/lottery/bettautorecord.js">
       <publishTime>12/07/2016 09:36:45</publishTime>
     </File>
+    <File Include="modules/scripts/lottery/chongqingssc.js">
+      <publishTime>01/09/2017 10:41:08</publishTime>
+    </File>
     <File Include="modules/scripts/lottery/lotteryrecord.js">
       <publishTime>01/04/2017 16:26:04</publishTime>
     </File>
     <File Include="modules/scripts/lottery/shanghaissl.js">
-      <publishTime>01/08/2017 09:55:03</publishTime>
+      <publishTime>01/08/2017 10:27:48</publishTime>
     </File>
     <File Include="modules/scripts/lottery/shiyiyun.js">
       <publishTime>01/08/2017 09:34:43</publishTime>
@@ -3265,7 +3277,7 @@
       <publishTime>10/12/2016 17:04:11</publishTime>
     </File>
     <File Include="Scripts/yzm.js">
-      <publishTime>10/11/2016 08:26:17</publishTime>
+      <publishTime>01/08/2017 15:21:37</publishTime>
     </File>
     <File Include="Upload/UserAvatar/2.jpg">
       <publishTime>10/24/2016 17:57:53</publishTime>
@@ -3346,10 +3358,10 @@
       <publishTime>11/15/2016 08:36:38</publishTime>
     </File>
     <File Include="Views/Home/Login.cshtml">
-      <publishTime>11/14/2016 11:19:48</publishTime>
+      <publishTime>01/08/2017 15:58:02</publishTime>
     </File>
     <File Include="Views/Home/Register.cshtml">
-      <publishTime>10/21/2016 14:08:12</publishTime>
+      <publishTime>01/08/2017 16:47:50</publishTime>
     </File>
     <File Include="Views/Home/Register2.cshtml">
       <publishTime>10/18/2016 17:59:29</publishTime>
@@ -3357,8 +3369,11 @@
     <File Include="Views/Lottery/BettAutoRecord.cshtml">
       <publishTime>12/07/2016 08:53:20</publishTime>
     </File>
+    <File Include="Views/Lottery/CQLottery.cshtml">
+      <publishTime>01/09/2017 10:00:25</publishTime>
+    </File>
     <File Include="Views/Lottery/HighLottery.cshtml">
-      <publishTime>01/03/2017 09:48:35</publishTime>
+      <publishTime>01/09/2017 09:58:59</publishTime>
     </File>
     <File Include="Views/Lottery/Index.cshtml">
       <publishTime>12/26/2016 08:56:41</publishTime>
@@ -3367,7 +3382,7 @@
       <publishTime>12/30/2016 16:41:44</publishTime>
     </File>
     <File Include="Views/Lottery/SSC3D.cshtml">
-      <publishTime>01/06/2017 16:07:17</publishTime>
+      <publishTime>01/08/2017 10:30:46</publishTime>
     </File>
     <File Include="Views/Report/ReportList.cshtml">
       <publishTime>01/04/2017 16:22:11</publishTime>
@@ -3452,6 +3467,9 @@
     </File>
     <File Include="Views/User/UserReward.cshtml">
       <publishTime>11/22/2016 10:26:41</publishTime>
+    </File>
+    <File Include="Views/User/UserSpread.cshtml">
+      <publishTime>01/08/2017 17:39:44</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>10/10/2016 17:06:28</publishTime>
