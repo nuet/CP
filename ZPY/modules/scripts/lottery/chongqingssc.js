@@ -4,6 +4,7 @@
      "1WUX": { "firstNum": "180000-4%", "lastNum": "1861.2-0%" },
      "1SIX1": { "firstNum": "180000-4%", "lastNum": "1861.2-0%" },
      "1QIANS1": { "firstNum": "1782-4%", "lastNum": "1861.2-0%" },
+     "1ZHONGS": { "firstNum": "1782-4%", "lastNum": "1861.2-0%" },
      "1HS1": { "firstNum": "1782-4%", "lastNum": "1861.2-0%" },
      "sanxing1": { "firstNum": "1782-4%", "lastNum": "1861.2-0%" },
      "sanxing2": { "firstNum": "297-4%", "lastNum": "310.2-0%" },
@@ -30,10 +31,10 @@
 var reg=/^[0-9]*$/;
  $(function(){
  	//选号：
-	$(".num-select li div.numbers").find("span").click(function(){
-		$(this).toggleClass("clicked");
-		getsumnum();
-	})
+     $(".num-select li div.numbers").find("span").click(function() {
+         $(this).toggleClass("clicked");
+         getsumnum();
+     });
 	//全大小奇偶清：
 	$(".sel-actions").find("span").click(function(){
 		$(this).addClass("clicked").siblings().removeClass("clicked");
@@ -48,297 +49,7 @@ var reg=/^[0-9]*$/;
 	    }
 		getsumnum();
 	})
-	$(".navs").find("li").click(function(){
-
-		var names=$(this).data("name");
-		if (typeof (names) != 'undefined' && names != '') {
-            $(".play-action select option").eq(0).text(options1[names].firstNum);
-            $(".play-action select option").eq(1).text(options1[names].lastNum);
-		}
-
-		$(this).addClass("navs-cur").siblings().removeClass("navs-cur");
-		$(".numbers span,.sel-actions span").removeClass("clicked");
-		$(".play-action .times").val("1");
-		$(".play-action p span").text("0");
-		$(".additems").data("type",'');
-		$("textarea").val("");
-		switch($(this).index()){
-			case 0:$(".n-star").show().siblings("div").not(".all-ways").hide();  //五星
-			       $(".all-ways").show();
-			       $(".all-ways").css("height","40px");
-                   $(".play-action .select-fan,.play-action select").show();
-			       $(".all-ways").html('<div class="zhixuan"><span>直选</span><ul><li class="all-ways-cur" data-type="zhifu-wuxing">直选复式</li><li data-type="handin-wuxingd">直选单式</li><li data-type="zhifu-wuxingzu">五星组合</li></ul></div>');
-			break;
-            case 1:$(".n-star").show().siblings("div").not(".all-ways").hide();   //四星
-                   $(".all-ways").show();
-                   $(".all-ways").css("height","40px");
-                   $(".play-action .select-fan,.play-action select").show();
-                   $(".all-ways").html('<div class="zhixuan"><span>直选</span><ul><li class="all-ways-cur" data-type="zhifu-sixing">直选复式</li><li data-type="handin-sixingd">直选单式</li><li data-type="zhifu-sixingzu">四星组合</li></ul></div>');
-            break;
-            case 2:$(".n-star").show().siblings("div").not(".all-ways").hide();   //后三星
-                   $(".all-ways").show();
-                   $(".all-ways").css("height","80px");
-                   $(".play-action .select-fan,.play-action select").show();
-                   $(".all-ways").html('<div class="zhixuan"><span>直选</span><ul><li class="all-ways-cur" data-type="zhifu-hsanxing">直选复式</li><li data-type="handin-hsanxingd">直选单式</li><li data-type="zhi-hhezhi">直选和值</li></ul></div><div class="zuxuan"><span>组选</span><ul><li data-type="zuxuans-hsanxing">组三</li><li data-type="zuxuanl-hsanxing">组六</li><li data-type="handin-hsanxingz">混合组选</li><li data-type="zu-hhezhi">组选和值</li></ul></div>');
-            break;
-            case 3:$(".n-star").show().siblings("div").not(".all-ways").hide();   //中三星
-                   $(".all-ways").show();
-                   $(".all-ways").css("height","80px");
-                   $(".play-action .select-fan,.play-action select").show();
-                   $(".all-ways").html('<div class="zhixuan"><span>直选</span><ul><li class="all-ways-cur" data-type="zhifu-zhsanxing">直选复式</li><li data-type="handin-zhsanxingd">直选单式</li><li data-type="zhi-zhhezhi">直选和值</li></ul></div><div class="zuxuan"><span>组选</span><ul><li data-type="zuxuans-zhsanxing">组三</li><li data-type="zuxuanl-zhsanxing">组六</li><li data-type="handin-zhsanxingz">混合组选</li><li data-type="zu-zhhezhi">组选和值</li></ul></div>');
-            break;
-            case 4:$(".n-star").show().siblings("div").not(".all-ways").hide();   //前三星
-                   $(".all-ways").show();
-                   $(".all-ways").css("height","80px");
-                   $(".play-action .select-fan,.play-action select").show();
-                   $(".all-ways").html('<div class="zhixuan"><span>直选</span><ul><li class="all-ways-cur" data-type="zhifu-qsanxing">直选复式</li><li data-type="handin-qsanxingd">直选单式</li><li data-type="zhi-qhezhi">直选和值</li></ul></div><div class="zuxuan"><span>组选</span><ul><li data-type="zuxuans-qsanxing">组三</li><li data-type="zuxuanl-qsanxing">组六</li><li data-type="handin-zhsanxingz">混合组选</li><li data-type="zu-qhezhi">组选和值</li></ul></div>');
-            break;
-			case 5:$(".n-star").show().siblings("div").not(".all-ways").hide();    //二星
-			       $(".all-ways").show();
-			       $(".all-ways").css("height","80px");
-			       
-                   $(".all-ways").html('<div class="houer"><span>后二</span><ul><li class="all-ways-cur" data-type="zhifu-erxingh">直选复式</li><li data-type="handin-erxinghzhi">直选单式</li><li data-type="zuxuan-erxingh">组选复式</li><li data-type="handin-erxinghz">组选单式</li></ul></div><div class="qianer"><span>前二</span><ul><li data-type="zhifu-erxingq">直选复式</li><li data-type="handin-erxingqzhi">直选单式</li><li data-type="zuxuan-erxingq">组选复式</li><li data-type="handin-erxingqz">组选单式</li></ul></div>');
-                   $(".play-section .zhifu>p").html("从十位和个位上至少各选1个号码。");
-                   
-                   $(".play-action .select-fan,.play-action select").show();
-			break;
-			case 6:$(".fixed").show().siblings("div").hide();                      //定位胆
-			       $(".all-ways").html(''); 
-			       $(".play-action .select-fan,.play-action select").show();break;
-			case 7:$(".non-fixed").show().siblings("div").not(".all-ways").hide();  //不定位
-			       $(".all-ways").show();
-			       $(".all-ways").html('<div class="yima"><span>一码</span><ul><li class="all-ways-cur" data-type="hs-yima">后三一码不定位</li><li data-type="zs-yima">中三一码不定位</li><li data-type="qs-yima">前三一码不定位</li></ul></div><div class="erma"><span>二码</span><ul><li data-type="hs-erma">后三二码不定位</li><li data-type="zs-erma">中三二码不定位</li><li data-type="qs-erma">前三二码不定位</li></ul></div>');
-			       $(".all-ways").css("height","80px").find("li").css("width","110px");
-			       $(".play-action .select-fan,.play-action select").show();break;
-            case 8:$(".n-star").show().siblings("div").not(".all-ways").hide();  //任选
-                   $(".all-ways").show();
-                   $(".all-ways").html('<div class="rener"><span>任二</span><ul><li class="all-ways-cur" data-type="zhifu-rener" data-nums="2">直选复式</li><li data-type="renxuan-zhidaner" data-num="2">直选单式</li><li data-type="renxuan-zufuer" data-num="2">组选复式</li><li data-type="renxuan-zudaner" data-num="2">组选单式</li></ul></div><div class="rensan"><span>任三</span><ul><li data-type="zhifu-rensan" data-nums="3">直选复式</li><li data-type="renxuan-zhidansan" data-num="3">直选单式</li><li data-type="renxuan-zufusan" data-num="3">组三复式</li><li data-type="renxuan-zudansan" data-num="3">组三单式</li><li data-type="renxuan-zufuliu" data-num="3">组六复式</li><li data-type="renxuan-zudanliu" data-num="3">组六单式</li></ul></div><div class="rensi"><span>任四</span><ul><li data-type="zhifu-rensi" data-nums="4">直选复式</li><li data-type="renxuan-zhidansi" data-num="4">直选单式</li><li data-type="renxuan-zufusi" data-num="4">组选复式</li><li data-type="renxuan-zudansi" data-num="4">组选单式</li></ul></div>');
-                   $(".all-ways").css("height","115px");
-                   $(".play-action .select-fan,.play-action select").show();break;
-			case 9:$(".interests").show().siblings("div").not(".all-ways").hide();  //趣味型
-			       $(".all-ways").show();
-			       $(".all-ways").html('<span>大小单双</span><ul><li class="all-ways-cur" data-type="qdxds">前二大小单双</li><li data-type="hdxds">后二大小单双</li></ul>');
-			       $(".all-ways").css("height","40px");
-                   $(".play-action .select-fan,.play-action select").hide();
-			       break;
-		}
-		$(".all-ways").find("li").click(function(){
-            var _this=$(this);
-			var allwaysType=_this.data("type");
-			$(".play-action .select-fan,.play-action select").show();
-            if (allwaysType.indexOf("zhifu")>-1) {       //五星、四星的直选复式和组选4个，三星后三和中三和前三3个、二星直选复式2个，外加任选直选复式3个
-            	$(".n-star .play-section .zhifu").show().siblings().hide();
-            	$(".zhifu li").show();
-                if (allwaysType.indexOf("wuxing")>-1) {//五星的直选复式和组选
-                    if (allwaysType=="zhifu-wuxing") {                //五星直选复式
-                        $(".zhifu>p").text("从万位、千位、百位、十位、个位中选择一个5位数号码组成一注。");
-                    }else{                                            //五星组选
-                        $(".zhifu>p").text("从万位、千位、百位、十位、个位中至少各选1个号码组成1-5星的组合，共五注。");
-                        $(".play-action .select-fan,.play-action select").hide();
-                    } 
-                }else if (allwaysType.indexOf("sixing")>-1) {//四星的直选复式和组选
-                    $(".zhifu li").eq(0).hide();
-                    if (allwaysType=="zhifu-sixing") {                //四星直选复式
-                        $(".zhifu>p").text("从千位、百位、十位、个位中选择一个4位数号码组成一注。");
-                    }else{                                            //四星组选
-                        $(".zhifu>p").text("从千位、百位、十位、个位中至少各选1个号码组成1-4星的组合，共四注。");
-                        $(".play-action .select-fan,.play-action select").hide();
-                    } 
-                }
-                else if (allwaysType.indexOf("sanxing")>-1) {//三星直选复式
-                    if (allwaysType=="zhifu-hsanxing") {              //后三星直选复式
-                        $(".zhifu>p").text("从百位、十位、个位中至少各选1个号码组成一注。");
-                        $(".zhifu li").eq(0).hide().end().eq(1).hide();
-                    }else if(allwaysType=="zhifu-qsanxing"){                                            //前三星直选复式
-                        $(".zhifu>p").text("从万位、千位、百位中至少各选1个号码组成一注。");
-                        $(".zhifu li").eq(3).hide().end().eq(4).hide();
-                    }else if(allwaysType=="zhifu-zhsanxing"){                                            //中三星直选复式
-                        $(".zhifu>p").text("从千位、百位、十位中至少各选1个号码组成一注。");
-                        $(".zhifu li").eq(0).hide().end().eq(4).hide();
-                    }
-            	}else if (allwaysType=="zhifu-erxingh") {
-                    $(".zhifu>p").text("从十位和个位上至少各选1个号码。");
-                    $(".zhifu li").eq(0).hide().end().eq(1).hide().end().eq(2).hide();
-            	}else if(allwaysType=="zhifu-erxingq") {
-                    $(".zhifu>p").text("从万位和千位上至少各选1个号码。");
-                    $(".zhifu li").eq(2).hide().end().eq(3).hide().end().eq(4).hide();
-            	}else if (allwaysType.indexOf("ren")>-1) {                                             //任选的直选复式3个
-                    $(".n-star").show().siblings("div").not(".all-ways").hide();
-                    if (allwaysType=="zhifu-rener") {
-                        $(".zhifu>p").text("从万位、千位、百位、十位、个位中至少两位上各选1个号码组成一注。");
-                    }else if (allwaysType=="zhifu-rensan") {
-                        $(".zhifu>p").text("从万位、千位、百位、十位、个位中至少三位上各选1个号码组成一注。");
-                    }else if (allwaysType=="zhifu-rensi") {
-                        $(".zhifu>p").text("从万位、千位、百位、十位、个位中至少四位上各选1个号码组成一注。");
-                    }
-                }
-
-            }else if (allwaysType.indexOf("handin")>-1) {   //手动输入 五星、四星直选单式2个，三星后三和中三和前三的 直选单式、混合组选6个，二星的直选单式和组选单式4个
-            	$(".n-star .play-section .handin").show().siblings().hide();
-                $(".n-star .play-section .handin p:last-child").text("每注号码之间请使用英文逗号（,）隔开。");   
-                if (allwaysType.indexOf("wuxing")>-1) {               //五星直选单式
-                    $(".handin p:first-child").text("手动输入号码，至少输入1个五位数号码组成一注。");
-                    $(".n-star .play-section .handin p:last-child").text("每注号码之间请使用英文逗号（,）隔开。(一次最大可投注5000注)")   
-                }else if (allwaysType.indexOf("sixing")>-1) {         //四星直选单式
-                    $(".handin p:first-child").text("手动输入号码，至少输入1个四位数号码组成一注。");
-                    $(".n-star .play-section .handin p:last-child").text("每注号码之间请使用英文逗号（,）隔开。(一次最大可投注5000注)") 
-                }else if (allwaysType.indexOf("sanxing")>-1) {        //三星后三和前三和中三
-            		$(".handin p:first-child").text("手动输入号码，至少输入1个三位数号码组成一注。");
-            		//混合组选去掉返点select。
-            		if (allwaysType.indexOf("sanxingz")>-1) {         //三星（前中后）的混合组选
-                        $(".play-action .select-fan,.play-action select").hide();
-            		}
-            	}else if (allwaysType.indexOf("erxing")>-1) {
-            		$(".handin p:first-child").text("手动输入号码，至少输入1个两位数号码组成一注。");
-            	}
-            }else if (allwaysType.indexOf("hezhi")>-1) {   //和值  三星后三和中三和前三的 直选和值、组选和值6个
-            	$(".n-star .play-section .hezhi").show().siblings().hide();
-            	if (allwaysType.indexOf("zu")>-1) {            //组选和值
-                    $(".hezhi>p").text("从1-26中任意选择1个或1个以上号码。");
-                    $(".zh-hezhi").hide();
-                    $(".zu-hezhi").show();
-                    $(".play-action .select-fan,.play-action select").hide();
-            	}else{                                         //直选和值
-                    $(".hezhi>p").text("从0-27中任意选择1个或1个以上号码。");
-                    $(".zu-hezhi").hide();
-                    $(".zh-hezhi").show();
-            	}
-            }else if (allwaysType.indexOf("zuxuan")>-1) {   //组选  三星后三和中三和前三的  组三、组六6个，二星的组选复式2个
-            	$(".n-star .play-section .zuxuans").show().siblings().hide();
-            	if (allwaysType.indexOf("l")==-1) {     //三星后三和前三的  组三，二星的组选复式
-            		$(".zuxuans>p").text("从0-9中任意选择2个或2个以上号码。");
-            		if (allwaysType.indexOf("zuxuans")>-1) {
-                        $(".zuxuans li p").text("组三");
-            		}else{                       
-            			$(".zuxuans li p").text("组选");
-            		}
-            	}else{                     //组六
-                    $(".zuxuans>p").text("从0-9中任意选择3个或3个以上号码。");
-                    $(".zuxuans li p").text("组六");
-            	}
-            }else if (allwaysType.indexOf("yima")>-1) {  //不定位
-            	$(".non-fixed .play-section>p").text("从0-9中任意选择1个或1个以上号码。");
-            	$(".non-fixed .play-section ul p").text("一码");
-            }else if (allwaysType.indexOf("erma")>-1) {  //不定位
-            	$(".non-fixed .play-section>p").text("从0-9中任意选择2个或2个以上号码。");
-            	$(".non-fixed .play-section ul p").text("二码");
-            }else if (allwaysType.indexOf("qdxds")>-1) {  //前二大小单双
-            	$(".interests .play-section>p").text("从万位、千位中的“大、小、单、双”中至少各选一个组成一注。");
-            	$(".interests .num-select li").show().eq(2).hide().end().eq(3).hide().end().eq(4).hide();
-            }else if (allwaysType.indexOf("hdxds")>-1) {  //后二大小单双
-            	$(".interests .play-section>p").text("从十位、个位中的“大、小、单、双”中至少各选一个组成一注。");
-            	$(".interests .num-select li").show().eq(0).hide().end().eq(1).hide().end().eq(2).hide();
-            }else if (allwaysType.indexOf("renxuan")>-1) {  //任选
-                $(".optional").show().siblings("div").not(".all-ways").hide();
-
-                if (allwaysType.indexOf("dan")>-1) {  //单式
-                    $(".optional .play-section .shoudong").show().siblings("div").hide();
-                    if (allwaysType.indexOf("er")>-1) {      //任二的单式2个
-                        $(".tip22").find("strong").eq(0).text("2").end().find("strong").eq(1).text("1");
-                        //写checkbox选择。。。
-                        if (allwaysType=="renxuan-zhidaner") {
-                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择两个位置,至少手动输入两个号码构成一注。");
-                        }else if (allwaysType=="renxuan-zudaner") {
-                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择两个位置,至少手动输入两个不重复的号码构成一注。");
-                        }
-                    }else if (allwaysType.indexOf("san")>-1||allwaysType.indexOf("liu")>-1) {    //任三的单式3个
-                        $(".tip22").find("strong").eq(0).text("3").end().find("strong").eq(1).text("1");  
-                        //写checkbox选择。。。
-                        if (allwaysType=="renxuan-zhidansan") {
-                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择三个位置,至少手动输入三个号码构成一注。");
-                        }else if (allwaysType=="renxuan-zudansan") {
-                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择三个位置,至少手动输入两个重复号码和一个不重复号码构成一注。");
-                        }else if (allwaysType=="renxuan-zudanliu") {
-                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择三个位置,手动至少输入三个不重复的号码构成一注。");
-                        }
-                    }else if (allwaysType.indexOf("si")>-1) {    //任四的单式2个
-                        $(".tip22").find("strong").eq(0).text("4").end().find("strong").eq(1).text("1");
-                        //写checkbox选择。。。
-                        if (allwaysType=="renxuan-zhidansi") {
-                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择四个位置,至少手动输入四个号码构成一注。");
-                        }else if (allwaysType=="renxuan-zudansi") {
-                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择四个位置,至少手动输入四个不重复的号码构成一注。");
-                        }
-                    }
-                }else if (allwaysType.indexOf("fu")>-1) { //组复4个
-                    $(".optional .play-section .renzu").show().siblings("div").hide();
-                    if (allwaysType.indexOf("er")>-1) {      //任二的组复1个
-                        $(".tip44").find("strong").eq(0).text("2").end().find("strong").eq(1).text("1");
-                        //写checkbox选择。。。
-                  
-                        $(".tip33").text("从万位、千位、百位、十位、个位中至少选择两个位置,号码区至少选择两个号码构成一注，不包括对子号码。");
-                        $(".optional .play-section .renzu .num-select p").text("任二组选");
-                    }else if (allwaysType.indexOf("san")>-1||allwaysType.indexOf("liu")>-1) {    //任三的组复2个
-                        $(".tip44").find("strong").eq(0).text("3").end().find("strong").eq(1).text("1");  
-                        //写checkbox选择。。。
-                        if (allwaysType=="renxuan-zufusan") {
-                            $(".tip33").text("从万位、千位、百位、十位、个位中至少选择三个位置,号码区至少选择两个号码构成两注。");
-                            $(".optional .play-section .renzu .num-select p").text("任三组三");
-                        }else if (allwaysType=="renxuan-zufuliu") {
-                            $(".tip33").text("从万位、千位、百位、十位、个位中至少选择三个位置,号码区至少选择三个号码构成一注。");
-                            $(".optional .play-section .renzu .num-select p").text("任三组六");
-                        }
-                    }else if (allwaysType.indexOf("si")>-1) {    //任四的组复1个
-                        $(".tip44").find("strong").eq(0).text("4").end().find("strong").eq(1).text("1");
-                        //写checkbox选择。。。
-                        
-                        $(".tip33").text("从万位、千位、百位、十位、个位中至少选择四个位置,号码区至少选择四个号码构成一注，不包括任何重复号码。");
-                        $(".optional .play-section .renzu .num-select p").text("任四组选");
-                    }
-                }
-
-                var visdiv=$(".optional .play-section>div:visible");
-                var labels=visdiv.find("label");
-                //console.log(visdiv.find("label"));对的
-                
-                var text1=visdiv.find(".tip").eq("1").find("strong").eq(0);
-                var text2=visdiv.find(".tip").eq("1").find("strong").eq(1);
-                visdiv.find("label").find("input").removeAttr("checked");
-
-                if (allwaysType.indexOf("er")>-1) {  //任二的3个的checkbox
-                    visdiv.find("label:gt(2) input").prop("checked","true");
-                }else if (allwaysType.indexOf("san")>-1||allwaysType.indexOf("liu")>-1) {  //任三的5个的checkbox
-                    visdiv.find("label:gt(1) input").prop("checked","true");
-                }else if (allwaysType.indexOf("si")>-1) {   //任四的3个的checkbox
-                    visdiv.find("label:gt(0) input").prop("checked","true");
-                }
-                text2.text("1");
-
-                $('.optional label').change(function() {
-                    var checkedInput=0;
-                    labels.each(function(){
-                        var inputs=$(this).find("input");
-                        if (inputs.prop("checked")==true) {
-                            checkedInput++;
-                        }
-                    })
-                    text1.text(checkedInput);
-                    if (checkedInput<_this.data("num")) {
-                        text2.text("0");
-                    }else {
-                        text2.text(fibonacci(checkedInput,_this.data("num")));
-                    }
-                    getsumnum();
-                    $(this).parents(".tip22").siblings("textarea").keyup();
-                }); 
-            } 
-	    	$(".additems").data("type",'');
-			var names=$(this).data("name");
-			if(typeof(names)!='undefined'){
-			    $(".play-action select option").eq(0).text(options1[names].firstNum);
-			    $(".play-action select option").eq(1).text(options1[names].lastNum);
-		    }
-		    
-			$(".numbers span,.sel-actions span").removeClass("clicked");
-			$(".play-action .times").val("1");
-			$(".play-action p span").text("0");
-			$(this).addClass("all-ways-cur").parents(".all-ways").find("li").not($(this)).removeClass("all-ways-cur");
-			$("textarea").val("");
-		});
-		$(".all-ways").find("li").eq(0).click();
-	})
-    $(".navs").find("li").eq(0).click();
-
+	 
 	//加1减1：
      $("img[alt='plus']").click(function() {
          var _this = $(this);
@@ -420,8 +131,7 @@ var reg=/^[0-9]*$/;
 
     //发起追号：
     $(".chase-num").find("input[type='button']").click(function() {
-         $this = $(this);
-         //console.log($(".num-selected table tbody tr:first-child").find("td").eq(0).text());
+         $this = $(this); 
          if ($(".num-selected table tbody tr:first-child").find("td").eq(0).text() != "") {
              $this.toggleClass("up");
              $(".chase-action").toggle();
@@ -456,6 +166,7 @@ var reg=/^[0-9]*$/;
              item.Num = $(".play-action p span").eq(0).text();
              item.pMuch = $(".play-action .times").val();
              item.TypeName = type;
+             
              if (type.split("_")[1] == "混合组选" || type.split("_")[1] == "组选和值" || type.split("_")[1] == "四星组合" || type.split("_")[1] == "五星组合") {
                  item.WinFee = 0;
                  item.RPoint = 1;
@@ -465,7 +176,6 @@ var reg=/^[0-9]*$/;
                  var tempr = $(".play-action select").find("option:selected").text().split("-");
                  item.WinFee = tempr[0];
                  item.RPoint = (parseFloat(tempr[1].replace('%', '')) / 100).toFixed(2);
-
                  if ($(".all-ways .all-ways-cur").data("type") && $(".all-ways .all-ways-cur").data("type").indexOf("renxuan") > -1) {
                      var location = [];
                      var j = 0;
@@ -492,14 +202,13 @@ var reg=/^[0-9]*$/;
                              location[j] = loc;
                              j++;
                          }
-                     })
+                     });
                      var msg = "<tr title='" + ('投注模式：' + type + '\n' + '选择位置：' + location + '\n' + '投注信息：' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200px' style='word-break:break-all;'>" + arrSelectNum + "</td><td width='73.3'>" + item.Num + "注" + "</td><td width='73.3'>" + item.pMuch + "倍" + "</td><td width='73.3'>" + item.PayFee + "元" + "</td><td width='73.3'>" + tempr[0] + "元" + "</td><td width='73.3'>" + tempr[1] + "</td><td width='73.3'><span>删除</span></td></tr>";
                  } else {
                      var msg = "<tr title='" + ('投注模式：' + type + '\n' + '投注信息：' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200px' style='word-break:break-all;'>" + arrSelectNum + "</td><td width='73.3'>" + item.Num + "注" + "</td><td width='73.3'>" + item.pMuch + "倍" + "</td><td width='73.3'>" + item.PayFee + "元" + "</td><td width='73.3'>" + tempr[0] + "元" + "</td><td width='73.3'>" + tempr[1] + "</td><td width='73.3'><span>删除</span></td></tr>";
                  }
                  $(".num-selected tbody").append(msg);
              }
-
              $(".num-selected table tbody tr td span").unbind('click').bind('click', function() {
                  var index = $(this).parent().parent().index();
                  $('#totalnum').html(parseInt($('#totalnum').html()) - parseInt(items[index].Num));
@@ -514,15 +223,14 @@ var reg=/^[0-9]*$/;
              });
              $('#totalnum').html(parseInt(item.Num) + parseInt($('#totalnum').html()));
              $('#totalfee').html(parseFloat(parseFloat(item.PayFee) + parseFloat($('#totalfee').html())).toFixed(2));
-
              $(".play-action .times").val("1");
              $(".play-section textarea").val("");
              $(this).siblings("p").find("span").text("0");
              $(".num-select span").removeClass("clicked");
-             item.CPCode = '';
-             item.CPName = '';
+             item.CPCode = lottery.CPCode;
+             item.CPName = lottery.CPName;
              item.IssueNum = $('#issueslt').val();
-             var typeid = typeof ($('.all-ways .all-ways-cur')) != 'undefined' ? $('.all-ways .all-ways-cur').data('sid') : $('.navs .navs-cur').data('sid');
+             var typeid = (typeof ($('.all-ways .all-ways-cur')) != 'undefined' && typeof ($('.all-ways .all-ways-cur').data('sid')) != 'undefined') ? $('.all-ways .all-ways-cur').data('sid') : $('.navs .navs-cur').data('sid');
              item.Type = typeid;
              item.Content = JSON.stringify(arrSelectNum);
              items.push(item);
@@ -565,7 +273,7 @@ var reg=/^[0-9]*$/;
         $(".alert1 p .btn").eq(0).css("margin-left", "35px");
     })
     //立即投注：
-    $(".add-bet input").click(function(){
+	$("#btnSave").click(function () {
     	if ($(".num-selected table tbody tr:first-child").find("td").eq(0).text()=="") {
             $('#basic-dialog-ok').modal({
                 "opacity":30
@@ -575,12 +283,18 @@ var reg=/^[0-9]*$/;
     	}else{
     		$("body").append("<div class='cover-layer'></div>");
             $(".alert1").show().css("z-index","10001");
-            $(".alert1").css({"width":"464px","height":"286px","top":"35%"});
-            $(".alert1 h3+p").html('<img src="/modules/images/tips2.png" width="40" style="margin-left:-10px;"><span>你确定加入<strong>16023658</strong>期？</span><br/><textarea style="width:90%;height:100px;margin:0 auto;margin-top:-10px;"></textarea>').css("text-align","center");
-            $(".alert1 h3+p textarea").text("4545");
-            $(".alert1 p:last-child").prepend('<span class="totle-money">投注总金额<strong style="margin:0 5px;">2400</strong>元</span>');
+	        $(".alert1").css({ "width": "464px", "height": "286px", "top": "35%" });
+            $(".alert1 h3+p").html('<img src="/modules/images/tips2.png" width="40" style="margin-left:-10px;"><span>你确定加入<strong>' + $('#issueslt').val() + '</strong>期？</span><br/><textarea style="width:90%;height:100px;margin:0 auto;margin-top:-10px;"></textarea>').css("text-align", "center");
+            var incontent = '';
+            $('.num-selected tbody tr').each(function (i, v) {
+                var s = $(v).attr('title');
+                s = s.replace('投注模式:', '').replace('\n', '').replace('投注信息:', '      ');
+                incontent += s + '\n';
+            });
+            $(".alert1 h3+p textarea").text(incontent);
+            $(".alert1 p:last-child").prepend('<span class="totle-money">投注总金额<strong style="margin:0 5px;">' + $('#totalfee').html() + '</strong>元</span>');
             $(".alert1 p:last-child").css({"text-align":"center","margin-top":"10px"});
-            $(".alert1 p .btn").eq(0).css("margin-left", "45px").click(function () {
+            $(".alert1 p .btn").eq(0).css("margin-left", "45px").unbind("click").bind("click", function () {
 				//投注进去：
 	            $(".alert1").hide();
 	            $(".cover-layer").remove();
@@ -591,6 +305,7 @@ var reg=/^[0-9]*$/;
 	            $(".alert1 p:last-child span").remove();
 	            $(".alert1 p:last-child").css({"text-align":"center","margin-top":"-10px"});
 	            $(".alert1 p .btn").eq(0).css("margin-left", "35px");
+	            lottery.saveItems();
 			    return;
 		    })
     	}
@@ -616,9 +331,7 @@ var reg=/^[0-9]*$/;
         var arrDel=[];
         var w=0;
         var arrSame=[];
-        var r=0;
-        //console.log(typelen);
-
+        var r=0; 
         arrSelectNum = $.trim(content).split(",");
         for (var e = 0; e < arrSelectNum.length; e++) {
             arrSelectNum[e]=$.trim(arrSelectNum[e]);
@@ -642,11 +355,9 @@ var reg=/^[0-9]*$/;
     		if (!reg.test(single)) {
                 arrDel[w]=arrSelectNum[i];
                 w++;
-    		}else {
-                //console.log(typelen);
+    		}else { 
                 if (whichtype.indexOf("erxing")>-1||whichtype.indexOf("sanxing")>-1||whichtype.indexOf("sixing")>-1||whichtype.indexOf("wuxing")>-1) {
-                    if(single.length!=typelen){
-                        //console.log(typelen);
+                    if(single.length!=typelen){ 
                         arrDel[w]=arrSelectNum[i];
                         w++;
                     }else if(whichtype=="handin-zhsanxingz"||whichtype=="handin-qsanxingz"||whichtype=="handin-hsanxingz"||whichtype=="handin-erxinghz"||whichtype=="handin-erxingqz"){   
@@ -656,8 +367,7 @@ var reg=/^[0-9]*$/;
                             w++;
                         }
                     }
-                }else if (whichtype.indexOf("renxuan")>-1) { //任选的手动输入
-                    //console.log(typenum);
+                }else if (whichtype.indexOf("renxuan")>-1) { //任选的手动输入 
                     if(single.length!=typenum){
                         arrDel[w]=arrSelectNum[i];
                         w++;
@@ -690,7 +400,6 @@ var reg=/^[0-9]*$/;
                     }
                 }
             }
-
 	        getsumnum();
     	} 
 	    for (var l = 0; l < arrSelectNum.length; l++) {  //除去错误的号码
@@ -706,8 +415,7 @@ var reg=/^[0-9]*$/;
 	    			arrSelectNum.splice(u,1);u--;break;
 	    		}
 	    	}
-	    }
-	    //console.log(arrSelectNum);
+	    }  
         var times=$(".play-action").find(".times").val();
         if (whichtype.indexOf("renxuan")>-1) {
             $(".play-action").find("p span:first-child").text($(".tip22").find("strong").eq(1).text()*arrSelectNum.length);
@@ -813,8 +521,7 @@ function lvhide() {
                  break;
              }
          }
-     }
-     //console.log(k);
+     } 
      if (k == items.length) {
          $(".chase-action>ul li:first-child").show().click();
      } else {
@@ -825,14 +532,11 @@ function lvhide() {
 
 function getsumnum(){
     var type="";
-    type=$(".navs-cur").html()+$(".all-ways-cur").parent().siblings("span").text()+"_"+$(".all-ways-cur").text();
-
-
+    type=$(".navs-cur").html()+$(".all-ways-cur").parent().siblings("span").text()+"_"+$(".all-ways-cur").text(); 
 	var types="";
     types=typeof($(".all-ways-cur").data("type"))!="undefined"?$(".all-ways-cur").data("type"):"";
     var times=$("img[alt='plus']").siblings(".times").val();
-    var s=0;
-    //console.log(types);
+    var s=0; 
     if (types.indexOf("zhifu")>-1) {  //五星、四星、三星、二星直选复式，和任选的直选复式
        var whichplay=$(".all-ways").siblings("div:visible").attr("class");
        var $numbers=$("."+whichplay+" .numbers:visible");
@@ -843,7 +547,7 @@ function getsumnum(){
        var $span5=$numbers.eq(4).find("span.clicked"); 
        var $span=$numbers.find("span.clicked");
 
-       if (types.indexOf("ren")>-1) {//待优化！！！！！！！！！！！！！！！！！！！！！！！！！！！
+       if (types.indexOf("ren")>-1) {//待优化！
             var len=0;
             $numbers.each(function(){
                 if ($(this).hasClass("have")) {
@@ -853,33 +557,7 @@ function getsumnum(){
                     len++;
                     $(this).addClass("have");
                 }
-            })
-            //console.log(len);
-            // if (len>$(".all-ways-cur").data("nums")-1) { 
-            //    for (var i = 0; i < $span.length; i++) {
-            //        for(var j=i+1;j<$span.length;j++){
-            //            if ($(".all-ways-cur").data("nums")==2) {
-            //                if ($span.eq(j).parent().parent().index()>$span.eq(i).parent().parent().index()) {
-            //                    s++;
-            //                }
-            //            }else if ($(".all-ways-cur").data("nums")>2) {
-            //                for (var k = j+1; k < $span.length; k++) {
-            //                    if ($(".all-ways-cur").data("nums")==3) {
-            //                        if ($span.eq(j).parent().parent().index()>$span.eq(i).parent().parent().index()&&$span.eq(k).parent().parent().index()>$span.eq(j).parent().parent().index()) {
-            //                            s++;
-            //                        }
-            //                    }else if ($(".all-ways-cur").data("nums")==4) {
-            //                        for (var r = k+1; r < $span.length; r++) {
-            //                            if ($span.eq(j).parent().parent().index()>$span.eq(i).parent().parent().index()&&$span.eq(k).parent().parent().index()>$span.eq(j).parent().parent().index()&&$span.eq(r).parent().parent().index()>$span.eq(k).parent().parent().index()) {
-            //                                 s++;
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            // }
+            }) 
             if ($(".all-ways-cur").data("nums")==4){
                 if (len==4) {
                     s=1;
@@ -944,16 +622,12 @@ function getsumnum(){
             }else if (types.indexOf("zhifu-sixingzu")>-1) {
                 s=4*s;
             }
-       }
-        //console.log(arrSelectNum);
+       } 
     }
 
     else if (types.indexOf("handin")>-1) {//手动输入
-        if (types.indexOf("sanxing")>-1) {        //直选单式和混合组选
-            
-            // if (types.indexOf("handin-sanxingz")>-1) {//混合组选
-                
-            // }
+        if (types.indexOf("sanxing") > -1) {        //直选单式和混合组选 
+
         }else if (types.indexOf("erxing")>-1) {   //二星直选单式和组选单式4个
             
         }
@@ -1045,9 +719,7 @@ function getsumnum(){
             }
     	}  
     }else if (types.indexOf("dxds")>-1) { //大小单双
-
         type=$(".navs-cur").html()+"_"+$(".all-ways-cur").text();
-
     	var $numbers=$(".interests .numbers:visible");
     	var s=0;
     	s=$numbers.eq(0).find("span.clicked").length*$numbers.eq(1).find("span.clicked").length;
@@ -1058,7 +730,6 @@ function getsumnum(){
         }
     }else if (types=="") {                         //定位胆
         type=$(".navs-cur").html()+"_"+"五星";
-
         var s=0;
         var $span=$(".fixed .numbers span.clicked");
         s=$span.length;
@@ -1087,7 +758,7 @@ function getsumnum(){
             }
         }
     }
-
+    console.log(types);
     /********************** 下，算所选号码：***********************/
     if (types.indexOf("zhifu")>-1||types.indexOf("dxds")>-1||types=="") {//五星直复和组选2，四星直复和组选2，前后三星直复2，二星直复2，大小单双2，定位胆1,任选7个
     	var whichplay=$(".all-ways").siblings("div:visible").attr("class");
@@ -1097,11 +768,9 @@ function getsumnum(){
     	var selectNum3="";
         var selectNum4="";
         var selectNum5="";
-    	var $numbers=$("."+whichplay+" .numbers:visible");
-        //console.log($numbers);
+    	var $numbers=$("."+whichplay+" .numbers:visible"); 
         for (var m = 0; m < $numbers.length; m++) {
-        	var s2=$numbers.eq(m).find("span.clicked");
-        	//console.log(s2);
+        	var s2=$numbers.eq(m).find("span.clicked"); 
         	for (var n = 0; n < s2.length; n++) {
         		if (m==0) {
         			selectNum1+=s2.eq(n).text();
@@ -1121,36 +790,34 @@ function getsumnum(){
         selectNum2==""?selectNum2="_":selectNum2=selectNum2;
         selectNum3==""?selectNum3="_":selectNum3=selectNum3;
         selectNum4==""?selectNum4="_":selectNum4=selectNum4;
-        selectNum5==""?selectNum5="_":selectNum5=selectNum5;
-
+        selectNum5==""?selectNum5="_":selectNum5=selectNum5; 
+       
         if (types.indexOf("sanxing")>-1||types==""||types.indexOf("zhifu-wuxing")>-1||types.indexOf("zhifu-sixing")>-1||types.indexOf("ren")>-1) {             //五星和四星的直选复式2个，和组合2个，前中后三星直复3个，定位胆1个，任选直复3个
             if (types.indexOf("zhifu-wuxing")>-1||types==""||types.indexOf("ren")>-1) {
                 arrSelectNum=[selectNum1,selectNum2,selectNum3,selectNum4,selectNum5];
             }else if(types.indexOf("zhifu-sixing")>-1){
-                arrSelectNum=["_",selectNum1,selectNum2,selectNum3,selectNum4];
+                arrSelectNum=[selectNum1,selectNum2,selectNum3,selectNum4];
             }else if (types.indexOf("-hsanxing")>-1) {
-                arrSelectNum=["_","_",selectNum1,selectNum2,selectNum3];
+                arrSelectNum=[selectNum1,selectNum2,selectNum3];
             }else if (types.indexOf("-zhsanxing")>-1) {
-                arrSelectNum=["_",selectNum1,selectNum2,selectNum3,"_"];
+                arrSelectNum=[selectNum1,selectNum2,selectNum3];
             }else if (types.indexOf("-qsanxing")>-1) {
-                arrSelectNum=[selectNum1,selectNum2,selectNum3,"_","_"];
+                arrSelectNum=[selectNum1,selectNum2,selectNum3];
             }
         }else if (types=="zhifu-erxingh"||types.indexOf("hdxds")>-1) {       //后二直复1个，后二大小单双1个
-            arrSelectNum=["_","_","_",selectNum1,selectNum2];
+            arrSelectNum=[selectNum1,selectNum2];
         }else if(types=="zhifu-erxingq"||types.indexOf("qdxds")>-1) {        //前二直复1个，前二大小单双1个
-            arrSelectNum=[selectNum1,selectNum2,"_","_","_"];
+            arrSelectNum=[selectNum1,selectNum2];
         }
     }
     if (types.indexOf("zuxuan")>-1||types.indexOf("ma")>-1||types.indexOf("hezhi")>-1||types.indexOf("renxuan-zufu")>-1) {//组三3个，组六3个，二星组选复式2，不定位2，和值6个,任选组复4个
         arrSelectNum=[];  
         var whichplay=$(".all-ways").siblings("div:visible").find(".numbers:visible");
         var $span=whichplay.find("span.clicked");
-    	$span.each(function(i,v){
-            arrSelectNum[i]=$(v).text();
-    	})
-    }
-
-    //console.log(s);
+        $span.each(function(i, v) {
+            arrSelectNum[i] = $(v).text();
+        });
+    } 
     $(".play-action").find("p span:first-child").text(s);
 	$(".play-action").find("p span:last-child").text(2*s*times);
 
@@ -1200,8 +867,7 @@ function times(num) {
 }
 //手动改变倍数
 function handchange(obj, issums) {
-    var times2 = obj.val();
-    console.log(times2);
+    var times2 = obj.val(); 
     if (!reg.test(times2)) {
         times2 = 1;
     } else {
@@ -1216,234 +882,7 @@ function handchange(obj, issums) {
         var nums = $(".play-action").find("p span:first-child").text();
         obj.siblings("p").find("span:last-child").text(nums * times2 * 2);
     }
-}
-
-function lvhide() {
-    var k = 0;
-    if (items.length > 0) {
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].TypeName == items[0].TypeName) {
-                k++;
-            } else {
-                break;
-            }
-        }
-    }
-    if (k == items.length) {
-        $(".chase-action>ul li:first-child").show().click();
-    } else {
-        $(".chase-action>ul li:nth-child(2)").click();
-        $(".chase-action>ul li:first-child").hide();
-    }
-}
-
-function getsumnum() {
-    var type = "";
-    type = $(".navs-cur").html() + $(".all-ways-cur").parent().siblings("span").text() + "_" + $(".all-ways-cur").text();
-    var types = "";
-    types = typeof ($(".all-ways-cur").data("type")) != "undefined" ? $(".all-ways-cur").data("type") : "";
-    var times = $("img[alt='plus']").siblings(".times").val();
-    var s = 0;
-    if (types.indexOf("zhifu") > -1) {  //三星、二星直选复式
-        var whichplay = $(".all-ways").siblings("div:visible").attr("class");
-        var $numbers = $("." + whichplay + " .numbers:visible");
-        var $span1 = $numbers.eq(0).find("span.clicked");
-        var $span2 = $numbers.eq(1).find("span.clicked");
-        var $span3 = $numbers.eq(2).find("span.clicked");
-        var $span4 = $numbers.eq(3).find("span.clicked");
-        var $span5 = $numbers.eq(4).find("span.clicked");
-
-        for (var i = 0; i < $span1.length; i++) {
-            for (var j = 0; j < $span2.length; j++) {
-                if ($numbers.length == 2) {
-                    s++;
-                } else if ($numbers.length == 3) {
-                    for (var k = 0; k < $span3.length; k++) {
-                        s++;
-                    }
-                } else if ($numbers.length == 4) {
-                    for (var k = 0; k < $span3.length; k++) {
-                        for (var p = 0; p < $span4.length; p++) {
-                            s++;
-                        }
-                    }
-                } else if ($numbers.length == 5) {
-                    for (var k = 0; k < $span3.length; k++) {
-                        for (var p = 0; p < $span4.length; p++) {
-                            for (var q = 0; q < $span5.length; q++) {
-                                s++;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (types.indexOf("zhifu-wuxingzu") > -1) {
-            s = 5 * s;
-        } else if (types.indexOf("zhifu-sixingzu") > -1) {
-            s = 4 * s;
-        }
-    } else if (types.indexOf("hezhi") > -1) {//和值
-        var $span = $(".n-star .hezhi .numbers:visible").find("span");
-        var s = 0;
-
-        if (types.indexOf("zu") > -1) {              //组选和值
-            $span.each(function (i, v) {
-                if ($(v).hasClass('clicked')) {
-                    if (i > 12) { i = 25 - i; }
-                    if (i == 0) {
-                        s += 1
-                    } else if (i == 1) {
-                        s += 2;
-                    } else if (i == 2) {
-                        s += 2;
-                    } else if (i == 3) {
-                        s += 4;
-                    } else if (i == 4) {
-                        s += 5;
-                    } else if (i == 5) {
-                        s += 6;
-                    } else if (i == 6) {
-                        s += 8;
-                    } else if (i == 7) {
-                        s += 10;
-                    } else if (i == 8) {
-                        s += 11;
-                    } else if (i == 9) {
-                        s += 13;
-                    } else if (i == 10) {
-                        s += 14;
-                    } else if (i == 11) {
-                        s += 14;
-                    } else if (i == 12) {
-                        s += 15;
-                    }
-                }
-            });
-
-        } else {                                     //直选和值
-            $span.each(function (i, v) {
-                if ($(v).hasClass('clicked')) {
-                    if (i > 13) { i = 27 - i; }
-                    if (i == 10) {
-                        s += 63;
-                    } else if (i == 11) {
-                        s += 69;
-                    } else if (i == 12) {
-                        s += 73;
-                    } else if (i == 13) {
-                        s += 75;
-                    } else {
-                        s += 0.5 * (i + 1) * (i + 2);
-                    }
-                }
-            });
-        }
-    } else if (types.indexOf("zuxuan") > -1) {//组选
-        var $span = $(".zuxuans .numbers span.clicked").length;
-        var s = 0;
-        if (types.indexOf("l") == -1) {              //组三和二星的组选复式
-            if (types.indexOf("zuxuans") > -1) {       //组三
-                if ($span > 1) {
-                    s = $span * ($span - 1);
-                }
-            } else {                                   //二星的两个组选复式
-                if ($span > 1) {
-                    s = $span * ($span - 1) / 2;
-                }
-            }
-        } else {            //组六
-            if ($span > 2) {
-                s = $span * ($span - 1) * ($span - 2) / 6;
-            }
-        }
-    } else if (types.indexOf("ma") > -1) { //不定位
-        type = $(".navs-cur").html() + $(".all-ways-cur").parent().siblings("span").text() + "_" + $(".all-ways-cur").text().substring(0, 2);
-        var $span = $(".non-fixed .numbers span.clicked").length;
-        var s = 0;
-        if (types.indexOf("yima") > -1) {          //不定位一码
-            s = $span;
-        } else {                                   //不定位二码
-            if ($span > 1) {
-                s = $span * ($span - 1) / 2;
-            }
-        }
-    } else if (types.indexOf("dxds") > -1) { //大小单双
-        type = $(".navs-cur").html() + "_" + $(".all-ways-cur").text();
-        var $numbers = $(".interests .numbers:visible");
-        var s = 0;
-        s = $numbers.eq(0).find("span.clicked").length * $numbers.eq(1).find("span.clicked").length;
-    } else if (types == "") {                         //定位胆
-        type = $(".navs-cur").html() + "_" + "五星";
-        var s = 0;
-        var $span = $(".fixed .numbers span.clicked");
-        s = $span.length;
-    }
-
-    /********************** 下，算所选号码：***********************/
-    if (types.indexOf("zhifu") > -1 || types.indexOf("dxds") > -1 || types == "") {//三星直复1，二星直复2，大小单双2，定位胆1
-        var whichplay = $(".all-ways").siblings("div:visible").attr("class");
-        arrSelectNum = [];
-        var selectNum1 = "";
-        var selectNum2 = "";
-        var selectNum3 = "";
-        var selectNum4 = "";
-        var selectNum5 = "";
-        var $numbers = $("." + whichplay + " .numbers:visible");
-        for (var m = 0; m < $numbers.length; m++) {
-            var s2 = $numbers.eq(m).find("span.clicked");
-            //console.log(s2);
-            for (var n = 0; n < s2.length; n++) {
-                if (m == 0) {
-                    selectNum1 += s2.eq(n).text();
-                } else if (m == 1) {
-                    selectNum2 += s2.eq(n).text();
-                } else if (m == 2) {
-                    selectNum3 += s2.eq(n).text();
-                } else if (m == 3) {
-                    selectNum4 += s2.eq(n).text();
-                } else if (m == 4) {
-                    selectNum5 += s2.eq(n).text();
-                }
-            }
-        }
-
-        selectNum1 == "" ? selectNum1 = "_" : selectNum1 = selectNum1;
-        selectNum2 == "" ? selectNum2 = "_" : selectNum2 = selectNum2;
-        selectNum3 == "" ? selectNum3 = "_" : selectNum3 = selectNum3;
-        selectNum4 == "" ? selectNum4 = "_" : selectNum4 = selectNum4;
-        selectNum5 == "" ? selectNum5 = "_" : selectNum5 = selectNum5;
-
-        if (types.indexOf("sanxing") > -1 || types == "" || types.indexOf("zhifu-wuxing") > -1 || types.indexOf("zhifu-sixing") > -1) {             //五星和四星的直选复式2个，和组合2个，前后三星直复2个，定位胆1个
-            if (types.indexOf("zhifu-wuxing") > -1 || types == "") {
-                arrSelectNum = [selectNum1, selectNum2, selectNum3, selectNum4, selectNum5];
-            } else if (types.indexOf("zhifu-sixing") > -1) {
-                arrSelectNum = [selectNum1, selectNum2, selectNum3, selectNum4];
-            } else if (types.indexOf("hsanxing") > -1) {
-                arrSelectNum = [selectNum1, selectNum2, selectNum3];
-            } else if (types.indexOf("qsanxing") > -1) {
-                arrSelectNum = [selectNum1, selectNum2, selectNum3];
-            }
-        } else if (types == "zhifu-erxingh" || types.indexOf("hdxds") > -1) {       //后二直复1个，后二大小单双1个
-            arrSelectNum = [selectNum1, selectNum2];
-        } else if (types == "zhifu-erxingq" || types.indexOf("qdxds") > -1) {        //前二直复1个，前二大小单双1个
-            arrSelectNum = [selectNum1, selectNum2];
-        }
-    }
-    if (types.indexOf("zuxuan") > -1 || types.indexOf("ma") > -1 || types.indexOf("hezhi") > -1) {//组三2个，组六2个，二星组选复式2，不定位2，和值4个
-        arrSelectNum = [];
-        var whichplay = $(".all-ways").siblings("div:visible").find(".numbers:visible");
-        var $span = whichplay.find("span.clicked");
-        $span.each(function (i, v) {
-            arrSelectNum[i] = $(v).text();
-        });
-    }
-    $(".play-action").find("p span:first-child").text(s);
-    $(".play-action").find("p span:last-child").text(2 * s * times);
-    $('.additems').data('type', type);
-}
-
-
+} 
 
 function bindselectnavs() {
     //加减1倍数：   
@@ -1562,16 +1001,13 @@ function sumtotalFee() {
         }
         $(".totle em").eq(1).text(q);
     });
-}
-
-
-
+} 
 
 function bindnavs() {
     $(".navs").find("li").click(function () {
         var _this = $(this);
         var names = _this.data("name");
-        if (typeof (names) != 'undefined' && names != '') {
+        if (typeof (names) != 'undefined' && names != '') { 
             $(".play-action select option").eq(0).text(options1[names].firstNum);
             $(".play-action select option").eq(1).text(options1[names].lastNum);
         }
@@ -1623,9 +1059,10 @@ function bindnavs() {
                 $(".all-ways").html(html);
                 break;
             case '1HS1':
+            case '1ZHONGS':
             case '1QIANS1':
                 $(".all-ways").css("height", "80px");
-                var tp = names == '1HS1' ? 'h' : 'q';
+                var tp = names == '1HS1' ? 'h' : (names == "1QIANS1" ? 'q' : 'zh');
                 for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
                     var tempitem = lottery.CPTypes[$(this).data("sid")][i];
                     html += '<div class="' + (tempitem.PCode == '2ZHIX' ? 'zhixuan' : 'zuxuan') + '"><span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
@@ -1677,7 +1114,41 @@ function bindnavs() {
                 $(".play-action .select-fan,.play-action select").show();
                 break;
             case 'dingweidan':
+                $(".all-ways").css("height", "0px");
                 $('.' + _this.data('id')).show().siblings("div").hide();
+                break;
+            case 'renxuan1':
+                for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
+                    var tempitem = lottery.CPTypes[$(this).data("sid")][i];
+                    var tname = (tempitem.PCode == "2RENE" ? "er" : (tempitem.PCode == "2RSAN" ? "san" : "si"));
+                    var tnum = (tempitem.PCode == "2RENE" ? 2 : (tempitem.PCode == "2RSAN" ? 3 : 4));
+                    html += '<div class="' + tname + '"><span data-sid="ren' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
+
+                    for (var j = 0; j < tempitem.ChildPlays.length; j++) {
+                        var titem = tempitem.ChildPlays[j];
+                        if (titem.PCode == '3ZHIXFS') {
+                            html += '<li class="all-ways-cur" data-nums="' + tnum + '" data-type="zhifu-ren' + tname + '" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        }else if (titem.PCode == '3ZHIXDS') {
+                            html += '<li data-nums="' + tnum + '" data-type="renxuan-zhidan' + tname + '" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        } else if (titem.PCode == '3ZUXFS') {
+                            html += '<li data-nums="' + tnum + '" data-type="renxuan-zufu' + tname + '" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        } else if (titem.PCode == '3ZUXDS') {
+                            html += '<li data-nums="' + tnum + '" data-type="renxuan-zudan' + tname + '" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        } else if (titem.PCode == '3ZUSFS'){ 
+                            html += '<li data-nums="' + tnum + '" data-type="renxuan-zufu' + tname + '"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        } else if (titem.PCode == '3ZUSDS') {
+                            html += '<li data-nums="' + tnum + '" data-type="renxuan-zudan' + tname + '"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        } else if (titem.PCode == '3ZULFS') {
+                            html += '<li data-nums="' + tnum + '" data-type="renxuan-zudanliu"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        } else if (titem.PCode == '3ZULDS') {
+                            html += '<li data-nums="' + tnum + '" data-type="renxuan-zudanliu"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                        }
+                    } 
+                    html += '</ul></div>';
+                }
+                $(".all-ways").html(html);
+                $(".all-ways").css("height", "115px");
+                $(".play-action .select-fan,.play-action select").show();
                 break;
             case 'budingwei':
                 for (var i = 0; i < lottery.CPTypes[$(this).data("sid")].length; i++) {
@@ -1685,9 +1156,9 @@ function bindnavs() {
                     html += '<div class="' + (tempitem.PCode == "2ERMA" ? "erma" : "yima") + '"><span data-sid="' + tempitem.PIDS + '">' + tempitem.PName + '</span><ul>';
                     for (var j = 0; j < tempitem.ChildPlays.length; j++) {
                         var titem = tempitem.ChildPlays[j];
-                        if (titem.PCode == '3HSYMBDW') {
+                        if (titem.PCode == '3HSYMBDW' || titem.PCode == '3ZSYMBDW' || titem.PCode == '3QSYMBDW') {
                             html += '<li class="all-ways-cur" data-name="budingwei" data-type="yima" data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
-                        } else if (titem.PCode == '3HSEMBDW') {
+                        } else if (titem.PCode == '3HSEMBDW' || titem.PCode == '3ZSEMBDW' || titem.PCode == '3QSEMBDW') {
                             html += '<li data-name="budingwei2" data-type="erma"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         }
                     }
@@ -1712,11 +1183,12 @@ function bindnavs() {
                 }
                 $(".all-ways").html(html);
                 break;
-        }
-        $(".all-ways").find("li").click(function () {
-            var allwaysType = $(this).data("type");
+        } 
+        $(".all-ways").find("li").click(function() {
+            var _this = $(this);
+            var allwaysType = _this.data("type");
             $(".play-action .select-fan,.play-action select").show();
-            if (allwaysType.indexOf("zhifu") > -1) { //五星、四星的直选复式和组选4个，三星后三和前三2个、二星直选复式2个，
+            if (allwaysType.indexOf("zhifu") > -1) { //五星、四星的直选复式和组选4个，三星后三和中三和前三3个、二星直选复式2个，外加任选直选复式3个
                 $(".n-star .play-section .zhifu").show().siblings().hide();
                 $(".zhifu li").show();
                 if (allwaysType.indexOf("wuxing") > -1) { //五星的直选复式和组选
@@ -1738,9 +1210,12 @@ function bindnavs() {
                     if (allwaysType == "zhifu-hsanxing") { //后三星直选复式
                         $(".zhifu>p").text("从百位、十位、个位中至少各选1个号码组成一注。");
                         $(".zhifu li").eq(0).hide().end().eq(1).hide();
-                    } else { //前三星直选复式
+                    } else if (allwaysType == "zhifu-qsanxing") { //前三星直选复式
                         $(".zhifu>p").text("从万位、千位、百位中至少各选1个号码组成一注。");
                         $(".zhifu li").eq(3).hide().end().eq(4).hide();
+                    } else if (allwaysType == "zhifu-zhsanxing") { //中三星直选复式
+                        $(".zhifu>p").text("从千位、百位、十位中至少各选1个号码组成一注。");
+                        $(".zhifu li").eq(0).hide().end().eq(4).hide();
                     }
                 } else if (allwaysType == "zhifu-erxingh") {
                     $(".zhifu>p").text("从十位和个位上至少各选1个号码。");
@@ -1748,8 +1223,18 @@ function bindnavs() {
                 } else if (allwaysType == "zhifu-erxingq") {
                     $(".zhifu>p").text("从万位和千位上至少各选1个号码。");
                     $(".zhifu li").eq(2).hide().end().eq(3).hide().end().eq(4).hide();
+                } else if (allwaysType.indexOf("ren") > -1) { //任选的直选复式3个
+                    $(".n-star").show().siblings("div").not(".all-ways").hide();
+                    if (allwaysType == "zhifu-rener") {
+                        $(".zhifu>p").text("从万位、千位、百位、十位、个位中至少两位上各选1个号码组成一注。");
+                    } else if (allwaysType == "zhifu-rensan") {
+                        $(".zhifu>p").text("从万位、千位、百位、十位、个位中至少三位上各选1个号码组成一注。");
+                    } else if (allwaysType == "zhifu-rensi") {
+                        $(".zhifu>p").text("从万位、千位、百位、十位、个位中至少四位上各选1个号码组成一注。");
+                    }
                 }
-            } else if (allwaysType.indexOf("handin") > -1) { //手动输入 五星、四星直选单式2个，三星后三和前三的 直选单式、混合组选4个，二星的直选单式和组选单式4个
+
+            } else if (allwaysType.indexOf("handin") > -1) { //手动输入 五星、四星直选单式2个，三星后三和中三和前三的 直选单式、混合组选6个，二星的直选单式和组选单式4个
                 $(".n-star .play-section .handin").show().siblings().hide();
                 $(".n-star .play-section .handin p:last-child").text("每注号码之间请使用英文逗号（,）隔开。");
                 if (allwaysType.indexOf("wuxing") > -1) { //五星直选单式
@@ -1758,16 +1243,16 @@ function bindnavs() {
                 } else if (allwaysType.indexOf("sixing") > -1) { //四星直选单式
                     $(".handin p:first-child").text("手动输入号码，至少输入1个四位数号码组成一注。");
                     $(".n-star .play-section .handin p:last-child").text("每注号码之间请使用英文逗号（,）隔开。(一次最大可投注5000注)")
-                } else if (allwaysType.indexOf("sanxing") > -1) { //三星后三和前三
+                } else if (allwaysType.indexOf("sanxing") > -1) { //三星后三和前三和中三
                     $(".handin p:first-child").text("手动输入号码，至少输入1个三位数号码组成一注。");
                     //混合组选去掉返点select。
-                    if (allwaysType.indexOf("sanxingz") > -1) { //三星（前后）的混合组选
+                    if (allwaysType.indexOf("sanxingz") > -1) { //三星（前中后）的混合组选
                         $(".play-action .select-fan,.play-action select").hide();
                     }
                 } else if (allwaysType.indexOf("erxing") > -1) {
                     $(".handin p:first-child").text("手动输入号码，至少输入1个两位数号码组成一注。");
                 }
-            } else if (allwaysType.indexOf("hezhi") > -1) { //和值  三星后三和前三的 直选和值、组选和值4个
+            } else if (allwaysType.indexOf("hezhi") > -1) { //和值  三星后三和中三和前三的 直选和值、组选和值6个
                 $(".n-star .play-section .hezhi").show().siblings().hide();
                 if (allwaysType.indexOf("zu") > -1) { //组选和值
                     $(".hezhi>p").text("从1-26中任意选择1个或1个以上号码。");
@@ -1779,7 +1264,7 @@ function bindnavs() {
                     $(".zu-hezhi").hide();
                     $(".zh-hezhi").show();
                 }
-            } else if (allwaysType.indexOf("zuxuan") > -1) { //组选  三星后三和前三的  组三、组六4个，二星的组选复式2个
+            } else if (allwaysType.indexOf("zuxuan") > -1) { //组选  三星后三和中三和前三的  组三、组六6个，二星的组选复式2个
                 $(".n-star .play-section .zuxuans").show().siblings().hide();
                 if (allwaysType.indexOf("l") == -1) { //三星后三和前三的  组三，二星的组选复式
                     $(".zuxuans>p").text("从0-9中任意选择2个或2个以上号码。");
@@ -1804,11 +1289,102 @@ function bindnavs() {
             } else if (allwaysType.indexOf("hdxds") > -1) { //后二大小单双
                 $(".interests .play-section>p").text("从十位、个位中的“大、小、单、双”中至少各选一个组成一注。");
                 $(".interests .num-select li").show().eq(0).hide().end().eq(1).hide().end().eq(2).hide();
-            }
+            } else if (allwaysType.indexOf("renxuan") > -1) { //任选
+                $(".optional").show().siblings("div").not(".all-ways").hide();
 
+                if (allwaysType.indexOf("dan") > -1) { //单式
+                    $(".optional .play-section .shoudong").show().siblings("div").hide();
+                    if (allwaysType.indexOf("er") > -1) { //任二的单式2个
+                        $(".tip22").find("strong").eq(0).text("2").end().find("strong").eq(1).text("1");
+                        //写checkbox选择。。。
+                        if (allwaysType == "renxuan-zhidaner") {
+                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择两个位置,至少手动输入两个号码构成一注。");
+                        } else if (allwaysType == "renxuan-zudaner") {
+                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择两个位置,至少手动输入两个不重复的号码构成一注。");
+                        }
+                    } else if (allwaysType.indexOf("san") > -1 || allwaysType.indexOf("liu") > -1) { //任三的单式3个
+                        $(".tip22").find("strong").eq(0).text("3").end().find("strong").eq(1).text("1");
+                        //写checkbox选择。。。
+                        if (allwaysType == "renxuan-zhidansan") {
+                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择三个位置,至少手动输入三个号码构成一注。");
+                        } else if (allwaysType == "renxuan-zudansan") {
+                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择三个位置,至少手动输入两个重复号码和一个不重复号码构成一注。");
+                        } else if (allwaysType == "renxuan-zudanliu") {
+                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择三个位置,手动至少输入三个不重复的号码构成一注。");
+                        }
+                    } else if (allwaysType.indexOf("si") > -1) { //任四的单式2个
+                        $(".tip22").find("strong").eq(0).text("4").end().find("strong").eq(1).text("1");
+                        //写checkbox选择。。。
+                        if (allwaysType == "renxuan-zhidansi") {
+                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择四个位置,至少手动输入四个号码构成一注。");
+                        } else if (allwaysType == "renxuan-zudansi") {
+                            $(".tip11").text("从万位、千位、百位、十位、个位中至少选择四个位置,至少手动输入四个不重复的号码构成一注。");
+                        }
+                    }
+                } else if (allwaysType.indexOf("fu") > -1) { //组复4个
+                    $(".optional .play-section .renzu").show().siblings("div").hide();
+                    if (allwaysType.indexOf("er") > -1) { //任二的组复1个
+                        $(".tip44").find("strong").eq(0).text("2").end().find("strong").eq(1).text("1");
+                        //写checkbox选择。。。
+
+                        $(".tip33").text("从万位、千位、百位、十位、个位中至少选择两个位置,号码区至少选择两个号码构成一注，不包括对子号码。");
+                        $(".optional .play-section .renzu .num-select p").text("任二组选");
+                    } else if (allwaysType.indexOf("san") > -1 || allwaysType.indexOf("liu") > -1) { //任三的组复2个
+                        $(".tip44").find("strong").eq(0).text("3").end().find("strong").eq(1).text("1");
+                        //写checkbox选择。。。
+                        if (allwaysType == "renxuan-zufusan") {
+                            $(".tip33").text("从万位、千位、百位、十位、个位中至少选择三个位置,号码区至少选择两个号码构成两注。");
+                            $(".optional .play-section .renzu .num-select p").text("任三组三");
+                        } else if (allwaysType == "renxuan-zufuliu") {
+                            $(".tip33").text("从万位、千位、百位、十位、个位中至少选择三个位置,号码区至少选择三个号码构成一注。");
+                            $(".optional .play-section .renzu .num-select p").text("任三组六");
+                        }
+                    } else if (allwaysType.indexOf("si") > -1) { //任四的组复1个
+                        $(".tip44").find("strong").eq(0).text("4").end().find("strong").eq(1).text("1");
+                        //写checkbox选择。。。
+
+                        $(".tip33").text("从万位、千位、百位、十位、个位中至少选择四个位置,号码区至少选择四个号码构成一注，不包括任何重复号码。");
+                        $(".optional .play-section .renzu .num-select p").text("任四组选");
+                    }
+                }
+
+                var visdiv = $(".optional .play-section>div:visible");
+                var labels = visdiv.find("label");
+
+                var text1 = visdiv.find(".tip").eq("1").find("strong").eq(0);
+                var text2 = visdiv.find(".tip").eq("1").find("strong").eq(1);
+                visdiv.find("label").find("input").removeAttr("checked");
+
+                if (allwaysType.indexOf("er") > -1) { //任二的3个的checkbox
+                    visdiv.find("label:gt(2) input").prop("checked", "true");
+                } else if (allwaysType.indexOf("san") > -1 || allwaysType.indexOf("liu") > -1) { //任三的5个的checkbox
+                    visdiv.find("label:gt(1) input").prop("checked", "true");
+                } else if (allwaysType.indexOf("si") > -1) { //任四的3个的checkbox
+                    visdiv.find("label:gt(0) input").prop("checked", "true");
+                }
+                text2.text("1");
+
+                $('.optional label').change(function() {
+                    var checkedInput = 0;
+                    labels.each(function() {
+                        var inputs = $(this).find("input");
+                        if (inputs.prop("checked") == true) {
+                            checkedInput++;
+                        }
+                    })
+                    text1.text(checkedInput);
+                    if (checkedInput < _this.data("num")) {
+                        text2.text("0");
+                    } else {
+                        text2.text(fibonacci(checkedInput, _this.data("num")));
+                    }
+                    getsumnum();
+                    $(this).parents(".tip22").siblings("textarea").keyup();
+                });
+            }
             $(".additems").data("type", '');
             var names = $(this).data("name");
-            if (typeof (names) != 'undefined' && names != '') {
+            if (typeof(names) != 'undefined') {
                 $(".play-action select option").eq(0).text(options1[names].firstNum);
                 $(".play-action select option").eq(1).text(options1[names].lastNum);
             }
@@ -1817,7 +1393,7 @@ function bindnavs() {
             $(".play-action .times").val("1");
             $(".play-action p span").text("0");
             $(this).addClass("all-ways-cur").parents(".all-ways").find("li").not($(this)).removeClass("all-ways-cur");
-            $(".n-star textarea").val("");
+            $("textarea").val("");
         });
         $(".all-ways").find("li").eq(0).click();
     })
@@ -1924,8 +1500,7 @@ lottery.getDifDate = function (item) {
         minutes = minutes > 9 ? minutes : '0' + minutes;
         if (leave2)
             //计算相差秒数
-            var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
-        console.log(leave2);
+            var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数 
         var seconds = Math.round(leave3 / 1000);
         if (seconds > 0) {
             seconds = seconds - 1;

@@ -142,7 +142,7 @@ ul.num-select li div span:hover{background: #ffecec;}
 .bet-record table{border-collapse: collapse;width: 970px;margin-left: 15px;color: white;text-align: center;line-height: 28px;margin-top: 0px;}
 .bet-record table thead{background: #103049;height: }
 .bet-record table tbody tr{height: 35px;border-bottom: 1px solid #777;}
-.bet-record table tbody{max-height: 316px;overflow-y:auto;display: block;}
+.bet-record table tbody{max-height: 316px;overflow-y:auto;display: block;    font-size: 12px;}
 .bet-record table thead tr{display: block;}
 .bet-record table th,.bet-record table td{width: 97px;}
 .width40{ width: 40px !important;}
