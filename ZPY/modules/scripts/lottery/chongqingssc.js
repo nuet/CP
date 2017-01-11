@@ -166,7 +166,7 @@ var reg=/^[0-9]*$/;
              item.Num = $(".play-action p span").eq(0).text();
              item.pMuch = $(".play-action .times").val();
              item.TypeName = type;
-             
+             var location = [];
              if (type.split("_")[1] == "混合组选" || type.split("_")[1] == "组选和值" || type.split("_")[1] == "四星组合" || type.split("_")[1] == "五星组合") {
                  item.WinFee = 0;
                  item.RPoint = 1;
@@ -177,32 +177,22 @@ var reg=/^[0-9]*$/;
                  item.WinFee = tempr[0];
                  item.RPoint = (parseFloat(tempr[1].replace('%', '')) / 100).toFixed(2);
                  if ($(".all-ways .all-ways-cur").data("type") && $(".all-ways .all-ways-cur").data("type").indexOf("renxuan") > -1) {
-                     var location = [];
+                   
                      var j = 0;
                      $(".optional .play-section>div:visible").find("input[type='checkbox']").each(function(i, v) {
                          var loc = "";
                          if ($(v).prop("checked") == true) {
                              switch (i) {
-                             case 0:
-                                 loc = "万位";
-                                 break;
-                             case 1:
-                                 loc = "千位";
-                                 break;
-                             case 2:
-                                 loc = "百位";
-                                 break;
-                             case 3:
-                                 loc = "十位";
-                                 break;
-                             case 4:
-                                 loc = "个位";
-                                 break;
+                             case 0: loc = "万位";  break;
+                             case 1: loc = "千位";  break;
+                             case 2: loc = "百位";  break;
+                             case 3: loc = "十位";  break;
+                             case 4: loc = "个位";  break;
                              }
                              location[j] = loc;
                              j++;
                          }
-                     });
+                     }); 
                      var msg = "<tr title='" + ('投注模式：' + type + '\n' + '选择位置：' + location + '\n' + '投注信息：' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200px' style='word-break:break-all;'>" + arrSelectNum + "</td><td width='73.3'>" + item.Num + "注" + "</td><td width='73.3'>" + item.pMuch + "倍" + "</td><td width='73.3'>" + item.PayFee + "元" + "</td><td width='73.3'>" + tempr[0] + "元" + "</td><td width='73.3'>" + tempr[1] + "</td><td width='73.3'><span>删除</span></td></tr>";
                  } else {
                      var msg = "<tr title='" + ('投注模式：' + type + '\n' + '投注信息：' + arrSelectNum) + "'><td width='130'>" + type + "</td><td width='200px' style='word-break:break-all;'>" + arrSelectNum + "</td><td width='73.3'>" + item.Num + "注" + "</td><td width='73.3'>" + item.pMuch + "倍" + "</td><td width='73.3'>" + item.PayFee + "元" + "</td><td width='73.3'>" + tempr[0] + "元" + "</td><td width='73.3'>" + tempr[1] + "</td><td width='73.3'><span>删除</span></td></tr>";
@@ -232,7 +222,7 @@ var reg=/^[0-9]*$/;
              item.IssueNum = $('#issueslt').val();
              var typeid = (typeof ($('.all-ways .all-ways-cur')) != 'undefined' && typeof ($('.all-ways .all-ways-cur').data('sid')) != 'undefined') ? $('.all-ways .all-ways-cur').data('sid') : $('.navs .navs-cur').data('sid');
              item.Type = typeid;
-             item.Content = JSON.stringify(arrSelectNum);
+             item.Content = JSON.stringify(arrSelectNum) + location.length > 0 ? JSON.stringify(location) : "";
              items.push(item);
              lvhide();
          } else {
@@ -316,7 +306,7 @@ var reg=/^[0-9]*$/;
     $(".play-section>div textarea").keyup(function(){
         var content = $(this).val();
         var whichtype = $(this).parents(".select-nums").find(".all-ways .all-ways-cur").data("type");
-        var typenum = $(this).parents(".select-nums").find(".all-ways .all-ways-cur").data("num");  //对任选里的2/3/4区别定义
+        var typenum = $(this).parents(".select-nums").find(".all-ways .all-ways-cur").data("nums");  //对任选里的2/3/4区别定义
         var typelen=0;
         //indexOf("sanxing")>-1?3:2;
         if (whichtype.indexOf("wuxing")>-1) {
@@ -1139,7 +1129,7 @@ function bindnavs() {
                         } else if (titem.PCode == '3ZUSDS') {
                             html += '<li data-nums="' + tnum + '" data-type="renxuan-zudan' + tname + '"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         } else if (titem.PCode == '3ZULFS') {
-                            html += '<li data-nums="' + tnum + '" data-type="renxuan-zudanliu"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
+                            html += '<li data-nums="' + tnum + '" data-type="renxuan-zufuliu"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         } else if (titem.PCode == '3ZULDS') {
                             html += '<li data-nums="' + tnum + '" data-type="renxuan-zudanliu"  data-sid="' + titem.PIDS + '">' + titem.PName + '</li>';
                         }
@@ -1376,7 +1366,7 @@ function bindnavs() {
                     if (checkedInput < _this.data("num")) {
                         text2.text("0");
                     } else {
-                        text2.text(fibonacci(checkedInput, _this.data("num")));
+                        text2.text(fibonacci(checkedInput, _this.data("nums")));
                     }
                     getsumnum();
                     $(this).parents(".tip22").siblings("textarea").keyup();
@@ -1484,7 +1474,8 @@ lottery.GetlotteryResult = function () {
 }
 lottery.getDifDate = function (item) {
     if (item != null) {
-        if (kkk != null && item.AutoID > 0) {
+        if (typeof (kkk) != 'undefined' && item.AutoID > 0) {
+            console.log(typeof(kkk));
             clearTimeout(kkk);
         }
         $('#cpissue').html(item.IssueNum);
@@ -1505,17 +1496,16 @@ lottery.getDifDate = function (item) {
         if (seconds > 0) {
             seconds = seconds - 1;
         }
-        seconds = seconds > 9 ? seconds : '0' + seconds;
-        if (seconds > -1 && minutes > -1) {
+        seconds = seconds > 9 ? seconds+'' : '0' + seconds;
+
+        if (seconds.indexOf('-') == -1 && (minutes.indexOf('-') == -1 && minutes > -1)) {
             $('#lotterymin').html(minutes);
             $('#lotterysec').html(seconds);
             setTimeout(function () { lottery.getDifDate(item) }, 1000);
-        } else {
-            // if (seconds == 0 && minutes == 0) {
-            if (kkk != null) {
+        } else { 
+            if (typeof (kkk) != 'undefined') {
                 kkk = setTimeout(function () { lottery.GetlotteryResult(); }, 3000);
-            }
-            //}
+            } 
         }
     }
 }
