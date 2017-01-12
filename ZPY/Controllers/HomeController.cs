@@ -51,8 +51,7 @@ namespace CPiao.Controllers
             } 
             ViewBag.ID = string.IsNullOrEmpty(id) ? "" : id;
             return View(); 
-        }
-
+        } 
         public ActionResult Register2()
         {
             return View();

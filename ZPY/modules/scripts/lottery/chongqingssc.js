@@ -747,8 +747,7 @@ function getsumnum(){
                 s=s*$(".tip44").find("strong").eq(1).text();
             }
         }
-    }
-    console.log(types);
+    } 
     /********************** 下，算所选号码：***********************/
     if (types.indexOf("zhifu")>-1||types.indexOf("dxds")>-1||types=="") {//五星直复和组选2，四星直复和组选2，前后三星直复2，二星直复2，大小单双2，定位胆1,任选7个
     	var whichplay=$(".all-ways").siblings("div:visible").attr("class");
@@ -1474,8 +1473,7 @@ lottery.GetlotteryResult = function () {
 }
 lottery.getDifDate = function (item) {
     if (item != null) {
-        if (typeof (kkk) != 'undefined' && item.AutoID > 0) {
-            console.log(typeof(kkk));
+        if (typeof (kkk) != 'undefined' && item.AutoID > 0) { 
             clearTimeout(kkk);
         }
         $('#cpissue').html(item.IssueNum);
@@ -1496,14 +1494,15 @@ lottery.getDifDate = function (item) {
         if (seconds > 0) {
             seconds = seconds - 1;
         }
-        seconds = seconds > 9 ? seconds+'' : '0' + seconds;
-
-        if (seconds.indexOf('-') == -1 && (minutes.indexOf('-') == -1 && minutes > -1)) {
+        seconds = seconds > 9 ? seconds : '0' + seconds;
+        var sssssss = seconds + ' ';
+        var mmmmmmm = minutes + ' '; 
+        if (sssssss.indexOf('-') == -1 && (mmmmmmm.indexOf('-') == -1 && minutes > -1)) {
             $('#lotterymin').html(minutes);
             $('#lotterysec').html(seconds);
             setTimeout(function () { lottery.getDifDate(item) }, 1000);
         } else { 
-            if (typeof (kkk) != 'undefined') {
+            if (typeof (kkk) == 'undefined') {
                 kkk = setTimeout(function () { lottery.GetlotteryResult(); }, 3000);
             } 
         }

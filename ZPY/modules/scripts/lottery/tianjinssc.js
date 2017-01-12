@@ -376,8 +376,7 @@ var reg=/^[0-9]*$/;
                      break;
                  }
              }
-         }
-         //console.log(arrSelectNum);
+         } 
          $(".play-action").find("p span:first-child").text(arrSelectNum.length);
          var times = $(".play-action").find(".times").val();
          $(".play-action").find("p span:last-child").text(arrSelectNum.length * times * 2);
@@ -824,8 +823,7 @@ function times(num) {
 }
 //手动改变倍数
 function handchange(obj,issums){
-    var times2 = obj.val();
-    console.log(times2);
+    var times2 = obj.val(); 
     if (!reg.test(times2)) {
         times2=1;
     }else{
@@ -1015,8 +1013,7 @@ function getsumnum(){
         var selectNum5="";
     	var $numbers=$("."+whichplay+" .numbers:visible");
         for (var m = 0; m < $numbers.length; m++) {
-        	var s2=$numbers.eq(m).find("span.clicked");
-        	//console.log(s2);
+        	var s2=$numbers.eq(m).find("span.clicked"); 
         	for (var n = 0; n < s2.length; n++) {
         		if (m==0) {
         			selectNum1+=s2.eq(n).text();
@@ -1150,7 +1147,7 @@ lottery.GetlotteryResult = function () {
 }
 lottery.getDifDate = function (item) {
     if (item != null) {
-        if (kkk != null && item.AutoID > 0) {
+        if (typeof (kkk) != 'undefined' && item.AutoID > 0) { 
             clearTimeout(kkk);
         }
         $('#cpissue').html(item.IssueNum);
@@ -1167,19 +1164,20 @@ lottery.getDifDate = function (item) {
         if (leave2)
             //计算相差秒数
             var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
-        console.log(leave2);
         var seconds = Math.round(leave3 / 1000);
         if (seconds > 0) {
             seconds = seconds - 1;
         }
         seconds = seconds > 9 ? seconds : '0' + seconds;
-        if (seconds > -1 && minutes > -1) {
+        var sssssss = seconds + ' ';
+        var mmmmmmm = minutes + ' '; 
+        if (sssssss.indexOf('-') == -1 && (mmmmmmm.indexOf('-') == -1 || minutes > -1)) {
             $('#lotterymin').html(minutes);
             $('#lotterysec').html(seconds);
             setTimeout(function () { lottery.getDifDate(item) }, 1000);
         } else { 
-            if (kkk != null) {
-                kkk = setTimeout(function () { lottery.GetlotteryResult(); }, 3000);
+            if (typeof (kkk) == 'undefined') {
+                kkk = setTimeout('lottery.GetlotteryResult()', 3000); 
             } 
         }
     }
