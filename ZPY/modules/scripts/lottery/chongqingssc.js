@@ -221,9 +221,9 @@ var reg=/^[0-9]*$/;
              item.CPName = lottery.CPName;
              item.IssueNum = $('#issueslt').val();
              var typeid = (typeof ($('.all-ways .all-ways-cur')) != 'undefined' && typeof ($('.all-ways .all-ways-cur').data('sid')) != 'undefined') ? $('.all-ways .all-ways-cur').data('sid') : $('.navs .navs-cur').data('sid');
-             item.Type = typeid;
-             item.Content = JSON.stringify(arrSelectNum) + location.length > 0 ? JSON.stringify(location) : "";
-             items.push(item);
+             item.Type = typeid; 
+             item.Content = JSON.stringify(arrSelectNum) + (location.length > 0 ? JSON.stringify(location) : "");
+             items.push(item); 
              lvhide();
          } else {
              $('#basic-dialog-ok')
@@ -1543,7 +1543,7 @@ lottery.saveItems = function () {
 
     for (var i = 0; i < items.length; i++) {
         items[i].IssueNum = $('#issueslt').val();
-    }
+    } 
     $.post('/Lottery/AddLotteryOrders', { list: JSON.stringify(items), usedisFee: $('#isusedic').prop('checked') ? 1 : 0 }, function (data) {
         if (data.result > 0) {
             items = [];
