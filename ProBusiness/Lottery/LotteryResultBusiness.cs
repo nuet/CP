@@ -136,6 +136,12 @@ namespace ProBusiness
             return LotteryResultDAL.BaseProvider.UpdateSD11X5Result(result, issnum,cpcode);
         }
 
+
+        public static bool UpdateByStatusAndOpentTime(string cpcode, string opentime)
+        {
+            return LotteryResultDAL.BaseProvider.UpdateByStatusAndOpentTime(cpcode, opentime);
+        }
+
         #endregion
 
     }

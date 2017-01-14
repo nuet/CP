@@ -56,3 +56,4 @@ D:\MichauxPro\CPiao\ZPY\obj\Release\CPiao.csproj.App.config
 D:\MichauxPro\CPiao\ZPY\obj\Release\CPiao.csprojResolveAssemblyReference.cache
 D:\MichauxPro\CPiao\ZPY\obj\Release\CPiao.dll
 D:\MichauxPro\CPiao\ZPY\obj\Release\CPiao.pdb
+D:\MichauxPro\CPiao\ZPY\bin\LogClass.dll

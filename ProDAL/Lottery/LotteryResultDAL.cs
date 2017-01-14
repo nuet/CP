@@ -45,5 +45,21 @@ namespace ProDAL
                                    };
             return ExecuteNonQuery("UpdateSD11X5Result", paras, CommandType.StoredProcedure) > 0;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cpcode">以,结尾</param>
+        /// <param name="openTime"></param>
+        /// <returns></returns>
+        public bool UpdateByStatusAndOpentTime(string cpcode, string openTime)
+        {
+            cpcode ="'"+ cpcode.Replace(",", "','");
+            SqlParameter[] paras = { 
+                                       new SqlParameter("@OpenTime",openTime),
+                                       new SqlParameter("@CPCode",cpcode)
+                                   };
+            return ExecuteNonQuery("Update LotteryResult set Status=1  where Opentime<@OpenTime and CPCode in (@CPCode) and Status=0", paras, CommandType.Text) > 0;
+        }
     }
 }

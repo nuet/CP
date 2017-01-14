@@ -376,8 +376,7 @@ var reg=/^[0-9]*$/;
                      break;
                  }
              }
-         }
-         //console.log(arrSelectNum);
+         } 
          $(".play-action").find("p span:first-child").text(arrSelectNum.length);
          var times = $(".play-action").find(".times").val();
          $(".play-action").find("p span:last-child").text(arrSelectNum.length * times * 2);
@@ -824,8 +823,7 @@ function times(num) {
 }
 //手动改变倍数
 function handchange(obj,issums){
-    var times2 = obj.val();
-    console.log(times2);
+    var times2 = obj.val(); 
     if (!reg.test(times2)) {
         times2=1;
     }else{
@@ -1015,8 +1013,7 @@ function getsumnum(){
         var selectNum5="";
     	var $numbers=$("."+whichplay+" .numbers:visible");
         for (var m = 0; m < $numbers.length; m++) {
-        	var s2=$numbers.eq(m).find("span.clicked");
-        	//console.log(s2);
+        	var s2=$numbers.eq(m).find("span.clicked"); 
         	for (var n = 0; n < s2.length; n++) {
         		if (m==0) {
         			selectNum1+=s2.eq(n).text();
@@ -1150,7 +1147,7 @@ lottery.GetlotteryResult = function () {
 }
 lottery.getDifDate = function (item) {
     if (item != null) {
-        if (kkk != null && item.AutoID > 0) {
+        if (typeof (kkk) != 'undefined' && item.AutoID > 0) { 
             clearTimeout(kkk);
         }
         $('#cpissue').html(item.IssueNum);
@@ -1167,22 +1164,21 @@ lottery.getDifDate = function (item) {
         if (leave2)
             //计算相差秒数
             var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
-        console.log(leave2);
         var seconds = Math.round(leave3 / 1000);
         if (seconds > 0) {
             seconds = seconds - 1;
         }
         seconds = seconds > 9 ? seconds : '0' + seconds;
-        if (seconds > -1 && minutes > -1) {
+        var sssssss = seconds + ' ';
+        var mmmmmmm = minutes + ' '; 
+        if (sssssss.indexOf('-') == -1 && (mmmmmmm.indexOf('-') == -1 || minutes > -1)) {
             $('#lotterymin').html(minutes);
             $('#lotterysec').html(seconds);
             setTimeout(function () { lottery.getDifDate(item) }, 1000);
-        } else {
-           // if (seconds == 0 && minutes == 0) {
-            if (kkk != null) {
-                kkk = setTimeout(function () { lottery.GetlotteryResult(); }, 3000);
-            }
-            //}
+        } else { 
+            if (typeof (kkk) == 'undefined') {
+                kkk = setTimeout('lottery.GetlotteryResult()', 3000); 
+            } 
         }
     }
 }
@@ -1238,7 +1234,7 @@ lottery.getLotteryList = function () {
         for (var i = 0; i < data.items.length; i++) {
             var item = data.items[i];
             html += ' <tr><td class="width140">' + item.LCode + '</td><td class="width120">' + convertdateTostring(item.CreateTime, true, "yyyy-MM-dd hh:mm:ss") + '</td><td class="width130">' + item.TypeName + '</td><td class="width85">' + item.IssueNum + '</td><td class="width200">' + item.Content + '</td>' +
-                '<td class="width60">' + item.PMuch + '</td><td class="width40">元</td><td class="width65">' + item.PayFee + '</td><td class="width85">' + item.WinFee + '</td><td class="width40">' + (item.Status == 0 ? "未开奖" : (item.Status == 1 ? "已中奖" : (item.Status == 2 ? "未中奖" : (item.Status == 3 ? "已撤单" : "已删除")))) + '</td></tr>';
+                '<td class="width60">' + item.PMuch + '</td><td class="width40">元</td><td class="width65">' + item.PayFee + '</td><td class="width85">' + item.WinFee + '</td><td class="width40">' + (item.Status == 0 ? "未开奖" : (item.Status == 2 ? "已中奖" : (item.Status == 1 ? "未中奖" : (item.Status == 3 ? "已撤单" : "已删除")))) + '</td></tr>';
         }
         if (html == "") {
             html += '<tr><td></td><td></td><td></td><td></td><td>暂无投注记录</td><td></td><td></td><td></td><td></td><td></td></tr>';

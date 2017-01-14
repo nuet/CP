@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text; 
-using Newtonsoft.Json;
-using LLibrary;
+using Newtonsoft.Json; 
 using ProEntity;
 
 namespace ProBusiness
@@ -49,7 +48,7 @@ namespace ProBusiness
                      {
                          errmsg = x.BCode + "第" + comnum + "期插入失败";
 
-                         L.Log("[BettAutoInsert] ", x.BCode + "第" + comnum + "期插入失败");
+                        // L.Log("[BettAutoInsert] ", x.BCode + "第" + comnum + "期插入失败");
                      }
                      msg += errmsg;
                      LotteryOrderBusiness.UpdateBettAutoByCode(x.BCode, comnum, pMuch * x.PayFee, errmsg);
@@ -61,9 +60,13 @@ namespace ProBusiness
 
         public bool OpenLotteryResult(string result,string issnum,string cpcode)
         {
-            var s= LotteryResultBusiness.UpdateSD11X5Result(result, issnum, cpcode);
-            L.Log(issnum + (s ? "开奖成功!" : "开奖失败"));
+            var s= LotteryResultBusiness.UpdateSD11X5Result(result, issnum, cpcode); 
             return s;
+        }
+
+        public bool UpdByStatusAndOpenTime(string cpcode,string opentime)
+        {
+            return LotteryResultBusiness.UpdateByStatusAndOpentTime(cpcode, opentime);
         }
 
         public bool IsEquelNum(string cpcode, string issuenum, string nowNum)

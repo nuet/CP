@@ -39,7 +39,7 @@ body{background: #E1EAF0;}
 .select-nums .navs li:not(.navs-cur):hover{background: #1B5682;}
 
 
-.all-ways{width: 1000px;height: 80px;line-height: 30px;background: #17476B;}
+.all-ways{width: 1000px;height: 40px;line-height: 30px;background: #17476B;}
 .zhixuan,.zuxuan{width: 100%;}
 .all-ways span{float:left;margin-top: 7px;text-align:center;margin-left: 10px;background: url(../images/bg1.png) no-repeat;display: inline-block;width: 81px;height: 26px;color: white;line-height: 26px;}
 /*.all-ways ul{float: left;}*/
@@ -96,7 +96,7 @@ ul.num-select li div span:hover{background: #ffecec;}
 .num-selected table thead tr{display: block;}
 /*.num-selected table td{width: 80px;}
 .num-selected table th{width: 80px;}*/
-.add-bet{float: left;width: 180px;margin-left: 10px;background: #103049;color: white;height: 200px;padding-left: 10px;}
+.add-bet{float: left;width: 180px;margin-left: 10px;background: #103049;color: white;height: 240px;padding-left: 10px;}
 .add-bet p{line-height: 28px;}
 .add-bet p:first-child{margin-top: 10px;}
 .add-bet select{height: 24px;border-radius: 4px;width: 170px;padding-left: 5px;margin-top: 6px;margin-bottom: 6px;}
@@ -142,10 +142,18 @@ ul.num-select li div span:hover{background: #ffecec;}
 .bet-record table{border-collapse: collapse;width: 970px;margin-left: 15px;color: white;text-align: center;line-height: 28px;margin-top: 0px;}
 .bet-record table thead{background: #103049;height: }
 .bet-record table tbody tr{height: 35px;border-bottom: 1px solid #777;}
-.bet-record table tbody{max-height: 316px;overflow-y:auto;display: block;}
+.bet-record table tbody{max-height: 316px;overflow-y:auto;display: block;    font-size: 12px;}
 .bet-record table thead tr{display: block;}
 .bet-record table th,.bet-record table td{width: 97px;}
-
+.width40{ width: 40px !important;}
+.width60{ width: 60px !important;}
+.width65{ width: 65px !important;}
+.width85{ width: 85px !important;}
+.width100{ width: 100px !important;}
+.width120{ width: 120px !important;}
+.width130{ width: 130px !important;}
+.width140{ width: 140px !important;}
+.width200{ width: 200px !important;word-break: break-all; }
 .footer{width: 1000px;height: 65px;border:1px solid #bbb;margin-bottom: 30px;background: white;}
 .footer p{float: right;margin-right: 20px;line-height: 65px;color: #777;}
 
@@ -177,3 +185,44 @@ ul.num-select li div span:hover{background: #ffecec;}
 .optional .play-section label:nth-child(5){margin-right: 25px;}
 .optional .play-section strong{color: #fb4;margin-left: 4px;margin-right: 4px;}
 .optional .play-section p:nth-child(2){color: #fff;}
+
+
+.yima li,.erma li{width: 120px!important;}
+
+
+
+
+.alert1{width: 300px;height: 160px;border: 1px solid #cf1b1c;background: white;position: fixed;top: 40%;left: 37%;display: none;}
+.alert1 h3{background: #CF1B1C;height: 35px;line-height: 35px;width: 100%;color: white;text-indent: 15px;}
+.alert1 h3 img{float: right;margin:10px 15px 5px -10px;vertical-align: middle;}
+.alert1 p{width: 100%;}
+.alert1 h3+p img{margin:20px 15px 15px 15px;vertical-align: middle;}
+.alert1 p:last-child{margin-top: -10px;text-align: center;}  
+.alert1 p .btn {display: inline-block;width: 70px;height: 25px;margin-right: 15px;}
+
+.cover-layer{width:100%;height:1600px;position:absolute;top:0;left:0;right:0;z-index:1000;cursor:default;background:rgba(0,0,0,0.3);}
+.totle-money{float:left;margin-left:25px;display:inline-block;width:200px;text-align:center;height:25px;line-height:25px;background:#4B4B4B;color:#fc3;border-radius:6px;}
+
+.yima li,.erma li{width: 120px!important;}
+
+
+ .alert {background-color: #333;opacity:0.8; font-size: 13px; position: fixed; top:35%; z-index: 99999; 
+         padding:20px;padding-left:40px;  overflow:auto; border-radius:5px;min-width:140px;max-width:260px;}
+.alert .alert-wrap { word-wrap: break-word;  word-break:break-all;color:#fff;font-size:14px;}
+.alert-wrap .alert-icon-right:before {content:"\e613";}
+.alert-wrap .alert-icon-right {color:#fefefe;font-size:20px;float:left;}
+.alert-wrap .alert-icon-warn:before {content:"\e64a";}
+.alert-wrap .alert-icon-warn {color:#fefefe;font-size:20px;float:left;}
+.alert-wrap .alert-msg {float:left;color:#fff;font-size:16px;line-height:24px; padding:0 20px 0 15px;max-width:160px;}
+.alert-wrap .alert-close:before {content:"\e628";}
+.alert-wrap .alert-close {float:left;color:#ddd;font-size:20px;padding-top:0px;cursor:pointer;}
+.alert-wrap .alert-close:hover {color:#fff;}
+/*confirm样式*/
+.confirm-layer {position: fixed; z-index:99998; top:0; left:0;right:0; bottom:0; background-color:#000; opacity:0.7;}
+.confirm { border: 1px solid #ccc; background-color: #fff; font-size: 13px; position: fixed; top:35%; z-index: 99999; width:260px; overflow:auto;padding:20px;border-radius:3px; }
+.confirm .confirm-wrap { word-wrap: break-word;  word-break:break-all;font-size:16px;  }
+.confirm .confirm-bottom { margin-top:20px; text-align:right; }
+.confirm-bottom .sure { padding:10px 24px; background-color:#D64242; color:#fff; border:none; cursor:pointer; display:inline-block; border-radius:3px; }
+.confirm-bottom .sure:hover {  background-color:#AC1716;  }
+.confirm-bottom .close { padding:5px 40px; color:#999; border:none; cursor:pointer; display:inline-block; }
+.confirm-bottom .close:hover {color:#D64242; }

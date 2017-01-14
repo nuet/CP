@@ -958,7 +958,7 @@ lottery.GetlotteryResult= function() {
  var kkk;
 lottery.getDifDate = function (item) {
     if (item != null) {
-        if (kkk != null && item.AutoID > 0) {
+        if (typeof (kkk) != 'undefined' && item.AutoID > 0) {
             clearTimeout(kkk);
         }
             $('#cpissue').html(item.IssueNum);
@@ -970,8 +970,7 @@ lottery.getDifDate = function (item) {
       
             //计算相差分钟数
             var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
-            //leave2 = leave2 - (35 * 1000);
-            console.log(leave2);
+            //leave2 = leave2 - (35 * 1000); 
             var minutes = Math.floor(leave2 / (60 * 1000));
             minutes = minutes > 9 ? minutes : '0' + minutes;
             if (leave2)
@@ -982,16 +981,16 @@ lottery.getDifDate = function (item) {
                 seconds = seconds - 1;
             }
             seconds = seconds > 9 ? seconds : '0' + seconds;
-            if (seconds > -1 && minutes > -1) {
+            var sssssss = seconds + ' ';
+            var mmmmmmm = minutes + ' ';
+            if (sssssss.indexOf('-') == -1 && (mmmmmmm.indexOf('-') == -1 && minutes > -1)) {
                 $('#lotterymin').html(minutes);
                 $('#lotterysec').html(seconds);
                 setTimeout(function () { lottery.getDifDate(item) }, 1000);
-            } else {
-                //if (seconds == 0 && minutes == 0) {
-                if (kkk != null) {
+            } else { 
+                if (typeof (kkk) == 'undefined') {
                     kkk = setTimeout(function () { lottery.GetlotteryResult(); }, 3000);
-                }
-                //}
+                } 
             }
         }  
 }
@@ -1088,7 +1087,7 @@ lottery.GetIssNum= function() {
         for (var i=0; i < data.items.length; i++) {
             var item = data.items[i]; 
             html += ' <tr><td class="width140">' + item.LCode + '</td><td class="width120">' + convertdateTostring(item.CreateTime, true, "yyyy-MM-dd hh:mm:ss") + '</td><td class="width130">' + item.TypeName + '</td><td class="width85">' + item.IssueNum + '</td><td class="width200">' + item.Content + '</td>' +
-                '<td class="width60">' + item.PMuch + '</td><td class="width40">元</td><td class="width65">' + item.PayFee + '</td><td class="width85">' + item.WinFee + '</td><td class="width40">' + (item.Status == 0 ? "未开奖" : (item.Status == 1 ? "已中奖" : (item.Status == 2 ? "未中奖" : (item.Status == 3 ? "已撤单" : "已删除")))) + '</td></tr>';
+                '<td class="width60">' + item.PMuch + '</td><td class="width40">元</td><td class="width65">' + item.PayFee + '</td><td class="width85">' + item.WinFee + '</td><td class="width40">' + (item.Status == 0 ? "未开奖" : (item.Status == 2 ? "已中奖" : (item.Status == 1 ? "未中奖" : (item.Status == 3 ? "已撤单" : "已删除")))) + '</td></tr>';
         }
         if (html == "") {
             html += '<tr><td></td><td></td><td></td><td></td><td>暂无投注记录</td><td></td><td></td><td></td><td></td><td></td></tr>';

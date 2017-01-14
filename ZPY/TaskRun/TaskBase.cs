@@ -61,15 +61,13 @@ namespace CPiao.TaskRun
         private void InsertLottery()
         { 
             //Schedule(() =>
-            //{
-            //   L.Log("[insertlottery]", "Begin...");
-            //   TaskService.BasService.InsertAllLottery();
-            //   L.Log("[insertlottery]", "End...");
+            //{ 
+            //   TaskService.BasService.InsertAllLottery(); 
             //}).NonReentrant().WithName("[insertlottery]").ToRunEvery(1).Days().At(04, 30);
         }
         private void UpdateLotteryStatus()
-        {
-            L.Register("[updatelotterystatus]");
+        { 
+            LogHelper.Info("UpdateLotteryStatus", "TaskBase", "Begin");
 
             Schedule(() =>
             {
@@ -78,9 +76,13 @@ namespace CPiao.TaskRun
                 TimeSpan tmNow = DateTime.Now.TimeOfDay;
                 int min = DateTime.Now.Minute;
                 int sec = DateTime.Now.Second;
-                if (tmNow > DateTime.Parse("00:00").TimeOfDay && tmNow > DateTime.Parse("02:10").TimeOfDay)
+                if (tmNow > DateTime.Parse("00:00").TimeOfDay && tmNow > DateTime.Parse("02:20").TimeOfDay)
                 {
-                    LotteryResultBusiness.UpdateStatus("XJSSC,", 1); 
+                    lock (thisLock)
+                    {
+                        LotteryResultBusiness.UpdateStatus("XJSSC,", 1);
+                        LogHelper.Info("UpdateStatus", "TaskBase", "XJSSC End");
+                    }
                 }
                 if (tmNow >= startTime && tmNow <= endTime)
                 {
@@ -90,13 +92,15 @@ namespace CPiao.TaskRun
                         lock (thisLock)
                         {
                             LotteryResultBusiness.UpdateStatus("SD11X5,", 1);
+                            LogHelper.Info("UpdateStatus", "TaskBase", "SD11X5 End");
                         }
                     }
                     else if (s == "9")
                     {
                         lock (thisLock)
                         {  
-                            LotteryResultBusiness.UpdateStatus("GD11X5,JX11X5,HLJSSC,XJSSC,TJSSC,", 1); 
+                            LotteryResultBusiness.UpdateStatus("GD11X5,JX11X5,HLJSSC,XJSSC,TJSSC,", 1);
+                            LogHelper.Info("UpdateStatus", "TaskBase", "GD11X5,JX11X5,HLJSSC,XJSSC,TJSSC End");
                         }
                     }
                     else if (min == 55 && DateTime.Now.Hour==21)
@@ -104,6 +108,7 @@ namespace CPiao.TaskRun
                         lock (thisLock)
                         {
                             LotteryResultBusiness.UpdateStatus("FCSD,", 1);
+                            LogHelper.Info("UpdateStatus", "TaskBase", "FCSD End");
                         }
                     }
                     if (min ==0 || min==30)
@@ -111,15 +116,18 @@ namespace CPiao.TaskRun
                         lock (thisLock)
                         {
                             LotteryResultBusiness.UpdateStatus("SHSSL,", 1);
+                            LogHelper.Info("UpdateStatus", "TaskBase", "SHSSL End");
                         }
+                        
                     }
 
                 }
             }).NonReentrant().WithName("[updatelotterystatus]").ToRunNow().AndEvery(1).Minutes();
+           
         }
         private void UpdateSD11X5Result()
-        {
-            L.Register("[updatesd11x5result]");
+        { 
+            LogHelper.Info("UpdateResult", "TaskBase", "SD11X5 Begin");
             Schedule(() =>
             {
                 TimeSpan startTime = DateTime.Parse("09:05").TimeOfDay;
@@ -134,19 +142,25 @@ namespace CPiao.TaskRun
                         //方法处理
                         KCWBase<DataResult> kcwresult = ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
                                 Getparas("SD11X5"));
-                        if (kcwresult!=null && kcwresult.Data.Count > 0)
+                        if (kcwresult != null && kcwresult.Data.Count > 0)
                         {
-                            var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '),
-                                kcwresult.Data[0].Expect, "SD11X5");
-                            L.Log("SD11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                            var suc =
+                                TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',', ' '),
+                                    kcwresult.Data[0].Expect, "SD11X5"); 
+                            LogHelper.Info("UpdateResult", "TaskBase",
+                                "SD11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败") + " End");
+                        }
+                        else
+                        {
+                            LogHelper.Info("UpdateResult", "TaskBase", "SD11X5  End");
                         }
                     }  
                 }
-            }).NonReentrant().WithName("[updatesd11x5result]").ToRunNow().AndEvery(1).Minutes();
+            }).NonReentrant().WithName("[updatesd11x5result]").ToRunNow().AndEvery(1).Minutes(); 
         }
         private void UpdateJX11X5Result()
-        {
-            L.Register("[UpdateJX11X5Result]");
+        { 
+            LogHelper.Info("UpdateResult", "TaskBase", "JX11X5 Begin");
             Schedule(() =>
             {
                 TimeSpan startTime = DateTime.Parse("09:05").TimeOfDay;
@@ -163,16 +177,20 @@ namespace CPiao.TaskRun
                                 Getparas("JX11X5"));
                         if (kcwresult!=null && kcwresult.Data.Count > 0)
                         {
-                            var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "JX11X5");
-                            L.Log("JX11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                            var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "JX11X5"); 
+                            LogHelper.Info("UpdateResult", "TaskBase", "JX11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败")+"  End");
+                        }
+                        else
+                        {
+                            LogHelper.Info("UpdateResult", "TaskBase", "JX11X5  End");
                         }
                     }  
                 }
             }).NonReentrant().WithName("[UpdateJX11X5Result]").ToRunNow().AndEvery(1).Minutes();
         }
         private void UpdateGD11X5Result()
-        {
-            L.Register("[UpdateGD11X5Result]");
+        { 
+            LogHelper.Info("UpdateResult", "TaskBase", "JX11X5 Begin");
             Schedule(() =>
             {
                 TimeSpan startTime = DateTime.Parse("09:05").TimeOfDay;
@@ -188,16 +206,20 @@ namespace CPiao.TaskRun
                                 Getparas("GD11X5"));
                         if (kcwresult != null && kcwresult.Data.Count > 0)
                         {
-                            var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "GD11X5");
-                            L.Log("GD11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                            var suc = TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "GD11X5"); 
+                            LogHelper.Info("UpdateResult", "TaskBase", "GD11X5:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败") + "  End");
+                        }
+                        else
+                        {
+                            LogHelper.Info("UpdateResult", "TaskBase", "GD11X5  End");
                         }
                     } 
                 }
             }).NonReentrant().WithName("[UpdateGD11X5Result]").ToRunNow().AndEvery(1).Minutes();
         }
         private void UpdateSHSSLResult()
-        {
-            L.Register("[UpdateSHSSLResult]");
+        { 
+            LogHelper.Info("UpdateResult", "TaskBase", "SHSSL End");
             Schedule(() =>
             {
                 TimeSpan startTime = DateTime.Parse("10:26").TimeOfDay;
@@ -211,16 +233,20 @@ namespace CPiao.TaskRun
                                 Getparas("SHSSL"));
                         if (kcwresult != null && kcwresult.Data.Count > 0)
                         {
-                                var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "SHSSL");
-                                L.Log("SHSSL:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
-                        } 
+                                var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "SHSSL"); 
+                                LogHelper.Info("UpdateResult", "TaskBase", "SHSSL:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败") + "  End");
+                        }
+                        else
+                        {
+                            LogHelper.Info("UpdateResult", "TaskBase", "SHSSL End");
+                        }
                     } 
                 }
             }).NonReentrant().WithName("[UpdateSHSSLResult]").ToRunNow().AndEvery(1).Minutes();
         }
         private void UpdateTJSSCResult()
-        {
-            L.Register("[UpdateTJSSCResult]");
+        { 
+            LogHelper.Info("UpdateResult", "TaskBase", "TJSSC Begin");
             Schedule(() =>
             {
                 TimeSpan startTime = DateTime.Parse("09:09").TimeOfDay;
@@ -234,16 +260,20 @@ namespace CPiao.TaskRun
                                 Getparas("TJSSC"));
                         if (kcwresult != null && kcwresult.Data.Count > 0)
                         {
-                                var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "TJSSC");
-                                L.Log("TJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
-                        } 
+                                var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "TJSSC"); 
+                                LogHelper.Info("UpdateResult", "TaskBase", "TJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败") + "  End");
+                        }
+                        else
+                        {
+                            LogHelper.Info("UpdateResult", "TaskBase", "TJSSC End");
+                        }
                     }
                 }
             }).NonReentrant().WithName("[UpdateTJSSCResult]").ToRunNow().AndEvery(1).Minutes();
         }
         private void UpdateHLJSSCResult()
-        {
-            L.Register("[UpdateHLJSSCResult]");
+        { 
+            LogHelper.Info("UpdateResult", "TaskBase", "HLJSSC Begin");
             Schedule(() =>
             {
                 TimeSpan startTime = DateTime.Parse("09:09").TimeOfDay;
@@ -258,15 +288,19 @@ namespace CPiao.TaskRun
                         if (kcwresult != null && kcwresult.Data.Count > 0)
                         {
                                 var suc=TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',',' '), kcwresult.Data[0].Expect, "HLJSSC");
-                                L.Log("HLJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
-                        } 
+                                LogHelper.Info("UpdateResult", "TaskBase", "HLJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败") + "  End");
+                        }
+                        else
+                        {
+                            LogHelper.Info("UpdateResult", "TaskBase", "HLJSSC End");
+                        }
                     }
                 }
             }).NonReentrant().WithName("[UpdateHLJSSCResult]").ToRunNow().AndEvery(1).Minutes();
         }
         private void UpdateFC3DResult()
-        {
-            L.Register("[UpdateFC3DResult]");
+        { 
+            LogHelper.Info("UpdateResult", "TaskBase", "FC3D Begin");
             Schedule(() =>
             {
                 TimeSpan startTime = DateTime.Parse("20:30").TimeOfDay;
@@ -288,7 +322,11 @@ namespace CPiao.TaskRun
                                     TaskService.BasService.OpenLotteryResult(
                                         kcwresult.Data[0].OpenCode.Replace(',', ' '),
                                         kcwresult.Data[0].Expect, "FC3D");
-                                L.Log("FC3D:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                                LogHelper.Info("UpdateResult", "TaskBase", "FC3D:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败") + "  End");
+                            }
+                            else
+                            {
+                                LogHelper.Info("UpdateResult", "TaskBase", "FC3D End");
                             }
                         }
                     }
@@ -296,8 +334,8 @@ namespace CPiao.TaskRun
             }).NonReentrant().WithName("[UpdateFC3DResult]").ToRunNow().AndEvery(1).Minutes();
         }
         private void UpdateXJSSCResult()
-        {
-            L.Register("[UpdateXJSSCResult]");
+        { 
+            LogHelper.Info("UpdateResult", "TaskBase", "XJSSC Begin");
             Schedule(() =>
             {
                 TimeSpan startTime = DateTime.Parse("09:09").TimeOfDay;
@@ -315,7 +353,11 @@ namespace CPiao.TaskRun
                             var suc =
                                 TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',', ' '),
                                     kcwresult.Data[0].Expect, "XJSSC");
-                            L.Log("XJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败"));
+                            LogHelper.Info("UpdateResult", "TaskBase", "XJSSC:" + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败") + "  End");
+                        }
+                        else
+                        {
+                            LogHelper.Info("UpdateResult", "TaskBase", "XJSSC End");
                         }
                     }
                 }
@@ -324,10 +366,11 @@ namespace CPiao.TaskRun
 
         private void BeetAuto()
         {
-            L.Register("[beetAuto]");
+            LogHelper.Info("BeetAuto", "TaskBase", "自动投注 Begin");
             Schedule(() =>
             { 
                 TaskService.BasService.BettAutoInsert();
+                LogHelper.Info("BeetAuto", "TaskBase", "自动投注 End");
             }).WithName("[beetAuto]").ToRunNow().AndEvery(1).Minutes();
         }
 
@@ -348,10 +391,46 @@ namespace CPiao.TaskRun
             return paraDir;
         }
 
-        private void Disable()
-        {
-            L.Register("[disable]");
 
+
+        private void CheckLotteryResult()
+        {
+            LogHelper.Info("CheckResult", "TaskBase","漏开奖检测 Begin");
+            Schedule(() =>
+            {
+                TimeSpan startTime = DateTime.Parse("08:00").TimeOfDay;
+                TimeSpan endTime = DateTime.Parse("23:59").TimeOfDay;
+                TimeSpan tmNow = DateTime.Now.TimeOfDay;
+                if ((tmNow >= startTime && tmNow <= endTime) || (tmNow > DateTime.Parse("00:00").TimeOfDay && tmNow < DateTime.Parse("04:00").TimeOfDay))
+                {
+                    string codes = "";
+                    CommonBusiness.LottertList.ForEach(x =>
+                    {
+                        codes += x.CPCode + ",";
+                    });
+                    TaskService.BasService.UpdByStatusAndOpenTime(codes,
+                        DateTime.Now.AddSeconds(-30).ToString("yyyy-MM-dd hh:mm:ss"));
+
+                    foreach (var item in CommonBusiness.LottertList)
+                    {
+                        KCWBase<DataResult> kcwresult =
+                        ProTools.HttpRequest.RequestServer<KCWBase<DataResult>>(ProTools.KCWAppUrl.NewLy,
+                            Getparas(item.CPCode.ToUpper(), 20));
+                        if (kcwresult != null && kcwresult.Data.Count > 0)
+                        {
+                            var suc =
+                                TaskService.BasService.OpenLotteryResult(kcwresult.Data[0].OpenCode.Replace(',', ' '),
+                                    kcwresult.Data[0].Expect, item.CPCode.ToUpper());
+                            LogHelper.Info("CheckResult", "TaskBase", item.CPCode.ToUpper() + "楼开奖检测 " + kcwresult.Data[0].Expect + (suc ? "开奖成功!" : "开奖失败") + " End");
+                        } 
+                    }
+                    
+                }
+            }).NonReentrant().WithName("[CheckLotteryResult]").ToRunNow().AndEvery(1).Hours(); 
+        }
+
+        private void Disable()
+        { 
             Schedule(() =>
             {
                 JobManager.RemoveJob("[reentrant]");
@@ -362,8 +441,6 @@ namespace CPiao.TaskRun
 
         private void Faulty()
         {
-            L.Register("[faulty]");
-
             Schedule(() =>
             {
                 L.Register("[faulty]", "I'm going to raise an exception!");
@@ -373,8 +450,6 @@ namespace CPiao.TaskRun
 
         private void Removed()
         {
-            L.Register("[removed]");
-
             Schedule(() =>
             {
                 L.Register("[removed]", "SOMETHING WENT WRONG.");
@@ -393,48 +468,36 @@ namespace CPiao.TaskRun
 
         private void FiveMinutes()
         {
-            L.Register("[five minutes]");
-
             Schedule(() => L.Log("[five minutes]", "Five minutes has passed."))
                 .WithName("[five minutes]").ToRunOnceAt(DateTime.Now.AddMinutes(5)).AndEvery(5).Minutes();
         }
 
         private void TenMinutes()
         {
-            L.Register("[ten minutes]");
-
             Schedule(() => L.Log("[ten minutes]", "Ten minutes has passed."))
                 .WithName("[ten minutes]").ToRunEvery(10).Minutes();
         }
 
         private void Hour()
         {
-            L.Register("[hour]");
-
             Schedule(() => L.Log("[hour]", "A hour has passed."))
                 .WithName("[hour]").ToRunEvery(1).Hours();
         }
 
         private void Day()
         {
-            L.Register("[day]");
-
             Schedule(() => L.Log("[day]", "A day has passed."))
                 .WithName("[day]").ToRunEvery(1).Days();
         }
 
         private void Weekday()
         {
-            L.Register("[weekday]");
-
             Schedule(() => L.Log("[weekday]", "A new weekday has started."))
                 .WithName("[weekday]").ToRunEvery(1).Weekdays();
         }
 
         private void Week()
         {
-            L.Register("[week]");
-
             Schedule(() => L.Log("[week]", "A new week has started."))
                 .WithName("[week]").ToRunEvery(1).Weeks();
         }
